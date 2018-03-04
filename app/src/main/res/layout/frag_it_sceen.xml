@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    android:orientation="vertical"
+    android:id="@+id/ll_screen"
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal">
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_weight="1"
+        android:layout_height="wrap_content"
+        android:padding="30dp"
+        android:background="#ffffff"
+        android:gravity="center"
+        android:orientation="vertical">
+        <ImageView
+            android:src="@mipmap/icon_it_sceen_comehome"
+            android:layout_width="67dp"
+            android:layout_height="61dp" />
+        <TextView
+            android:text="到家"
+            android:textColor="#666666"
+            android:layout_marginTop="10dp"
+            android:textSize="14sp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <ImageView
+            android:background="@mipmap/cj_k"
+            android:layout_marginTop="5dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+    <LinearLayout
+        android:layout_marginLeft="10dp"
+        android:layout_width="0dp"
+        android:layout_weight="1"
+        android:background="#ffffff"
+        android:padding="30dp"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="vertical">
+        <ImageView
+            android:src="@mipmap/icon_it_sceen_leave_home"
+            android:layout_width="67dp"
+            android:layout_height="61dp" />
+        <TextView
+            android:text="离家"
+            android:textColor="#666666"
+            android:textSize="14sp"
+            android:layout_marginTop="10dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <ImageView
+            android:background="@mipmap/cj_g"
+            android:layout_marginTop="5dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+</LinearLayout>
+    <LinearLayout
+        android:layout_marginTop="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:background="#ffffff"
+            android:gravity="center"
+            android:padding="30dp"
+            android:orientation="vertical">
+            <ImageView
+                android:src="@mipmap/icon_it_sceen_getup"
+                android:layout_width="67dp"
+                android:layout_height="61dp" />
+            <TextView
+                android:text="起床"
+                android:textColor="#666666"
+                android:textSize="14sp"
+                android:layout_marginTop="10dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+            <ImageView
+                android:background="@mipmap/cj_g"
+                android:layout_marginTop="5dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:padding="30dp"
+            android:background="#ffffff"
+            android:gravity="center"
+            android:orientation="vertical">
+            <ImageView
+                android:src="@mipmap/icon_it_experience"
+                android:layout_width="67dp"
+                android:layout_height="61dp" />
+            <TextView
+                android:text="休息"
+                android:layout_marginTop="10dp"
+                android:textColor="#666666"
+                android:textSize="14sp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+            <ImageView
+                android:background="@mipmap/cj_g"
+                android:layout_marginTop="5dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+    </LinearLayout>
+</LinearLayout>

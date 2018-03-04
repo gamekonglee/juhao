@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:paddingTop="20dp"
+              android:background="@color/white"
+    >
+    <View
+        android:background="#ffffff"
+        android:layout_width="match_parent"
+        android:layout_height="20dp"/>
+    <LinearLayout
+        android:visibility="gone"
+        android:id="@+id/linearLayout1"
+        android:layout_width="250dp"
+        android:layout_height="30dp"
+        android:background="@color/white"
+        android:layout_marginTop="10dp"
+        android:layout_centerHorizontal="true">
+
+        <TextView
+            android:id="@+id/text2"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_weight="1.0"
+            android:gravity="center"
+            android:text="@string/frag_product"
+            android:textColor="@color/white"
+            android:background="@drawable/classify_shape_pressed"
+            android:textSize="15dp" />
+
+        <TextView
+            android:id="@+id/type_02_tv"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_weight="1.0"
+            android:gravity="center"
+            android:text="@string/frag_select"
+            android:textColor="@color/green"
+            android:background="@drawable/classify_shape_active"
+            android:textSize="15dp" />
+    </LinearLayout>
+    <RelativeLayout
+        android:id="@+id/rl_search"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/bg_eeeeee_corner_100"
+        android:layout_marginBottom="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        >
+        <TextView
+            android:text="请输入搜索关键词"
+            android:gravity="center"
+            android:id="@+id/et_search"
+            android:layout_width="match_parent"
+            android:layout_height="35dp"
+            android:layout_marginRight="5dp"
+            android:background="@null"
+            android:focusable="false"
+            android:paddingBottom="2dp"
+            android:paddingLeft="5dp"
+            android:paddingTop="2dp"
+            android:textColor="#bbbbbb"
+            android:textSize="15sp"
+            />
+        <ImageView
+            android:src="@mipmap/home_search"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="50dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+    </RelativeLayout>
+
+    <View
+        android:id="@+id/line"
+        style="@style/view_style"
+        android:layout_marginTop="10dp"
+        android:layout_below="@id/rl_search"
+        />
+
+    <bc.juhao.com.ui.view.countdownview.ViewPagerSlide
+        android:id="@+id/vPager"
+        android:layout_below="@id/line"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_weight="1.0"
+        android:flipInterval="30"
+        android:persistentDrawingCache="animation" />
+
+
+</RelativeLayout>

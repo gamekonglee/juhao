@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white"
+    android:orientation="vertical"
+    android:paddingBottom="10dip">
+
+    <ImageView
+        android:id="@+id/warn_imgClose"
+        android:layout_width="36dp"
+        android:layout_height="36dp"
+        android:layout_alignParentRight="true"
+        android:padding="6dp"
+        android:src="@mipmap/ico_close" />
+
+    <TextView
+        android:id="@+id/warn_txtContent"
+        style="@style/txtDefaultStyle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:gravity="center"
+        android:minLines="2"
+        android:padding="10dip"
+        android:text="来一条提示啊！" />
+
+    <Button
+        android:id="@+id/warn_btnConfirm"
+        style="@style/btnStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/warn_txtContent"
+        android:layout_centerHorizontal="true"
+        android:layout_marginLeft="10dip"
+        android:layout_marginRight="10dip"
+        android:layout_marginTop="10dip"
+        android:minWidth="100dp"
+        android:text="确定"
+        android:textColor="@color/white" />
+</RelativeLayout>

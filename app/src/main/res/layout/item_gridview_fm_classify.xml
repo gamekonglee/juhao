@@ -1,0 +1,22 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="80dp">
+
+    <ImageView
+        android:id="@+id/classify_iv"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:layout_centerHorizontal="true"
+        android:src="@mipmap/type_7" />
+
+    <TextView
+        android:id="@+id/classify_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/classify_iv"
+        android:layout_centerHorizontal="true"
+        android:textColor="@color/fontColor6"
+        android:text="更多"
+        android:textSize="12sp" />
+
+</RelativeLayout>

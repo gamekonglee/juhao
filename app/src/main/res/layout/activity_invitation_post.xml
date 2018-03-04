@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    android:id="@+id/main_ll"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:gaga="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@drawable/icon_top"
+        android:minHeight="?attr/actionBarSize">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <LinearLayout
+                android:layout_width="80dp"
+                android:layout_height="match_parent"
+                android:gravity="center_vertical"
+                android:onClick="goBack"
+                android:paddingLeft="10dp">
+
+                <ImageView
+                    android:id="@+id/topLeftBtn"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="5dp"
+                    android:background="@drawable/goback"
+
+                    android:textColor="#FFFFFF"/>
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/et_search"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:text="我的邀请码"
+                android:textColor="@color/white"
+                android:textSize="18dp"
+                />
+        </RelativeLayout>
+
+
+    </RelativeLayout>
+
+    <ScrollView
+        android:id="@+id/sv"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <bc.juhao.com.ui.view.RatioLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                gaga:ratio="0.58"
+                gaga:relative="width">
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:scaleType="fitXY"
+                    android:src="@mipmap/invitation_post"/>
+            </bc.juhao.com.ui.view.RatioLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:gravity="center_horizontal"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/invitation_code_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="35dp"
+                    android:layout_marginTop="100dp"
+                    android:background="@drawable/shape_invitation"
+                    android:gravity="center"
+                    android:paddingLeft="15dp"
+                    android:paddingRight="15dp"
+                    android:textColor="@color/txt_black"
+                    android:textSize="16sp"/>
+            </LinearLayout>
+
+            <View
+                android:id="@+id/share_v"
+                android:layout_width="match_parent"
+                android:layout_height="100dp"
+                android:layout_alignParentBottom="true"/>
+
+        </RelativeLayout>
+    </ScrollView>
+
+</LinearLayout>

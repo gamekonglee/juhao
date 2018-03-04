@@ -1,0 +1,72 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="0.2dp"
+    android:background="@color/white"
+    >
+    <RelativeLayout
+        android:id="@+id/imageViewRl"
+        android:layout_width="183dp"
+        android:layout_height="183dp"
+        android:background="#FFFFFF"
+        android:layout_centerHorizontal="true">
+
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="183dp"
+            android:layout_height="183dp"
+            android:layout_centerHorizontal="true"
+            android:src="@drawable/bg_default" />
+        <ImageView
+            android:id="@+id/check_iv"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_centerHorizontal="true"
+            android:scaleType="fitXY"
+            android:visibility="gone"
+            android:src="@drawable/icon_design_product_select"/>
+        <TextView
+            android:id="@+id/groupbuy_tv"
+            android:layout_width="40dp"
+            android:layout_height="20dp"
+            android:text="限时购"
+            android:background="@drawable/shape_red"
+            android:textColor="@color/white"
+            android:gravity="center"
+            android:textSize="10dp"
+            android:visibility="gone"
+            android:layout_marginLeft="10dp"
+            android:layout_alignParentBottom="true"/>
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/name_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/imageViewRl"
+        android:layout_centerHorizontal="true"
+        android:text="MS5263电灯泡"
+        android:textColor="@color/fontColor2"
+        android:layout_marginTop="5dp"
+        android:textSize="@dimen/x30" />
+    <TextView
+        android:id="@+id/old_price_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/name_tv"
+        android:layout_centerHorizontal="true"
+        android:visibility="gone"
+        android:text="￥35"
+        android:textColor="@color/fontColor2"
+        android:textSize="@dimen/x26" />
+    <TextView
+        android:id="@+id/price_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/old_price_tv"
+        android:layout_centerHorizontal="true"
+        android:text="￥30"
+        android:textColor="@color/red"
+        android:textSize="@dimen/x28"
+        android:layout_marginBottom="5dp"/>
+</RelativeLayout>

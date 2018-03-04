@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent">
+    <RelativeLayout
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@drawable/icon_top"
+        android:minHeight="?attr/actionBarSize">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <LinearLayout
+                android:layout_width="80dp"
+                android:layout_height="match_parent"
+                android:gravity="center_vertical"
+                android:onClick="goBack"
+                android:paddingLeft="10dp">
+                <ImageView
+                    android:id="@+id/topLeftBtn"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="5dp"
+                    android:background="@drawable/goback"
+
+                    android:textColor="#FFFFFF"/>
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/et_search"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:text="提现帐号"
+                android:textColor="@color/white"
+                android:textSize="18dp"
+                />
+        </RelativeLayout>
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/shape_dialog_bg"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            >
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1">
+
+                <EditText
+                    android:id="@+id/alipay_et"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@null"
+                    android:hint="请输入收款人支付宝账号"
+                    android:paddingLeft="15dp"
+                    android:textColor="@color/fontColor2"
+                    android:textSize="14sp"
+                    android:textColorHint="@color/fontColora"
+                    />
+            </LinearLayout>
+
+            <ImageView
+                android:layout_width="33dp"
+                android:layout_height="33dp"
+                android:layout_marginRight="15dp"
+                android:src="@drawable/icon_zhifubao"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/shape_dialog_bg"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            >
+
+            <EditText
+                android:id="@+id/alipay_name_tv"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@null"
+                android:hint="请输入收款人的真实姓名"
+                android:paddingLeft="15dp"
+                android:textColor="@color/fontColor2"
+                android:textSize="14sp"
+                android:textColorHint="@color/fontColora"/>
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/fontColor2"
+            android:textSize="13sp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="20dp"
+            android:text="注意事项"
+            />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/fontColora"
+            android:layout_marginRight="5dp"
+            android:textSize="12sp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="5dp"
+            android:text="1.提现账号是您本人的支付宝账号,您可以将您的收益兑换成现金然后转至您的支付宝账户中，请务必保证账号安全以及正确。"
+            />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/fontColora"
+            android:textSize="12sp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="3dp"
+            android:text="2.如因为账号错误而发生的任何意外，责任由您本人承担。"
+            />
+
+        <Button
+            android:id="@+id/sure_bt"
+            style="@style/btnStyle"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:layout_marginLeft="10dip"
+            android:layout_marginRight="10dip"
+            android:layout_marginTop="50dp"
+            android:text="确定"
+            android:textSize="18dp"
+            android:textColor="@color/white"/>
+    </LinearLayout>
+</LinearLayout>

@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+             android:layout_width="fill_parent"
+             android:layout_height="fill_parent"
+             android:orientation="vertical" >
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/whatsnew_viewpager"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center" >
+
+
+        <android.support.v4.view.PagerTitleStrip
+            android:id="@+id/pagertitle"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:layout_gravity="bottom"
+            android:background="#0000"
+            android:textColor="#ffff" />
+    </android.support.v4.view.ViewPager>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        >
+
+        <LinearLayout
+            android:id="@+id/page_ll"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:layout_marginBottom="30dp"
+            android:gravity="center_horizontal"
+            android:layout_alignParentBottom="true"
+            android:visibility="gone">
+            <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+                android:gravity="center"
+                android:visibility="visible">
+                <ImageView
+                    android:id="@+id/page0"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:scaleType="matrix"
+                    android:src="@drawable/guide_star" />
+                <ImageView
+                    android:id="@+id/page1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="13dp"
+                    android:scaleType="matrix"
+                    android:src="@drawable/guide_yuan" />
+                <!--<ImageView-->
+                    <!--android:id="@+id/page2"-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:layout_marginLeft="13dp"-->
+                    <!--android:scaleType="matrix"-->
+                    <!--android:src="@drawable/guide_yuan" />-->
+        </LinearLayout>
+
+
+        </LinearLayout>
+        <Button
+            android:id="@+id/startBtn"
+            android:layout_width="140dp"
+            android:layout_height="35dp"
+            android:layout_centerHorizontal="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="70dp"
+            android:textSize="16sp"
+            android:textColor="@color/blue_4285f4"
+            android:background="@drawable/shape_lead_go"
+            android:layout_gravity="center_vertical"
+            android:onClick="startbutton"
+            android:visibility="visible"
+            android:text="立即体验"
+            />
+
+    </RelativeLayout>
+
+
+
+
+</FrameLayout>

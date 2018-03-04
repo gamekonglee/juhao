@@ -1,0 +1,44 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="120dp"
+                android:padding="0.2dp"
+                android:background="@color/white"
+    >
+    <RelativeLayout
+        android:id="@+id/imageViewRl"
+        android:layout_width="75dp"
+        android:layout_marginTop="12dp"
+        android:layout_height="75dp"
+        android:background="#FFFFFF"
+        android:layout_centerHorizontal="true">
+
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="75dp"
+            android:layout_height="75dp"
+            android:layout_centerHorizontal="true"
+            android:src="@drawable/bg_default" />
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/old_price_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@id/price_tv"
+        android:visibility="visible"
+        android:text="￥35"
+        android:textColor="@color/fontColor2"
+        android:textSize="10sp" />
+
+    <TextView
+        android:id="@+id/price_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="￥30"
+        android:textColor="@color/theme_orange"
+        android:textSize="12sp"
+        android:layout_below="@+id/imageViewRl"
+        android:layout_alignStart="@+id/old_price_tv"/>
+
+</RelativeLayout>

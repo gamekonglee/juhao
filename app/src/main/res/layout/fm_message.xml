@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:hyphenate="http://schemas.android.com/apk/res-auto"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="vertical">
+
+    <RelativeLayout
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@drawable/icon_top"
+        android:minHeight="?attr/actionBarSize">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <LinearLayout
+                android:layout_width="80dp"
+                android:layout_height="match_parent"
+                android:gravity="center_vertical"
+                android:onClick="goBack"
+                android:paddingLeft="10dp">
+                <ImageView
+                    android:id="@+id/topLeftBtn"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="5dp"
+                    android:background="@drawable/goback"
+
+                    android:textColor="#FFFFFF"/>
+            </LinearLayout>
+            <TextView
+                android:id="@+id/title_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/white"
+                android:textSize="18dp"
+                android:layout_centerInParent="true"
+                android:text="我的消息"
+                />
+
+            <RelativeLayout
+                android:id="@+id/reflesh_rl"
+                android:layout_width="80dp"
+                android:layout_height="match_parent"
+                android:layout_alignParentRight="true"
+                android:visibility="gone">
+                <ImageView
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:src="@drawable/reflesh"
+                    android:layout_centerVertical="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginRight="10dp"/>
+            </RelativeLayout>
+
+        </RelativeLayout>
+
+
+    </RelativeLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+        <!--第一次没有数据时显示空-->
+        <include
+            android:id="@+id/null_net"
+            layout="@layout/empty_page_no_wifi"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="gone"
+
+            />
+
+        <include
+            android:id="@+id/null_view"
+            layout="@layout/empty_page_no_recoder"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="gone"
+            />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            >
+
+            <include layout="@layout/ease_search_bar"
+                     android:visibility="gone"/>
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/fl_error_item"
+
+                >
+            </FrameLayout>
+            <com.hyphenate.easeui.widget.EaseConversationList
+                android:id="@+id/list"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_below="@id/bottom_bar"
+                android:background="@android:color/transparent"
+                android:cacheColorHint="#00000000"
+                android:divider="@null"
+                hyphenate:cvsListPrimaryTextSize="16sp"
+                />
+
+
+        </RelativeLayout>
+
+    </LinearLayout>
+
+
+</LinearLayout>

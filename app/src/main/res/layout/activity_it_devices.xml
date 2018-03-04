@@ -1,0 +1,518 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+        <LinearLayout
+            android:id="@+id/ll_top"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            <View
+                android:layout_width="match_parent"
+                android:background="@color/theme_orange"
+                android:layout_height="20dp"/>
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:background="@color/theme_orange">
+                <ImageView
+                    android:background="@mipmap/logo_white"
+                    android:layout_marginLeft="30dp"
+                    android:layout_width="50dp"
+                    android:layout_height="wrap_content" />
+                <RelativeLayout
+                    android:onClick="goBack"
+                    android:layout_width="40dp"
+                    android:layout_height="50dp">
+                    <ImageView
+                        android:background="@drawable/goback"
+                        android:layout_width="20dp"
+                        android:layout_centerVertical="true"
+                        android:layout_centerInParent="true"
+                        android:layout_height="25dp" />
+                </RelativeLayout>
+            <TextView
+                android:text="选择设备类型"
+                android:textColor="#ffffff"
+                android:textSize="16sp"
+                android:layout_centerInParent="true"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+            </RelativeLayout>
+        </LinearLayout>
+        <bc.juhao.com.ui.view.TextViewPlus
+            android:drawableLeft="@mipmap/wifi"
+            android:paddingLeft="15dp"
+            android:text="通过wifi连接新设备"
+            android:textSize="12sp"
+            android:textColor="#2572ff"
+            android:gravity="center_vertical"
+            android:drawablePadding="5dp"
+            android:layout_width="match_parent"
+            android:background="#ffffff"
+            android:layout_height="50dp" />
+        <ScrollView
+            android:layout_marginTop="1dp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+        <LinearLayout
+            android:onClick="onClick"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:gravity="center"
+                    android:padding="15dp"
+                    android:background="#ffffff"
+                    android:layout_weight="1">
+                    <ImageView
+                        android:src="@mipmap/icon_it_cz"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp" />
+                    <TextView
+                        android:layout_marginTop="5dp"
+                        android:textColor="#333333"
+                        android:textSize="11sp"
+                        android:lines="1"
+                        android:text="插座"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:gravity="center"
+                    android:layout_marginLeft="1dp"
+                    android:padding="15dp"
+                    android:background="#ffffff"
+                    android:layout_weight="1">
+                    <ImageView
+                        android:src="@mipmap/exper_it_control"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp" />
+                    <TextView
+                        android:layout_marginTop="5dp"
+                        android:textColor="#333333"
+                        android:textSize="11sp"
+                        android:text="开关"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:gravity="center"
+                    android:layout_marginLeft="1dp"
+                    android:padding="15dp"
+                    android:background="#ffffff"
+                    android:layout_weight="1">
+                    <ImageView
+                        android:src="@mipmap/icon_it_zm"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp" />
+                    <TextView
+                        android:layout_marginTop="5dp"
+                        android:textColor="#333333"
+                        android:textSize="11sp"
+                        android:text="照明"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:gravity="center"
+                    android:layout_marginLeft="1dp"
+                    android:padding="15dp"
+                    android:background="#ffffff"
+                    android:layout_weight="1">
+                    <ImageView
+                        android:src="@mipmap/icon_it_wifi"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp" />
+                    <TextView
+                        android:layout_marginTop="5dp"
+                        android:textColor="#333333"
+                        android:textSize="11sp"
+                        android:text="wifi连接器"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_marginTop="1dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:gravity="center"
+                    android:padding="15dp"
+                    android:background="#ffffff"
+                    android:layout_weight="1">
+                    <ImageView
+                        android:src="@mipmap/icon_it_kt"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp" />
+                    <TextView
+                        android:layout_marginTop="5dp"
+                        android:textColor="#333333"
+                        android:textSize="11sp"
+                        android:text="空调"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:gravity="center"
+                    android:layout_marginLeft="1dp"
+                    android:padding="15dp"
+                    android:background="#ffffff"
+                    android:layout_weight="1">
+                    <ImageView
+                        android:src="@mipmap/icon_it_sd"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp" />
+                    <TextView
+                        android:layout_marginTop="5dp"
+                        android:textColor="#333333"
+                        android:textSize="11sp"
+                        android:text="扫地机器人"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:gravity="center"
+                    android:layout_marginLeft="1dp"
+                    android:padding="15dp"
+                    android:background="#ffffff"
+                    android:layout_weight="1">
+                    <ImageView
+                        android:src="@mipmap/icon_it_rsq"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp" />
+                    <TextView
+                        android:layout_marginTop="5dp"
+                        android:textColor="#333333"
+                        android:textSize="11sp"
+                        android:text="热水器"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:gravity="center"
+                    android:layout_marginLeft="1dp"
+                    android:padding="15dp"
+                    android:background="#ffffff"
+                    android:layout_weight="1">
+                    <ImageView
+                        android:src="@mipmap/icon_it_qnq"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp" />
+                    <TextView
+                        android:layout_marginTop="5dp"
+                        android:textColor="#333333"
+                        android:textSize="11sp"
+                        android:text="取暖器"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_marginTop="1dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:gravity="center"
+                    android:padding="15dp"
+                    android:background="#ffffff"
+                    android:layout_weight="1">
+                    <ImageView
+                        android:src="@mipmap/icon_it_kqjhq"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp" />
+                    <TextView
+                        android:layout_marginTop="5dp"
+                        android:textColor="#333333"
+                        android:textSize="11sp"
+                        android:text="空气净化器"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:gravity="center"
+                    android:layout_marginLeft="1dp"
+                    android:padding="15dp"
+                    android:background="#ffffff"
+                    android:layout_weight="1">
+                    <ImageView
+                        android:src="@mipmap/icon_it_dfb"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp" />
+                    <TextView
+                        android:layout_marginTop="5dp"
+                        android:textColor="#333333"
+                        android:textSize="11sp"
+                        android:text="电饭煲"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:gravity="center"
+                    android:layout_marginLeft="1dp"
+                    android:padding="15dp"
+                    android:background="#ffffff"
+                    android:layout_weight="1">
+                    <ImageView
+                        android:src="@mipmap/icon_it_wbl"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp" />
+                    <TextView
+                        android:layout_marginTop="5dp"
+                        android:textColor="#333333"
+                        android:textSize="11sp"
+                        android:text="微波炉"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:gravity="center"
+                    android:layout_marginLeft="1dp"
+                    android:padding="15dp"
+                    android:background="#ffffff"
+                    android:layout_weight="1">
+                    <ImageView
+                        android:src="@mipmap/tj_djj"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp" />
+                    <TextView
+                        android:layout_marginTop="5dp"
+                        android:textColor="#333333"
+                        android:textSize="11sp"
+                        android:text="豆浆机"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+                </LinearLayout>
+            </LinearLayout>
+            <LinearLayout
+                android:layout_marginTop="1dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:gravity="center"
+                    android:padding="15dp"
+                    android:background="#ffffff"
+                    android:layout_weight="1">
+                    <ImageView
+                        android:src="@mipmap/icon_it_kx"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp" />
+                    <TextView
+                        android:layout_marginTop="5dp"
+                        android:textColor="#333333"
+                        android:textSize="11sp"
+                        android:text="烤箱"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:gravity="center"
+                    android:layout_marginLeft="1dp"
+                    android:padding="15dp"
+                    android:background="#ffffff"
+                    android:layout_weight="1">
+                    <ImageView
+                        android:src="@mipmap/icon_it_xyj"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp" />
+                    <TextView
+                        android:layout_marginTop="5dp"
+                        android:textColor="#333333"
+                        android:textSize="11sp"
+                        android:text="洗衣机"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:gravity="center"
+                    android:layout_marginLeft="1dp"
+                    android:padding="15dp"
+                    android:background="#ffffff"
+                    android:layout_weight="1">
+                    <ImageView
+                        android:src="@mipmap/icon_it_bx"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp" />
+                    <TextView
+                        android:layout_marginTop="5dp"
+                        android:textColor="#333333"
+                        android:textSize="11sp"
+                        android:text="冰箱"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:gravity="center"
+                    android:layout_marginLeft="1dp"
+                    android:padding="15dp"
+                    android:background="#ffffff"
+                    android:layout_weight="1">
+                    <ImageView
+                        android:src="@mipmap/icon_it_cl"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp" />
+                    <TextView
+                        android:layout_marginTop="5dp"
+                        android:textColor="#333333"
+                        android:textSize="11sp"
+                        android:text="窗帘"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+                </LinearLayout>
+            </LinearLayout>
+            <LinearLayout
+                android:layout_marginTop="1dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:gravity="center"
+                    android:padding="15dp"
+                    android:background="#ffffff"
+                    android:layout_weight="1">
+                    <ImageView
+                        android:src="@mipmap/icon_it_ykq"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp" />
+                    <TextView
+                        android:layout_marginTop="5dp"
+                        android:textColor="#333333"
+                        android:textSize="11sp"
+                        android:text="遥控器"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:gravity="center"
+                    android:layout_marginLeft="1dp"
+                    android:padding="15dp"
+                    android:background="#ffffff"
+                    android:layout_weight="1">
+                    <ImageView
+                        android:src="@mipmap/icon_it_fs"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp" />
+                    <TextView
+                        android:layout_marginTop="5dp"
+                        android:textColor="#333333"
+                        android:textSize="11sp"
+                        android:text="风扇"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:gravity="center"
+                    android:layout_marginLeft="1dp"
+                    android:padding="15dp"
+                    android:background="#ffffff"
+                    android:layout_weight="1">
+                    <ImageView
+                        android:src="@mipmap/icon_it_wdk"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp" />
+                    <TextView
+                        android:layout_marginTop="5dp"
+                        android:textColor="#333333"
+                        android:textSize="11sp"
+                        android:text="温控器"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:gravity="center"
+                    android:layout_marginLeft="1dp"
+                    android:padding="15dp"
+                    android:background="#ffffff"
+                    android:layout_weight="1">
+                    <ImageView
+                        android:src="@mipmap/tj_qt"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp" />
+                    <TextView
+                        android:layout_marginTop="5dp"
+                        android:textColor="#333333"
+                        android:textSize="11sp"
+                        android:text="其他"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+                </LinearLayout>
+            </LinearLayout>
+        </LinearLayout>
+        </ScrollView>
+</LinearLayout>
+</LinearLayout>

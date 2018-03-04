@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="80dp"
+                android:background="@color/white"
+                android:orientation="vertical"
+    >
+
+    <CheckBox
+        android:id="@+id/select_cb"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:button="@drawable/checked_cbx_bg"
+        />
+    <TextView
+        android:id="@+id/logistics_name_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="@dimen/x30"
+        android:text="物流公司:顺风快递"
+        android:layout_marginTop="10dp"
+        android:layout_toRightOf="@id/select_cb"
+        android:textColor="@color/fontColor3"
+        />
+    <TextView
+        android:id="@+id/logistics_phone_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="@dimen/x28"
+        android:text="联系电话：13138479865"
+        android:layout_marginTop="5dp"
+        android:layout_toRightOf="@id/select_cb"
+        android:layout_below="@id/logistics_name_tv"
+        android:textColor="@color/fontColor6"
+        />
+    <TextView
+        android:id="@+id/logistics_address_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="@dimen/x28"
+        android:text="收货地址：佛山市禅城去创意产业园"
+        android:layout_marginTop="5dp"
+        android:layout_toRightOf="@id/select_cb"
+        android:layout_below="@id/logistics_phone_tv"
+        android:textColor="@color/fontColor6"
+        />
+
+</RelativeLayout>

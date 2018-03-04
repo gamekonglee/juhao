@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:background="@color/background_color"
+              android:orientation="vertical">
+
+    <RelativeLayout
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@drawable/icon_top"
+        android:minHeight="?attr/actionBarSize">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <LinearLayout
+                android:layout_width="80dp"
+                android:layout_height="match_parent"
+                android:gravity="center_vertical"
+                android:onClick="goBack"
+                android:paddingLeft="10dp">
+
+                <ImageView
+                    android:id="@+id/topLeftBtn"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="5dp"
+                    android:background="@drawable/goback"
+
+                    android:textColor="#FFFFFF"/>
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/title_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:text="我的服务运营商"
+                android:textColor="@color/white"
+                android:textSize="18dp"
+                />
+        </RelativeLayout>
+
+
+    </RelativeLayout>
+
+
+    <bc.juhao.com.ui.view.ObservableScrollView
+        android:id="@+id/scrollView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="130dp"
+                android:background="@drawable/icon_top">
+
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:id="@+id/head_cv"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="20dp"
+                    android:src="@drawable/touxian"
+                    />
+
+                <TextView
+                    android:id="@+id/nickname_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignTop="@id/head_cv"
+                    android:layout_marginLeft="20dp"
+                    android:layout_toRightOf="@id/head_cv"
+                    android:textColor="@color/white"
+                    android:textSize="15dp"
+                    />
+
+                <TextView
+                    android:id="@+id/phone_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/nickname_tv"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginTop="3dp"
+                    android:layout_toRightOf="@id/head_cv"
+                    android:textColor="@color/white"
+                    android:textSize="15dp"
+                    />
+
+                <TextView
+                    android:id="@+id/address_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/phone_tv"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginTop="3dp"
+                    android:layout_toRightOf="@id/head_cv"
+                    android:textColor="@color/white"
+                    android:textSize="15dp"
+                    />
+
+
+
+
+            </RelativeLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:layout_marginBottom="5dp"
+                android:layout_marginTop="10dp"
+                android:background="@color/white"
+                >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="10dp"
+                    android:gravity="center_vertical"
+                    android:text="客服列表"
+                    android:textColor="@color/black"
+                    android:textSize="18sp"/>
+            </LinearLayout>
+
+
+            <com.lib.common.hxp.view.ListViewForScrollView
+                android:id="@+id/main_lv"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/white"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:layout_marginBottom="5dp"
+                android:layout_marginTop="10dp"
+                android:background="@color/white"
+                >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="10dp"
+                    android:gravity="center_vertical"
+                    android:text="所在位置"
+                    android:textColor="@color/black"
+                    android:textSize="18sp"/>
+            </LinearLayout>
+            <bc.juhao.com.ui.view.BaiduMapContainer
+                android:id="@+id/baiduMapContainer"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="gone">
+                <com.baidu.mapapi.map.MapView
+                    android:id="@+id/bmapView"
+                    android:layout_width="match_parent"
+                    android:layout_height="200dp"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:textIsSelectable="true"
+                    android:screenOrientation="portrait"/>
+            </bc.juhao.com.ui.view.BaiduMapContainer>
+
+
+
+        </LinearLayout>
+    </bc.juhao.com.ui.view.ObservableScrollView>
+
+
+</LinearLayout>

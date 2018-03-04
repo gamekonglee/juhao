@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent">
+    <RelativeLayout
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@drawable/icon_top"
+        android:minHeight="?attr/actionBarSize">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <LinearLayout
+                android:layout_width="80dp"
+                android:layout_height="match_parent"
+                android:gravity="center_vertical"
+                android:onClick="goBack"
+                android:paddingLeft="10dp">
+                <ImageView
+                    android:id="@+id/topLeftBtn"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="5dp"
+                    android:background="@drawable/goback"
+
+                    android:textColor="#FFFFFF"/>
+            </LinearLayout>
+            <TextView
+                android:id="@+id/et_search"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/white"
+                android:textSize="18dp"
+                android:layout_centerInParent="true"
+                android:text="@string/add_logistics"
+                />
+        </RelativeLayout>
+
+
+    </RelativeLayout>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/background_color"
+        android:visibility="visible">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dip"
+            android:paddingLeft="10dip"
+            android:background="@color/white"
+            android:orientation="vertical">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:orientation="vertical"
+                >
+                <LinearLayout
+                    android:id="@+id/logistics_name_rl"
+                    style="@style/mine_item_style02"
+                    >
+
+                    <EditText
+                        android:id="@+id/logistics_name_tv"
+                        style="@style/mine_text_edit_style"
+                        android:hint="@string/logistics_name"
+                        android:paddingLeft="10dp"
+                        android:background="@null"/>
+
+                </LinearLayout>
+                <View
+                    style="@style/view_style"
+                    />
+                <RelativeLayout
+                    android:id="@+id/logistics_phone_ll"
+                    style="@style/mine_item_style02"
+                    >
+
+                    <EditText
+                        android:id="@+id/logistics_phone_tv"
+                        style="@style/mine_text_edit_style"
+                        android:paddingLeft="10dp"
+                        android:inputType="phone"
+                        android:hint="@string/logistics_phone"
+                        android:background="@null"/>
+
+                </RelativeLayout>
+                <View
+                    style="@style/view_style"
+                    />
+                <RelativeLayout
+                    android:id="@+id/logistics_address_ll"
+                    style="@style/mine_item_style02"
+                    >
+
+                    <EditText
+                        android:id="@+id/logistics_address_tv"
+                        style="@style/mine_text_edit_style"
+                        android:hint="@string/logistics_address"
+                        android:paddingLeft="10dp"
+                        android:background="@null"/>
+
+                </RelativeLayout>
+            </LinearLayout>
+
+        </LinearLayout>
+        <Button
+            android:id="@+id/btn_save"
+            style="@style/button_style"
+            android:layout_centerHorizontal="true"
+            android:layout_marginRight="20dp"
+            android:gravity="center_vertical|center_horizontal"
+            android:layout_alignParentBottom="true"
+            android:text="@string/save"
+            android:textColor="@color/white"
+            android:layout_marginBottom="10dp"
+            />
+
+    </RelativeLayout>
+</LinearLayout>

@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:gaga="http://schemas.android.com/apk/res-auto"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent">
+    <RelativeLayout
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@drawable/icon_top"
+        android:minHeight="?attr/actionBarSize">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <LinearLayout
+                android:layout_width="80dp"
+                android:layout_height="match_parent"
+                android:gravity="center_vertical"
+                android:onClick="goBack"
+                android:paddingLeft="10dp">
+                <ImageView
+                    android:id="@+id/topLeftBtn"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="5dp"
+                    android:background="@drawable/goback"
+
+                    android:textColor="#FFFFFF"/>
+            </LinearLayout>
+            <TextView
+                android:id="@+id/et_search"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/white"
+                android:textSize="18dp"
+                android:layout_centerInParent="true"
+                android:text="我的订单"
+                />
+            <RelativeLayout
+                android:id="@+id/search_rl"
+                android:layout_width="80dp"
+                android:layout_height="match_parent"
+                android:layout_centerInParent="true"
+                android:layout_alignParentRight="true">
+                <ImageView
+                    android:id="@+id/iv_search"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:src="@drawable/search"
+                    android:layout_centerInParent="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginRight="10dp"
+                    />
+            </RelativeLayout>
+
+        </RelativeLayout>
+    </RelativeLayout>
+    <View
+        style="@style/view_style"
+        />
+    <!--主体部分-->
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <astuetz.MyPagerSlidingTabStrip
+            android:background="@color/white"
+            gaga:pstsIndicatorColor="#e9642b"
+            gaga:pstsTextViewSize="14dip"
+            gaga:pstsDividerColor="@color/white"
+            gaga:pstsSelectTextViewSize="14dip"
+            gaga:pstsTextViewColor="@color/fontColor3"
+            gaga:pstsSelectTextViewColor="#e9642b"
+            android:id="@+id/tabs"
+            android:layout_width="match_parent"
+            android:layout_height="35dip" />
+        <android.support.v4.view.ViewPager
+            android:id="@+id/main_viewpager"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+        </android.support.v4.view.ViewPager>
+
+
+    </LinearLayout>
+</LinearLayout>

@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:background="@drawable/bg_corner_trans"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <TextView
+        android:id="@+id/tv_type_select_tip"
+        android:textColor="#333"
+        android:textSize="13sp"
+        android:text=""
+        android:lineSpacingExtra="5dp"
+        android:layout_margin="15dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+    <LinearLayout
+        android:id="@+id/ll_taxpay"
+        android:orientation="horizontal"
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <CheckBox
+            android:id="@+id/cb_taxpay"
+            android:layout_gravity="center_vertical"
+            android:button="@null"
+            android:clickable="false"
+            android:background="@drawable/cb_type_select"
+            android:layout_width="25dp"
+            android:layout_height="25dp" />
+        <LinearLayout
+            android:layout_marginLeft="10dp"
+            android:layout_width="match_parent"
+            android:orientation="vertical"
+            android:layout_height="wrap_content">
+            <TextView
+                android:text="普通商品"
+                android:textColor="#666666"
+                android:textSize="15sp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+            <TextView
+                android:id="@+id/tv_taxpay_count"
+                android:text="0件"
+                android:textColor="#999999"
+                android:textSize="14sp"
+                android:layout_marginTop="2dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+    </LinearLayout>
+    <View
+        android:id="@+id/line_1"
+        android:layout_marginRight="15dp"
+        android:layout_marginLeft="15dp"
+        android:background="@color/lines_tab_grey_C3C3C3"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"/>
+    <LinearLayout
+        android:id="@+id/ll_hellogou"
+        android:paddingTop="5dp"
+        android:paddingBottom="5dp"
+        android:orientation="horizontal"
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <CheckBox
+            android:id="@+id/cb_hellegou"
+            android:clickable="false"
+            android:layout_gravity="center_vertical"
+            android:button="@null"
+            android:background="@drawable/cb_type_select"
+            android:layout_width="25dp"
+            android:layout_height="25dp" />
+        <LinearLayout
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="10dp"
+            android:layout_width="match_parent"
+            android:orientation="vertical"
+            android:layout_height="wrap_content">
+            <TextView
+                android:text="超市商品"
+                android:textColor="#666666"
+                android:textSize="15sp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+            <TextView
+                android:id="@+id/tv_hellogou_count"
+                android:text="0件"
+                android:textColor="#999999"
+                android:textSize="14sp"
+                android:layout_marginTop="2dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <View
+        android:id="@+id/line_2"
+        android:background="@color/lines_tab_grey_C3C3C3"
+        android:layout_marginRight="15dp"
+        android:layout_marginLeft="15dp"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"/>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <Button
+            android:id="@+id/btn_back_to_sc"
+            android:text="返回购物车"
+            android:textSize="15sp"
+            android:textColor="#333"
+            android:background="@drawable/bg_corner_8c8e91"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_margin="15dp"
+            android:layout_height="40dp" />
+        <Button
+            android:id="@+id/btn_balance"
+            android:text="去结算"
+            android:textColor="#fff"
+            android:background="@drawable/bg_corner_full_jd_red"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_margin="15dp"
+            android:layout_height="40dp"  />
+    </LinearLayout>
+</LinearLayout>

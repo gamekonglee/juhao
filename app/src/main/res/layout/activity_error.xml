@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    android:orientation="vertical"
+    android:gravity="center_horizontal"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <View
+        android:layout_width="match_parent"
+        android:background="@color/theme_orange"
+        android:layout_height="20dp"/>
+    <RelativeLayout
+        android:background="@color/theme_orange"
+        android:layout_width="match_parent"
+        android:layout_height="50dp">
+        <RelativeLayout
+            android:onClick="goBack"
+            android:layout_width="50dp"
+            android:layout_height="50dp">
+            <ImageView
+                android:background="@drawable/goback"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="15dp"
+                android:layout_width="15dp"
+                android:layout_height="20dp" />
+        </RelativeLayout>
+       <TextView
+           android:text="添加设备"
+           android:textColor="#ffffff"
+           android:textSize="16sp"
+           android:layout_centerInParent="true"
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content" />
+    </RelativeLayout>
+    <TextView
+        android:text="此设备尚在开发中"
+        android:textSize="16sp"
+        android:textColor="#999999"
+        android:layout_marginTop="150dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+    <ImageView
+        android:background="@mipmap/error_noready"
+        android:layout_marginTop="15dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+</LinearLayout>

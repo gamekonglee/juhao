@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:background="@color/background_color">
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/background_color"
+            android:orientation="vertical">
+            <!--第一次没有数据时显示空-->
+            <include
+                android:id="@+id/null_net"
+                layout="@layout/empty_page_no_wifi"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:visibility="gone"
+
+                />
+
+            <include
+                android:id="@+id/null_view"
+                layout="@layout/empty_page_no_recoder"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:visibility="gone"
+                />
+
+                <!-- 支持所有实现Pullable接口的View -->
+                <com.lib.common.hxp.view.PullToRefreshLayout
+                    android:id="@+id/refresh_view"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:visibility="visible">
+
+                    <include layout="@layout/refresh_head"/>
+                    <!-- 支持所有实现Pullable接口的View -->
+
+                    <com.lib.common.hxp.view.PullableGridView
+                        android:id="@+id/gridView"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@color/background_color"
+                        android:horizontalSpacing="15dp"
+                        android:paddingLeft="5dp"
+                        android:paddingRight="5dp"
+                        android:paddingTop="5dp"
+                        android:scrollbars="none"
+                        android:verticalSpacing="15dp"/>
+
+                    <include layout="@layout/load_more"/>
+
+                </com.lib.common.hxp.view.PullToRefreshLayout>
+                <include layout="@layout/load_more" />
+        </LinearLayout>
+        <ProgressBar
+            android:id="@+id/pd"
+            style="@style/Base.Widget.AppCompat.ProgressBar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="45dp"
+            android:visibility="invisible" />
+        <ImageView
+            android:id="@+id/go_sun_iv"
+            android:layout_width="100dp"
+            android:layout_height="30dp"
+            android:layout_gravity="center_horizontal|bottom"
+            android:layout_marginBottom="20dp"
+            android:gravity="center"
+            android:src="@drawable/icon_saijia"
+            android:scaleType="centerCrop"
+            />
+    </FrameLayout>
+
+</LinearLayout>

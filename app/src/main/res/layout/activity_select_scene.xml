@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+             android:layout_width="match_parent"
+             android:layout_height="match_parent"
+             android:orientation="vertical">
+    <RelativeLayout
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@drawable/icon_top"
+        android:minHeight="?attr/actionBarSize">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <LinearLayout
+                android:layout_width="80dp"
+                android:layout_height="match_parent"
+                android:gravity="center_vertical"
+                android:onClick="goBack"
+                android:paddingLeft="10dp">
+                <ImageView
+                    android:id="@+id/topLeftBtn"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="5dp"
+                    android:background="@drawable/goback"
+
+                    android:textColor="#FFFFFF"/>
+            </LinearLayout>
+            <TextView
+                android:id="@+id/et_search"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/white"
+                android:textSize="18dp"
+                android:layout_centerInParent="true"
+                android:text="@string/scene_database"
+                />
+            <TextView
+                android:id="@+id/tv_album"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/white"
+                android:textSize="15dp"
+                android:layout_centerInParent="true"
+                android:text="@string/goPhotograph"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="10dp"
+                />
+        </RelativeLayout>
+
+
+    </RelativeLayout>
+    <View
+        style="@style/view_style"
+        />
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <com.baiiu.filter.DropDownMenu
+            android:id="@+id/dropDownMenu"
+
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <com.lib.common.hxp.view.PullToRefreshLayout
+                android:id="@+id/mFilterContentView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <include layout="@layout/refresh_head" />
+                <!-- 支持所有实现Pullable接口的View -->
+
+                <com.lib.common.hxp.view.PullableGridView
+                    android:id="@+id/gridView"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:horizontalSpacing="5dp"
+                    android:numColumns="2"
+                    android:paddingLeft="15dp"
+                    android:paddingRight="15dp"
+                    android:paddingTop="5dp"
+                    android:scrollbars="none"
+                    android:background="@android:color/transparent"
+                    android:verticalSpacing="5dp" />
+
+                <include layout="@layout/load_more" />
+
+            </com.lib.common.hxp.view.PullToRefreshLayout>
+        </com.baiiu.filter.DropDownMenu>
+
+        <ProgressBar
+            android:id="@+id/pd"
+            style="@style/Base.Widget.AppCompat.ProgressBar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:visibility="invisible" />
+        <RelativeLayout
+            android:id="@+id/select_rl"
+            android:layout_width="150dp"
+            android:layout_height="50dp"
+            android:background="@drawable/icon_select"
+            android:orientation="horizontal"
+            android:layout_gravity="bottom|right"
+            android:layout_marginRight="10dp"
+            android:layout_marginBottom="10dp"
+            android:visibility="visible">
+            <TextView
+                android:layout_width="150dp"
+                android:layout_height="50dp"
+                android:text="开始做方案"
+                android:textColor="@color/white"
+                android:gravity="center_vertical"
+                android:layout_marginLeft="20dp"
+                android:visibility="visible"/>
+            <TextView
+                android:id="@+id/select_num_tv"
+                android:layout_width="150dp"
+                android:layout_height="50dp"
+                android:text="0"
+                android:textColor="@color/white"
+                android:gravity="center"
+                android:paddingLeft="100dp"
+                android:visibility="visible"/>
+        </RelativeLayout>
+    </FrameLayout>
+
+</LinearLayout>

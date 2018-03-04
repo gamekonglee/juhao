@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="130dp"
+        android:orientation="horizontal"
+        android:paddingTop="5dp"
+        >
+
+        <LinearLayout
+            android:layout_width="80dp"
+            android:layout_height="match_parent"
+            android:layout_marginRight="5dp">
+
+            <ImageView
+                android:id="@+id/imageView"
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                />
+        </LinearLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+                <TextView
+                    android:id="@+id/name_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginLeft="5dp"
+                    android:text="名称"
+                    android:singleLine="true"
+                    android:textSize="16sp"
+                    android:textColor="@color/txt_black"/>
+
+                <TextView
+                    android:id="@+id/property_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginLeft="5dp"
+                    android:singleLine="true"
+                    android:textSize="13sp"
+                    />
+
+                <TextView
+                    android:id="@+id/old_priceTv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginLeft="5dp"
+                    android:textSize="13sp" />
+
+                <TextView
+                    android:id="@+id/goods_summoney_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:layout_margin="5dp"
+                    android:textColor="@color/fontColor6"
+                    android:textSize="13sp"
+                    />
+                <TextView
+                    android:id="@+id/agio_priceTv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:layout_marginLeft="5dp"
+                    android:textSize="13sp" />
+            </LinearLayout>
+
+
+            <TextView
+                android:id="@+id/goods_sum_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentRight="true"
+                android:textColor="@color/fontColor6"
+                android:layout_marginBottom="3dp"
+                android:textSize="12dp"
+                />
+
+            <TextView
+                android:id="@+id/update_product_money_tv"
+                android:layout_width="80dp"
+                android:layout_height="25dp"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="10dp"
+                android:layout_marginTop="5dp"
+                android:layout_weight="1.0"
+                android:background="@drawable/classify_shape_active"
+                android:gravity="center"
+                android:text="@string/update_money"
+                android:textColor="@color/green"
+                android:textSize="12dip"/>
+        </RelativeLayout>
+
+    </LinearLayout>
+
+</LinearLayout>

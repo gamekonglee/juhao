@@ -1,0 +1,249 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@drawable/icon_top"
+        android:minHeight="?attr/actionBarSize">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:layout_width="40dp"
+                android:layout_height="match_parent"
+                android:gravity="center_vertical"
+                android:onClick="goBack"
+                android:paddingLeft="10dp">
+                <ImageView
+                    android:id="@+id/topLeftBtn"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="5dp"
+                    android:background="@drawable/goback"
+
+                    android:textColor="#FFFFFF"/>
+            </LinearLayout>
+
+            <EditText
+                android:id="@+id/et_search"
+                android:layout_width="0dp"
+                android:layout_height="35dp"
+                android:layout_marginRight="5dp"
+                android:layout_weight="1"
+                android:background="@drawable/search_et_shap02"
+                android:paddingBottom="2dp"
+                android:paddingLeft="5dp"
+                android:paddingTop="2dp"
+                android:textColor="#222222"
+                android:textSize="18dp"
+                android:imeOptions="actionSearch"
+                android:singleLine="true"
+                android:inputType="text"
+                />
+
+            <TextView
+                android:id="@+id/topRightBtn"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="10dp"
+                android:gravity="center"
+                android:text="筛选"
+                android:textColor="@color/white"
+                android:textSize="15dp"
+                />
+
+        </LinearLayout>
+    </RelativeLayout>
+    <FrameLayout  android:layout_width="match_parent"
+                  android:layout_height="match_parent"
+                  android:orientation="vertical">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+            <ImageView
+                android:id="@+id/lineIv"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_alignParentBottom="true"
+                android:background="@color/divider_gray"
+
+                />
+            <LinearLayout
+                android:id="@+id/search_ll"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_marginBottom="1dp"
+                android:background="#FFFFFF"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+
+                <TextView
+                    android:id="@+id/popularityTv"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:textColor="@color/fontColor60"
+                    android:text="@string/popularity"
+                    android:textSize="17sp" />
+                <LinearLayout
+                    android:id="@+id/stylell"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:orientation="horizontal">
+                    <TextView
+                        android:id="@+id/priceTv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:gravity="center"
+                        android:textColor="@color/fontColor60"
+                        android:text="@string/price"
+                        android:textSize="17sp" />
+                    <ImageView
+                        android:id="@+id/price_iv"
+                        android:layout_width="20dp"
+                        android:layout_height="25dp"
+                        android:src="@drawable/arror"/>
+                </LinearLayout>
+
+
+
+                <TextView
+                    android:id="@+id/newTv"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:textColor="@color/fontColor60"
+                    android:text="@string/new_goods"
+                    android:textSize="17sp" />
+                <TextView
+                    android:id="@+id/saleTv"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="@string/sale"
+                    android:textColor="@color/fontColor60"
+                    android:textSize="17sp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/background_color"
+                android:layout_weight="1"
+                android:orientation="vertical">
+                <!--第一次没有数据时显示空-->
+                <include
+                    android:id="@+id/null_net"
+                    layout="@layout/empty_page_no_wifi"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:visibility="gone"
+
+                    />
+
+                <include
+                    android:id="@+id/null_view"
+                    layout="@layout/empty_page_no_recoder"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:visibility="gone"
+                    />
+
+
+                <com.lib.common.hxp.view.PullToRefreshLayout
+                    android:id="@+id/refresh_view"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <include layout="@layout/refresh_head" />
+                    <!-- 支持所有实现Pullable接口的View -->
+
+
+                    <com.lib.common.hxp.view.PullableScrollView
+                        android:id="@+id/scrollView"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:scrollbars="none"
+                        android:layout_alignParentTop="true"
+                        android:layout_alignParentStart="true">
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical">
+                            <com.lib.common.hxp.view.GridViewForScrollView
+                                android:id="@+id/priductGridView"
+                                android:layout_width="match_parent"
+                                android:layout_height="200dp"
+                                android:horizontalSpacing="5dp"
+                                android:numColumns="2"
+                                android:paddingLeft="10dp"
+                                android:paddingRight="10dp"
+                                android:paddingTop="5dp"
+                                android:scrollbars="none"
+                                android:verticalSpacing="15dp" />
+                        </LinearLayout>
+                    </com.lib.common.hxp.view.PullableScrollView>
+
+                    <include layout="@layout/load_more" />
+                </com.lib.common.hxp.view.PullToRefreshLayout>
+            </LinearLayout>
+
+        </LinearLayout>
+        <ProgressBar
+            android:id="@+id/pd"
+            style="@style/Base.Widget.AppCompat.ProgressBar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="45dp"
+            android:visibility="invisible" />
+        <RelativeLayout
+            android:id="@+id/select_rl"
+            android:layout_width="150dp"
+            android:layout_height="50dp"
+            android:background="@drawable/icon_select"
+            android:orientation="horizontal"
+            android:layout_gravity="bottom|right"
+            android:layout_marginRight="10dp"
+            android:layout_marginBottom="10dp"
+            android:visibility="gone">
+            <TextView
+                android:layout_width="150dp"
+                android:layout_height="50dp"
+                android:text="开始做方案"
+                android:textColor="@color/white"
+                android:gravity="center_vertical"
+                android:layout_marginLeft="20dp"
+                android:visibility="visible"/>
+            <TextView
+                android:id="@+id/select_num_tv"
+                android:layout_width="150dp"
+                android:layout_height="50dp"
+                android:text="0"
+                android:textColor="@color/white"
+                android:gravity="center"
+                android:paddingLeft="100dp"
+                android:visibility="visible"/>
+        </RelativeLayout>
+
+    </FrameLayout>
+</LinearLayout>

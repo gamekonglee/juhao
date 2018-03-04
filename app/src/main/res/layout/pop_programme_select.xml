@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/deep_transparent"
+    android:orientation="horizontal"
+    >
+    <LinearLayout
+        android:id="@+id/main_ll"
+        android:layout_width="40dp"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:background="@color/white">
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:background="@color/green"
+            android:gravity="center_vertical"
+            android:paddingLeft="15dp"
+            android:text="方案筛选"
+            android:textColor="@color/white"
+            android:textSize="18sp" />
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp"
+                        android:gravity="center_vertical"
+                        android:paddingLeft="22dp"
+                        android:text="风格"
+                        android:textColor="@color/colorPrimaryDark"
+                        android:textSize="17sp" />
+
+                    <com.lib.common.hxp.view.GridViewForScrollView
+                        android:id="@+id/gridview1"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:cacheColorHint="#00000000"
+                        android:gravity="center"
+                        android:listSelector="#00000000"
+                        android:numColumns="3"
+                        android:paddingLeft="10dp"
+                        android:paddingRight="10dp"
+                        android:scrollbars="none"
+                        android:verticalSpacing="5dp"
+                        android:horizontalSpacing="5dp"/>
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_marginTop="10dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp"
+                        android:gravity="center_vertical"
+                        android:paddingLeft="22dp"
+                        android:text="空间"
+                        android:textColor="@color/colorPrimaryDark"
+                        android:textSize="17sp" />
+                    <com.lib.common.hxp.view.GridViewForScrollView
+                        android:id="@+id/gridview2"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:cacheColorHint="#00000000"
+                        android:descendantFocusability="blocksDescendants"
+                        android:gravity="center"
+                        android:listSelector="#00000000"
+                        android:numColumns="3"
+                        android:paddingLeft="10dp"
+                        android:paddingRight="10dp"
+                        android:scrollbars="none"
+                        android:verticalSpacing="5dp"
+                        android:horizontalSpacing="5dp"/>
+                </LinearLayout>
+            </LinearLayout>
+        </ScrollView>
+
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <Button
+                android:id="@+id/btn_cancal"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="2.4"
+                android:background="@color/green"
+                android:text="重置"
+                android:textColor="@color/white" />
+            <Button
+                android:id="@+id/btn_ok"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="2.4"
+                android:background="@color/yellow"
+                android:text="确定"
+                android:textColor="@color/white" />
+        </LinearLayout>
+    </LinearLayout>
+</LinearLayout>
+
+

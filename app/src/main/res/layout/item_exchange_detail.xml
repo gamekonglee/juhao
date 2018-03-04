@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:background="@color/whiteSmoke"
+                android:orientation="vertical"
+                android:paddingBottom="5dp"
+                android:paddingLeft="10dp">
+
+    <TextView
+        android:id="@+id/exchange_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:textColor="@color/fontColor2"
+        android:textSize="14sp"
+        />
+
+    <TextView
+        android:id="@+id/time_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/exchange_tv"
+        android:layout_marginTop="10dp"
+        android:textColor="@color/fontColora"
+        android:textSize="12sp"/>
+
+    <TextView
+        android:id="@+id/num_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="13dp"
+        android:layout_alignParentBottom="true"
+        android:textColor="@color/fontColor2"
+        android:textSize="20sp"
+        />
+
+    <View
+        style="@style/view_style"
+        android:layout_alignParentBottom="true"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="5dp"
+        />
+
+</RelativeLayout>

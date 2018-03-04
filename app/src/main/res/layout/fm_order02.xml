@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="vertical"
+              android:background="@color/background_color"
+    >
+    <TextView
+        android:id="@+id/text1"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:textSize="20sp"
+        android:visibility="gone"
+        />
+    <!--第一次没有数据时显示空-->
+    <include
+        android:id="@+id/null_net"
+        layout="@layout/empty_page_no_wifi"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone"
+
+        />
+
+    <include
+        android:id="@+id/null_view"
+        layout="@layout/empty_page_no_recoder"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone"
+        />
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        >
+        <com.lib.common.hxp.view.ListViewForScrollView
+            android:id="@+id/order_sv"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:horizontalSpacing="5dp"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:paddingTop="10dp"
+            android:verticalSpacing="15dp"
+            android:dividerHeight="0dip"
+            android:listSelector="@android:color/transparent"
+            android:background="@android:color/transparent"/>
+        <ProgressBar
+            android:id="@+id/pd"
+            style="@style/Base.Widget.AppCompat.ProgressBar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:visibility="invisible" />
+    </FrameLayout>
+
+
+
+</LinearLayout>

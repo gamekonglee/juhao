@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="vertical">
+
+    <LinearLayout
+        android:id="@+id/bg_ll"
+        android:layout_width="match_parent"
+        android:layout_height="150dp"
+        android:background="@color/trantracent_wode"
+        android:orientation="vertical">
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:background="@color/white">
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            >
+
+            <TextView
+                android:id="@+id/goods_name_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/logistic_type"
+                android:textSize="18sp"
+                android:layout_marginTop="13dp"
+                android:layout_centerInParent="true"
+                android:textColor="@color/fontColor2"/>
+
+
+            <ImageView
+                android:id="@+id/close_iv"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_alignParentRight="true"
+                android:src="@mipmap/ico_close"
+                android:layout_marginTop="3dp"
+                android:layout_marginRight="5dp"/>
+
+        </RelativeLayout>
+        <View
+            style="@style/view_style"
+            />
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+                <ListView
+                    android:id="@+id/properties_lv"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:scrollbars="none">
+
+                </ListView>
+                <View
+                    style="@style/view_style"
+                    />
+
+            </LinearLayout>
+
+            <ProgressBar
+                android:id="@+id/pd"
+                style="@style/Base.Widget.AppCompat.ProgressBar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:visibility="invisible" />
+        </FrameLayout>
+
+        <View
+            style="@style/view_style"
+            />
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="45dp">
+            <Button
+                android:id="@+id/btn_logistic"
+                style="@style/button_style"
+                android:layout_centerHorizontal="true"
+                android:layout_marginRight="20dp"
+                android:gravity="center_vertical|center_horizontal"
+                android:layout_alignParentBottom="true"
+                android:text="选择/新建自定义物流"
+                android:textColor="@color/white"
+                android:layout_marginBottom="5dp"
+                />
+        </RelativeLayout>
+    </LinearLayout>
+</LinearLayout>

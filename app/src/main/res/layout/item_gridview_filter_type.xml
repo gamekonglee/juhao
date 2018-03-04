@@ -1,0 +1,19 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/whiteSmoke">
+
+    <RelativeLayout
+        android:id="@+id/filter_rl"
+        style="@style/mine_item_style"
+        >
+
+        <TextView
+            android:id="@+id/name_tv"
+            style="@style/mine_text_style"
+            android:layout_centerInParent="true"
+            android:text="类型"/>
+
+    </RelativeLayout>
+
+</RelativeLayout>

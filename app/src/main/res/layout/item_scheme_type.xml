@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="horizontal"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+    android:paddingTop="15dp"
+    android:paddingLeft="10dp">
+    <TextView
+        android:id="@+id/type_name_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="风格"
+        android:textSize="18sp"
+        android:textColor="@color/black"/>
+    <GridView
+        android:id="@+id/type_gv"
+        android:layout_width="match_parent"
+        android:layout_height="240dp"
+        android:background="#FFFFFF"
+        android:numColumns="3"
+        android:paddingLeft="15dp"
+        android:paddingRight="10dp"
+        android:scrollbars="none"
+        android:verticalSpacing="10dip"
+        android:horizontalSpacing="10dip"
+        />
+
+</LinearLayout>

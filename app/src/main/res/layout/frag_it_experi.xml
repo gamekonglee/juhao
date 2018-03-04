@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    android:id="@+id/ll_experi"
+    android:orientation="vertical"
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:background="#ffffff">
+        <TextView
+            android:text="虚拟体验设备"
+            android:textSize="16sp"
+            android:textColor="#333333"
+            android:layout_width="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="15dp"
+            android:layout_height="wrap_content" />
+        <TextView
+            android:text="免费体验生活"
+            android:textColor="#999999"
+            android:textSize="10sp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="10dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_marginTop="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:padding="30dp"
+            android:background="#ffffff"
+            android:gravity="center"
+            android:orientation="vertical">
+            <ImageView
+                android:src="@mipmap/exper_white_lamb"
+                android:layout_width="67dp"
+                android:layout_height="61dp" />
+            <TextView
+                android:text="智能白光灯"
+                android:textColor="#666666"
+                android:layout_marginTop="10dp"
+                android:textSize="14sp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+            <TextView
+                android:text="立即体验"
+                android:textSize="14sp"
+                android:textColor="#ffffff"
+                android:background="@drawable/bg_corner_full_orange_10"
+                android:padding="5dp"
+                android:layout_marginTop="5dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_marginLeft="10dp"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:background="#ffffff"
+            android:padding="30dp"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="vertical">
+            <ImageView
+                android:src="@mipmap/exper_it_control"
+                android:layout_width="67dp"
+                android:layout_height="61dp" />
+            <TextView
+                android:text="智能开关"
+                android:textColor="#666666"
+                android:textSize="14sp"
+                android:layout_marginTop="10dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+            <TextView
+                android:text="立即体验"
+                android:textSize="14sp"
+                android:textColor="#ffffff"
+                android:background="@drawable/bg_corner_full_orange_10"
+                android:padding="5dp"
+                android:layout_marginTop="5dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+    </LinearLayout>
+    <LinearLayout
+        android:layout_marginTop="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:background="#ffffff"
+            android:gravity="center"
+            android:padding="30dp"
+            android:orientation="vertical">
+            <ImageView
+                android:src="@mipmap/exper_it_air"
+                android:layout_width="67dp"
+                android:layout_height="61dp" />
+            <TextView
+                android:text="空气净化器"
+                android:textColor="#666666"
+                android:textSize="14sp"
+                android:layout_marginTop="10dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+            <TextView
+                android:text="立即体验"
+                android:textSize="14sp"
+                android:textColor="#ffffff"
+                android:background="@drawable/bg_corner_full_orange_10"
+                android:padding="5dp"
+                android:layout_marginTop="5dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:visibility="invisible"
+            android:padding="30dp"
+            android:background="#ffffff"
+            android:gravity="center"
+            android:orientation="vertical">
+            <ImageView
+                android:src="@mipmap/icon_it_experience"
+                android:layout_width="67dp"
+                android:layout_height="61dp" />
+            <TextView
+                android:text="休息"
+                android:layout_marginTop="10dp"
+                android:textColor="#666666"
+                android:textSize="14sp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+        </LinearLayout>
+    </LinearLayout>
+</LinearLayout>

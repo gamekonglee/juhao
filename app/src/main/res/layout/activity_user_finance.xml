@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="vertical">
+    <RelativeLayout
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@drawable/icon_top"
+        android:minHeight="?attr/actionBarSize">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <LinearLayout
+                android:layout_width="80dp"
+                android:layout_height="match_parent"
+                android:gravity="center_vertical"
+                android:onClick="goBack"
+                android:paddingLeft="10dp">
+                <LinearLayout
+                    android:layout_width="80dp"
+                    android:layout_height="match_parent"
+                    android:gravity="center_vertical"
+                    android:onClick="goBack">
+                    <ImageView
+                        android:id="@+id/topLeftBtn"
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:layout_centerVertical="true"
+                        android:layout_marginRight="5dp"
+                        android:background="@drawable/goback"
+
+                        android:textColor="#FFFFFF"/>
+                </LinearLayout>
+            </LinearLayout>
+
+
+            <TextView
+                android:id="@+id/et_search"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/white"
+                android:textSize="18dp"
+                android:layout_centerInParent="true"
+                android:text="财务中心"
+                />
+            <TextView
+                android:id="@+id/topRighttv"
+                android:layout_width="80dp"
+                android:layout_height="match_parent"
+                android:textColor="@color/white"
+                android:gravity="center"
+                android:layout_alignParentRight="true"
+                android:text="提现明细"/>
+        </RelativeLayout>
+
+
+    </RelativeLayout>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="200dip"
+        android:background="@drawable/icon_top">
+
+        <ImageView
+            android:id="@+id/user_fnc_imgBg"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:layout_centerInParent="true"
+            android:src="@drawable/ico_finance_bg"/>
+
+        <TextView
+            android:id="@+id/user_fnc_txtBalance"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:paddingBottom="20dp"
+            android:textColor="@color/white"
+            android:textStyle="bold"
+            android:textSize="24sp"
+            android:text="0.00"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/user_fnc_txtBalance"
+            android:layout_centerHorizontal="true"
+            android:textColor="@color/white"
+            android:textSize="12sp"
+            android:text="@string/cur_balance"/>
+        <Button
+            android:id="@+id/user_fnc_btnWithdraw"
+            style="@style/btnStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingLeft="@dimen/margin_default"
+            android:paddingRight="@dimen/margin_default"
+            android:layout_alignBottom="@+id/user_fnc_imgBg"
+            android:layout_toRightOf="@+id/user_fnc_imgBg"
+            android:background="@color/red"
+            android:text="@string/withdrawal"/>
+
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="80dip"
+        android:padding="@dimen/margin_normal"
+        android:background="@color/white"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:id="@+id/lly_platformShare"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:gravity="center">
+            <TextView
+                android:id="@+id/user_fnc_txtBonusPlatform"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/padding_default"
+                android:textStyle="bold"
+                android:textSize="16sp"
+                android:text="0.00"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="14sp"
+                android:text="销售总额"/>
+        </LinearLayout>
+        <include layout="@layout/in_divider_vertical"/>
+        <LinearLayout
+            android:id="@+id/lly_saleShare"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:gravity="center">
+            <TextView
+                android:id="@+id/user_fnc_txtBonusSales"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/padding_default"
+                android:textStyle="bold"
+                android:textSize="16sp"
+                android:text="0.00"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingLeft="@dimen/padding_default"
+                android:gravity="center_vertical"
+                android:textSize="14sp"
+                android:text="销售分红"/>
+        </LinearLayout>
+    </LinearLayout>
+
+    <RelativeLayout
+        android:id="@+id/profit_record_rl"
+        style="@style/mine_item_style02"
+        android:layout_marginTop="10dp"
+        >
+        <TextView
+            android:id="@+id/profit_record_title_tv"
+            style="@style/mine_text_style02"
+            android:text="收益明细"/>
+        <ImageView
+            android:id="@+id/type_iv"
+            style="@style/mine_image_arrow"
+            android:layout_alignParentRight="true"/>
+    </RelativeLayout>
+
+</LinearLayout>

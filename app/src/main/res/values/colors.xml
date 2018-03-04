@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimaryDark">#303030</color>
+    <color name="colorPrimary">#242424</color>
+    <color name="colorAccent">#303030</color>
+    <color name="green">#EE7600</color>
+    <color name="fontColor92">#929292</color>
+    <color name="yellow">#F0AC41</color>
+    <color name="txt_black">#444444</color>
+    <color name="divider_gray">#AAacacac</color>
+    <color name="colorPrimaryRed">#EE7600</color>
+    <color name="fontColor2">#444444</color>
+    <color name="fontColor6">#444444</color>
+    <color name="fontColor60">#605f5f</color>
+    <color name="colorview">#efefef</color>
+    <color name="device_line">#bebcbc</color>
+    <color name="transparent">#00000000</color>
+    <color name="background_color">#F0EFF5</color>
+    <color name="fontColora">#aaaaaa</color>
+    <color name="fontColor3">#333333</color>
+    <color name="fontColorEO">#444444</color>
+    <color name="red">#fa0202</color>
+    <color name="divider_color">#d4d5d6</color>
+    <color name="whiteSmoke">#F5F5F5</color><!-- 白烟-->
+    <color name="ed_f8">#F8D6A0</color>
+    <color name="EC">#ECECEC</color>
+    <color name="font_color1">#444444</color>
+    <color name="line">#e6e6e6</color>
+    <color name="purple">#8C08EF</color>
+    <color name="oushi">#E32C6F</color>
+    <color name="xiandai">#FF9376</color>
+    <color name="xinzhonshi">#E2B621</color>
+    <color name="zhongshi">#B86436</color>
+    <color name="e0e0e0">#e0e0e0</color>
+    <color name="white">#FFFFFF</color>
+    <color name="black">#000000</color>
+    <color name="trantracent">#22000000</color>
+    <color name="trantracent_wode">#55000000</color>
+    <color name="deep_transparent">#bb000000</color>
+    <color name="deep_transparentDD">#DD000000</color>
+    <color name="grey_text_color_normal">#8A8A8A</color>
+    <color name="grey_line_bg">#E4E4E4</color>
+    <color name="original_border_color">#F18459</color>
+    <color name="grey_normal_bg">#EEEEEE</color>
+    <color name="comment_divider">#cccccc</color>
+    <color name="spots_dialog_color">@android:color/holo_blue_dark</color>
+    <color name="lines_tab_grey_C3C3C3" >#C3C3C3</color>
+    <color name="jd_8c8e91">#8c8e91</color>
+    <color name="jd_red">#F23030</color>
+    <color name="background_tab_pressed">#6633B5E5</color>
+    <color name="actionbar_color">#607D8B</color>
+    <color name="actionbar_color_dark">#455A64</color>
+
+    <!--uCrop Activity-->
+    <color name="ucrop_color_toolbar">#FF6E40</color>
+    <color name="ucrop_color_statusbar">#CC5833</color>
+    <color name="ucrop_color_title">#fff</color>
+    <color name="ucrop_color_widget">#000</color>
+    <color name="ucrop_color_widget_active">#FF6E40</color>
+    <color name="ucrop_color_widget_background">#fff</color>
+    <color name="ucrop_color_widget_text">#000</color>
+    <color name="ucrop_color_progress_wheel_line">#808080</color>
+    <color name="ucrop_color_crop_background">#000</color>
+
+    <!--Crop View-->
+    <color name="ucrop_color_default_crop_grid">#80ffffff</color>
+    <color name="ucrop_color_default_crop_frame">#ffffff</color>
+    <color name="ucrop_color_default_dimmed">#8c000000</color>
+    <color name="theme_lines">#dddddd</color>
+    <color name="theme_orange">#ff5500</color>
+    <color name="tv_444444">#444444</color>
+
+</resources>

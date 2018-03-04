@@ -1,0 +1,41 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/whiteSmoke">
+
+    <RelativeLayout
+        android:id="@+id/imageViewRl"
+        android:layout_width="183dp"
+        android:layout_height="183dp"
+        android:layout_centerHorizontal="true">
+
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="183dp"
+            android:layout_height="183dp"
+            android:layout_centerHorizontal="true"
+            android:scaleType="centerCrop"
+            android:src="@drawable/bg_default" />
+        <ImageView
+            android:id="@+id/check_iv"
+            android:layout_width="183dp"
+            android:layout_height="183dp"
+            android:layout_centerHorizontal="true"
+            android:scaleType="fitXY"
+            android:visibility="gone"
+            android:src="@drawable/icon_design_product_select"/>
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/imageViewRl"
+        android:gravity="center"
+        android:text="更多"
+        android:padding="5dp"
+        android:textSize="15sp"
+        android:visibility="gone"
+        />
+
+</RelativeLayout>

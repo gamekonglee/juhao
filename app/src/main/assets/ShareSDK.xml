@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<DevInfor>
+    <ShareSDK
+        AppKey = "19e5c27faa39c"/> <!-- 修改成你在sharesdk后台注册的应用的appkey"-->
+    
+    <!-- ShareByAppClient标识是否使用微博客户端分享，默认是false -->
+    <!--<SinaWeibo-->
+        <!--Id="1"-->
+        <!--SortId="1"-->
+        <!--AppKey="wx0d5873a8c4a78126"-->
+        <!--AppSecret="9e375d469e4c2390e3a172ea6aaff3e0"-->
+        <!--RedirectUrl="http://www.sharesdk.cn"-->
+        <!--ShareByAppClient="true"-->
+        <!--Enable="true" />-->
+
+
+    <Wechat
+        Id="1"
+        SortId="1"
+		AppKey="wxe5dbf8785c4ec928"
+		AppSecret="51b49eb6c84cd25c58392c8164906968"
+        BypassApproval="false"
+        Enable="true" />
+    
+    <WechatMoments
+        Id="2"
+        SortId="2"
+		AppKey="wxe5dbf8785c4ec928"
+		AppSecret="51b49eb6c84cd25c58392c8164906968"
+        BypassApproval="false"
+        Enable="true" />
+        
+	<WechatFavorite
+        Id="3"
+        SortId="3"
+		AppKey="wx031a94cf4e6af01b"
+		AppSecret="8dddc38672f03e02d3c93624e7217721"
+        Enable="true" />
+    
+	<!-- ShareByAppClient标识是否使用微博客户端分享，默认是false -->
+	<QQ
+        Id="4"
+        SortId="4"
+        AppId="1106021571"
+        AppKey="qoJZW9ClouqvgFwS"
+        ShareByAppClient="true"
+        Enable="true" />
+	<!--<TencentWeibo-->
+		<!--Id="6"-->
+		<!--SortId="6"-->
+		<!--AppKey="wx3a98c61770cd9972"-->
+		<!--AppSecret="d7cbac54b4d30046d212e5b31cd068ca"-->
+		<!--RedirectUri="http://sharesdk.cn"-->
+		<!--Enable="true" />-->
+
+	<!--<QZone-->
+		<!--Id="7"-->
+		<!--SortId="7"-->
+		<!--AppId="1105698263"-->
+		<!--AppKey="KEYtYmEI8SxyUfCSDQM"-->
+		<!--Enable="true" />-->
+</DevInfor>

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center"
+    android:clipChildren="false"
+    android:orientation="vertical">
+    <android.support.v4.view.ViewPager
+        android:id="@+id/viewpager_ad"
+        android:layout_width="match_parent"
+        android:layout_height="170dp"
+        android:layout_centerInParent="true" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/viewpager_ad"
+        android:orientation="vertical"
+        android:padding="8dp">
+        <!-- 放置小圆点 -->
+
+        <LinearLayout
+            android:id="@+id/layout_dot"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:orientation="horizontal"
+            android:paddingTop="3dp"></LinearLayout>
+    </LinearLayout>
+</RelativeLayout>
+

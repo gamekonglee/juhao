@@ -1,0 +1,102 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:tools="http://schemas.android.com/tools"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="vertical" >
+
+    <RelativeLayout
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@drawable/icon_top"
+        android:minHeight="?attr/actionBarSize">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <LinearLayout
+                android:layout_width="80dp"
+                android:layout_height="match_parent"
+                android:gravity="center_vertical"
+                android:onClick="goBack"
+                android:paddingLeft="10dp">
+
+                <ImageView
+                    android:id="@+id/topLeftBtn"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="5dp"
+                    android:background="@drawable/goback"
+
+                    android:textColor="#FFFFFF"/>
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/et_search"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:text="发布嗮图"
+                android:textColor="@color/white"
+                android:textSize="18dp"
+                />
+            <RelativeLayout
+                android:id="@+id/save_rl"
+                android:layout_width="80dp"
+                android:layout_height="match_parent"
+                android:layout_centerInParent="true"
+                android:layout_alignParentRight="true">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/white"
+                    android:textSize="15sp"
+                    android:layout_centerInParent="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginRight="10dp"
+                    android:text="发布"/>
+            </RelativeLayout>
+        </RelativeLayout>
+
+
+    </RelativeLayout>
+
+    <View
+        style="@style/view_style"
+        />
+
+    <TextView
+        android:id="@+id/tv_photo_path"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text=""
+        android:visibility="gone" />
+
+    <EditText
+        android:id="@+id/value_et"
+        android:layout_width="fill_parent"
+        android:layout_height="150dp"
+        android:padding="10dp"
+        android:background="@color/white"
+        android:gravity="left|top"
+        android:hint="说点什么吧..." >
+
+    </EditText>
+    <com.lib.common.hxp.view.GridViewForScrollView
+        android:id="@+id/imageGv"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:horizontalSpacing="5dp"
+        android:numColumns="4"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:paddingTop="5dp"
+        android:scrollbars="none"
+        android:verticalSpacing="15dp" />
+
+
+
+
+</LinearLayout>

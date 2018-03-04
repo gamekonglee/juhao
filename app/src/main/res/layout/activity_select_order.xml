@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="vertical">
+
+    <RelativeLayout
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@drawable/icon_top"
+        android:minHeight="?attr/actionBarSize">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <LinearLayout
+                android:layout_width="80dp"
+                android:layout_height="match_parent"
+                android:gravity="center_vertical"
+                android:onClick="goBack">
+
+                <LinearLayout
+                    android:layout_width="80dp"
+                    android:layout_height="match_parent"
+                    android:gravity="center_vertical"
+                    android:onClick="goBack"
+                    android:paddingLeft="10dp">
+
+                    <ImageView
+                        android:id="@+id/topLeftBtn"
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:layout_centerVertical="true"
+                        android:layout_marginRight="5dp"
+                        android:background="@drawable/goback"
+
+                        android:textColor="#FFFFFF"/>
+                </LinearLayout>
+            </LinearLayout>
+
+
+            <TextView
+                android:id="@+id/et_search"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:text="查询订单"
+                android:textColor="@color/white"
+                android:textSize="18dp"
+                />
+        </RelativeLayout>
+
+
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/background_color"
+        android:orientation="vertical"
+        >
+        <!--第一次没有数据时显示空-->
+        <include
+            android:id="@+id/null_net"
+            layout="@layout/empty_page_no_wifi"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="gone"
+
+            />
+
+        <include
+            android:id="@+id/null_view"
+            layout="@layout/empty_page_no_recoder"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="gone"
+            />
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            >
+            <com.lib.common.hxp.view.PullToRefreshLayout
+                android:id="@+id/refresh_view"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <include layout="@layout/refresh_head" />
+                <!-- 支持所有实现Pullable接口的View -->
+                <com.lib.common.hxp.view.PullableScrollView
+                    android:id="@+id/scrollView"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:scrollbars="none">
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+                        <com.lib.common.hxp.view.ListViewForScrollView
+                            android:id="@+id/order_sv"
+                            android:layout_width="match_parent"
+                            android:layout_height="200dp"
+                            android:horizontalSpacing="5dp"
+                            android:paddingLeft="10dp"
+                            android:paddingRight="10dp"
+                            android:paddingTop="10dp"
+                            android:verticalSpacing="15dp"
+                            android:dividerHeight="0dip"
+                            android:listSelector="@android:color/transparent"
+                            android:background="@android:color/transparent"/>
+                    </LinearLayout>
+                </com.lib.common.hxp.view.PullableScrollView>
+                <include layout="@layout/load_more" />
+
+            </com.lib.common.hxp.view.PullToRefreshLayout>
+            <ProgressBar
+                android:id="@+id/pd"
+                style="@style/Base.Widget.AppCompat.ProgressBar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:visibility="invisible" />
+        </FrameLayout>
+
+
+    </LinearLayout>
+</LinearLayout>
