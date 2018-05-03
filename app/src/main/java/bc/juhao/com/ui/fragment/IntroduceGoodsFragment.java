@@ -67,28 +67,30 @@ public class IntroduceGoodsFragment extends BaseFragment implements View.OnClick
         unPriceTv = (TextView) getActivity().findViewById(R.id.unPriceTv);
         proPriceTv = (TextView) getActivity().findViewById(R.id.proPriceTv);
 
+        top_iv = (ImageView) getActivity().findViewById(R.id.top_iv);
+
+
         final PullUpToLoadMore ptlm = (PullUpToLoadMore) getActivity().findViewById(R.id.ptlm);
         ptlm.currPosition=0;
         ptlm.setmListener(new PullUpToLoadMore.ScrollListener() {
             @Override
             public void onScrollToBottom(int currPosition) {
                 if (currPosition == 0) {
-                    mListener.onScrollToBottom(0);
+                   if(mListener!=null) mListener.onScrollToBottom(0);
                     top_iv.setVisibility(View.GONE);
                 } else {
-                    mListener.onScrollToBottom(1);
+                    if(mListener!=null) mListener.onScrollToBottom(1);
                     top_iv.setVisibility(View.VISIBLE);
                 }
             }
         });
-
-        top_iv = (ImageView) getActivity().findViewById(R.id.top_iv);
         top_iv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 ptlm.scrollToTop();
             }
         });
+
 
         if (!EventBus.getDefault().isRegistered(this)) {
             EventBus.getDefault().register(this);
@@ -121,6 +123,11 @@ public class IntroduceGoodsFragment extends BaseFragment implements View.OnClick
         }
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        mController.send24Rexiao();
+    }
 
     private ScrollListener mListener;
 

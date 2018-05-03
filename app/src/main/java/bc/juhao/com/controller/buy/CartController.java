@@ -48,6 +48,7 @@ import org.greenrobot.eventbus.EventBus;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 import bc.juhao.com.R;
 import bc.juhao.com.adapter.BaseAdapterHelper;
@@ -129,10 +130,13 @@ public class CartController extends BaseController implements INetworkCallBack, 
      * @param per_page
      */
     public void selectProduct(int page, String per_page) {
-        mNetWork.sendGoodsList(page, per_page, null, null, null, null, null, null, null, new INetworkCallBack() {
+        Random random=new Random();
+        String sortKey=(random.nextInt(5)+1)+"";
+        String sortValue=(random.nextInt(2)+1)+"";
+        mNetWork.sendGoodsList(page, per_page, null, null, null, null, null, sortKey, sortValue, new INetworkCallBack() {
             @Override
             public void onSuccessListener(String requestCode, JSONObject ans) {
-                if (null == mView || mView.getActivity().isFinishing())
+                if (null == mView ||mView.getActivity()==null|| mView.getActivity().isFinishing())
                     return;
 
                 JSONArray goodsList = ans.getJSONArray(Constance.goodsList);
@@ -199,7 +203,7 @@ public class CartController extends BaseController implements INetworkCallBack, 
                     mView.showLoading();
                     String id = goodses.getJSONObject(position).getString(Constance.id);
                     //                    mDeleteIndex=position;
-                    isLastDelete = false;
+                    isLastDelete = true;
                     deleteShoppingCart(id);
                 }
                 return false;
@@ -293,12 +297,12 @@ public class CartController extends BaseController implements INetworkCallBack, 
         }
         switch (requestCode) {
             case NetWorkConst.DeleteCART:
-                if(isLastDelete==true){
-                    isLastDelete=false;
-//                    isCheckList.remove(mDeleteIndex);
+//                if(isLastDelete){
+//                    isLastDelete=false;
+////                    isCheckList.remove(mDeleteIndex);
+//                    return;
+//                }
                     sendShoppingCart();
-                    return;
-                }
                 mView.hideLoading();
                 break;
             case NetWorkConst.UpdateCART:
@@ -369,7 +373,7 @@ public class CartController extends BaseController implements INetworkCallBack, 
     public void sendSettle() {
         if(!isEdit){
             myAdapter.getCartGoodsCheck();
-            if(goods.length()==0){
+            if(goods==null||goods.length()==0){
                 MyToast.show(mView.getActivity(),"请选择产品");
                 return;
             }
@@ -496,6 +500,7 @@ public class CartController extends BaseController implements INetworkCallBack, 
         }
 
         public void getCartGoodsCheck(){
+            if(goodses==null)goodses=new JSONArray();
             if(goodses.length()!=isCheckList.size())return;
             goods=new JSONArray();
             for(int i = 0; i < isCheckList.size(); i++){
@@ -510,8 +515,8 @@ public class CartController extends BaseController implements INetworkCallBack, 
 
             for(int i=0;i<goods.length();i++){
 //                JSONObject group_buy=((JSONObject)goods.get(i)).getJSONObject(Constance.product).getJSONObject(Constance.group_buy);
-                int category=((JSONObject)goods.get(i)).getJSONObject(Constance.product).getInt(Constance.category);
-                if(category==212){
+                int is_jh=((JSONObject)goods.get(i)).getJSONObject(Constance.product).getInt(Constance.is_jh);
+                if(is_jh==1){
                     hasXianGou=true;
                     juhao++;
                 }else {
@@ -524,7 +529,7 @@ public class CartController extends BaseController implements INetworkCallBack, 
 
 
         public void setIsCheck(int poistion, Boolean isCheck) {
-            if(isCheckList.size()<poistion) return;
+            if(isCheckList.size()<=poistion) return;
             isCheckList.set(poistion, isCheck);
             getTotalMoney();
 
@@ -771,9 +776,8 @@ public class CartController extends BaseController implements INetworkCallBack, 
 
             String parent_name = IssueApplication.mUserObject.getString("parent_name");
             String parent_id = IssueApplication.mUserObject.getString("parent_id");
-            int category=myAdapter.getItem(position).getJSONObject(Constance.product).getInt(Constance.category);
-            System.out.println("category"+category);
-            if(category==212){
+            int is_jh=myAdapter.getItem(position).getJSONObject(Constance.product).getInt(Constance.is_jh);
+            if(is_jh==1){
                 parent_name="钜豪超市";
                 parent_id="37";
             }
@@ -910,18 +914,20 @@ public class CartController extends BaseController implements INetworkCallBack, 
                 if(cb_taxpay.isChecked()){
 //                    seletType =Constance.NORMAL_GOODS;
                     for(int i=0;i<goods.length();i++){
-                        int category=((JSONObject)goods.get(i)).getJSONObject(Constance.product).getInt(Constance.category);
-                        if(category==212){
+                        int is_jh=((JSONObject)goods.get(i)).getJSONObject(Constance.product).getInt(Constance.is_jh);
+                        if(is_jh==1){
                            goods.delete(i);
+                            isCheckList.set(i,false);
                             i--;
                         }
                     }
                 }else if(cb_hellegou.isChecked()){
 //                    seletType =Constance.JUGAO_GOODS;
                     for(int i=0;i<goods.length();i++){
-                        int category=((JSONObject)goods.get(i)).getJSONObject(Constance.product).getInt(Constance.category);
-                        if(category!=212){
+                        int is_jh=((JSONObject)goods.get(i)).getJSONObject(Constance.product).getInt(Constance.is_jh);
+                        if(is_jh==0){
                             goods.delete(i);
+                            isCheckList.set(i,false);
                             i--;
                         }
                     }

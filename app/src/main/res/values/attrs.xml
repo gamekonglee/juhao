@@ -213,5 +213,30 @@
         <attr name="bottom_height" format="dimension" />
         <attr name="bottom_width" format="dimension" />
     </declare-styleable>
-
+    <declare-styleable name="BarcodeScannerView">
+        <attr name="shouldScaleToFill" format="boolean" />
+        <attr name="laserEnabled" format="boolean" />
+        <attr name="laserColor" format="color" />
+        <attr name="borderColor" format="color" />
+        <attr name="maskColor" format="color" />
+        <attr name="borderWidth" format="dimension" />
+        <attr name="borderLength" format="dimension" />
+        <attr name="roundedCorner" format="boolean" />
+        <attr name="cornerRadius" format="dimension" />
+        <attr name="squaredFinder" format="boolean" />
+        <attr name="borderAlpha" format="float" />
+        <attr name="finderOffset" format="dimension" />
+    </declare-styleable>
+    <declare-styleable name="LineBreakLayout">
+        <!--标签之间左右距离-->
+        <attr name="leftAndRightSpace" format="dimension" />
+        <!--标签行距-->
+        <attr name="rowSpace" format="dimension" />
+    </declare-styleable>
+    <declare-styleable name="MovieRecorderView">
+        <attr name="mo_width" format="integer"></attr>
+        <attr name="mo_height" format="integer"></attr>
+        <attr name="is_open_camera" format="boolean"></attr>
+        <attr name="record_max_time" format="integer"></attr>
+    </declare-styleable>
 </resources>

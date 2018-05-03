@@ -2,13 +2,15 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/goods_details_sku"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical">
 
     <RelativeLayout
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
-        android:background="@drawable/icon_top"
+        android:background="#ffffff"
         android:minHeight="?attr/actionBarSize">
 
         <RelativeLayout
@@ -23,11 +25,11 @@
                 android:paddingLeft="10dp">
                 <ImageView
                     android:id="@+id/topLeftBtn"
-                    android:layout_width="24dp"
-                    android:layout_height="24dp"
+                    android:layout_width="10dp"
+                    android:layout_height="20dp"
                     android:layout_centerVertical="true"
                     android:layout_marginRight="5dp"
-                    android:background="@drawable/goback"
+                    android:background="@mipmap/nav_left"
 
                     android:textColor="#FFFFFF"/>
             </LinearLayout>
@@ -35,7 +37,7 @@
                 android:id="@+id/et_search"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textColor="@color/white"
+                android:textColor="#666666"
                 android:textSize="18dp"
                 android:layout_centerInParent="true"
                 android:text="@string/add_address"
@@ -56,7 +58,10 @@
 
 
     </RelativeLayout>
-
+<View
+    android:background="#dddddd"
+    android:layout_width="match_parent"
+    android:layout_height="1dp"/>
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
@@ -67,13 +72,22 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/margin_normal"
-            android:paddingLeft="@dimen/margin_default"
             android:background="@color/white"
             android:orientation="vertical">
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/edit_height"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:orientation="horizontal">
+                <LinearLayout
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:orientation="vertical">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
                 android:orientation="horizontal">
                 <TextView
                     android:layout_weight="1"
@@ -96,7 +110,7 @@
             <include layout="@layout/in_divider"/>
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/edit_height"
+                android:layout_height="50dp"
                 android:orientation="horizontal">
                 <TextView
                     android:layout_weight="1"
@@ -120,7 +134,7 @@
             <LinearLayout
                 android:id="@+id/user_addr_llyCity"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/edit_height"
+                android:layout_height="50dp"
                 android:orientation="horizontal">
                 <TextView
                     android:layout_weight="1"
@@ -144,10 +158,60 @@
                     android:layout_gravity="center_vertical"
                     android:layout_marginRight="@dimen/margin_normal"/>
             </LinearLayout>
-            <include layout="@layout/in_divider"/>
+            </LinearLayout>
+                <View
+                    android:background="#dddddd"
+                    android:layout_width="1dp"
+                    android:layout_height="match_parent"/>
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+                    <LinearLayout
+                        android:id="@+id/ll_choose_connect"
+                        android:gravity="center"
+                        android:padding="10dp"
+                        android:orientation="vertical"
+                        android:layout_width="80dp"
+                        android:layout_height="100dp">
+                        <ImageView
+                            android:src="@mipmap/icon_address_avard"
+                            android:layout_width="45dp"
+                            android:layout_height="45dp" />
+                        <TextView
+                            android:text="选联系人"
+                            android:textColor="#444444"
+                            android:layout_marginTop="5dp"
+                            android:textSize="12sp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" />
+                    </LinearLayout>
+                    <View
+                        android:background="#dddddd"
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"/>
+                    <bc.juhao.com.ui.view.TextViewPlus
+                        android:id="@+id/tv_location"
+                        android:text="定位"
+                        android:textSize="12sp"
+                        android:textColor="#444444"
+                        android:drawableLeft="@mipmap/icon_address"
+                        app:left_width="15dp"
+                        android:drawablePadding="5dp"
+                        app:left_height="19dp"
+                        android:layout_gravity="center"
+                        android:layout_marginTop="15dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+                </LinearLayout>
+            </LinearLayout>
+            <View
+                android:background="#dddddd"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"/>
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/edit_height"
+                android:layout_height="50dp"
                 android:orientation="horizontal">
                 <TextView
                     android:layout_weight="1"
@@ -167,8 +231,9 @@
             </LinearLayout>
             <include layout="@layout/in_divider"/>
             <LinearLayout
+                android:visibility="gone"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/edit_height"
+                android:layout_height="50dp"
                 android:orientation="horizontal">
                 <CheckBox
                     android:id="@+id/select_cb"

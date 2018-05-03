@@ -9,6 +9,7 @@ import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Build;
+import android.os.Handler;
 import android.support.multidex.MultiDex;
 
 import com.baidu.mapapi.SDKInitializer;
@@ -20,13 +21,18 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.nostra13.universalimageloader.core.assist.ImageScaleType;
 import com.nostra13.universalimageloader.core.assist.QueueProcessingType;
+import com.nostra13.universalimageloader.core.display.SimpleBitmapDisplayer;
+import com.pgyersdk.crash.PgyCrashManager;
 
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.lang.reflect.Field;
+import java.util.ArrayList;
 
+import bc.juhao.com.R;
+import bc.juhao.com.bean.CommentBean;
 import bc.juhao.com.chat.DemoHelper;
 import bc.juhao.com.chat.cache.ACache;
 import bc.juhao.com.utils.ImageLoadProxy;
@@ -48,6 +54,16 @@ public class IssueApplication extends BaseApplication {
 
     public static JSONObject UserInfo;
     public static int unreadMsgCount;
+    private static ArrayList<CommentBean> commentList;
+    private static DisplayImageOptions options;
+
+    public static void setCommentList(ArrayList<CommentBean> commentList) {
+        IssueApplication.commentList = commentList;
+    }
+
+    public static ArrayList<CommentBean> getCommentList() {
+        return commentList;
+    }
 
     @Override
     public void onCreate() {
@@ -57,7 +73,7 @@ public class IssueApplication extends BaseApplication {
         mACache = ACache.get(this);
         mContext= getApplicationContext();
         super.mInstance = this;
-        SDKInitializer.initialize(getApplicationContext());
+        SDKInitializer.initialize(mContext);
         initImageLoader();
         ImageLoadProxy.initImageLoader(mContext);
 
@@ -65,10 +81,10 @@ public class IssueApplication extends BaseApplication {
         JPushInterface.init(this);     		// 初始化 JPush
 
         JAnalyticsInterface.init(mContext);
-        JAnalyticsInterface.initCrashHandler(mContext);
+//        JAnalyticsInterface.initCrashHandler(mContext);
 
         DemoHelper.getInstance().init(mContext);
-
+        PgyCrashManager.register(this);
 //        //SDK 初次注册成功后，开发者通过在自定义的 Receiver 里监听 Action - cn.jpush.android.intent.REGISTRATION 来获取对应的 RegistrationID。注册成功后，也可以通过此函数获取
 //        public static String getRegistrationID(Context context)
 
@@ -76,12 +92,12 @@ public class IssueApplication extends BaseApplication {
 
     }
 
-    public   DisplayImageOptions getImageLoaderOption() {
+    public  static   DisplayImageOptions getImageLoaderOption() {
         DisplayImageOptions defaultOptions = new DisplayImageOptions.Builder().bitmapConfig(Bitmap.Config.RGB_565)
                 .cacheInMemory(true).imageScaleType(ImageScaleType.EXACTLY)
                 .cacheOnDisk(true).build();
         ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(
-                this)
+                mContext)
                 .threadPoolSize(3)
 // default
                 .threadPriority(Thread.NORM_PRIORITY - 2)
@@ -99,7 +115,24 @@ public class IssueApplication extends BaseApplication {
                 .build();
 // Initialize ImageLoader with configuration.
         ImageLoader.getInstance().init(config);
-        return defaultOptions;
+
+        options = new DisplayImageOptions.Builder()
+                             .showImageOnLoading(R.drawable.bg_default) // resource or
+                                                                     // drawable
+                             .showImageForEmptyUri(R.drawable.bg_default) // resource or
+                                                                         // drawable
+                             .showImageOnFail(R.drawable.bg_default) // resource or
+                                .cacheInMemory(true)// drawable
+                             .resetViewBeforeLoading(false) // default
+                             .delayBeforeLoading(1000).cacheInMemory(true) // default
+                             .cacheOnDisk(true) // default
+                             .considerExifParams(false) // default
+                             .imageScaleType(ImageScaleType.IN_SAMPLE_POWER_OF_2) // default
+                             .bitmapConfig(Bitmap.Config.RGB_565) // default
+                             .displayer(new SimpleBitmapDisplayer()) // default
+                             .handler(new Handler()) // default
+                             .build();
+        return options;
     }
 
     @Override

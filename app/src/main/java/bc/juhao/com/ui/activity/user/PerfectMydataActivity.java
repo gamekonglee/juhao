@@ -1,6 +1,7 @@
 package bc.juhao.com.ui.activity.user;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -34,6 +35,7 @@ public class PerfectMydataActivity extends BaseActivity implements View.OnClickL
     @Override
     protected void initView() {
         setContentView(R.layout.activity_perfect_mydata);
+        setColor(this, Color.WHITE);
         head_rl = (RelativeLayout) findViewById(R.id.head_rl);
         name_rl = (RelativeLayout) findViewById(R.id.name_rl);
         sex_rl = (RelativeLayout) findViewById(R.id.sex_rl);
@@ -43,6 +45,8 @@ public class PerfectMydataActivity extends BaseActivity implements View.OnClickL
         email_rl = (RelativeLayout) findViewById(R.id.email_rl);
         update_password_rl = (RelativeLayout) findViewById(R.id.update_password_rl);
         save_rl = (RelativeLayout) findViewById(R.id.save_rl);
+        ImageView head_iv=findViewById(R.id.head_iv);
+        head_iv.setOnClickListener(this);
         head_rl.setOnClickListener(this);
         name_rl.setOnClickListener(this);
         birthday_rl.setOnClickListener(this);
@@ -65,6 +69,7 @@ public class PerfectMydataActivity extends BaseActivity implements View.OnClickL
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.head_rl:
+            case R.id.head_iv:
                 mController.setHead();
                 break;
             case R.id.name_rl:

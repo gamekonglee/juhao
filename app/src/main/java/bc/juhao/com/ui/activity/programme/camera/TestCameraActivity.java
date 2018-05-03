@@ -51,7 +51,7 @@ public class TestCameraActivity extends BaseActivity
     private Camera mCamera;
     private String mFileName;
     private OrientationEventListener mOrEventListener; // 设备方向监听器
-    private Boolean mCurrentOrientation; // 当前设备方向 横屏false,竖屏true
+    private Boolean mCurrentOrientation=false; // 当前设备方向 横屏false,竖屏true
 
     ImageView mThumbnail, mSelectProduct;
     Button mButton;

@@ -19,7 +19,9 @@ import android.text.Layout;
 import android.text.StaticLayout;
 import android.text.TextPaint;
 import android.util.Log;
+import android.view.Display;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.ScrollView;
 
@@ -29,8 +31,12 @@ import com.google.zxing.WriterException;
 import com.google.zxing.common.BitMatrix;
 import com.google.zxing.qrcode.QRCodeWriter;
 
+import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
@@ -292,7 +298,41 @@ public class ImageUtil {
         }
         return bitmap;
     }
+    /**
+     * 根据 路径 得到 file 得到 bitmap
+     * @param filePath
+     * @return
+     * @throws IOException
+     */
+    public static Bitmap decodeFile(String filePath) throws IOException{
+        Bitmap b = null;
+        int IMAGE_MAX_SIZE = 60000;
 
+        File f = new File(filePath);
+        if (f == null){
+            return null;
+        }
+        //Decode image size
+        BitmapFactory.Options o = new BitmapFactory.Options();
+        o.inJustDecodeBounds = true;
+
+        FileInputStream fis = new FileInputStream(f);
+        BitmapFactory.decodeStream(fis, null, o);
+        fis.close();
+
+        int scale = 1;
+        if (o.outHeight > IMAGE_MAX_SIZE || o.outWidth > IMAGE_MAX_SIZE) {
+            scale = (int) Math.pow(2, (int) Math.round(Math.log(IMAGE_MAX_SIZE / (double) Math.max(o.outHeight, o.outWidth)) / Math.log(0.5)));
+        }
+
+        //Decode with inSampleSize
+        BitmapFactory.Options o2 = new BitmapFactory.Options();
+        o2.inSampleSize = scale;
+        fis = new FileInputStream(f);
+        b = BitmapFactory.decodeStream(fis, null, o2);
+        fis.close();
+        return b;
+    }
 
     //    /**传递进来的源图片*/
     //    private Bitmap source;
@@ -376,6 +416,23 @@ public class ImageUtil {
         return newBitmap;
     }
 
+    /**
+     * Bitmap转换成byte[]并且进行压缩,压缩到不大于maxkb
+     * @param bitmap
+     * @param IMAGE_SIZE
+     * @return
+     */
+    public static byte[] bitmap2Bytes(Bitmap bitmap, int maxkb) {
+        ByteArrayOutputStream output = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.PNG, 100, output);
+        int options = 100;
+        while (output.toByteArray().length/1024 > maxkb&& options != 10) {
+            output.reset(); //清空output
+            bitmap.compress(Bitmap.CompressFormat.JPEG, options, output);//这里压缩options%，把压缩后的数据存放到output中
+            options -= 10;
+        }
+        return output.toByteArray();
+    }
     public static byte[] getBitmapByte(Bitmap bitmap) {
         ByteArrayOutputStream out = new ByteArrayOutputStream();
         bitmap.compress(Bitmap.CompressFormat.JPEG, 100, out);
@@ -485,7 +542,7 @@ public class ImageUtil {
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         image.compress(Bitmap.CompressFormat.JPEG, 80, baos);//质量压缩方法，这里100表示不压缩，把压缩后的数据存放到baos中
         int options = 100;
-        while (baos.toByteArray().length / 1024 > 100) {  //循环判断如果压缩后图片是否大于100kb,大于继续压缩
+        while (baos.toByteArray().length / 1024 > 18000000) {  //循环判断如果压缩后图片是否大于100kb,大于继续压缩
             baos.reset();//重置baos即清空baos
             image.compress(Bitmap.CompressFormat.JPEG, options, baos);//这里压缩options%，把压缩后的数据存放到baos中
             options -= 10;//每次都减少10
@@ -576,6 +633,79 @@ public class ImageUtil {
             }
         }
         return image;
+    }
+
+    //absolutePath是图片绝对路径
+    public static Bitmap adjustImage(Activity activity,String absolutePath) {
+        BitmapFactory.Options opt = new BitmapFactory.Options();
+        // 这个isjustdecodebounds很重要
+        opt.inJustDecodeBounds = true;
+        Bitmap bm = BitmapFactory.decodeFile(absolutePath, opt);
+
+        // 获取到这个图片的原始宽度和高度
+        int picWidth = opt.outWidth;
+        int picHeight = opt.outHeight;
+
+        // 获取屏的宽度和高度
+        WindowManager windowManager = activity.getWindowManager();
+        Display display = windowManager.getDefaultDisplay();
+        int screenWidth = display.getWidth();
+        int screenHeight = display.getHeight();
+
+        // isSampleSize是表示对图片的缩放程度，比如值为2图片的宽度和高度都变为以前的1/2
+        opt.inSampleSize = 1;
+        // 根据屏的大小和图片大小计算出缩放比例
+        if (picWidth > picHeight) {
+            if (picWidth > screenWidth)
+                opt.inSampleSize = picWidth / screenWidth;
+        } else {
+            if (picHeight > screenHeight)
+
+                opt.inSampleSize = picHeight / screenHeight;
+        }
+
+        // 这次再真正地生成一个有像素的，经过缩放了的bitmap
+        opt.inJustDecodeBounds = false;
+        bm= BitmapFactory.decodeFile(absolutePath, opt);
+        return bm;
+        // 用imageview显示出bitmap
+    }
+
+    public static Bitmap getBitmapFromView(View v) {
+        if (v == null) {
+            return null;
+        }
+        v.setDrawingCacheEnabled(true);
+        v.buildDrawingCache();
+        Bitmap bitmap = v.getDrawingCache();
+        return bitmap;
+    }
+    public static Bitmap loadBitmapFromView(View v) {
+        if (v == null) {
+            return null;
+        }
+        Bitmap screenshot;
+        screenshot = Bitmap.createBitmap(v.getWidth(), v.getHeight(), Bitmap.Config.ARGB_4444);
+        Canvas canvas = new Canvas(screenshot);
+        canvas.translate(-v.getScrollX(), -v.getScrollY());//我们在用滑动View获得它的Bitmap时候，获得的是整个View的区域（包括隐藏的），如果想得到当前区域，需要重新定位到当前可显示的区域
+        v.draw(canvas);// 将 view 画到画布上
+        return screenshot;
+    }
+
+    public static Bitmap createThumbBitmap(Bitmap bm,int newWidth,int newHeight) {
+
+        // 获得图片的宽高
+        int width = bm.getWidth();
+        int height = bm.getHeight();
+        // 计算缩放比例
+        float scaleWidth = ((float) newWidth) / width;
+        float scaleHeight = ((float) newHeight) / height;
+        // 取得想要缩放的matrix参数
+        Matrix matrix = new Matrix();
+        matrix.postScale(scaleWidth, scaleHeight);
+        // 得到新的图片
+        Bitmap newbm = Bitmap.createBitmap(bm, 0, 0, width, height, matrix, true);
+        return newbm;
     }
 
 }

@@ -1,6 +1,7 @@
 package bc.juhao.com.ui.activity.user;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
 
@@ -12,7 +13,7 @@ import bc.juhao.com.ui.fragment.ChatLFragment;
 import bocang.utils.AppUtils;
 import bocang.view.BaseActivity;
 
-public class ChatActivity extends BaseActivity {
+public class ChatActivity extends bc.juhao.com.common.BaseActivity {
     public static ChatActivity activityInstance;
     private ChatLFragment chatFragment;
     String toChatUsername;
@@ -21,6 +22,7 @@ public class ChatActivity extends BaseActivity {
     protected void onCreate(Bundle arg0) {
         super.onCreate(arg0);
         setContentView(R.layout.activity_chat);
+        setColor(this, getResources().getColor(R.color.color_chat));
         activityInstance = this;
         //聊天人或群id
         toChatUsername = getIntent().getExtras().getString(EaseConstant.EXTRA_USER_ID);
@@ -51,11 +53,6 @@ public class ChatActivity extends BaseActivity {
 
     @Override
     protected void initData() {
-
-    }
-
-    @Override
-    protected void onViewClick(View v) {
 
     }
 

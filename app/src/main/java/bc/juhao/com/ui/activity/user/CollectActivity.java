@@ -1,5 +1,6 @@
 package bc.juhao.com.ui.activity.user;
 
+import android.graphics.Color;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -33,6 +34,7 @@ public class CollectActivity extends BaseActivity {
     @Override
     protected void initView() {
         setContentView(R.layout.activity_collect_product);
+        setColor(this, Color.WHITE);
         iv_edit = getViewAndClick(R.id.iv_edit);
         checkAll = getViewAndClick(R.id.checkAll);
         delete_bt = getViewAndClick(R.id.delete_bt);

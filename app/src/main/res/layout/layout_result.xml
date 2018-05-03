@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    android:orientation="vertical"
+    android:background="#ffffff"
+    android:gravity="center_horizontal"
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+<RelativeLayout
+    android:layout_width="match_parent"
+    android:layout_height="50dp">
+    <RelativeLayout
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:onClick="goBack">
+        <ImageView
+            android:src="@mipmap/nav_left"
+            android:layout_width="10dp"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="15dp"
+            android:layout_height="20dp" />
+
+    </RelativeLayout>
+    <TextView
+        android:text="订单支付"
+        android:textSize="15sp"
+        android:textColor="#444444"
+        android:layout_centerInParent="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+</RelativeLayout>
+    <View
+        android:background="#dddddd"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"/>
+<ImageView
+    android:layout_marginTop="100dp"
+    android:src="@mipmap/icon_pay_success"
+    android:layout_width="100dp"
+    android:layout_height="100dp" />
+    <TextView
+        android:text="支付成功"
+        android:textColor="#444444"
+        android:textSize="15sp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+</LinearLayout>

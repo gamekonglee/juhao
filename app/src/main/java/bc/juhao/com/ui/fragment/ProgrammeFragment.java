@@ -30,6 +30,7 @@ import bc.juhao.com.R;
 import bc.juhao.com.bean.Classify;
 import bc.juhao.com.bean.Programme;
 import bc.juhao.com.common.BaseFragment;
+import bc.juhao.com.cons.Constance;
 import bc.juhao.com.controller.programme.ProgrammeController;
 import bc.juhao.com.listener.ILinearLayoutListener;
 import bc.juhao.com.ui.activity.MainActivity;
@@ -37,6 +38,7 @@ import bc.juhao.com.ui.activity.programme.DiyActivity;
 import bc.juhao.com.ui.adapter.GridviewAdapter;
 import bc.juhao.com.ui.view.MyLinearLayout;
 import bc.juhao.com.ui.view.SearchNestedScrollParent;
+import bc.juhao.com.utils.MyShare;
 import bc.juhao.com.utils.UIUtils;
 import bocang.utils.AppUtils;
 import bocang.utils.IntentUtil;
@@ -89,7 +91,8 @@ public class ProgrammeFragment extends BaseFragment implements View.OnClickListe
     @Override
     public void onStart() {
         super.onStart();
-        if(!isToken()){
+        String token = MyShare.get(getActivity()).getString(Constance.TOKEN);
+        if(!AppUtils.isEmpty(token)){
             if(AppUtils.isEmpty(mController.mSchemes)){
                 mController.page=1;
                 mController.sendFangAnList();
@@ -101,7 +104,9 @@ public class ProgrammeFragment extends BaseFragment implements View.OnClickListe
         }
 
     }
-
+    public void goBack(View v){
+        goBack(v);
+    }
     @Override
     protected void initViewData() {
         String[] styleArrs = UIUtils.getStringArr(R.array.style);
@@ -176,6 +181,10 @@ public class ProgrammeFragment extends BaseFragment implements View.OnClickListe
                 popupWindow.showAtLocation(main_fl, Gravity.RIGHT, 0, 0);
                 break;
             case R.id.my_works_ll://我的作品
+                if(isToken()){
+                square_ll.performClick();
+                return;
+                }
                 mProgrammeType=1;
                 selectProgrammeType();
                 mController.getRefershData();

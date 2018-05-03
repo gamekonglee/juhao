@@ -115,7 +115,7 @@ public class LeadPageActivity extends BaseActivity implements View.OnClickListen
     @Override
     public void onClick(View v) {
         MyShare.get(this).putBoolean(Constance.ISFIRSTISTART, true);
-        IntentUtil.startActivity(this, LoginActivity.class, true);
+        IntentUtil.startActivity(this, MainActivity.class, true);
     }
 
     @Override
@@ -175,7 +175,7 @@ public class LeadPageActivity extends BaseActivity implements View.OnClickListen
     //跳转页面
     public void startbutton(View v) {
         Intent intent = new Intent();
-        intent.setClass(LeadPageActivity.this,LoginActivity.class);
+        intent.setClass(LeadPageActivity.this,MainActivity.class);
         startActivity(intent);
         this.finish();
     }

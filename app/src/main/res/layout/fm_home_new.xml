@@ -5,21 +5,17 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="#ffffff"
     android:focusable="true"
-    android:paddingTop="20dp"
     android:focusableInTouchMode="true"
     android:orientation="vertical">
 <View
     android:background="#ffffff"
     android:layout_width="match_parent"
-    android:layout_marginTop="-20dp"
     android:layout_height="20dp"/>
 
     <com.lib.common.hxp.view.PullToRefreshLayout
         android:id="@+id/refresh_view"
-        android:layout_marginTop="?attr/actionBarSize"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-
         android:layout_alignParentTop="true"
         android:layout_alignParentStart="true"
         android:layout_alignParentLeft="true">
@@ -454,8 +450,6 @@
                             android:src="@mipmap/home_news"/>
                     </LinearLayout>
 
-
-
                     <TextSwitcher
                         android:id="@+id/textSwitcher_title"
                         android:layout_width="match_parent"
@@ -525,6 +519,10 @@
                             app:suffixGravity="center"
                             app:suffixTextColor="#000000"
                             app:suffixTextSize="15sp"
+                            app:suffixDay="天"
+                            app:suffixHour="时"
+                            app:suffixMinute="分"
+                            app:suffixSecond="秒"
                             app:timeTextColor="#000000"
                             app:timeTextSize="15sp" />
 
@@ -589,7 +587,7 @@
                 <LinearLayout
                     android:background="#ffffff"
                     android:layout_width="match_parent"
-                    android:layout_height="331dp"
+                    android:layout_height="550dp"
                     android:orientation="vertical">
                     <View
                         android:background="#f9f9f9"
@@ -1317,6 +1315,7 @@
 
         <android.support.v7.widget.Toolbar
             android:id="@+id/toolbar"
+            android:visibility="gone"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             android:background="#ffffff"

@@ -12,6 +12,7 @@
       android:layout_marginLeft="10dp"
       >
         <LinearLayout
+            android:visibility="gone"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
@@ -43,7 +44,13 @@
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:gravity="center"
+                android:visibility="gone"
                 android:text="电  话:"/>
+            <ImageView
+                android:src="@mipmap/my_fws_dh_64"
+                android:layout_width="35dp"
+                android:layout_gravity="center_vertical"
+                android:layout_height="35dp" />
             <TextView
                 android:id="@+id/phone_tv"
                 android:layout_width="0dp"
@@ -56,6 +63,7 @@
             <ImageView
                 android:layout_width="25dp"
                 android:layout_height="25dp"
+                android:visibility="gone"
                 android:layout_gravity="center_vertical"
                 android:src="@drawable/icon_tel"/>
         </LinearLayout>
@@ -72,7 +80,13 @@
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:gravity="center"
+                android:visibility="gone"
                 android:text="Q     Q:"/>
+            <ImageView
+                android:src="@mipmap/my_fws_qq_52"
+                android:layout_width="35dp"
+                android:layout_gravity="center_vertical"
+                android:layout_height="35dp" />
             <TextView
                 android:id="@+id/qq_tv"
                 android:layout_width="0dp"
@@ -85,6 +99,7 @@
             <ImageView
                 android:layout_width="25dp"
                 android:layout_height="25dp"
+                android:visibility="gone"
                 android:layout_gravity="center_vertical"
                 android:src="@drawable/icon_qq"/>
         </LinearLayout>
@@ -101,7 +116,13 @@
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:gravity="center"
+                android:visibility="gone"
                 android:text="微  信:"/>
+            <ImageView
+                android:src="@mipmap/my_fws_qq_28"
+                android:layout_width="35dp"
+                android:layout_gravity="center_vertical"
+                android:layout_height="35dp" />
             <TextView
                 android:id="@+id/weixin_tv"
                 android:layout_width="0dp"

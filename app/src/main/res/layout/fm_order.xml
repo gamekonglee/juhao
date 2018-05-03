@@ -13,23 +13,6 @@
         android:textSize="20sp"
         android:visibility="gone"
         />
-    <!--第一次没有数据时显示空-->
-    <include
-        android:id="@+id/null_net"
-        layout="@layout/empty_page_no_wifi"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:visibility="gone"
-
-        />
-
-    <include
-        android:id="@+id/null_view"
-        layout="@layout/empty_page_no_recoder"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:visibility="gone"
-        />
 
     <FrameLayout
         android:layout_width="match_parent"
@@ -48,21 +31,69 @@
                 android:layout_height="match_parent"
                 android:scrollbars="none">
                 <LinearLayout
+
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical">
+                    <!--第一次没有数据时显示空-->
+                    <include
+                        android:id="@+id/null_net"
+                        layout="@layout/empty_page_no_wifi"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:visibility="gone"
+
+                        />
+
+                    <include
+                        android:id="@+id/null_view"
+                        layout="@layout/empty_page_no_order"
+                        android:layout_width="match_parent"
+                        android:layout_height="300dp"
+                        android:visibility="gone"
+                        />
                     <com.lib.common.hxp.view.ListViewForScrollView
                         android:id="@+id/order_sv"
                         android:layout_width="match_parent"
-                        android:layout_height="200dp"
+                        android:layout_height="250dp"
+                        android:layout_marginTop="15dp"
+                        android:layout_marginBottom="15dp"
                         android:horizontalSpacing="5dp"
-                        android:paddingLeft="10dp"
-                        android:paddingRight="10dp"
                         android:paddingTop="10dp"
-                        android:verticalSpacing="15dp"
-                        android:dividerHeight="0dip"
+                        android:verticalSpacing="10dp"
+                        android:dividerHeight="10dip"
                         android:listSelector="@android:color/transparent"
                         android:background="@android:color/transparent"/>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:gravity="center"
+                        android:background="#ffffff"
+                        android:orientation="horizontal">
+                        <ImageView
+                            android:src="@mipmap/my_hot"
+                            android:layout_width="15dp"
+                            android:layout_height="20dp" />
+                        <TextView
+                            android:text="大家都在买"
+                            android:textColor="#555555"
+                            android:textSize="14sp"
+                            android:layout_marginLeft="15dp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" />
+                    </LinearLayout>
+
+                    <com.lib.common.hxp.view.GridViewForScrollView
+                        android:id="@+id/priductGridView"
+                        android:layout_width="match_parent"
+                        android:layout_height="200dp"
+                        android:horizontalSpacing="15dp"
+                        android:numColumns="2"
+                        android:paddingLeft="10dp"
+                        android:paddingRight="10dp"
+                        android:paddingTop="15dp"
+                        android:verticalSpacing="15dp"
+                        android:visibility="visible"/>
                 </LinearLayout>
             </com.lib.common.hxp.view.PullableScrollView>
             <include layout="@layout/load_more" />

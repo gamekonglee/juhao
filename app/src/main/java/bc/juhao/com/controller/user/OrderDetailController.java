@@ -1,10 +1,15 @@
 package bc.juhao.com.controller.user;
 
+import android.Manifest;
+import android.app.Dialog;
 import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.Handler;
 import android.os.Message;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -12,6 +17,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -31,11 +37,15 @@ import com.hyphenate.easeui.domain.EaseUser;
 import com.hyphenate.exceptions.HyphenateException;
 import com.hyphenate.util.NetUtils;
 import com.lib.common.hxp.view.ListViewForScrollView;
+import com.tencent.mm.opensdk.modelpay.PayReq;
+import com.tencent.mm.opensdk.openapi.IWXAPI;
+import com.tencent.mm.opensdk.openapi.WXAPIFactory;
 
 import java.text.DecimalFormat;
 
 import bc.juhao.com.R;
 import bc.juhao.com.bean.PayResult;
+import bc.juhao.com.bean.PrepayIdInfo;
 import bc.juhao.com.chat.DemoHelper;
 import bc.juhao.com.cons.Constance;
 import bc.juhao.com.cons.NetWorkConst;
@@ -53,6 +63,7 @@ import bc.juhao.com.ui.view.ShowDialog;
 import bc.juhao.com.utils.DateUtils;
 import bc.juhao.com.utils.MyShare;
 import bc.juhao.com.utils.UIUtils;
+import bc.juhao.com.utils.WXpayUtils;
 import bocang.utils.AppDialog;
 import bocang.utils.AppUtils;
 import bocang.utils.MyLog;
@@ -66,6 +77,7 @@ import static bc.juhao.com.cons.Constance.sn;
  * @description :
  */
 public class OrderDetailController extends BaseController implements INetworkCallBack, OnItemClickListener {
+    public static final int CALL_PHONE_REQUEST_CODE = 400;
     private OrderDetailActivity mView;
     private TextView title_tv, consignee_tv, phone_tv, address_tv, do_tv, do02_tv, do03_tv, order_code_tv, order_time_tv, chat_buy_tv,consigment_tv;
     private TextView go_state_tv, total_tv, old_money, new_money, remark_tv, update_money_tv,order_remark_tv,log_sv_tv,log_remark_tv,consignment_time_title_tv;
@@ -97,19 +109,38 @@ public class OrderDetailController extends BaseController implements INetworkCal
     private InputMethodManager imm;
     private float mProductDiscount=0;//返回产品打折范围
     private boolean isJuhao;
+    private int payType;
+    private String mShop_mobile;
+    private TextView tv_call;
 
 
     public OrderDetailController(OrderDetailActivity v) {
         mView = v;
         initView();
+//        bocang.json.JSONObject jsonObject=IssueApplication.mUserObject;
+//        Log.e("userObj",jsonObject.toString());
         if(AppUtils.isEmpty(mView.mOrderSn)){
             initViewData();
             sendOrderDetail(mView.mOrderObject.getString(sn));
         }else{
             sendOrderDetail(mView.mOrderSn);
         }
-
+//        sendShopMobile();
     }
+
+//    private void sendShopMobile() {
+//        mNetWork.getShopMobile(new INetworkCallBack() {
+//            @Override
+//            public void onSuccessListener(String requestCode, bocang.json.JSONObject ans) {
+//
+//            }
+//
+//            @Override
+//            public void onFailureListener(String requestCode, bocang.json.JSONObject ans) {
+//
+//            }
+//        });
+//    }
 
     private void initView() {
         title_tv = (TextView) mView.findViewById(R.id.title_tv);
@@ -138,10 +169,24 @@ public class OrderDetailController extends BaseController implements INetworkCal
         log_remark_tv = (TextView) mView.findViewById(R.id.log_remark_tv);
         consignment_time_title_tv = (TextView) mView.findViewById(R.id.consignment_time_title_tv);
         log_rl = (RelativeLayout) mView.findViewById(R.id.log_rl);
-
+        tv_call = mView.findViewById(R.id.tv_call);
+        tv_call.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(TextUtils.isEmpty(mShop_mobile))return;
+                if (ContextCompat.checkSelfPermission(mView, Manifest.permission.CALL_PHONE)
+                        != PackageManager.PERMISSION_GRANTED) {
+                    //申请WRITE_EXTERNAL_STORAGE权限
+                    ActivityCompat.requestPermissions(mView, new String[]{Manifest.permission.CALL_PHONE},
+                            CALL_PHONE_REQUEST_CODE);
+                }else {
+                UIUtils.diallPhone(mView,mShop_mobile);
+                }
+            }
+        });
         imm02 = (InputMethodManager) mView.getSystemService(Context.INPUT_METHOD_SERVICE);
         //拓展窗口
-        mAlertViewExt02 = new AlertView("提示", "请输入价格折扣", "取消", null, new String[]{"完成"}, mView, AlertView.Style.Alert, this);
+        mAlertViewExt02 = new AlertView("提示", "请输入价格折扣(不能低于"+Float.parseFloat(mView.mOrderObject.getString(Constance.discount))*10+"折)！", "取消", null, new String[]{"完成"}, mView, AlertView.Style.Alert, this);
         ViewGroup extView02 = (ViewGroup) LayoutInflater.from(mView).inflate(R.layout.alertext_form, null);
         etName02 = (EditText) extView02.findViewById(R.id.etName);
         etName02.setOnFocusChangeListener(new View.OnFocusChangeListener() {
@@ -157,7 +202,7 @@ public class OrderDetailController extends BaseController implements INetworkCal
 
         imm = (InputMethodManager) mView.getSystemService(Context.INPUT_METHOD_SERVICE);
         //拓展窗口
-        mAlertViewExt = new AlertView("提示", "请输入价格折扣(不能低于8折)！", "取消", null, new String[]{"完成"}, mView, AlertView.Style.Alert, this);
+        mAlertViewExt = new AlertView("提示", "请输入价格折扣(不能低于"+Float.parseFloat(mView.mOrderObject.getString(Constance.discount))*10+"折)！", "取消", null, new String[]{"完成"}, mView, AlertView.Style.Alert, this);
         ViewGroup extView = (ViewGroup) LayoutInflater.from(mView).inflate(R.layout.alertext_form, null);
         etName = (EditText) extView.findViewById(R.id.etName);
         etName.setOnFocusChangeListener(new View.OnFocusChangeListener() {
@@ -178,7 +223,7 @@ public class OrderDetailController extends BaseController implements INetworkCal
         if( mView.mStatus==-1){
             mView.mStatus = mView.mOrderObject.getInteger(Constance.status);
         }
-
+        mShop_mobile = mView.mOrderObject.getString(Constance.shop_mobile);
 
         mLevel= IssueApplication.mUserObject.getInt(Constance.level);
         getState(mView.mStatus);
@@ -206,13 +251,14 @@ public class OrderDetailController extends BaseController implements INetworkCal
                 }
             }
         }
+        mOrderId = mView.mOrderObject.getInteger(Constance.id);
         isJuhao = false;
         if(!AppUtils.isEmpty(group_buy)&&group_buy.size()>0&&!group_buy.equals("0")||group_buyint==212){
             isJuhao =true;
         }
         if (AppUtils.isEmpty(mProductArray))
             return;
-        mAGvAdapter = new OrderGvAdapter(mView, mProductArray,mOrderLevel, state);
+        mAGvAdapter = new OrderGvAdapter(mView, mProductArray,mOrderLevel, state,mOrderId+"");
         order_detail_lv.setAdapter(mAGvAdapter);
 
         mAGvAdapter.setUpdateProductPriceListener(new IUpdateProductPriceListener() {
@@ -229,6 +275,19 @@ public class OrderDetailController extends BaseController implements INetworkCal
                 mUpdateorderSn = order_code;
                 mDiscount = Float.parseFloat(discount);
                 mProductPosition = position;
+                mAlertViewExt02 = new AlertView("提示", "请输入价格折扣(不能低于"+mProductDiscount*10+"折)！", "取消", null, new String[]{"完成"}, mView, AlertView.Style.Alert, OrderDetailController.this);
+                ViewGroup extView02 = (ViewGroup) LayoutInflater.from(mView).inflate(R.layout.alertext_form, null);
+                etName02 = (EditText) extView02.findViewById(R.id.etName);
+                etName02.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+                    @Override
+                    public void onFocusChange(View view, boolean focus) {
+                        //输入框出来则往上移动
+                        boolean isOpen = imm02.isActive();
+                        mAlertViewExt02.setMarginBottom(isOpen && focus ? 120 : 0);
+                        System.out.println(isOpen);
+                    }
+                });
+                mAlertViewExt02.addExtView(extView02);
                 mAlertViewExt02.show();
             }
         });
@@ -242,7 +301,7 @@ public class OrderDetailController extends BaseController implements INetworkCal
                 mView.startActivity(intent);
             }
         });
-        mOrderId = mView.mOrderObject.getInteger(Constance.id);
+
         int tatalNum = 0;
         String total = mView.mOrderObject.getString(Constance.total);
         for (int i = 0; i < mProductArray.size(); i++) {
@@ -265,7 +324,7 @@ public class OrderDetailController extends BaseController implements INetworkCal
         String user_name = mView.mOrderObject.getString(Constance.user_name);
         mOrderLevel= mView.mOrderObject.getInteger(Constance.level);
         String levelValue = "";
-
+        int is_discount=mView.mOrderObject.getInteger(Constance.is_discount);
 
         if (mOrderLevel == 0) {
             levelValue = "一级";
@@ -282,7 +341,7 @@ public class OrderDetailController extends BaseController implements INetworkCal
         if (mLevel == 0) {
             levelValue = levelValue + "(" + user_name + ")";
             remark_tv.setText(levelValue);
-            if (mLevel != mOrderLevel && mView.mStatus == 0) {
+            if ( mView.mStatus == 0) {
                 remark_tv.setVisibility(View.VISIBLE);
                 mIsUpdate=true;
                 if (isJuhao) {
@@ -293,8 +352,8 @@ public class OrderDetailController extends BaseController implements INetworkCal
                 if (mView.mStatus == 0) {
                     do_tv.setVisibility(View.GONE);
                     do02_tv.setVisibility(View.GONE);
-                    do03_tv.setVisibility(View.GONE);
-                    chat_buy_tv.setVisibility(View.VISIBLE);
+//                    do03_tv.setVisibility(View.GONE);
+//                    chat_buy_tv.setVisibility(View.VISIBLE);
                 }
 
             } else {
@@ -359,7 +418,7 @@ public class OrderDetailController extends BaseController implements INetworkCal
     private void getState(int type) {
         do_tv.setVisibility(View.GONE);
         do02_tv.setVisibility(View.GONE);
-        do03_tv.setVisibility(View.GONE);
+//        do03_tv.setVisibility(View.GONE);
         consigment_tv.setVisibility(View.GONE);
         log_rl.setVisibility(View.GONE);
         consignment_time_title_tv.setVisibility(View.GONE);
@@ -374,7 +433,7 @@ public class OrderDetailController extends BaseController implements INetworkCal
                 go_state_tv.setText("等待买家付款");
                 go_state_iv.setImageResource(R.drawable.wait_pay);
                 order_payment_ll.setVisibility(View.GONE);
-                payment_ll.setVisibility(View.VISIBLE);
+//                payment_ll.setVisibility(View.VISIBLE);
                 break;
             case 1:
                 do_tv.setVisibility(View.VISIBLE);
@@ -463,10 +522,9 @@ public class OrderDetailController extends BaseController implements INetworkCal
                 //                IntentUtil.startActivity(mView, MerchantInfoActivity.class, false);
             }
         } else if (mView.mStatus == 0) {
-            mView.setShowDialog(true);
-            mView.setShowDialog("正在付款中!");
-            mView.showLoading();
-            sendPayment(mOrderId + "", "alipay.app");
+            showPaySelectDialog(""+mOrderId);
+
+
         } else if (mView.mStatus == 2) {
             //TODO 确认收货
             sendConfirmReceipt(mOrderId+"");
@@ -494,7 +552,57 @@ public class OrderDetailController extends BaseController implements INetworkCal
     }
 
 
+    /***
+     * 选择支付方式
+     * @param orderId
+     */
+    private void showPaySelectDialog(final String orderId) {
+        final Dialog dialog=UIUtils.showBottomInDialog(mView,R.layout.dialog_pay_select,UIUtils.dip2PX(200));
+        LinearLayout ll_alipay=dialog.findViewById(R.id.ll_alipay);
+        LinearLayout ll_wx=dialog.findViewById(R.id.ll_wxpay);
+        final ImageView iv_alipay=dialog.findViewById(R.id.iv_alipay);
+        final ImageView iv_wx=dialog.findViewById(R.id.iv_wxpay);
+        Button btn_submit=dialog.findViewById(R.id.btn_submit);
+        payType = 0;
+        ll_alipay.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(payType ==0){
+                    return;
+                }
+                payType =0;
+                iv_alipay.setImageResource(R.mipmap.shopping_icon_sel);
+                iv_wx.setImageResource(R.mipmap.shopping_icon_nor);
+            }
+        });
+        ll_wx.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(payType ==1){
+                    return;
+                }
+                payType =1;
+                iv_alipay.setImageResource(R.mipmap.shopping_icon_nor);
+                iv_wx.setImageResource(R.mipmap.shopping_icon_sel);
+            }
+        });
+        btn_submit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mView.setShowDialog(true);
+                mView.setShowDialog("正在付款中!");
+                mView.showLoading();
+                dialog.dismiss();
+                if(payType ==0){
+                    sendPayment(orderId, "alipay.app");
+                }else {
+                    sendPayment(orderId, "wxpay.app");
+                }
+            }
+        });
 
+
+    }
     /**
      * 确认收货
      */
@@ -583,10 +691,40 @@ public class OrderDetailController extends BaseController implements INetworkCal
         mNetWork.sendPayment(order, code, new INetworkCallBack02() {
             @Override
             public void onSuccessListener(String requestCode, JSONObject ans) {
-                String notify_url = ans.getString(Constance.alipay);
-                if (AppUtils.isEmpty(notify_url))
-                    return;
-                SubmitAliPay(notify_url);
+                if(payType==0){
+                    String notify_url = ans.getString(Constance.alipay);
+                    if (AppUtils.isEmpty(notify_url))
+                        return;
+                    SubmitAliPay(notify_url);
+                } else {
+                    com.alibaba.fastjson.JSONObject wxpayObject = ans.getJSONObject(Constance.wxpay);
+                    String appid = wxpayObject.getString("appid");
+                    String mch_id = wxpayObject.getString("mch_id");
+                    String nonce_str = wxpayObject.getString("nonce_str");
+                    String packages = wxpayObject.getString("packages");
+                    String prepay_id = wxpayObject.getString("prepay_id");
+                    String sign = wxpayObject.getString("sign");
+                    String timestamp = wxpayObject.getString("timestamp");
+                    PayReq request = new PayReq();
+                    request.appId=appid;
+                    request.partnerId=mch_id;
+                    request.prepayId=prepay_id;
+                    request.packageValue=packages;
+                    request.nonceStr=nonce_str;
+                    request.timeStamp=timestamp;
+                    request.sign=sign;
+//                    PrepayIdInfo bean = new PrepayIdInfo();
+//                    bean.setAppid(appid);
+//                    bean.setMch_id(mch_id);
+//                    bean.setNonce_str(nonce_str);
+//                    bean.setPrepay_id(prepay_id);
+//                    bean.setSign(sign);
+//                    bean.setTimestamp(timestamp);
+//                    WXpayUtils.mContext = mView;
+//                    WXpayUtils.Pay(bean, bean.getPrepay_id());
+                    IWXAPI iwxapi= WXAPIFactory.createWXAPI(mView,appid);
+                    iwxapi.sendReq(request);
+                }
             }
 
             @Override
@@ -1011,12 +1149,13 @@ public class OrderDetailController extends BaseController implements INetworkCal
          * @param goods_id
          * @param goods_amount
          */
-        private void updateProductPrice(String orderId, String goods_id, String goods_amount) {
+        private void updateProductPrice(final String orderId, String goods_id, String goods_amount) {
             mNetWork.updateProductPrice(orderId, goods_id, goods_amount, new INetworkCallBack02() {
                 @Override
                 public void onSuccessListener(String requestCode, JSONObject ans) {
                     mView.hideLoading();
-                    updatePrice(mUpdateorderSn, mTotalProductMoney, mDiscount + "");
+                    sendOrderList(orderId);
+//                    updatePrice(mUpdateorderSn, mTotalProductMoney, mDiscount + "");
                 }
 
                 @Override
@@ -1031,5 +1170,11 @@ public class OrderDetailController extends BaseController implements INetworkCal
     public void setUpdateMoney(){
         mUpdateorderSn = order_code;
         mAlertViewExt.show();
+    }
+
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+        if(requestCode==CALL_PHONE_REQUEST_CODE&&grantResults[0]==0){
+            UIUtils.diallPhone(mView,mShop_mobile);
+        }
     }
 }

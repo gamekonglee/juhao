@@ -1,19 +1,29 @@
 package bc.juhao.com.ui.activity.buy;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.view.View;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
+
 import bc.juhao.com.R;
+import bc.juhao.com.bean.PayResult;
 import bc.juhao.com.cons.Constance;
 import bc.juhao.com.controller.buy.ConfirmOrderController;
 import bc.juhao.com.ui.activity.EditValueActivity;
+import bc.juhao.com.ui.activity.user.OrderDetailActivity;
 import bc.juhao.com.ui.view.ShowDialog;
 import bocang.json.JSONArray;
 import bocang.json.JSONObject;
+import bocang.utils.MyToast;
 import bocang.view.BaseActivity;
 
 /**
@@ -30,6 +40,8 @@ public class ConfirmOrderActivity extends BaseActivity implements RadioGroup.OnC
     private RelativeLayout logistic_type_rl;
     public JSONObject mAddressObject;
     private ImageView add_remark_iv;
+    private CheckBox appliay_cb;
+    private CheckBox weixin_cb;
 
     @Override
     protected void InitDataView() {
@@ -43,7 +55,8 @@ public class ConfirmOrderActivity extends BaseActivity implements RadioGroup.OnC
 
     @Override
     protected void initView() {
-        setContentView(R.layout.activity_confirm_order);
+        setContentView(R.layout.activity_confirm_order_new);
+        setColor(this, Color.WHITE);
         address_rl = getViewAndClick(R.id.address_rl);
         settle_tv = getViewAndClick(R.id.settle_tv);
         money_tv = (TextView) findViewById(R.id.summoney_tv);
@@ -53,9 +66,58 @@ public class ConfirmOrderActivity extends BaseActivity implements RadioGroup.OnC
         logistic_type_rl = (RelativeLayout) findViewById(R.id.logistic_type_rl);
         logistic_type_rl = getViewAndClick(R.id.logistic_type_rl);
         add_remark_iv = getViewAndClick(R.id.add_remark_iv);
+        appliay_cb = (CheckBox) findViewById(R.id.appliay_cb);
+        weixin_cb = (CheckBox) findViewById(R.id.weixin_cb);
+        appliay_cb.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked) {
+                    appliay_cb.setChecked(isChecked);
+                    weixin_cb.setChecked(false);
+                } else {
+                    weixin_cb.setChecked(true);
+                }
+            }
+        });
+        weixin_cb.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked) {
+                    weixin_cb.setChecked(isChecked);
+                    appliay_cb.setChecked(false);
+                } else {
+                    appliay_cb.setChecked(true);
+                }
+            }
+        });
+        EventBus.getDefault().register(this);
     }
 
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void resultPay(PayResult result){
+        int state=2;
+        Intent intent = new Intent(this, OrderDetailActivity.class);
+        intent.putExtra(Constance.order, mController.mOrderObject.toJSONString());
 
+        if(result.result.equals("0")){
+        MyToast.show(this, "支付成功");
+        mController.sendPaySuccess();
+        }else if(result.result.equals("-2")){
+            state=0;
+            MyToast.show(this, "支付失败");
+            intent.putExtra(Constance.state, state);
+            startActivity(intent);
+            ConfirmOrderActivity.this.finish();
+        }else {
+            state=0;
+            intent.putExtra(Constance.state, state);
+            startActivity(intent);
+            ConfirmOrderActivity.this.finish();
+        }
+
+
+    }
+    //在主线程执行
     float money = 0;
 
     @Override
@@ -66,7 +128,6 @@ public class ConfirmOrderActivity extends BaseActivity implements RadioGroup.OnC
         money = intent.getFloatExtra(Constance.money, 0);
 
     }
-
     @Override
     protected void onViewClick(View v) {
         switch (v.getId()) {
@@ -87,7 +148,8 @@ public class ConfirmOrderActivity extends BaseActivity implements RadioGroup.OnC
                 break;
         }
     }
-    private  Intent mIntent;
+
+    private Intent mIntent;
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -114,6 +176,7 @@ public class ConfirmOrderActivity extends BaseActivity implements RadioGroup.OnC
             }
         });
     }
+
 
 
 }

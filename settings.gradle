@@ -1,1 +1,1 @@
-include ':app', ':common', ':swipelistviewlibrary', ':filter-lib'
+include ':app', ':common', ':swipelistviewlibrary', ':filter-lib', ':core', ':okhttputils'

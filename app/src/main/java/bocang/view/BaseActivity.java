@@ -6,7 +6,9 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.IdRes;
+import android.support.annotation.RequiresApi;
 import android.support.v4.app.FragmentActivity;
+import android.support.v4.view.ViewCompat;
 import android.text.TextUtils;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,6 +24,7 @@ import bc.juhao.com.cons.Constance;
 import bc.juhao.com.ui.activity.user.LoginActivity;
 import bc.juhao.com.ui.view.dialog.SpotsDialog;
 import bc.juhao.com.utils.MyShare;
+import bc.juhao.com.utils.UIUtils;
 import bocang.utils.AppUtils;
 
 
@@ -73,6 +76,7 @@ public abstract class BaseActivity extends FragmentActivity implements View.OnCl
      * @param activity 需要设置的activity
      * @param color 状态栏颜色值
      */
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     public static void setColor(Activity activity, int color) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
             // 设置状态栏透明
@@ -86,6 +90,30 @@ public abstract class BaseActivity extends FragmentActivity implements View.OnCl
             ViewGroup rootView = (ViewGroup) ((ViewGroup) activity.findViewById(android.R.id.content)).getChildAt(0);
             rootView.setFitsSystemWindows(true);
             rootView.setClipToPadding(true);
+        }
+
+        if(Build.VERSION.SDK_INT>=Build.VERSION_CODES.LOLLIPOP) {
+            Window window = activity.getWindow();
+            //取消状态栏透明
+            window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+            //添加Flag把状态栏设为可绘制模式
+            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+            //设置状态栏颜色
+            window.setStatusBarColor(color);
+            //设置系统状态栏处于可见状态
+            window.getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_VISIBLE);
+            if(Build.VERSION.SDK_INT>=Build.VERSION_CODES.M) {
+                //设置状态栏文字颜色及图标为深色
+                window.getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN | View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
+            }
+            //让view不根据系统窗口来调整自己的布局
+            ViewGroup mContentView = (ViewGroup) window.findViewById(Window.ID_ANDROID_CONTENT);
+            View mChildView = mContentView.getChildAt(0);
+            if (mChildView != null) {
+                ViewCompat.setFitsSystemWindows(mChildView, true);
+                ViewCompat.requestApplyInsets(mChildView);
+
+            }
         }
     }
 
@@ -348,11 +376,13 @@ public abstract class BaseActivity extends FragmentActivity implements View.OnCl
     public Boolean isToken() {
         String token = MyShare.get(this).getString(Constance.TOKEN);
         if(AppUtils.isEmpty(token)){
-            Intent logoutIntent = new Intent(this, LoginActivity.class);
-            logoutIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-            startActivity(logoutIntent);
+            UIUtils.showLoginDialog(this);
             return true;
         }
         return false;
+    }
+
+    public void onRefresh() {
+        onResume();
     }
 }

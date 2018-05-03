@@ -1,6 +1,7 @@
 package bc.juhao.com.ui.adapter;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
@@ -68,8 +69,8 @@ public class ItemClassifyAdapter extends BaseAdapter {
 
         JSONObject object = mClassifyGoodses.getJSONObject(position);
         String name = object.getString(Constance.name);
-        String thumbs = object.getString(Constance.thumbs);
-
+        String thumbs = object.getString(Constance.thumbs2);
+//        Log.e("thumbs2",thumbs);
         if (name.length() > 10) {
             holder.textView.setTextSize(13);
             holder.textView.setText(name);

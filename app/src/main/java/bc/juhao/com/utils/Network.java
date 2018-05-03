@@ -477,6 +477,37 @@ public class Network {
     }
 
     /**
+     * 宣传视频列表
+     *
+     * @param page
+     * @param per_page
+     * @param iNetworkCallBack
+     */
+    public void sendVideoA(int page, int per_page, INetworkCallBack iNetworkCallBack) {
+        JSONObject params = new JSONObject();
+        params.add("id", 15);
+        params.add("page", page);
+        params.add("per_page", per_page);
+        sendRequest(params, NetWorkConst.ARTICLELIST, 2, 0, iNetworkCallBack);
+
+    }
+
+    /**
+     * 教学视频列表
+     *
+     * @param page
+     * @param per_page
+     * @param iNetworkCallBack
+     */
+    public void sendVideoB(int page, int per_page, INetworkCallBack iNetworkCallBack) {
+        JSONObject params = new JSONObject();
+        params.add("id", 16);
+        params.add("page", page);
+        params.add("per_page", per_page);
+        sendRequest(params, NetWorkConst.ARTICLELIST, 2, 0, iNetworkCallBack);
+
+    }
+    /**
      * 消息中心
      */
     public void sendNotice(int page, int per_page, INetworkCallBack iNetworkCallBack) {
@@ -754,7 +785,44 @@ public class Network {
     }
 
 
+    public void sendproductLink(String productId, INetworkCallBack iNetworkCallBack) {
+        JSONObject jsonObject=new JSONObject();
+        jsonObject.add("product",productId);
+        sendRequest(jsonObject,NetWorkConst.PRODUCT_DETAIL_LINK,1,0,iNetworkCallBack);
+    }
+    public void sendAddAccount(String company, String bank, String account, String name, String tel, INetworkCallBack iNetworkCallBack) {
+        JSONObject jsonObject=new JSONObject();
+        jsonObject.add("company",company);
+        jsonObject.add("bank",bank);
+        jsonObject.add("account",account);
+        jsonObject.add("name",name);
+        jsonObject.add("phone",tel);
+        sendRequest(jsonObject,NetWorkConst.ADD_ACCOUNT,1,0,iNetworkCallBack);
+    }
 
+    public void sendAccountList(INetworkCallBack iNetworkCallBack) {
+        JSONObject jsonObject=new JSONObject();
+        sendRequest(jsonObject,NetWorkConst.LIST_ACCOUNT,1,0,iNetworkCallBack);
+    }
+
+    public void sendPaySuccess(String orderid,String mTotal, INetworkCallBack iNetworkCallBack) {
+        JSONObject jsonObject=new JSONObject();
+        jsonObject.add("amount",mTotal);
+        jsonObject.add("order",orderid);
+        sendRequest(jsonObject,NetWorkConst.ALIPAY_SEND,1,0,iNetworkCallBack);
+    }
+    public void sendDealer(String name, String phone, String region, String address, String remark, INetworkCallBack iNetworkCallBack) {
+        JSONObject jsonObject=new JSONObject();
+        jsonObject.add("name",name);
+        jsonObject.add("phone",phone);
+        jsonObject.add("region",region);
+        jsonObject.add("address",address);
+        sendRequest(jsonObject,NetWorkConst.DEALER_ADD,1,0,iNetworkCallBack);
+    }
+    public void getShopMobile(INetworkCallBack iNetworkCallBack) {
+        JSONObject jsonObject=new JSONObject();
+//        sendRequest(jsonObject,NetWorkConst.SHOP_MOBILE);
+    }
     /**
      * 发送请求   bocang.json 的请求
      *
@@ -876,6 +944,14 @@ public class Network {
 
         net.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
     }
+
+
+    public void sendTokenAdd(String android_id, INetworkCallBack02 iNetworkCallBack02) {
+        JSONObject jsonObject=new JSONObject();
+        jsonObject.add("sid",android_id);
+        sendRequest02(jsonObject,NetWorkConst.TOKEN_ADD,2,iNetworkCallBack02);
+    }
+
 
 }
 

@@ -2,6 +2,8 @@ package bocang.view;
 
 import android.app.Application;
 import android.content.Context;
+import android.support.multidex.MultiDexApplication;
+
 
 /**
  * Copyright (C) 2016

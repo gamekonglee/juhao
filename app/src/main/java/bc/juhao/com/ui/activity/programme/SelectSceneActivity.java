@@ -5,6 +5,9 @@ import android.view.View;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import bc.juhao.com.R;
 import bc.juhao.com.cons.Constance;
 import bc.juhao.com.controller.programme.SelectSceneController;
@@ -54,6 +57,11 @@ public class SelectSceneActivity extends BaseActivity {
                 break;
             case R.id.select_rl:
                 mIntent = new Intent();
+//                ArrayList<String> data=new ArrayList<>();
+//                for(int i=0;i>IssueApplication.mSelectScreens.length();i++){
+//                    data.add(IssueApplication.mSelectScreens.getJSONObject(i).getJSONObject(Constance.scene).getString(Constance.original_img));
+//                }
+//                mIntent.putStringArrayListExtra(Constance.SCENE,data);
                 setResult(Constance.FROMDIY02, mIntent);//告诉原来的Activity 将数据传递给它
                 finish();//一定要调用该方法 关闭新的AC 此时 老是AC才能获取到Itent里面的值
                 break;

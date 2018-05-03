@@ -2,11 +2,15 @@ package bc.juhao.com.controller.blance;
 
 import android.content.Intent;
 import android.os.Message;
+import android.util.Log;
+import android.view.View;
 import android.widget.TextView;
 
 import com.alibaba.fastjson.JSONObject;
+import com.google.gson.Gson;
 
 import bc.juhao.com.R;
+import bc.juhao.com.bean.BankInfo;
 import bc.juhao.com.cons.Constance;
 import bc.juhao.com.cons.NetWorkConst;
 import bc.juhao.com.controller.BaseController;
@@ -15,6 +19,7 @@ import bc.juhao.com.listener.INetworkCallBack02;
 import bc.juhao.com.ui.activity.IssueApplication;
 import bc.juhao.com.ui.activity.blance.ExtractMoneyActivity;
 import bc.juhao.com.ui.activity.blance.WithDrawalDetailActivity;
+import bc.juhao.com.ui.activity.user.TixianGzActivity;
 import bc.juhao.com.utils.MyShare;
 import bocang.utils.AppUtils;
 import bocang.utils.MyToast;
@@ -130,4 +135,43 @@ public class ExtractMoneyController extends BaseController {
         });
     }
 
+    public void getAllMoney() {
+        exchange_num_et.setText(""+money);
+    }
+
+    public void sendAccountList() {
+        mNetWork.sendAccountList(new INetworkCallBack() {
+            @Override
+            public void onSuccessListener(String requestCode, bocang.json.JSONObject ans) {
+                if(ans!=null){
+                    bocang.json.JSONObject data=ans.getJSONObject(Constance.data);
+                    if(data!=null){
+                        final BankInfo bankInfo=new Gson().fromJson(data.toString(),BankInfo.class);
+                        if(bankInfo!=null){
+                            mView.add_tv.setVisibility(View.GONE);
+                            mView.alipay_tv.setText(bankInfo.getCompany());
+                            mView.alipay_tv.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View view) {
+                                    Intent intent=new Intent(mView,TixianGzActivity.class);
+                                    intent.putExtra("NoEdit",true);
+                                    intent.putExtra("bank",bankInfo);
+                                    mView.startActivity(intent);
+                                }
+                            });
+                        }else {
+                            mView.add_tv.setVisibility(View.VISIBLE);
+                        }
+                    }else {
+                        mView.add_tv.setVisibility(View.VISIBLE);
+                    }
+                }
+            }
+
+            @Override
+            public void onFailureListener(String requestCode, bocang.json.JSONObject ans) {
+
+            }
+        });
+    }
 }

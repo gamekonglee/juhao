@@ -1,14 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent"
-              android:orientation="vertical">
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical">
 
     <RelativeLayout
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
-        android:background="@drawable/icon_top"
+        android:background="#ffffff"
         android:minHeight="?attr/actionBarSize">
 
         <RelativeLayout
@@ -23,11 +24,11 @@
                 android:paddingLeft="10dp">
                 <ImageView
                     android:id="@+id/topLeftBtn"
-                    android:layout_width="24dp"
-                    android:layout_height="24dp"
+                    android:layout_width="10dp"
+                    android:layout_height="20dp"
                     android:layout_centerVertical="true"
                     android:layout_marginRight="5dp"
-                    android:background="@drawable/goback"
+                    android:background="@mipmap/nav_left"
 
                     android:textColor="#FFFFFF"/>
             </LinearLayout>
@@ -38,21 +39,71 @@
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
                 android:text="@string/setting"
-                android:textColor="@color/white"
+                android:textColor="#666666"
                 android:textSize="18dp"
                 />
         </RelativeLayout>
     </RelativeLayout>
-
-    <LinearLayout
+    <View
+        android:background="#dddddd"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@color/background_color"
-        android:orientation="vertical">
+        android:layout_height="1dp"/>
+    <bc.juhao.com.ui.view.TextViewPlus
+        android:id="@+id/tv_edit_info"
+        android:text="编辑个人资料"
+        android:background="#ffffff"
+        android:textColor="#666666"
+        android:textSize="16dp"
+        android:gravity="center_vertical"
+        android:paddingLeft="15dp"
+        android:drawableRight="@mipmap/my_icon_right"
+        app:right_width="6dp"
+        app:right_height="12dp"
+        android:paddingRight="15dp"
+        android:layout_width="match_parent"
+        android:layout_height="50dp" />
+    <View
+        android:background="#dddddd"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"/>
+    <bc.juhao.com.ui.view.TextViewPlus
+        android:id="@+id/tv_tuisong"
+        android:text="消息推送"
+        android:textColor="#666666"
+        android:textSize="16dp"
+        android:gravity="center_vertical"
+        android:paddingLeft="15dp"
+        android:drawableRight="@mipmap/my_xx_sel"
+        android:background="#ffffff"
+        app:right_width="25dp"
+        app:right_height="13dp"
+        android:paddingRight="15dp"
+        android:layout_width="match_parent"
+        android:layout_height="50dp" />
+    <View
+        android:background="#dddddd"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"/>
+    <bc.juhao.com.ui.view.TextViewPlus
+        android:text="意见反馈"
+        android:textColor="#666666"
+        android:textSize="16dp"
+        android:gravity="center_vertical"
+        android:paddingLeft="15dp"
+        android:background="#ffffff"
+        android:drawableRight="@mipmap/my_icon_right"
+        app:right_width="6dp"
+        app:right_height="12dp"
+        android:paddingRight="15dp"
+        android:layout_width="match_parent"
+        android:layout_height="50dp" />
+    <View
+        android:background="#dddddd"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"/>
         <RelativeLayout
             android:id="@+id/cache_rl"
             style="@style/mine_item_style02"
-            android:layout_marginTop="10dp"
             >
             <TextView
                 android:id="@+id/cache_title_tv"
@@ -63,19 +114,27 @@
                 style="@style/mine_text_style03"
                 />
         </RelativeLayout>
+    <View
+        android:background="#dddddd"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"/>
         <RelativeLayout
             android:id="@+id/about_rl"
             style="@style/mine_item_style02"
-            android:layout_marginTop="10dp"
             >
             <TextView
                 android:id="@+id/about_title_tv"
                 style="@style/mine_text_style02"
-                android:text="@string/about"/>
+                android:text="最新版本"/>
             <ImageView
+                android:visibility="gone"
                 android:id="@+id/type_iv"
                 style="@style/mine_image_arrow"
                 android:layout_alignParentRight="true"/>
+            <TextView
+                android:id="@+id/version_tv"
+                style="@style/mine_text_style03"
+                />
         </RelativeLayout>
         <View
             style="@style/view_style"
@@ -94,5 +153,3 @@
             android:textColor="@color/white"/>
     </LinearLayout>
 
-
-</LinearLayout>

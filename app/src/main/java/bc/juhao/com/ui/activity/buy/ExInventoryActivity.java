@@ -3,7 +3,10 @@ package bc.juhao.com.ui.activity.buy;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.support.v4.app.ActivityCompat;
+import android.text.TextUtils;
 import android.util.DisplayMetrics;
 import android.view.View;
 import android.webkit.WebSettings;
@@ -19,6 +22,8 @@ import com.itextpdf.text.Document;
 import com.itextpdf.text.DocumentException;
 import com.itextpdf.text.Image;
 import com.itextpdf.text.pdf.PdfWriter;
+import com.tencent.connect.share.QQShare;
+import com.tencent.mm.opensdk.modelmsg.SendMessageToWX;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -40,9 +45,6 @@ import bc.juhao.com.utils.ShareUtil;
 import bocang.json.JSONArray;
 import bocang.utils.AppUtils;
 import bocang.view.BaseActivity;
-import cn.sharesdk.tencent.qq.QQ;
-import cn.sharesdk.wechat.friends.Wechat;
-import cn.sharesdk.wechat.moments.WechatMoments;
 
 /**
  * @author: Jun
@@ -57,6 +59,7 @@ public class ExInventoryActivity extends BaseActivity {
     private LinearLayout wechat_ll, wechatmoments_ll, share_qq_ll, save_ll;
     private ScrollView sv;
     private int mShareType = 0;
+    private Bitmap bitmap;
 
     @Override
     protected void InitDataView() {
@@ -71,6 +74,7 @@ public class ExInventoryActivity extends BaseActivity {
     @Override
     protected void initView() {
         setContentView(R.layout.activity_cart_inventory);
+        setColor(this, Color.WHITE);
         save_rl = getViewAndClick(R.id.save_rl);
         wechat_ll = getViewAndClick(R.id.wechat_ll);
         wechatmoments_ll = getViewAndClick(R.id.wechatmoments_ll);
@@ -78,7 +82,7 @@ public class ExInventoryActivity extends BaseActivity {
         save_ll = getViewAndClick(R.id.save_ll);
         sv = (ScrollView) findViewById(R.id.sv);
         cotent_ll = (LinearLayout) findViewById(R.id.cotent_ll);
-        for (int i = 0; i < mUids.size(); i++) {
+        for (int i = 0; i < (mUids.size()); i++) {
             WebView mView = new WebView(this);
             //            WebSettings settings = mView.getSettings();
             //            settings.setJavaScriptEnabled(true);
@@ -129,14 +133,38 @@ public class ExInventoryActivity extends BaseActivity {
 
         if (mShareType == 0) {
             String id = IssueApplication.mUserObject.getString(Constance.id);
+            String path="";
+            String uids="";
+            String numbers="";
+            for(int x=0;x<mUids.size();x++){
+                uids+=mUids.get(x)+",";
+                numbers+=mNumbers.get(x)+",";
+            }
+            uids=uids.substring(0,uids.length()-1);
+            numbers=numbers.substring(0,numbers.length()-1);
             for (int i = 0; i < cotent_ll.getChildCount(); i++) {
-
-                String path = NetWorkConst.SCENE_HOST + "order_show.php?uid=" + id + "&goods=" + mUids.get(i) + "&number=" + mNumbers.get(i) + "&page=" + (1);
+                 path = NetWorkConst.SCENE_HOST + "order_show.php?uid=" + id + "&goods=" + uids+ "&number=" + numbers+ "&page=" + (i+1);
+                if(i==cotent_ll.getChildCount()-1){
+                path+="&end";
+                }
                 ((WebView) cotent_ll.getChildAt(i)).loadUrl(path);
             }
+
         } else {
+            String id = IssueApplication.mUserObject.getString(Constance.id);
+            String uids="";
+            String numbers="";
+            for(int x=0;x<mUids.size();x++){
+                uids+=mUids.get(x)+",";
+                numbers+=mNumbers.get(x)+",";
+            }
+            uids=uids.substring(0,uids.length()-1);
+            numbers=numbers.substring(0,numbers.length()-1);
             for (int i = 0; i < cotent_ll.getChildCount(); i++) {
-                String path = NetWorkConst.SCENE_HOST + "order_show.php?goods=" + mUids.get(i) + "&number=" + mNumbers.get(i) + "&page=" + (1) + morderUserUrl;
+                String path = NetWorkConst.SCENE_HOST + "order_show.php?goods=" + uids + "&number=" + numbers+ "&page=" + (i+1) + morderUserUrl;
+                if(i==cotent_ll.getChildCount()-1){
+                    path+="&end";
+                }
                 ((WebView) cotent_ll.getChildAt(i)).loadUrl(path);
             }
         }
@@ -261,8 +289,13 @@ public class ExInventoryActivity extends BaseActivity {
                                     savePDF();
                                     wechat_ll.setEnabled(true);
                                     Toast.makeText(ExInventoryActivity.this, "正在分享..", Toast.LENGTH_SHORT).show();
-                                    typeShare = Wechat.NAME;
-                                    ShareUtil.showShareType03(ExInventoryActivity.this, (String) mFileName, NetWorkConst.SHAREIMAGE, NetWorkConst.SHAREIMAGE, 1, ExInventoryActivity.this.typeShare, true, mFilePath);
+                                    typeShare = SendMessageToWX.Req.WXSceneSession;
+                                    final Bitmap bitmap = ImageUtil.getBitmapByView(sv);
+//                                    FileUtil.saveBitmap(bitmap, (String) mFileName);
+                                    if(TextUtils.isEmpty(mFilePath)){
+                                        savePDF();
+                                    }
+                                    ShareUtil.shareWxFile(ExInventoryActivity.this, (String) mFileName, mFilePath,true);
                                 }
                             });
                         } catch (InterruptedException e) {
@@ -274,14 +307,12 @@ public class ExInventoryActivity extends BaseActivity {
                 break;
             case R.id.wechatmoments_ll://微信朋友圈
                 Toast.makeText(this, "正在分享..", Toast.LENGTH_SHORT).show();
-                typeShare = WechatMoments.NAME;
-                if (!AppUtils.isEmpty(mShareImagePath)) {
-                    Toast.makeText(this, "图片保存为" + mShareImagePath, Toast.LENGTH_SHORT).show();
-                    ShareUtil.showShareType02(this, "", "1", mShareImagePath, 1, this.typeShare, true, null);
-                    //分享
+                typeShare = SendMessageToWX.Req.WXSceneTimeline;
+                if (!AppUtils.isEmpty(bitmap)) {
+                    ShareUtil.shareWxPic(ExInventoryActivity.this, (String) mFileName, bitmap,true);
                     return;
                 }
-                final Bitmap bitmap = ImageUtil.getBitmapByView(sv);
+                bitmap = ImageUtil.getBitmapByView(sv);
                 new Thread(new Runnable() {
                     @Override
                     public void run() {
@@ -290,7 +321,7 @@ public class ExInventoryActivity extends BaseActivity {
                         ExInventoryActivity.this.runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
-                                ShareUtil.showShareType02(ExInventoryActivity.this, "", "1", mShareImagePath, 1, typeShare, true, null);
+                                ShareUtil.shareWxPic(ExInventoryActivity.this, (String) mFileName, bitmap,false);
                             }
                         });
                     }
@@ -299,23 +330,23 @@ public class ExInventoryActivity extends BaseActivity {
                 break;
             case R.id.share_qq_ll://qq分享
                 Toast.makeText(this, "正在分享..", Toast.LENGTH_SHORT).show();
-                typeShare = QQ.NAME;
+                typeShare = QQShare.SHARE_TO_QQ_TYPE_IMAGE;
                 if (!AppUtils.isEmpty(mShareImagePath)) {
                     Toast.makeText(this, "图片保存为" + mShareImagePath, Toast.LENGTH_SHORT).show();
-                    ShareUtil.showShareType02(this, "", "1", mShareImagePath, 1, this.typeShare, true, null);
+                    ShareUtil.shareQQLocalpic(ExInventoryActivity.this, mShareImagePath,mFileName+"");
                     //分享
                     return;
                 }
-                final Bitmap bitmap1 = ImageUtil.getBitmapByView(sv);
+                if(bitmap==null)bitmap=ImageUtil.getBitmapByView(sv);
                 new Thread(new Runnable() {
                     @Override
                     public void run() {
 
-                        mShareImagePath = ScannerUtils.saveImageToGallery02(ExInventoryActivity.this, bitmap1, ScannerUtils.ScannerType.RECEIVER);
+                        mShareImagePath = ScannerUtils.saveImageToGallery02(ExInventoryActivity.this, bitmap, ScannerUtils.ScannerType.RECEIVER);
                         ExInventoryActivity.this.runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
-                                ShareUtil.showShareType02(ExInventoryActivity.this, "", "1", mShareImagePath, 1, typeShare, true, null);
+                                ShareUtil.shareQQLocalpic(ExInventoryActivity.this, mShareImagePath,mFileName+"");
                             }
                         });
                     }
@@ -329,7 +360,7 @@ public class ExInventoryActivity extends BaseActivity {
 
     }
 
-    private String typeShare;
+    private int typeShare;
     private String mShareImagePath = "";
 
 

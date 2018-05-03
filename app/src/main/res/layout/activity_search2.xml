@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:background="#ffffff"
+    android:layout_height="match_parent"
+    tools:context="bc.juhao.com.ui.activity.SearchActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:orientation="horizontal">
+        <RelativeLayout
+            android:onClick="goBack"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            >
+            <ImageView
+                android:src="@mipmap/nav_left"
+                android:layout_width="10dp"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="15dp"
+                android:layout_height="20dp" />
+        </RelativeLayout>
+        <FrameLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1">
+            <EditText
+                android:id="@+id/et_search_home"
+                android:layout_width="match_parent"
+                android:textColor="#666666"
+                android:textSize="15sp"
+                android:gravity="center"
+                android:layout_gravity="center"
+                android:hint="请输入搜索的内容"
+                android:background="@drawable/bg_corner_full_8c8e91"
+                android:layout_height="match_parent"
+                android:layout_margin="5dp"/>
+            <ImageView
+                android:src="@mipmap/nav_search_5"
+                android:layout_width="20dp"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="35dp"
+                android:layout_height="20dp" />
+        </FrameLayout>
+        <TextView
+            android:id="@+id/tv_search"
+            android:text="搜 索"
+            android:textSize="15sp"
+            android:textColor="#333333"
+            android:layout_gravity="center_vertical"
+            android:layout_marginRight="15dp"
+            android:layout_marginLeft="15dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+    </LinearLayout>
+    <View
+        android:background="@color/line"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"/>
+
+    <TextView
+        android:text="热门搜索"
+        android:textColor="#888888"
+        android:textSize="15sp"
+        android:layout_margin="15dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+    <bc.juhao.com.ui.view.LineBreakLayout
+        android:id="@+id/lbl"
+        android:layout_width="match_parent"
+        app:leftAndRightSpace="20dip"
+        android:layout_margin="15dp"
+        app:rowSpace="10dip"
+        android:layout_height="wrap_content"/>
+</LinearLayout>

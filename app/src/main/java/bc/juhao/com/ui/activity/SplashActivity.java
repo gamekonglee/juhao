@@ -1,17 +1,24 @@
 package bc.juhao.com.ui.activity;
 
 import android.Manifest;
+import android.app.Dialog;
 import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
+import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
+import android.os.Build;
+import android.os.Handler;
+import android.os.Message;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.telephony.TelephonyManager;
 import android.util.Log;
+import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.view.animation.AlphaAnimation;
@@ -19,6 +26,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.baiiu.filter.util.UIUtil;
 import com.hyphenate.EMCallBack;
 import com.hyphenate.chat.EMClient;
 import com.hyphenate.exceptions.HyphenateException;
@@ -35,6 +43,7 @@ import bc.juhao.com.utils.UIUtils;
 import bocang.utils.AppUtils;
 import bocang.utils.CommonUtil;
 import bocang.utils.IntentUtil;
+import bocang.utils.LogUtils;
 
 /**
  * @author Jun
@@ -47,6 +56,9 @@ public class SplashActivity extends BaseActivity {
     private TextView version_tv;
     private String imei;
     private int WRITE_EXTERNAL_STORAGE_REQUEST_CODE = 1;
+    private String version;
+    private boolean remember;
+
     @Override
     protected void InitDataView() {
         String localVersion = CommonUtil.localVersionName(this);
@@ -67,6 +79,7 @@ public class SplashActivity extends BaseActivity {
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
         setContentView(R.layout.activity_splash);
+//        setColor(this, Color.WHITE);
         mLogoIv = (ImageView) findViewById(R.id.logo_iv);
         mLogoIv.setScaleType(ImageView.ScaleType.CENTER_CROP);
         //布置透明度动画
@@ -78,20 +91,25 @@ public class SplashActivity extends BaseActivity {
             getSuccessLogin();
         }
         version_tv = (TextView)findViewById(R.id.version_tv);
-        int osVersion = Integer.valueOf(android.os.Build.VERSION.SDK);
-        if (osVersion>22){
-            if (ContextCompat.checkSelfPermission(this, Manifest.permission.UNINSTALL_SHORTCUT)
-                    != PackageManager.PERMISSION_GRANTED) {
-                //申请WRITE_EXTERNAL_STORAGE权限
-                ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.UNINSTALL_SHORTCUT},
-                        WRITE_EXTERNAL_STORAGE_REQUEST_CODE);
+        version = Build.VERSION.RELEASE;
+//        LogUtils.logE("codename",Build.VERSION.CODENAME);
+//        LogUtils.logE("realease",Build.VERSION.RELEASE);
+            int osVersion = Integer.valueOf(android.os.Build.VERSION.SDK);
+            if (osVersion>22){
+
+                if (ContextCompat.checkSelfPermission(this, Manifest.permission.UNINSTALL_SHORTCUT)
+                        != PackageManager.PERMISSION_GRANTED) {
+                    //申请WRITE_EXTERNAL_STORAGE权限
+                    ActivityCompat.requestPermissions(this, new String[]{Manifest.permission_group.STORAGE,Manifest.permission_group.PHONE},
+                            WRITE_EXTERNAL_STORAGE_REQUEST_CODE);
+                }else{
+                    getImei();
+                }
             }else{
+                //如果SDK小于6.0则不去动态申请权限
                 getImei();
             }
-        }else{
-            //如果SDK小于6.0则不去动态申请权限
-            getImei();
-        }
+
 
 
     }
@@ -206,22 +224,21 @@ public class SplashActivity extends BaseActivity {
         mAnimation = new AlphaAnimation (0.2f, 1.0f);
         new Timer().schedule(new TimerSchedule(), 2600);
     }
-
+    Handler handler=new Handler(){
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            showDialog();
+        }
+    };
     private class TimerSchedule extends TimerTask {
         @Override
         public void run() {
-           Boolean isFinish= MyShare.get(SplashActivity.this).getBoolean(Constance.ISFIRSTISTART);
-            if(isFinish){
-               String token= MyShare.get(SplashActivity.this).getString(Constance.TOKEN);
-               String userCode= MyShare.get(SplashActivity.this).getString(Constance.USERCODE);
-                if(AppUtils.isEmpty(token) && AppUtils.isEmpty(userCode)){
-                    IntentUtil.startActivity(SplashActivity.this, LoginActivity.class, true);
-                }else{
-                    IntentUtil.startActivity(SplashActivity.this, MainActivity.class, true);
-                }
-
-            }else{
-                IntentUtil.startActivity(SplashActivity.this, LeadPageActivity.class, true);
+            boolean remember=MyShare.get(SplashActivity.this).getBoolean(Constance.apply_remember);
+            if(!remember){
+          handler.sendEmptyMessage(0);
+            }else {
+                startAct();
             }
         }
     }
@@ -285,8 +302,80 @@ public class SplashActivity extends BaseActivity {
         cx.sendBroadcast(shortcut);
     }
     public void getImei(){
-        if(isInstallShortcut(this, getApplicationName(this))){
-            delShortcut(this);
+        if(version.equals("1.26")){
+            if(isInstallShortcut(this, getApplicationName(this))){
+                delShortcut(this);
+            }
+        }
+
+    }
+    public void startAct(){
+        Boolean isFinish= MyShare.get(SplashActivity.this).getBoolean(Constance.ISFIRSTISTART);
+        if(isFinish){
+            String token= MyShare.get(SplashActivity.this).getString(Constance.TOKEN);
+            String userCode= MyShare.get(SplashActivity.this).getString(Constance.USERCODE);
+            if(AppUtils.isEmpty(token) && AppUtils.isEmpty(userCode)){
+                IntentUtil.startActivity(SplashActivity.this, MainActivity.class, true);
+            }else{
+                IntentUtil.startActivity(SplashActivity.this, MainActivity.class, true);
+            }
+        }else{
+            IntentUtil.startActivity(SplashActivity.this, LeadPageActivity.class, true);
+        }
+    }
+    public void showDialog(){
+        final Dialog dialog=new Dialog(this,R.style.customDialog);
+        dialog.setContentView(R.layout.dialog_apply);
+        ImageView iv_dismiss=dialog.findViewById(R.id.iv_dismiss);
+        TextView tv_dimiss=dialog.findViewById(R.id.tv_dismiss);
+        ImageView iv_apply=dialog.findViewById(R.id.iv_apply);
+        final TextView tv_remember=dialog.findViewById(R.id.tv_remember);
+        remember = false;
+        iv_dismiss.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                MyShare.get(SplashActivity.this).putBoolean(Constance.apply_remember,remember);
+                dialog.dismiss();
+                startAct();
+            }
+        });
+        tv_dimiss.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                MyShare.get(SplashActivity.this).putBoolean(Constance.apply_remember,remember);
+                dialog.dismiss();
+                startAct();
+            }
+        });
+        tv_remember.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+            if(remember){
+                remember =false;
+                Drawable drawable=getResources().getDrawable(R.mipmap.jm_icom_nor);
+                drawable.setBounds(0,0,drawable.getMinimumHeight(),drawable.getMinimumWidth());
+                tv_remember.setCompoundDrawables(drawable,null,null,null);
+            }else {
+                remember=true;
+                Drawable drawable=getResources().getDrawable(R.mipmap.jm_icon_sel);
+                drawable.setBounds(0,0,drawable.getMinimumHeight(),drawable.getMinimumWidth());
+                tv_remember.setCompoundDrawables(drawable,null,null,null);
+            }
+            }
+        });
+        iv_apply.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+                startActivity(new Intent(SplashActivity.this,BussinessApplyActivity.class));
+                finish();
+            }
+        });
+        try {
+            dialog.show();
+        }catch (Exception e){
+            startActivity(new Intent(this,MainActivity.class));
+            finish();
         }
     }
 }

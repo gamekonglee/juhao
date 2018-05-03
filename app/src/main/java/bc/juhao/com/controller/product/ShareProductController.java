@@ -128,7 +128,7 @@ public class ShareProductController extends BaseController {
                 mProductPopWindow = new ShareProductPopWindow(mView);
                 mProductPopWindow.mActivity = mView;
                 mProductPopWindow.mShareTitle = mTitle;
-                mProductPopWindow.mShareImgPath = mCardPath;
+                mProductPopWindow.mShareImgPath = mImagePath;
                 mProductPopWindow.mSharePath = mCardPath;
                 mProductPopWindow.onShow(main_ll);
                 mView.hideLoading();

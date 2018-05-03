@@ -7,7 +7,7 @@
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
-        android:background="@drawable/icon_top"
+        android:background="#ffffff"
         android:minHeight="?attr/actionBarSize">
 
         <RelativeLayout
@@ -22,11 +22,11 @@
                 android:paddingLeft="10dp">
                 <ImageView
                     android:id="@+id/topLeftBtn"
-                    android:layout_width="24dp"
-                    android:layout_height="24dp"
+                    android:layout_width="10dp"
+                    android:layout_height="20dp"
                     android:layout_centerVertical="true"
                     android:layout_marginRight="5dp"
-                    android:background="@drawable/goback"
+                    android:background="@mipmap/nav_left"
 
                     android:textColor="#FFFFFF"/>
             </LinearLayout>
@@ -34,7 +34,7 @@
                 android:id="@+id/et_search"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textColor="@color/white"
+                android:textColor="#666666"
                 android:textSize="18dp"
                 android:layout_centerInParent="true"
                 android:text="@string/my_address"

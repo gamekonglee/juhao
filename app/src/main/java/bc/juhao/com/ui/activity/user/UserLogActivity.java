@@ -1,6 +1,7 @@
 package bc.juhao.com.ui.activity.user;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.view.View;
 import android.widget.Button;
 
@@ -32,8 +33,7 @@ public class UserLogActivity extends BaseActivity {
     @Override
     protected void initView() {
         setContentView(R.layout.activity_user_logistics);
-
-//        setColor(this, getResources().getColor(R.color.colorPrimary));
+        setColor(this, Color.WHITE);
         btn_save = getViewAndClick(R.id.btn_save);
 
     }

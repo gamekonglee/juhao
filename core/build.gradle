@@ -1,0 +1,24 @@
+apply plugin: 'com.android.library'
+
+android {
+    compileSdkVersion 22
+    buildToolsVersion '26.0.2'
+
+    defaultConfig {
+        minSdkVersion 8
+        targetSdkVersion 22
+        versionCode 1
+        versionName "1.0"
+    }
+}
+ext {
+    isLibrary = true
+    pomPackaging = "aar"
+    pomArtifactId = "core"
+    pomName = "Barcode Scanner View"
+    pomDescription = 'An android library project which contains the core barcode scanner view'
+}
+
+dependencies {
+//    compile ''
+}

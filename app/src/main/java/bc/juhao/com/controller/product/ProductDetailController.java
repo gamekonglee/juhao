@@ -1,6 +1,7 @@
 package bc.juhao.com.controller.product;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Message;
 import android.support.v4.app.Fragment;
@@ -37,6 +38,7 @@ import bc.juhao.com.listener.INetworkCallBack;
 import bc.juhao.com.listener.IParamentChooseListener;
 import bc.juhao.com.ui.activity.ChartListActivity;
 import bc.juhao.com.ui.activity.IssueApplication;
+import bc.juhao.com.ui.activity.buy.ConfirmOrderActivity;
 import bc.juhao.com.ui.activity.buy.ShoppingCartActivity;
 import bc.juhao.com.ui.activity.product.ProDetailActivity;
 import bc.juhao.com.ui.activity.product.ShareProductActivity;
@@ -52,6 +54,7 @@ import bc.juhao.com.ui.view.popwindow.SelectParamentPopWindow;
 import bc.juhao.com.utils.CartAnimator;
 import bc.juhao.com.utils.MyShare;
 import bc.juhao.com.utils.UIUtils;
+import bocang.json.JSONArray;
 import bocang.json.JSONObject;
 import bocang.utils.AppDialog;
 import bocang.utils.AppUtils;
@@ -71,10 +74,12 @@ public class ProductDetailController extends BaseController implements INetworkC
     private ProductContainerAdapter mContainerAdapter;
     private ViewPager container_vp;
     private Intent mIntent;
-    private LinearLayout title_ll, product_ll, detail_ll, parament_ll, main_ll, sun_image_ll;
+    private LinearLayout title_ll, product_ll, detail_ll, main_ll, sun_image_ll;
     private ImageView collectIv;
     private RelativeLayout main_rl;
     private TextView unMessageReadTv;
+    private TextView tuijian_tv;
+    private JSONObject mAddressObject;
 
 
     public ProductDetailController(ProDetailActivity v) {
@@ -98,8 +103,10 @@ public class ProductDetailController extends BaseController implements INetworkC
         detail_tv = (TextView) mView.findViewById(R.id.detail_tv);
         parament_tv = (TextView) mView.findViewById(R.id.parament_tv);
         sun_image_tv = (TextView) mView.findViewById(R.id.sun_image_tv);
+        tuijian_tv = mView.findViewById(R.id.tuijian_tv);
         unMessageReadTv = (TextView) mView.findViewById(R.id.unMessageReadTv);
         container_vp = (ViewPager) mView.findViewById(R.id.container_vp);
+
         mContainerAdapter = new ProductContainerAdapter(mView.getSupportFragmentManager());
         container_vp.setAdapter(mContainerAdapter);
         container_vp.setOnPageChangeListener(this);
@@ -108,8 +115,9 @@ public class ProductDetailController extends BaseController implements INetworkC
         product_ll = (LinearLayout) mView.findViewById(R.id.product_ll);
         main_ll = (LinearLayout) mView.findViewById(R.id.main_ll);
         detail_ll = (LinearLayout) mView.findViewById(R.id.detail_ll);
-        parament_ll = (LinearLayout) mView.findViewById(R.id.parament_ll);
+//        parament_ll = (LinearLayout) mView.findViewById(R.id.parament_ll);
         sun_image_ll = (LinearLayout) mView.findViewById(R.id.sun_image_ll);
+
         main_rl = (RelativeLayout) mView.findViewById(R.id.main_rl);
         collectIv = (ImageView) mView.findViewById(R.id.collectIv);
         container_vp.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
@@ -152,35 +160,50 @@ public class ProductDetailController extends BaseController implements INetworkC
      * @param type
      */
     public void selectProductType(int type) {
-        product_view.setVisibility(View.INVISIBLE);
-        detail_view.setVisibility(View.INVISIBLE);
-        parament_view.setVisibility(View.INVISIBLE);
-        sun_image_view.setVisibility(View.INVISIBLE);
-        product_tv.setTextColor(mView.getResources().getColor(R.color.txt_black));
-        detail_tv.setTextColor(mView.getResources().getColor(R.color.txt_black));
-        parament_tv.setTextColor(mView.getResources().getColor(R.color.txt_black));
+//        product_view.setVisibility(View.INVISIBLE);
+//        detail_view.setVisibility(View.INVISIBLE);
+//        parament_view.setVisibility(View.INVISIBLE);
+//        sun_image_view.setVisibility(View.INVISIBLE);
+
+//        parament_tv.setTextColor(mView.getResources().getColor(R.color.txt_black));
         sun_image_tv.setTextColor(mView.getResources().getColor(R.color.txt_black));
+        tuijian_tv.setTextColor(mView.getResources().getColor(R.color.txt_black));
+        detail_tv.setTextColor(mView.getResources().getColor(R.color.txt_black));
+        product_tv.setTextColor(mView.getResources().getColor(R.color.txt_black));
+        detail_tv.setBackgroundResource((R.drawable.bg_goods_detail_intro_corner_normal));
+        product_tv.setBackgroundResource((R.drawable.bg_goods_detail_intro_corner_left_normal));
+        tuijian_tv.setBackgroundResource(R.drawable.bg_goods_detail_intro_corner_normal);
+        sun_image_tv.setBackgroundResource(R.drawable.bg_goods_detail_intro_corner_right_normal);
         switch (type) {
             case R.id.product_ll:
-                product_view.setVisibility(View.VISIBLE);
-                product_tv.setTextColor(mView.getResources().getColor(R.color.colorPrimaryRed));
+//                product_view.setVisibility(View.VISIBLE);
+                product_tv.setBackgroundResource((R.drawable.bg_goods_detail_intro_corner_left));
+                product_tv.setTextColor(Color.WHITE);
                 container_vp.setCurrentItem(0, true);
                 break;
             case R.id.detail_ll:
-                detail_view.setVisibility(View.VISIBLE);
-                detail_tv.setTextColor(mView.getResources().getColor(R.color.colorPrimaryRed));
+//                detail_view.setVisibility(View.VISIBLE);
+                detail_tv.setBackgroundResource((R.drawable.bg_goods_detail_intro_corner));
+                detail_tv.setTextColor(Color.WHITE);
                 container_vp.setCurrentItem(1, true);
                 break;
-            case R.id.parament_ll:
-                parament_view.setVisibility(View.VISIBLE);
-                parament_tv.setTextColor(mView.getResources().getColor(R.color.colorPrimaryRed));
+//            case R.id.parament_ll:
+//                parament_view.setVisibility(View.VISIBLE);
+//                parament_tv.setTextColor(mView.getResources().getColor(R.color.colorPrimaryRed));
+//                container_vp.setCurrentItem(2, true);
+//                break;
+            case R.id.tuijian_ll:
+                tuijian_tv.setTextColor(Color.WHITE);
+                tuijian_tv.setBackgroundResource(R.drawable.bg_goods_detail_intro_corner);
                 container_vp.setCurrentItem(2, true);
                 break;
             case R.id.sun_image_ll:
-                sun_image_view.setVisibility(View.VISIBLE);
-                sun_image_tv.setTextColor(mView.getResources().getColor(R.color.colorPrimaryRed));
+//                sun_image_view.setVisibility(View.VISIBLE);
+                sun_image_tv.setTextColor(Color.WHITE);
+                sun_image_tv.setBackgroundResource(R.drawable.bg_goods_detail_intro_corner_right);
                 container_vp.setCurrentItem(3, true);
                 break;
+
         }
 
     }
@@ -259,7 +282,7 @@ public class ProductDetailController extends BaseController implements INetworkC
 
         if (ans.getJSONArray(Constance.goods_groups).length() > 0) {
             IssueApplication.mCartCount = ans.getJSONArray(Constance.goods_groups)
-                    .getJSONObject(0).getInt(Constance.total_amount);
+                    .getJSONObject(0).getJSONArray(Constance.goods).length();
             unMessageReadTv.setVisibility(View.VISIBLE);
             unMessageReadTv.setText(IssueApplication.mCartCount + "");
         } else {
@@ -296,6 +319,9 @@ public class ProductDetailController extends BaseController implements INetworkC
      */
     public void sendCall(String msg) {
         try {
+            if(IssueApplication.mUserObject==null){
+                return;
+            }
             int level = IssueApplication.mUserObject.getInt(Constance.level);
             if (level == 0) {
                 if (!mView.isToken()) {
@@ -459,8 +485,6 @@ public class ProductDetailController extends BaseController implements INetworkC
         } else {
             selectParament();
         }
-
-
     }
 
     private SelectParamentPopWindow mPopWindow;
@@ -562,7 +586,7 @@ public class ProductDetailController extends BaseController implements INetworkC
                 selectProductType(R.id.detail_ll);
                 break;
             case 2:
-                selectProductType(R.id.parament_ll);
+                selectProductType(R.id.tuijian_ll);
                 break;
             case 3:
                 selectProductType(R.id.sun_image_ll);
@@ -591,6 +615,73 @@ public class ProductDetailController extends BaseController implements INetworkC
         mView.startActivity(mIntent);
     }
 
+    public void toBuy() {
+
+        if (AppUtils.isEmpty(mView.mProductObject))
+            return;
+        mView.showLoading();
+        mNetWork.sendShoppingCart(mView.mProductId + "", mView.mProperty, 1, new INetworkCallBack() {
+            @Override
+            public void onSuccessListener(String requestCode, JSONObject ans) {
+                mNetWork.sendAddressList(new INetworkCallBack() {
+                    @Override
+                    public void onSuccessListener(String requestCode, JSONObject ans) {
+                        JSONArray consigneeList = ans.getJSONArray(Constance.consignees);
+                        if (consigneeList.length() == 0)
+                        {MyToast.show(mView,"请先添加收货地址");
+                        mView.hideLoading();
+                            return;}
+                        mAddressObject = consigneeList.getJSONObject(0);
+                        mNetWork.sendShoppingCart(new INetworkCallBack() {
+                            @Override
+                            public void onSuccessListener(String requestCode, JSONObject ans) {
+                                JSONArray goodses = ans.getJSONArray(Constance.goods_groups).getJSONObject(0).getJSONArray(Constance.goods);
+                                final JSONArray goods=new JSONArray();
+                                goods.add(goodses.getJSONObject(0));
+                                mView.hideLoading();
+                                Intent intent=new Intent(mView,ConfirmOrderActivity.class);
+                                intent.putExtra(Constance.goods,goods);
+                                Float total=Float.parseFloat(goods.getJSONObject(0).getString(Constance.price))*goods.getJSONObject(0).getInt(Constance.amount);
+                                intent.putExtra(Constance.money,total);
+                                intent.putExtra(Constance.address,mAddressObject);
+                                mView.startActivity(intent);
+//                                    mNetWork.sendUpdateCart(goods.getJSONObject(0).getString(Constance.id), "1", new INetworkCallBack() {
+//                                        @Override
+//                                        public void onSuccessListener(String requestCode, JSONObject ans) {
+//
+//                                        }
+//
+//                                        @Override
+//                                        public void onFailureListener(String requestCode, JSONObject ans) {
+//                                            mView.hideLoading();
+//                                        }
+//                                    });
+
+                            }
+
+                            @Override
+                            public void onFailureListener(String requestCode, JSONObject ans) {
+                                mView.hideLoading();
+                            }
+                        });
+                    }
+
+                    @Override
+                    public void onFailureListener(String requestCode, JSONObject ans) {
+                        mView.hideLoading();
+                    }
+                });
+
+            }
+
+            @Override
+            public void onFailureListener(String requestCode, JSONObject ans) {
+                mView.hideLoading();
+            }
+        });
+
+    }
+
     public class ProductContainerAdapter extends FragmentPagerAdapter {
 
 
@@ -616,16 +707,16 @@ public class ProductDetailController extends BaseController implements INetworkC
                 public void onScrollToBottom(int currPosition) {
                     if (currPosition == 0) {
                         title_ll.setVisibility(View.GONE);
-                        sun_image_ll.setVisibility(View.VISIBLE);
+//                        sun_image_ll.setVisibility(View.VISIBLE);
                         product_ll.setVisibility(View.VISIBLE);
                         detail_ll.setVisibility(View.VISIBLE);
-                        parament_ll.setVisibility(View.VISIBLE);
+                        mView.tuijian_ll.setVisibility(View.VISIBLE);
                     } else {
                         title_ll.setVisibility(View.VISIBLE);
                         product_ll.setVisibility(View.GONE);
-                        sun_image_ll.setVisibility(View.GONE);
+//                        sun_image_ll.setVisibility(View.GONE);
                         detail_ll.setVisibility(View.GONE);
-                        parament_ll.setVisibility(View.GONE);
+                        mView.tuijian_ll.setVisibility(View.GONE);
                     }
                 }
             });

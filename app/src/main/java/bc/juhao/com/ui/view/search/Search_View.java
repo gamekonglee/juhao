@@ -13,10 +13,13 @@ import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.CursorAdapter;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.SimpleCursorAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.lib.common.hxp.view.GridViewForScrollView;
 
 import bc.juhao.com.R;
 import bc.juhao.com.listener.ISearchListener;
@@ -37,7 +40,7 @@ public class Search_View extends LinearLayout {
     private TextView topRightBtn;
 
     /*列表及其适配器*/
-    private Search_Listview listView;
+    private GridViewForScrollView listView;
     private BaseAdapter adapter;
 
     /*数据库变量*/
@@ -45,6 +48,7 @@ public class Search_View extends LinearLayout {
     private SQLiteDatabase db;
 
     private ISearchListener mListener;
+    private ImageView iv_clear;
 
 
     /*三个构造函数*/
@@ -94,7 +98,14 @@ public class Search_View extends LinearLayout {
                 queryData("");
             }
         });
-
+        iv_clear.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //清空数据库
+                deleteData();
+                queryData("");
+            }
+        });
         //搜索框的文本变化实时监听
         et_search.addTextChangedListener(new TextWatcher() {
             @Override
@@ -214,8 +225,9 @@ public class Search_View extends LinearLayout {
         LayoutInflater.from(context).inflate(R.layout.search_layout, this);
         et_search = (EditText) findViewById(R.id.et_search);
         tv_clear = (TextView) findViewById(R.id.tv_clear);
+        iv_clear = findViewById(R.id.iv_clear);
         tv_tip = (TextView) findViewById(R.id.tv_tip);
-        listView = (Search_Listview) findViewById(R.id.listView);
+        listView =  findViewById(R.id.listView);
         topRightBtn = (TextView) findViewById(R.id.topRightBtn);
     }
 
@@ -233,7 +245,7 @@ public class Search_View extends LinearLayout {
         Cursor cursor = helper.getReadableDatabase().rawQuery(
                 "select id as _id,name from records where name like '%" + tempName + "%' order by id desc ", null);
         // 创建adapter适配器对象,装入模糊搜索的结果
-        adapter = new SimpleCursorAdapter(context, android.R.layout.simple_list_item_1, cursor, new String[]{"name"},
+        adapter = new SimpleCursorAdapter(context, R.layout.item_search, cursor, new String[]{"name"},
                 new int[]{android.R.id.text1}, CursorAdapter.FLAG_REGISTER_CONTENT_OBSERVER);
         // 设置适配器
         listView.setAdapter(adapter);

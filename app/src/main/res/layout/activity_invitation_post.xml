@@ -11,7 +11,7 @@
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
-        android:background="@drawable/icon_top"
+        android:background="#ffffff"
         android:minHeight="?attr/actionBarSize">
 
         <RelativeLayout
@@ -27,11 +27,11 @@
 
                 <ImageView
                     android:id="@+id/topLeftBtn"
-                    android:layout_width="24dp"
-                    android:layout_height="24dp"
+                    android:layout_width="10dp"
+                    android:layout_height="20dp"
                     android:layout_centerVertical="true"
                     android:layout_marginRight="5dp"
-                    android:background="@drawable/goback"
+                    android:background="@mipmap/nav_left"
 
                     android:textColor="#FFFFFF"/>
             </LinearLayout>
@@ -42,63 +42,122 @@
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
                 android:text="我的邀请码"
-                android:textColor="@color/white"
-                android:textSize="18dp"
+                android:textColor="#666666"
+                android:textSize="18sp"
                 />
         </RelativeLayout>
 
 
     </RelativeLayout>
-
+    <View
+        android:background="#dddddd"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"/>
     <ScrollView
         android:id="@+id/sv"
+        android:background="#ffffff"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-
-        <RelativeLayout
+        <LinearLayout
+            android:gravity="center_horizontal"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-            <bc.juhao.com.ui.view.RatioLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                gaga:ratio="0.58"
-                gaga:relative="width">
-
-                <ImageView
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:scaleType="fitXY"
-                    android:src="@mipmap/invitation_post"/>
-            </bc.juhao.com.ui.view.RatioLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_centerInParent="true"
-                android:gravity="center_horizontal"
-                android:orientation="vertical">
-
-                <TextView
-                    android:id="@+id/invitation_code_tv"
-                    android:layout_width="wrap_content"
-                    android:layout_height="35dp"
-                    android:layout_marginTop="100dp"
-                    android:background="@drawable/shape_invitation"
-                    android:gravity="center"
-                    android:paddingLeft="15dp"
-                    android:paddingRight="15dp"
-                    android:textColor="@color/txt_black"
-                    android:textSize="16sp"/>
-            </LinearLayout>
-
-            <View
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+            <TextView
+                android:text="推广赚钱 多多益善"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="50dp"
+                android:textColor="@color/green"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+            <TextView
+                android:text="1.长按识别二维码安装钜豪商城APP"
+                android:textColor="#666666"
+                android:textSize="12sp"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="20dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        <ImageView
+            android:id="@+id/iv_code"
+            android:src="@mipmap/my_yqm_ewm"
+            android:layout_marginTop="20dp"
+            android:layout_width="115dp"
+            android:layout_height="115dp" />
+            <TextView
+                android:text="2.输入邀请码，成为合伙人，开始赚钱"
+                android:textSize="12sp"
+                android:textColor="#666666"
+                android:layout_marginTop="30dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+            <TextView
+                android:id="@+id/invitation_code_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="35dp"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/shape_invitation"
+                android:gravity="center"
+                android:paddingLeft="15dp"
+                android:paddingRight="15dp"
+                android:textColor="@color/green"
+                android:textSize="16sp"/>
+            <TextView
+                android:id="@+id/tv_tips"
+                android:text="每邀请1名好友注册并成功钜豪商城，产生交易后即可享受到他的交易分成"
+                android:textColor="#333333"
+                android:textSize="12sp"
+                android:layout_marginTop="5dp"
+                android:layout_marginRight="80dp"
+                android:layout_marginLeft="80dp"
+                android:lineSpacingExtra="10dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+            <TextView
+                android:background="@drawable/bg_corner_full_orange_10"
+                android:layout_margin="15dp"
+                android:text="分享赚钱"
+                android:textSize="15sp"
+                android:textColor="#ffffff"
+                android:gravity="center"
                 android:id="@+id/share_v"
                 android:layout_width="match_parent"
-                android:layout_height="100dp"
+                android:layout_height="50dp"
                 android:layout_alignParentBottom="true"/>
 
-        </RelativeLayout>
-    </ScrollView>
+        </LinearLayout>
 
+    </ScrollView>
+    <!--<RelativeLayout-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="match_parent">-->
+
+        <!--<bc.juhao.com.ui.view.RatioLayout-->
+            <!--android:visibility="gone"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="match_parent"-->
+            <!--gaga:ratio="0.58"-->
+            <!--gaga:relative="width">-->
+
+            <!--<ImageView-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="match_parent"-->
+                <!--android:scaleType="fitXY"-->
+                <!--android:src="@mipmap/invitation_post"/>-->
+        <!--</bc.juhao.com.ui.view.RatioLayout>-->
+
+        <!--<LinearLayout-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_centerInParent="true"-->
+            <!--android:gravity="center_horizontal"-->
+            <!--android:orientation="vertical">-->
+
+
+        <!--</LinearLayout>-->
+
+
+    <!--</RelativeLayout>-->
 </LinearLayout>

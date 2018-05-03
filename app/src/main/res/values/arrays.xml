@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="home_titles" >
+        <item>全部</item>
+        <item>新品</item>
+        <item>视频</item>
+        <item>限时购</item>
+        <item>钜豪超市</item>
+        <item>发现设计师</item>
+    </string-array>
+</resources>

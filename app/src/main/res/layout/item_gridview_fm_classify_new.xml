@@ -1,26 +1,24 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="wrap_content"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
     android:background="#ffffff"
     android:gravity="center"
-    android:padding="5dp"
-    android:orientation="vertical"
     android:layout_height="wrap_content">
-
-    <ImageView
-        android:id="@+id/classify_iv"
-        android:layout_width="70dp"
-        android:layout_height="70dp"
-        android:src="@mipmap/type_7" />
-
     <TextView
         android:id="@+id/classify_tv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textColor="#444444"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginLeft="20dp"
         android:lines="1"
+        android:visibility="gone"
         android:text="更多"
         android:textSize="18sp" />
+    <ImageView
+        android:scaleType="fitXY"
+        android:id="@+id/classify_iv"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:src="@drawable/bg_default" />
 
-
-</LinearLayout>
+</RelativeLayout>

@@ -84,7 +84,7 @@ public class ArtiController extends BaseController implements PullToRefreshLayou
     }
     public void sendArticle(){
         LogUtils.logE("art:",page+"");
-        mNetWork.sendArticle(1, 20, new INetworkCallBack() {
+        mNetWork.sendArticle(page, 20, new INetworkCallBack() {
             @Override
             public void onSuccessListener(String requestCode, JSONObject ans) {
                 if (null != mPullToRefreshLayout) {
@@ -112,6 +112,7 @@ public class ArtiController extends BaseController implements PullToRefreshLayou
                     if (AppUtils.isEmpty(mArticlesArray))
                         MyToast.show(mView, "没有更多内容了");
                 }
+
                 adapter.replaceAll(mArticlesBeans);
                 adapter.notifyDataSetChanged();
                 if (mArticlesBeans.size() == 0)

@@ -3,16 +3,16 @@
     <color name="colorPrimaryDark">#303030</color>
     <color name="colorPrimary">#242424</color>
     <color name="colorAccent">#303030</color>
-    <color name="green">#EE7600</color>
+    <color name="green">#EE5500</color>
     <color name="fontColor92">#929292</color>
     <color name="yellow">#F0AC41</color>
     <color name="txt_black">#444444</color>
     <color name="divider_gray">#AAacacac</color>
-    <color name="colorPrimaryRed">#EE7600</color>
+    <color name="colorPrimaryRed">#EE5500</color>
     <color name="fontColor2">#444444</color>
-    <color name="fontColor6">#444444</color>
+    <color name="fontColor6">#888888</color>
     <color name="fontColor60">#605f5f</color>
-    <color name="colorview">#efefef</color>
+    <color name="colorview">#dddddd</color>
     <color name="device_line">#bebcbc</color>
     <color name="transparent">#00000000</color>
     <color name="background_color">#F0EFF5</color>
@@ -40,23 +40,23 @@
     <color name="deep_transparentDD">#DD000000</color>
     <color name="grey_text_color_normal">#8A8A8A</color>
     <color name="grey_line_bg">#E4E4E4</color>
-    <color name="original_border_color">#F18459</color>
+    <color name="original_border_color">#EE5500</color>
     <color name="grey_normal_bg">#EEEEEE</color>
     <color name="comment_divider">#cccccc</color>
     <color name="spots_dialog_color">@android:color/holo_blue_dark</color>
     <color name="lines_tab_grey_C3C3C3" >#C3C3C3</color>
     <color name="jd_8c8e91">#8c8e91</color>
-    <color name="jd_red">#F23030</color>
+    <color name="jd_red">#EE5500</color>
     <color name="background_tab_pressed">#6633B5E5</color>
     <color name="actionbar_color">#607D8B</color>
     <color name="actionbar_color_dark">#455A64</color>
 
     <!--uCrop Activity-->
-    <color name="ucrop_color_toolbar">#FF6E40</color>
-    <color name="ucrop_color_statusbar">#CC5833</color>
+    <color name="ucrop_color_toolbar">#EE5500</color>
+    <color name="ucrop_color_statusbar">#EE5500</color>
     <color name="ucrop_color_title">#fff</color>
     <color name="ucrop_color_widget">#000</color>
-    <color name="ucrop_color_widget_active">#FF6E40</color>
+    <color name="ucrop_color_widget_active">#EE5500</color>
     <color name="ucrop_color_widget_background">#fff</color>
     <color name="ucrop_color_widget_text">#000</color>
     <color name="ucrop_color_progress_wheel_line">#808080</color>
@@ -67,7 +67,16 @@
     <color name="ucrop_color_default_crop_frame">#ffffff</color>
     <color name="ucrop_color_default_dimmed">#8c000000</color>
     <color name="theme_lines">#dddddd</color>
-    <color name="theme_orange">#ff5500</color>
+    <color name="theme_orange">#EE5500</color>
     <color name="tv_444444">#444444</color>
+    <color name="viewfinder_mask">#60000000</color>
+    <color name="viewfinder_laser">#ffcc0000</color>
+    <color name="viewfinder_border">#ffafed44</color>
+    <color name="goods_details_sku">#f0eff4</color>
+    <color name="tv_gray">#666666</color>
+    <color name="tv_blue">#308BE9</color>
+    <color name="color_chat">#ed7600</color>
+    <color name="item_time_bg">#ffdac2</color>
+    //蓝色
 
 </resources>

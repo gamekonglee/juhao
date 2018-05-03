@@ -506,7 +506,7 @@ public class Order02Controller extends BaseController implements INetworkCallBac
             style.setSpan(new ForegroundColorSpan(Color.RED), fstart, fend, Spannable.SPAN_EXCLUSIVE_INCLUSIVE);
             holder.total_tv.setText(style);
 
-            OrderGvAdapter maGvAdapter = new OrderGvAdapter(mView.getActivity(), array, mOrderLevel, state);
+            OrderGvAdapter maGvAdapter = new OrderGvAdapter(mView.getActivity(), array, mOrderLevel, state,id);
             holder.lv.setAdapter(maGvAdapter);
             maGvAdapter.setUpdateProductPriceListener(new IUpdateProductPriceListener() {
                 @Override

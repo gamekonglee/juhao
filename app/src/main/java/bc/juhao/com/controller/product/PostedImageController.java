@@ -1,5 +1,6 @@
 package bc.juhao.com.controller.product;
 
+import android.os.Handler;
 import android.os.Message;
 import android.widget.EditText;
 
@@ -26,6 +27,8 @@ import bocang.utils.MyToast;
 public class PostedImageController extends BaseController {
     private PostedImageActivity mView;
     private EditText value_et;
+    private boolean isFinishPic;
+    private boolean isFinishVideo;
 
 
     public PostedImageController(PostedImageActivity v) {
@@ -79,7 +82,8 @@ public class PostedImageController extends BaseController {
         new Thread(new Runnable() {
             @Override
             public void run() {
-                final String resultJson = NetWorkUtils.uploadMoreFile(mView.lists, NetWorkConst.REVICE_ORDER_URL, params, "shaitu");
+                isFinishPic = false;
+                final String resultJson = NetWorkUtils.uploadMoreFile(mView.upLoadBitmap, NetWorkConst.REVICE_ORDER_URL, params, "shaitu");
                 //                            //分享的操作
                 mView.runOnUiThread(new Runnable() {
                     @Override
@@ -88,7 +92,8 @@ public class PostedImageController extends BaseController {
                         JSONObject dataObject = JSONObject.parseObject(resultJson);
                         int code = dataObject.getInteger(Constance.error_code);
                         if (code == 0) {
-                            mView.finish();
+                            isFinishPic=true;
+
                             MyToast.show(mView, "发布成功，请等待后台审核!");
                         } else {
                             String errorDesc = dataObject.getString(Constance.error_desc);
@@ -96,8 +101,39 @@ public class PostedImageController extends BaseController {
                         }
                     }
                 });
+                if(mView.files.size()>0){
+                    isFinishVideo = false;
+                final String resultJson2=NetWorkUtils.uploadvideo(mView.files,NetWorkConst.REVICE_ORDER_URL,params,"shaitu");
+                mView.runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        JSONObject dataObject = JSONObject.parseObject(resultJson2);
+                        int code = dataObject.getInteger(Constance.error_code);
+                        if (code == 0) {
+                            isFinishPic=true;
+                            handler.sendEmptyMessage(0);
+                            MyToast.show(mView, "视频发布成功，请等待后台审核!");
+                        } else {
+                            String errorDesc = dataObject.getString(Constance.error_desc);
+                            MyToast.show(mView, errorDesc);
+                        }
+                    }
+                });
+                }else {
+                    isFinishVideo=true;
+                }
             }
         }).start();
+
     }
+    Handler handler=new Handler(){
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            if(isFinishPic&&isFinishVideo){
+                mView.finish();
+            }
+        }
+    };
 
 }

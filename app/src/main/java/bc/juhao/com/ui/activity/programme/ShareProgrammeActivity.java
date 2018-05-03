@@ -7,14 +7,13 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.tencent.connect.share.QQShare;
+import com.tencent.mm.opensdk.modelmsg.SendMessageToWX;
+
 import bc.juhao.com.R;
 import bc.juhao.com.cons.Constance;
 import bc.juhao.com.controller.programme.ShareProgrammeController;
 import bocang.view.BaseActivity;
-import cn.sharesdk.tencent.qq.QQ;
-import cn.sharesdk.wechat.favorite.WechatFavorite;
-import cn.sharesdk.wechat.friends.Wechat;
-import cn.sharesdk.wechat.moments.WechatMoments;
 
 /**
  * @author: Jun
@@ -27,11 +26,12 @@ public class ShareProgrammeActivity extends BaseActivity {
     private LinearLayout share_link_ll, share_image_ll, save_image_ll, wechat_ll, wechatmoments_ll, wechat_collect_ll, share_qq_ll;
     private ImageView share_link_iv,share_image_iv;
     private TextView share_link_tv,share_image_tv;
-    public int mShareType=1;
+    public int mShareType=0;
     public String mSharePath="";
     public String mShareImgPath="";
     public String mShareTitle="";
-    public String typeShare="";
+    public int typeShare=1;
+    public String id;
 
 
     @Override
@@ -68,6 +68,7 @@ public class ShareProgrammeActivity extends BaseActivity {
         mSharePath=intent.getStringExtra(Constance.SHARE_PATH);
         mShareImgPath=intent.getStringExtra(Constance.SHARE_IMG_PATH);
         mShareTitle=intent.getStringExtra(Constance.TITLE);
+        id = intent.getStringExtra(Constance.id);
 
     }
 
@@ -92,19 +93,19 @@ public class ShareProgrammeActivity extends BaseActivity {
                 mController.getSaveImage();
                 break;
             case R.id.wechat_ll:
-                typeShare= Wechat.NAME;
+                typeShare= SendMessageToWX.Req.WXSceneSession;
                 mController.getShareData();
                 break;
             case R.id.wechatmoments_ll:
-                typeShare= WechatMoments.NAME;
+                typeShare= SendMessageToWX.Req.WXSceneTimeline;
                 mController.getShareData();
                 break;
             case R.id.wechat_collect_ll:
-                typeShare= WechatFavorite.NAME;
+                typeShare= SendMessageToWX.Req.WXSceneFavorite;
                 mController.getShareData();
                 break;
             case R.id.share_qq_ll:
-                typeShare= QQ.NAME;
+                typeShare= QQShare.SHARE_TO_QQ_TYPE_IMAGE;
                 mController.getShareData();
                 break;
 

@@ -1,5 +1,6 @@
 package bc.juhao.com.controller.user;
 
+import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
@@ -18,6 +19,7 @@ import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
@@ -29,6 +31,7 @@ import com.alibaba.fastjson.JSONArray;
 import com.alipay.sdk.app.PayTask;
 import com.bigkoo.alertview.AlertView;
 import com.bigkoo.alertview.OnItemClickListener;
+import com.google.gson.Gson;
 import com.hyphenate.EMCallBack;
 import com.hyphenate.chat.EMClient;
 import com.hyphenate.easeui.EaseConstant;
@@ -37,12 +40,23 @@ import com.hyphenate.exceptions.HyphenateException;
 import com.hyphenate.util.NetUtils;
 import com.lib.common.hxp.view.ListViewForScrollView;
 import com.lib.common.hxp.view.PullToRefreshLayout;
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.tencent.mm.opensdk.modelpay.PayReq;
+import com.tencent.mm.opensdk.openapi.IWXAPI;
+import com.tencent.mm.opensdk.openapi.WXAPIFactory;
 
 import java.text.DecimalFormat;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
 
 import bc.juhao.com.R;
+import bc.juhao.com.adapter.BaseAdapterHelper;
+import bc.juhao.com.adapter.QuickAdapter;
+import bc.juhao.com.bean.GoodsBean;
 import bc.juhao.com.bean.OrderInfo;
 import bc.juhao.com.bean.PayResult;
+import bc.juhao.com.bean.PrepayIdInfo;
 import bc.juhao.com.chat.DemoHelper;
 import bc.juhao.com.cons.Constance;
 import bc.juhao.com.cons.NetWorkConst;
@@ -53,6 +67,7 @@ import bc.juhao.com.listener.IUpdateProductPriceListener;
 import bc.juhao.com.ui.activity.ChartListActivity;
 import bc.juhao.com.ui.activity.IssueApplication;
 import bc.juhao.com.ui.activity.buy.ExInventoryActivity;
+import bc.juhao.com.ui.activity.product.ProDetailActivity;
 import bc.juhao.com.ui.activity.user.ChatActivity;
 import bc.juhao.com.ui.activity.user.ConsignmentOrderActivity;
 import bc.juhao.com.ui.activity.user.OrderDetailActivity;
@@ -62,6 +77,7 @@ import bc.juhao.com.ui.view.ShowDialog;
 import bc.juhao.com.utils.DateUtils;
 import bc.juhao.com.utils.MyShare;
 import bc.juhao.com.utils.UIUtils;
+import bc.juhao.com.utils.WXpayUtils;
 import bocang.json.JSONObject;
 import bocang.utils.AppDialog;
 import bocang.utils.AppUtils;
@@ -72,6 +88,8 @@ import bocang.utils.MyToast;
 
 import static bc.juhao.com.cons.Constance.category;
 import static bc.juhao.com.cons.Constance.goods;
+import static bc.juhao.com.cons.Constance.large;
+import static bc.juhao.com.cons.Constance.order_id;
 import static bc.juhao.com.cons.Constance.total_amount;
 
 /**
@@ -79,22 +97,22 @@ import static bc.juhao.com.cons.Constance.total_amount;
  * @date : 2017/2/6 15:13
  * @description :
  */
-public class OrderController extends BaseController implements PullToRefreshLayout.OnRefreshListener, INetworkCallBack, OnItemClickListener {
+public class OrderController extends BaseController implements PullToRefreshLayout.OnRefreshListener, INetworkCallBack, OnItemClickListener, AdapterView.OnItemClickListener {
     private OrderFragment mView;
     public JSONArray goodses;
     private PullToRefreshLayout mPullToRefreshLayout;
     private ProAdapter mProAdapter;
     private ListViewForScrollView order_sv;
-    private int page = 1;
+    public int page = 1;
 
     private View mNullView;
     private View mNullNet;
     private Button mRefeshBtn;
     private TextView mNullNetTv;
     private TextView mNullViewTv;
-    private int per_pag = 20;
+    private int per_pag = 12;
     private ProgressBar pd;
-    private int mPosition;
+    public int mPosition;
     private ImageView iv;
     private Button go_btn;
     private Boolean mIsUpdate = false;
@@ -123,10 +141,21 @@ public class OrderController extends BaseController implements PullToRefreshLayo
                     if (TextUtils.equals(resultStatus, "9000")) {
                         page = 1;
                         sendOrderList(page);
-                        Intent intent = new Intent(mView.getActivity(), OrderDetailActivity.class);
+                        final Intent intent = new Intent(mView.getActivity(), OrderDetailActivity.class);
                         intent.putExtra(Constance.order, goodses.getJSONObject(mPosition).toJSONString());
-                        intent.putExtra(Constance.state, 1);
-                        mView.getActivity().startActivity(intent);
+                        intent.putExtra(Constance.state, 0);
+
+                        mNetWork.sendPaySuccess(order_id,mTotal, new INetworkCallBack() {
+                            @Override
+                            public void onSuccessListener(String requestCode, JSONObject ans) {
+                                mView.getActivity().startActivity(intent);
+                            }
+
+                            @Override
+                            public void onFailureListener(String requestCode, JSONObject ans) {
+                                mView.getActivity().startActivity(intent);
+                            }
+                        });
 
                     } else {
                         // 判断resultStatus 为非"9000"则代表可能支付失败
@@ -146,6 +175,12 @@ public class OrderController extends BaseController implements PullToRefreshLayo
             }
         }
     };
+    private int payType;
+    private PrepayIdInfo bean;
+    private String mTotal;
+    private GridView priductGridView;
+    private QuickAdapter likeGoods;
+    private List<GoodsBean> goodsBeans;
 
 
     public OrderController(OrderFragment v) {
@@ -164,17 +199,89 @@ public class OrderController extends BaseController implements PullToRefreshLayo
         mView.setShowDialog(true);
         mView.showLoading();
         sendOrderList(page);
+        selectProduct(1,"12");
+    }
+    /**
+     * 获取产品列表
+     *
+     * @param page
+     * @param per_page
+     */
+    public void selectProduct(int page, String per_page) {
+        Random random=new Random();
+        String sortKey="7";
+        String sortValue="1";
+        mNetWork.sendGoodsList(page, per_page, null, null, null, null, null, sortKey, sortValue, new INetworkCallBack() {
+            @Override
+            public void onSuccessListener(String requestCode, JSONObject ans) {
+                if (null == mView ||mView.getActivity()==null|| mView.getActivity().isFinishing())
+                    return;
 
+                bocang.json.JSONArray goodsList = ans.getJSONArray(Constance.goodsList);
+                if (AppUtils.isEmpty(goodsList) || goodsList.length() == 0) {
+                    return;
+                }
+
+                getDataSuccess(goodsList);
+            }
+
+            @Override
+            public void onFailureListener(String requestCode, JSONObject ans) {
+
+            }
+        });
     }
 
-    private void sendOrderList(final int page) {
-        mNetWork.sendorderList(page, per_pag, mView.list.get(mView.flag), new INetworkCallBack02() {
+    private void getDataSuccess(bocang.json.JSONArray array) {
+        goodsBeans = new ArrayList<>();
+        for (int i = 0; i < array.length(); i++) {
+            try {
+
+                goodsBeans.add(new Gson().fromJson(String.valueOf(array.getJSONObject(i)),GoodsBean.class));
+            }catch (Exception e){
+                GoodsBean goodsBean=new GoodsBean();
+                goodsBean.setId(array.getJSONObject(i).getInt(Constance.id));
+                goodsBean.setName(array.getJSONObject(i).getString(Constance.name));
+                goodsBean.setCurrent_price(array.getJSONObject(i).getString(Constance.current_price));
+                goodsBean.setOriginal_img(array.getJSONObject(i).getString(Constance.original_img));
+                goodsBeans.add(goodsBean);
+            }
+        }
+        likeGoods.replaceAll(goodsBeans);
+        likeGoods.notifyDataSetChanged();
+    }
+    public void sendPaySuccess() {
+        mNetWork.sendPaySuccess(order_id,mTotal, new INetworkCallBack() {
+            @Override
+            public void onSuccessListener(String requestCode, JSONObject ans) {
+//                Intent intent = new Intent(mView.getContext(), OrderDetailActivity.class);
+//                intent.putExtra(Constance.order, mOrderObject.toJSONString());
+//                intent.putExtra(Constance.state, "2");
+//                mView.startActivity(intent);
+//                mView.finish();
+            }
+
+            @Override
+            public void onFailureListener(String requestCode, JSONObject ans) {
+//                Intent intent = new Intent(mView, OrderDetailActivity.class);
+//                intent.putExtra(Constance.order, mOrderObject.toJSONString());
+//                intent.putExtra(Constance.state, "2");
+//                mView.startActivity(intent);
+//                mView.finish();
+            }
+        });
+    }
+
+    public void sendOrderList(final int page) {
+        String state=mView.list.get(mView.flag);
+//        if(state.equals("1"))state="0";
+        mNetWork.sendorderList(page, per_pag, state, new INetworkCallBack02() {
             @Override
             public void onSuccessListener(String requestCode, com.alibaba.fastjson.JSONObject ans) {
                 mView.hideLoading();
                 switch (requestCode) {
                     case NetWorkConst.ORDERLIST:
-                        if (null == mView.getActivity() || mView.getActivity().isFinishing())
+                        if (mView==null||null == mView.getActivity() || mView.getActivity().isFinishing())
                             return;
                         if (null != mPullToRefreshLayout) {
                             dismissRefesh();
@@ -186,7 +293,7 @@ public class OrderController extends BaseController implements PullToRefreshLayo
                 if (AppUtils.isEmpty(goodsList) || goodsList.size() == 0) {
                     if (page == 1) {
                         mNullView.setVisibility(View.VISIBLE);
-                        iv.setImageResource(R.drawable.icon_no_order);
+//                        iv.setImageResource(R.drawable.icon_no_order);
                         go_btn.setVisibility(View.GONE);
                     }
 
@@ -230,7 +337,7 @@ public class OrderController extends BaseController implements PullToRefreshLayo
 
         imm = (InputMethodManager) mView.getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
         //拓展窗口
-        mAlertViewExt = new AlertView("提示", "请输入价格折扣(不能低于8折)！", "取消", null, new String[]{"完成"}, mView.getActivity(), AlertView.Style.Alert, this);
+        mAlertViewExt = new AlertView("提示", "请输入价格折扣(不能低于"+mDiscount*10+"折)！", "取消", null, new String[]{"完成"}, mView.getActivity(), AlertView.Style.Alert, this);
         ViewGroup extView = (ViewGroup) LayoutInflater.from(mView.getActivity()).inflate(R.layout.alertext_form, null);
         etName = (EditText) extView.findViewById(R.id.etName);
         etName.setOnFocusChangeListener(new View.OnFocusChangeListener() {
@@ -245,7 +352,7 @@ public class OrderController extends BaseController implements PullToRefreshLayo
         mAlertViewExt.addExtView(extView);
         imm02 = (InputMethodManager) mView.getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
         //拓展窗口
-        mAlertViewExt02 = new AlertView("提示", "请输入价格折扣！", "取消", null, new String[]{"完成"}, mView.getActivity(), AlertView.Style.Alert, this);
+        mAlertViewExt02 = new AlertView("提示", "请输入价格折扣！(不得低于"+mProductDiscount*10+"折)", "取消", null, new String[]{"完成"}, mView.getActivity(), AlertView.Style.Alert, this);
         ViewGroup extView02 = (ViewGroup) LayoutInflater.from(mView.getActivity()).inflate(R.layout.alertext_form, null);
         etName02 = (EditText) extView02.findViewById(R.id.etName);
         etName02.setOnFocusChangeListener(new View.OnFocusChangeListener() {
@@ -258,7 +365,22 @@ public class OrderController extends BaseController implements PullToRefreshLayo
             }
         });
         mAlertViewExt02.addExtView(extView02);
+        priductGridView = mView.getView().findViewById(R.id.priductGridView);
+        priductGridView.setOnItemClickListener(this);
 
+//        pd = (ProgressBar) mView.getActivity().findViewById(R.id.pd);
+//        pd.setVisibility(View.VISIBLE);
+        likeGoods = new QuickAdapter<GoodsBean>(mView.getContext(), R.layout.item_like_goods){
+            @Override
+            protected void convert(BaseAdapterHelper helper, GoodsBean item) {
+
+                helper.setText(R.id.tv_name,""+item.getName());
+                helper.setText(R.id.tv_price,"¥"+item.getCurrent_price());
+                ImageView imageView=helper.getView(R.id.iv);
+                ImageLoader.getInstance().displayImage(NetWorkConst.SCENE_HOST+item.getOriginal_img(),imageView,((IssueApplication)mView.getActivity().getApplicationContext()).getImageLoaderOption());
+            }
+        };
+        priductGridView.setAdapter(likeGoods);
 
     }
 
@@ -350,10 +472,40 @@ public class OrderController extends BaseController implements PullToRefreshLayo
             @Override
             public void onSuccessListener(String requestCode, com.alibaba.fastjson.JSONObject ans) {
                 mView.hideLoading();
+                if(payType==0){
                 String notify_url = ans.getString(Constance.alipay);
                 if (AppUtils.isEmpty(notify_url))
                     return;
                 SubmitAliPay(notify_url);
+                } else {
+                    com.alibaba.fastjson.JSONObject wxpayObject = ans.getJSONObject(Constance.wxpay);
+                    String appid = wxpayObject.getString("appid");
+                    String mch_id = wxpayObject.getString("mch_id");
+                    String nonce_str = wxpayObject.getString("nonce_str");
+                    String packages = wxpayObject.getString("packages");
+                    String prepay_id = wxpayObject.getString("prepay_id");
+                    String sign = wxpayObject.getString("sign");
+                    String timestamp = wxpayObject.getString("timestamp");
+                    PayReq request = new PayReq();
+                    request.appId=appid;
+                    request.partnerId=mch_id;
+                    request.prepayId=prepay_id;
+                    request.packageValue=packages;
+                    request.nonceStr=nonce_str;
+                    request.timeStamp=timestamp;
+                    request.sign=sign;
+//                    PrepayIdInfo bean = new PrepayIdInfo();
+//                    bean.setAppid(appid);
+//                    bean.setMch_id(mch_id);
+//                    bean.setNonce_str(nonce_str);
+//                    bean.setPrepay_id(prepay_id);
+//                    bean.setSign(sign);
+//                    bean.setTimestamp(timestamp);
+//                    WXpayUtils.mContext = mView;
+//                    WXpayUtils.Pay(bean, bean.getPrepay_id());
+                    IWXAPI iwxapi= WXAPIFactory.createWXAPI(mView.getContext(),appid);
+                    iwxapi.sendReq(request);
+                }
             }
 
             @Override
@@ -487,6 +639,14 @@ public class OrderController extends BaseController implements PullToRefreshLayo
     int mLevel = -1;
     int mOrderLevel = -1;
 
+    @Override
+    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        int productId = goodsBeans.get(position).getId();
+        Intent intent = new Intent(mView.getContext(), ProDetailActivity.class);
+        intent.putExtra(Constance.product, productId);
+        mView.startActivity(intent);
+    }
+
     private class ProAdapter extends BaseAdapter implements INetworkCallBack {
         public ProAdapter() {
         }
@@ -524,6 +684,7 @@ public class OrderController extends BaseController implements PullToRefreshLayo
                 holder.do02_tv = (TextView) convertView.findViewById(R.id.do02_tv);
                 holder.consigment_tv = (TextView) convertView.findViewById(R.id.consigment_tv);
                 holder.do03_tv = (TextView) convertView.findViewById(R.id.do03_tv);
+                holder.do04_tv=convertView.findViewById(R.id.do04_tv);
                 holder.chat_buy_tv = (TextView) convertView.findViewById(R.id.chat_buy_tv);
                 holder.code_tv = (TextView) convertView.findViewById(R.id.code_tv);
                 holder.total_tv = (TextView) convertView.findViewById(R.id.total_tv);
@@ -606,9 +767,9 @@ public class OrderController extends BaseController implements PullToRefreshLayo
             String str = "共计 " + tatalNum + " 件商品 合计￥" + total + "";
             holder.total_tv.setText(str);
             mOrderLevel = orderobject.getInteger(Constance.level);
-            OrderGvAdapter maGvAdapter = new OrderGvAdapter(mView.getActivity(), array, mOrderLevel, state);
+            OrderGvAdapter maGvAdapter = new OrderGvAdapter(mView.getActivity(), array, mOrderLevel, state,orderId);
             holder.lv.setAdapter(maGvAdapter);
-            mLevel = IssueApplication.mUserObject.getInt(Constance.level);
+            if(IssueApplication.mUserObject!=null)mLevel = IssueApplication.mUserObject.getInt(Constance.level);
             maGvAdapter.setUpdateProductPriceListener(new IUpdateProductPriceListener() {
                 @Override
                 public void onUpdateProductPriceListener(int position, com.alibaba.fastjson.JSONObject object) {
@@ -623,12 +784,25 @@ public class OrderController extends BaseController implements PullToRefreshLayo
                     mUpdateorderSn = sn;
                     mDiscount = Float.parseFloat(discount);
                     mProductPosition = position;
+                    mAlertViewExt02 = new AlertView("提示", "请输入价格折扣！(不得低于"+mProductDiscount*10+"折)", "取消", null, new String[]{"完成"}, mView.getActivity(), AlertView.Style.Alert, OrderController.this);
+                    ViewGroup extView02 = (ViewGroup) LayoutInflater.from(mView.getActivity()).inflate(R.layout.alertext_form, null);
+                    etName02 = (EditText) extView02.findViewById(R.id.etName);
+                    etName02.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+                        @Override
+                        public void onFocusChange(View view, boolean focus) {
+                            //输入框出来则往上移动
+                            boolean isOpen = imm02.isActive();
+                            mAlertViewExt02.setMarginBottom(isOpen && focus ? 120 : 0);
+                            System.out.println(isOpen);
+                        }
+                    });
+                    mAlertViewExt02.addExtView(extView02);
                     mAlertViewExt02.show();
                 }
             });
 
             String user_name = orderobject.getString(Constance.user_name);
-
+            int is_discount=orderobject.getInteger(Constance.is_discount);
             String levelValue = "";
             if (mOrderLevel == 0) {
                 levelValue = "一级";
@@ -639,7 +813,7 @@ public class OrderController extends BaseController implements PullToRefreshLayo
             } else {
                 levelValue = "消费者";
             }
-            getState(state, holder.state_tv, holder.do_tv, holder.do02_tv, holder.do03_tv);
+            getState(state, holder.state_tv, holder.do_tv, holder.do02_tv, holder.do03_tv,holder.do04_tv);
 
             levelValue = levelValue + "(" + user_name + ")";
             holder.remark_tv.setText(levelValue);
@@ -647,16 +821,14 @@ public class OrderController extends BaseController implements PullToRefreshLayo
 
             if (mLevel == 0) {
 
-                if (mLevel != mOrderLevel && state == 0) {
-                    mIsUpdate = true;
+                if (  state == 0&&!isJuhao) {
+                        mIsUpdate = true;
                         holder.update_money_tv.setVisibility(View.VISIBLE);
-                    if (state == 0) {
                         holder.do_tv.setVisibility(View.GONE);
-                        holder.do02_tv.setVisibility(View.GONE);
+                        if(mLevel!=mOrderLevel)holder.do02_tv.setVisibility(View.GONE);
                         holder.do03_tv.setVisibility(View.GONE);
                         holder.chat_buy_tv.setVisibility(View.VISIBLE);
 
-                    }
 
                 } else {
                     holder.update_money_tv.setVisibility(View.GONE);
@@ -689,6 +861,23 @@ public class OrderController extends BaseController implements PullToRefreshLayo
                     mUpdateOrderMoney = Float.parseFloat(score);
                     mUpdateorderSn = sn;
                     mDiscount = Float.parseFloat(discount);
+                    if(mDiscount<0.8){
+                        mDiscount= (float) 0.8;
+                    }
+//                    MyToast.show(mView.getContext(),"dis"+discount);
+                    mAlertViewExt = new AlertView("提示", "请输入价格折扣(不能低于"+mDiscount*10+"折)！", "取消", null, new String[]{"完成"}, mView.getActivity(), AlertView.Style.Alert, OrderController.this);
+                    ViewGroup extView = (ViewGroup) LayoutInflater.from(mView.getActivity()).inflate(R.layout.alertext_form, null);
+                    etName = (EditText) extView.findViewById(R.id.etName);
+                    etName.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+                        @Override
+                        public void onFocusChange(View view, boolean focus) {
+                            //输入框出来则往上移动
+                            boolean isOpen = imm.isActive();
+                            mAlertViewExt.setMarginBottom(isOpen && focus ? 120 : 0);
+                            System.out.println(isOpen);
+                        }
+                    });
+                    mAlertViewExt.addExtView(extView);
                     mAlertViewExt.show();
                 }
             });
@@ -751,10 +940,8 @@ public class OrderController extends BaseController implements PullToRefreshLayo
                             mBody += array.getJSONObject(i).getJSONObject(Constance.product).getString(Constance.name) + "  ";
                         }
                         mPosition = position;
-                        mView.setShowDialog(true);
-                        mView.setShowDialog("正在付款中!");
-                        mView.showLoading();
-                        sendPayment(orderId, "alipay.app");
+                        mTotal = total;
+                        showPaySelectDialog(orderId);
                     } else if (state == 2) {
                         //TODO 确认收货
                         sendConfirmReceipt(orderId);
@@ -852,7 +1039,12 @@ public class OrderController extends BaseController implements PullToRefreshLayo
                     mView.getActivity().startActivity(intent);
                 }
             });
+            holder.do04_tv.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
 
+                }
+            });
             return convertView;
         }
 
@@ -911,10 +1103,11 @@ public class OrderController extends BaseController implements PullToRefreshLayo
          * @param do_tv
          * @param do02_tv
          */
-        private void getState(int type, TextView state_tv, TextView do_tv, TextView do02_tv, TextView do03_tv) {
+        private void getState(int type, TextView state_tv, TextView do_tv, TextView do02_tv, TextView do03_tv,TextView do04_tv) {
             do_tv.setVisibility(View.GONE);
             do02_tv.setVisibility(View.GONE);
             do03_tv.setVisibility(View.GONE);
+            do04_tv.setVisibility(View.GONE);
             String stateValue = "";
             switch (type) {
                 case 0:
@@ -944,12 +1137,14 @@ public class OrderController extends BaseController implements PullToRefreshLayo
                 case 3:
                     do_tv.setVisibility(View.VISIBLE);
                     do_tv.setText("联系商家");
-                    stateValue = "【已完成】";
+                    stateValue = "【待评价】";
+//                    do04_tv.setVisibility(View.VISIBLE);
                     break;
                 case 4:
                     do_tv.setVisibility(View.VISIBLE);
                     do_tv.setText("联系商家");
                     stateValue = "【已完成】";
+//                    do04_tv.setVisibility(View.VISIBLE);
                     break;
                 case 5:
                     do_tv.setVisibility(View.VISIBLE);
@@ -995,6 +1190,7 @@ public class OrderController extends BaseController implements PullToRefreshLayo
             TextView do_tv;
             TextView do02_tv;
             TextView do03_tv;
+            TextView do04_tv;
             TextView consigment_tv;
             TextView pdf_tv;
             TextView chat_buy_tv;
@@ -1008,6 +1204,54 @@ public class OrderController extends BaseController implements PullToRefreshLayo
             TextView new_money;
 
         }
+    }
+
+    private void showPaySelectDialog(final String orderId) {
+        final Dialog dialog=UIUtils.showBottomInDialog(mView.getActivity(),R.layout.dialog_pay_select,UIUtils.dip2PX(200));
+        LinearLayout ll_alipay=dialog.findViewById(R.id.ll_alipay);
+        LinearLayout ll_wx=dialog.findViewById(R.id.ll_wxpay);
+        final ImageView iv_alipay=dialog.findViewById(R.id.iv_alipay);
+        final ImageView iv_wx=dialog.findViewById(R.id.iv_wxpay);
+        Button btn_submit=dialog.findViewById(R.id.btn_submit);
+        payType = 0;
+        ll_alipay.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(payType ==0){
+                    return;
+                }
+                payType =0;
+                iv_alipay.setImageResource(R.mipmap.shopping_icon_sel);
+                iv_wx.setImageResource(R.mipmap.shopping_icon_nor);
+            }
+        });
+        ll_wx.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(payType==1){
+                    return;
+                }
+                payType=1;
+                iv_alipay.setImageResource(R.mipmap.shopping_icon_nor);
+                iv_wx.setImageResource(R.mipmap.shopping_icon_sel);
+            }
+        });
+        btn_submit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mView.setShowDialog(true);
+                mView.setShowDialog("正在付款中!");
+                mView.showLoading();
+                dialog.dismiss();
+                if(payType==0){
+                    sendPayment(orderId, "alipay.app");
+                }else {
+                    sendPayment(orderId, "wxpay.app");
+                }
+            }
+        });
+
+
     }
 
     private AlertView mAlertViewExt;//窗口拓展例子
@@ -1156,7 +1400,9 @@ public class OrderController extends BaseController implements PullToRefreshLayo
             @Override
             public void onSuccessListener(String requestCode, com.alibaba.fastjson.JSONObject ans) {
                 mView.hideLoading();
-                updatePrice(mUpdateorderSn, mTotalProductMoney, mDiscount + "");
+                MyToast.show(mView.getActivity(), "修改成功!");
+                initViewData();
+//                updatePrice(mUpdateorderSn, mTotalProductMoney, mDiscount + "");
             }
 
             @Override

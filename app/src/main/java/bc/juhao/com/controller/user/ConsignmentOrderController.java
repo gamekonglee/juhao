@@ -123,7 +123,6 @@ public class ConsignmentOrderController extends BaseController implements OnItem
             mView.startActivity(intent1);
         }
         mView.finish();
-
     }
 
     @Override

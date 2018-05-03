@@ -1,52 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent"
-              android:background="@color/background_color"
-              android:orientation="vertical">
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
 
-    <RelativeLayout
-        android:id="@+id/toolbar"
-        android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
-        android:background="@drawable/icon_top"
-        android:minHeight="?attr/actionBarSize">
+    android:background="@color/background_color"
+    android:orientation="vertical">
 
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-            <LinearLayout
-                android:layout_width="80dp"
-                android:layout_height="match_parent"
-                android:gravity="center_vertical"
-                android:onClick="goBack"
-                android:paddingLeft="10dp">
-
-                <ImageView
-                    android:id="@+id/topLeftBtn"
-                    android:layout_width="24dp"
-                    android:layout_height="24dp"
-                    android:layout_centerVertical="true"
-                    android:layout_marginRight="5dp"
-                    android:background="@drawable/goback"
-
-                    android:textColor="#FFFFFF"/>
-            </LinearLayout>
-
-            <TextView
-                android:id="@+id/title_tv"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerInParent="true"
-                android:text="我的服务运营商"
-                android:textColor="@color/white"
-                android:textSize="18dp"
-                />
-        </RelativeLayout>
-
-
-    </RelativeLayout>
 
 
     <bc.juhao.com.ui.view.ObservableScrollView
@@ -58,119 +18,244 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical">
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="130dp"
-                android:background="@drawable/icon_top">
-
-                <de.hdodenhof.circleimageview.CircleImageView
-                    android:id="@+id/head_cv"
-                    android:layout_width="80dp"
-                    android:layout_height="80dp"
-                    android:layout_centerVertical="true"
-                    android:layout_marginLeft="20dp"
-                    android:src="@drawable/touxian"
-                    />
-
-                <TextView
-                    android:id="@+id/nickname_tv"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignTop="@id/head_cv"
-                    android:layout_marginLeft="20dp"
-                    android:layout_toRightOf="@id/head_cv"
-                    android:textColor="@color/white"
-                    android:textSize="15dp"
-                    />
-
-                <TextView
-                    android:id="@+id/phone_tv"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@id/nickname_tv"
-                    android:layout_centerVertical="true"
-                    android:layout_marginLeft="20dp"
-                    android:layout_marginTop="3dp"
-                    android:layout_toRightOf="@id/head_cv"
-                    android:textColor="@color/white"
-                    android:textSize="15dp"
-                    />
-
-                <TextView
-                    android:id="@+id/address_tv"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@id/phone_tv"
-                    android:layout_centerVertical="true"
-                    android:layout_marginLeft="20dp"
-                    android:layout_marginTop="3dp"
-                    android:layout_toRightOf="@id/head_cv"
-                    android:textColor="@color/white"
-                    android:textSize="15dp"
-                    />
-
-
-
-
-            </RelativeLayout>
-
             <LinearLayout
+                android:background="@mipmap/my_fws_bg"
                 android:layout_width="match_parent"
-                android:layout_height="30dp"
-                android:layout_marginBottom="5dp"
-                android:layout_marginTop="10dp"
-                android:background="@color/white"
-                >
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_marginLeft="10dp"
-                    android:gravity="center_vertical"
-                    android:text="客服列表"
-                    android:textColor="@color/black"
-                    android:textSize="18sp"/>
-            </LinearLayout>
-
-
-            <com.lib.common.hxp.view.ListViewForScrollView
-                android:id="@+id/main_lv"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="@color/white"/>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="30dp"
-                android:layout_marginBottom="5dp"
-                android:layout_marginTop="10dp"
-                android:background="@color/white"
-                >
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_marginLeft="10dp"
-                    android:gravity="center_vertical"
-                    android:text="所在位置"
-                    android:textColor="@color/black"
-                    android:textSize="18sp"/>
-            </LinearLayout>
-            <bc.juhao.com.ui.view.BaiduMapContainer
-                android:id="@+id/baiduMapContainer"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:visibility="gone">
-                <com.baidu.mapapi.map.MapView
-                    android:id="@+id/bmapView"
+                android:layout_height="225dp"
+                android:orientation="vertical">
+                <RelativeLayout
+                    android:id="@+id/toolbar"
                     android:layout_width="match_parent"
-                    android:layout_height="200dp"
-                    android:clickable="true"
-                    android:focusable="true"
-                    android:textIsSelectable="true"
-                    android:screenOrientation="portrait"/>
-            </bc.juhao.com.ui.view.BaiduMapContainer>
+                    android:layout_height="?attr/actionBarSize"
+                    android:minHeight="?attr/actionBarSize">
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <LinearLayout
+                            android:layout_width="80dp"
+                            android:layout_height="match_parent"
+                            android:gravity="center_vertical"
+                            android:onClick="goBack"
+                            android:paddingLeft="10dp">
+
+                            <ImageView
+                                android:id="@+id/topLeftBtn"
+                                android:layout_width="10dp"
+                                android:layout_height="20dp"
+                                android:layout_centerVertical="true"
+                                android:layout_marginRight="5dp"
+                                android:background="@mipmap/nav_left"
+                                android:textColor="#FFFFFF"/>
+                        </LinearLayout>
+
+                        <TextView
+                            android:id="@+id/title_tv"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerInParent="true"
+                            android:text="我的服务商"
+                            android:textColor="#666666"
+                            android:textSize="18dp"
+                            />
+                    </RelativeLayout>
+
+
+                </RelativeLayout>
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="130dp"
+                    >
+
+                    <de.hdodenhof.circleimageview.CircleImageView
+                        android:id="@+id/head_cv"
+                        android:layout_width="80dp"
+                        android:layout_height="80dp"
+                        android:layout_centerInParent="true"
+                        android:layout_marginLeft="20dp"
+                        android:src="@mipmap/icon_tixian_account"
+                        />
+
+                    <TextView
+                        android:id="@+id/nickname_tv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="#666666"
+                        android:layout_below="@+id/head_cv"
+                        android:layout_centerHorizontal="true"
+                        android:layout_marginTop="5dp"
+                        android:textSize="15dp"
+                        />
+
+                    <TextView
+                        android:id="@+id/phone_tv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/nickname_tv"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="20dp"
+                        android:layout_marginTop="3dp"
+                        android:layout_toRightOf="@id/head_cv"
+                        android:textColor="@color/white"
+                        android:visibility="gone"
+                        android:textSize="15dp"
+                        />
+                    <TextView
+                        android:id="@+id/address_tv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/phone_tv"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="20dp"
+                        android:visibility="gone"
+                        android:layout_marginTop="3dp"
+                        android:layout_toRightOf="@id/head_cv"
+                        android:textColor="@color/white"
+                        android:textSize="15dp"
+                        />
+                </RelativeLayout>
+            </LinearLayout>
+                <LinearLayout
+                    android:visibility="gone"
+                    android:background="#ffffff"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:gravity="center"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical"
+                        android:padding="5dp"
+                        android:layout_weight="1">
+                        <ImageView
+                            android:src="@mipmap/my_fws_qq"
+                            android:layout_width="24dp"
+                            android:layout_height="25dp" />
+                        <TextView
+                            android:text="添加QQ好友"
+                            android:textSize="14sp"
+                            android:textColor="#666666"
+                            android:layout_marginTop="5dp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" />
+                    </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:gravity="center"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical"
+                        android:padding="5dp"
+                        android:layout_weight="1">
+                        <ImageView
+                            android:src="@mipmap/my_fws_dh"
+                            android:layout_width="24dp"
+                            android:layout_height="25dp" />
+                        <TextView
+                            android:text="立即拨打电话"
+                            android:textSize="14sp"
+                            android:textColor="#666666"
+                            android:layout_marginTop="5dp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" />
+                    </LinearLayout> <LinearLayout
+                    android:layout_width="0dp"
+                    android:gravity="center"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    android:padding="5dp"
+                    android:layout_weight="1">
+                    <ImageView
+                        android:src="@mipmap/my_fws_kf"
+                        android:layout_width="24dp"
+                        android:layout_height="25dp" />
+                    <TextView
+                        android:text="联系客服"
+                        android:textSize="14sp"
+                        android:textColor="#666666"
+                        android:layout_marginTop="5dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+                </LinearLayout>
+                </LinearLayout>
+            <bc.juhao.com.ui.view.TextViewPlus
+                android:id="@+id/tv_kefu"
+                android:text="钜豪聊聊"
+                android:textSize="15sp"
+                android:textColor="#666666"
+                android:gravity="center_vertical"
+                android:background="#ffffff"
+                android:paddingLeft="15dp"
+                android:drawableLeft="@mipmap/icon_ll"
+                app:left_width="35dp"
+                app:left_height="35dp"
+                android:drawablePadding="5dp"
+                android:layout_marginTop="15dp"
+                android:layout_width="match_parent"
+                android:layout_height="60dp" />
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="30dp"
+                    android:layout_marginBottom="5dp"
+                    android:layout_marginTop="10dp"
+                    android:background="@color/white"
+                    >
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_marginLeft="10dp"
+                        android:gravity="center_vertical"
+                        android:text="客服列表"
+                        android:textColor="@color/black"
+                        android:textSize="18sp"/>
+                </LinearLayout>
+
+
+                <com.lib.common.hxp.view.ListViewForScrollView
+                    android:id="@+id/main_lv"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@color/white"/>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="5dp"
+                    android:padding="5dp"
+                    android:layout_marginTop="10dp"
+                    android:background="@color/white"
+                    >
+
+                    <bc.juhao.com.ui.view.TextViewPlus
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_marginLeft="10dp"
+                        android:gravity="center_vertical"
+                        android:text="所在位置"
+                        app:left_width="17dp"
+                        app:left_height="21dp"
+                        android:drawablePadding="5dp"
+                        android:drawableLeft="@mipmap/my_fws_wz"
+                        android:textColor="@color/black"
+                        android:textSize="18sp"/>
+                </LinearLayout>
+                <bc.juhao.com.ui.view.BaiduMapContainer
+                    android:id="@+id/baiduMapContainer"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:visibility="gone">
+                    <com.baidu.mapapi.map.MapView
+                        android:id="@+id/bmapView"
+                        android:layout_width="match_parent"
+                        android:layout_height="200dp"
+                        android:clickable="true"
+                        android:focusable="true"
+                        android:textIsSelectable="true"
+                        android:screenOrientation="portrait"/>
+                </bc.juhao.com.ui.view.BaiduMapContainer>
+
 
 
 

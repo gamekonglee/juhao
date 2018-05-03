@@ -21,6 +21,7 @@ import bocang.json.JSONArray;
 import bocang.json.JSONObject;
 import bocang.utils.AppUtils;
 import bocang.utils.LogUtils;
+import bocang.utils.MyToast;
 
 /**
  * @author: Jun
@@ -100,6 +101,10 @@ public class ClassifyGoods02Controller extends BaseController implements INetwor
     public void selectGoods() {
         mIntent = new Intent();
         String filter = "";
+        if(mFilterList==null||mFilterList.length()==0){
+            MyToast.show(mView,"数据加载中，请稍等");
+            return;
+        }
         for (int i = 0; i < mFilterList.length(); i++) {
             if (i == mFilterList.length() - 1) {
                 filter += mAdapter.mAttrList.get(i).getId();

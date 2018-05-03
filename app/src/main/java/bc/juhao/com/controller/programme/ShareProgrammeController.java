@@ -5,12 +5,23 @@ import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.os.Message;
 import android.support.v4.app.ActivityCompat;
+import android.view.View;
 import android.widget.Toast;
 
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.assist.FailReason;
+import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
+import com.tencent.mm.opensdk.modelmsg.SendMessageToWX;
+
+import java.io.IOException;
+
+import bc.juhao.com.cons.Constance;
+import bc.juhao.com.cons.NetWorkConst;
 import bc.juhao.com.controller.BaseController;
 import bc.juhao.com.ui.activity.IssueApplication;
 import bc.juhao.com.ui.activity.MainActivity;
 import bc.juhao.com.ui.activity.programme.ShareProgrammeActivity;
+import bc.juhao.com.ui.activity.user.MessageDetailActivity;
 import bc.juhao.com.ui.view.ScannerUtils;
 import bc.juhao.com.ui.view.ShowDialog;
 import bc.juhao.com.utils.ImageUtil;
@@ -23,6 +34,7 @@ import bc.juhao.com.utils.ShareUtil;
  */
 public class ShareProgrammeController extends BaseController {
     private ShareProgrammeActivity mView;
+    private Bitmap localBitmap;
 
     public ShareProgrammeController(ShareProgrammeActivity v) {
         mView = v;
@@ -52,10 +64,15 @@ public class ShareProgrammeController extends BaseController {
      * 查看方案
      */
     public void getFanganDetail() {
-        Intent mainIntent = new Intent(mView, MainActivity.class);
-        mainIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-        IssueApplication.isGoProgramme = true;
-        mView.startActivity(mainIntent);
+//        Intent mainIntent = new Intent(mView, MainActivity.class);
+//        mainIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+//        IssueApplication.isGoProgramme = true;
+//        mView.startActivity(mainIntent);
+        Intent intent = new Intent(mView, MessageDetailActivity.class);
+        String SceenId = mView.id;
+        intent.putExtra(Constance.url, NetWorkConst.SHAREFANAN_APP + SceenId);
+        intent.putExtra(Constance.FROMTYPE, 1);
+        mView.startActivity(intent);
     }
 
     /**
@@ -87,12 +104,17 @@ public class ShareProgrammeController extends BaseController {
                         new Thread(new Runnable() {
                             @Override
                             public void run() {
-                                final Bitmap bitmap = ImageUtil.getbitmap(mView.mShareImgPath);
+                                localBitmap = null;
+                                try {
+                                    localBitmap = ImageUtil.decodeFile(mView.mShareImgPath);
+                                } catch (IOException e) {
+                                    e.printStackTrace();
+                                }
                                 mView.runOnUiThread(new Runnable() {
                                     @Override
                                     public void run() {
-                                        ScannerUtils.saveImageToGallery(mView, bitmap, ScannerUtils.ScannerType.RECEIVER);
-                                        bitmap.recycle();
+                                        ScannerUtils.saveImageToGallery(mView, localBitmap, ScannerUtils.ScannerType.RECEIVER);
+                                        if(localBitmap !=null&&!localBitmap.isRecycled()) localBitmap.recycle();
                                         mView.hideLoading();
                                     }
                                 });
@@ -114,6 +136,31 @@ public class ShareProgrammeController extends BaseController {
      */
     public void getShareData() {
         Toast.makeText(mView, "正在分享..", Toast.LENGTH_LONG).show();
-        ShareUtil.showShareType02(mView, mView.mShareTitle, mView.mSharePath, mView.mShareImgPath, mView.mShareType, mView.typeShare,false,null);
+        try {
+            localBitmap = ImageUtil.decodeFile(mView.mShareImgPath);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        if(mView.mShareType==1){
+            //pic
+            if(mView.typeShare== SendMessageToWX.Req.WXSceneSession){
+                ShareUtil.shareWxPic(mView,mView.mShareTitle,localBitmap,true);
+            }else if(mView.typeShare==SendMessageToWX.Req.WXSceneTimeline){
+                ShareUtil.shareWxPic(mView,mView.mShareTitle,localBitmap,false);
+            }else {
+                ShareUtil.shareQQLocalpic(mView,mView.mShareImgPath,mView.mShareTitle);
+            }
+        }else {
+            if(mView.typeShare== SendMessageToWX.Req.WXSceneSession){
+                ShareUtil.shareWx(mView,mView.mShareTitle,mView.mSharePath,mView.mShareImgPath);
+            }else if(mView.typeShare==SendMessageToWX.Req.WXSceneTimeline){
+                ShareUtil.sharePyq(mView,mView.mShareTitle,mView.mSharePath,mView.mShareImgPath);
+            }else {
+                ShareUtil.shareQQ(mView,mView.mShareTitle,mView.mSharePath,mView.mShareImgPath);
+            }
+        }
+
+//        ShareUtil.showShareType02(mView, mView.mShareTitle, mView.mSharePath, mView.mShareImgPath, mView.mShareType, mView.typeShare,false,null);
+
     }
 }

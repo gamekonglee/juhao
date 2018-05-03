@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:orientation="vertical"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
     android:background="@color/white">
     <RelativeLayout
         android:id="@+id/logistics_name_rl"
@@ -69,26 +70,45 @@
         />
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="30dp"
+        android:layout_height="50dp"
         android:paddingLeft="5dp"
         android:paddingRight="10dp"
         android:gravity="center_vertical">
-        <TextView
+        <bc.juhao.com.ui.view.TextViewPlus
+            android:drawableLeft="@mipmap/shopping_icon_sel"
+            android:drawablePadding="10dp"
+            app:left_width="18dp"
+            app:left_height="18dp"
             android:id="@+id/default_addr_tv"
             android:layout_marginLeft="10dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/defaults_address"
-            android:textSize="18sp"
-            android:textColor="@color/colorPrimaryRed"
+            android:textSize="13sp"
+            android:textColor="@color/green"
             />
         <TextView
             android:id="@+id/edit_tv"
-            android:layout_marginLeft="10dp"
-            android:layout_width="wrap_content"
+            android:layout_width="70dp"
+            android:gravity="center"
             android:layout_height="wrap_content"
+            android:padding="5dp"
+            android:background="@drawable/bg_corner_5"
             android:text="编辑"
-            android:textSize="18sp"
+            android:textSize="12sp"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="80dp"
+            />
+        <TextView
+            android:id="@+id/tv_delete"
+            android:layout_marginLeft="10dp"
+            android:layout_width="70dp"
+            android:gravity="center"
+            android:padding="5dp"
+            android:layout_height="wrap_content"
+            android:background="@drawable/bg_corner_5"
+            android:text="删除"
+            android:textSize="12sp"
             android:layout_alignParentRight="true"
             />
     </RelativeLayout>

@@ -1,6 +1,9 @@
 package bc.juhao.com.ui.activity.user;
 
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.graphics.Color;
+import android.support.annotation.NonNull;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
@@ -40,7 +43,7 @@ public class UserAddrAddActivity extends BaseActivity {
     protected void initView() {
         setContentView(R.layout.activity_user_address_add);
         //沉浸式状态栏
-//        setColor(this, getResources().getColor(R.color.colorPrimary));
+        setColor(this, Color.WHITE);
         btnSave = getViewAndClick(R.id.btnSave);
         user_addr_llyCity = getViewAndClick(R.id.user_addr_llyCity);
         tv_delete = getViewAndClick(R.id.tv_delete);
@@ -70,6 +73,17 @@ public class UserAddrAddActivity extends BaseActivity {
                 break;
 
         }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if(requestCode==200&&grantResults[0]== PackageManager.PERMISSION_GRANTED){
+            mController.onRequestPermissionRsult();
+        }else if(requestCode==mController.REQUEST_LOCATION){
+            mController.startLocation();
+        }
+
     }
 
     public void goBack(View v){

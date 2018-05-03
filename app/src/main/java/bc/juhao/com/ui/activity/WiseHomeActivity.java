@@ -1,25 +1,16 @@
 package bc.juhao.com.ui.activity;
 
-import android.app.Activity;
 import android.content.Intent;
-import android.graphics.Color;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.view.View;
-import android.view.Window;
-import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import bc.juhao.com.R;
 import bc.juhao.com.common.BaseActivity;
-import bc.juhao.com.ui.fragment.CartFragment;
-import bc.juhao.com.ui.fragment.ClassifyFragment;
-import bc.juhao.com.ui.fragment.HomeFragment;
-import bc.juhao.com.ui.fragment.MineFragment;
 import bc.juhao.com.ui.fragment.intelligence.ItExperiFragment;
 import bc.juhao.com.ui.fragment.intelligence.ItHomeFragment;
 import bc.juhao.com.ui.fragment.intelligence.ItMineFragment;

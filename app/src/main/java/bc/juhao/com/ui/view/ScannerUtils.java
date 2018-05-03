@@ -26,7 +26,7 @@ public class ScannerUtils {
   }
 
   // 首先保存图片
-  public static void saveImageToGallery(Context context, Bitmap bitmap, ScannerType type) {
+  public static String saveImageToGallery(Context context, Bitmap bitmap, ScannerType type) {
     File appDir = new File(Environment.getExternalStorageDirectory().getAbsolutePath(), "juhao");
     if (!appDir.exists()) {
       // 目录不存在 则创建
@@ -47,11 +47,12 @@ public class ScannerUtils {
       } else if (type == ScannerType.MEDIA) {
         ScannerByMedia(context, file.getAbsolutePath());
       }
-      if (!bitmap.isRecycled()) {
+      if (bitmap!=null&&!bitmap.isRecycled()) {
         // bitmap.recycle(); 当存储大图片时，为避免出现OOM ，及时回收Bitmap
         System.gc(); // 通知系统回收
       }
       Toast.makeText(context, "图片保存为" + file.getAbsolutePath(), Toast.LENGTH_SHORT).show();
+      return file.getAbsolutePath();
     }
   }
   // 首先保存图片

@@ -1,5 +1,6 @@
 package bc.juhao.com.ui.fragment;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
@@ -16,6 +17,7 @@ import bc.juhao.com.R;
 import bc.juhao.com.common.BaseFragment;
 import bc.juhao.com.cons.Constance;
 import bc.juhao.com.controller.buy.CartController;
+import bc.juhao.com.ui.activity.MainActivity;
 
 /**
  * @author Jun
@@ -33,6 +35,7 @@ public class CartFragment extends BaseFragment implements View.OnClickListener {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+//        ((MainActivity)getActivity()).setColor(getActivity(), Color.WHITE);
         return inflater.inflate(R.layout.fm_cart_new, null);
     }
 

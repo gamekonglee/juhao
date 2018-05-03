@@ -1,6 +1,7 @@
 package bc.juhao.com.ui.activity.buy;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.view.View;
 
 import bc.juhao.com.R;
@@ -29,6 +30,7 @@ public class SearchActivity extends BaseActivity {
     @Override
     protected void initView() {
         setContentView(R.layout.activity_search);
+        setColor(this, Color.WHITE);
         search_layout = (Search_View) findViewById(R.id.search_layout);
         search_layout.setListener(new ISearchListener() {
             @Override

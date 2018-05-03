@@ -17,12 +17,14 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.AsyncTask;
+import android.support.v4.content.FileProvider;
 import android.view.View;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import bc.juhao.com.R;
+import bocang.utils.MyToast;
 
 public class EaseChatRowImage extends EaseChatRowFile{
 
@@ -84,16 +86,18 @@ public class EaseChatRowImage extends EaseChatRowFile{
         Intent intent = new Intent(context, EaseShowBigImageActivity.class);
         File file = new File(imgBody.getLocalUrl());
         if (file.exists()) {
-            Uri uri = Uri.fromFile(file);
+//            MyToast.show(context,"exists");
+            Uri uri = FileProvider.getUriForFile(context, "com.bocang.juhao.fileprovider", file);
             intent.putExtra("uri", uri);
         } else {
             // The local full size pic does not exist yet.
             // ShowBigImage needs to download it from the server
             // first
-            String msgId = message.getMsgId();
-            intent.putExtra("messageId", msgId);
-            intent.putExtra("localUrl", imgBody.getLocalUrl());
+
         }
+        String msgId = message.getMsgId();
+        intent.putExtra("messageId", msgId);
+        intent.putExtra("localUrl", imgBody.getLocalUrl());
         if (message != null && message.direct() == EMMessage.Direct.RECEIVE && !message.isAcked()
                 && message.getChatType() == ChatType.Chat) {
             try {

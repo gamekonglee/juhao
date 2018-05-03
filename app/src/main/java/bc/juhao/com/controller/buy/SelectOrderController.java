@@ -239,7 +239,7 @@ public class SelectOrderController extends BaseController implements PullToRefre
             holder.code_tv.setText("订单号:" + orderobject.getString(Constance.sn));
             final JSONArray array = orderobject.getJSONArray(Constance.goods);
             holder.time_tv.setText(DateUtils.getStrTime(orderobject.getString(Constance.created_at)));
-            OrderGvAdapter maGvAdapter = new OrderGvAdapter(mView, array, 1, state);
+            OrderGvAdapter maGvAdapter = new OrderGvAdapter(mView, array, 1, state,orderobject.getString(Constance.id));
             holder.lv.setAdapter(maGvAdapter);
             maGvAdapter.setUpdateProductPriceListener(new IUpdateProductPriceListener() {
                 @Override

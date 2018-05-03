@@ -1,6 +1,7 @@
 package bc.juhao.com.ui.activity.user;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.view.View;
 import android.widget.Button;
 
@@ -36,6 +37,7 @@ public class RegiestActivity extends BaseActivity {
     @Override
     protected void initView() {
         setContentView(R.layout.activity_regiest_new);
+        setColor(this, Color.WHITE);
         sure_bt=getViewAndClick(R.id.sure_bt);
         find_pwd_btnGetCode=getViewAndClick(R.id.find_pwd_btnGetCode);
     }

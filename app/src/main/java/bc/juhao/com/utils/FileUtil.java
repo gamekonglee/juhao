@@ -13,12 +13,14 @@ import android.net.Uri;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.FileProvider;
 import android.util.Base64;
 import android.util.Log;
 import android.webkit.WebView;
 
 import com.bigkoo.alertview.AlertView;
 import com.bigkoo.alertview.OnItemClickListener;
+import com.donkingliang.imageselector.utils.ImageSelectorUtils;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -35,9 +37,12 @@ import java.util.Date;
 
 import bc.juhao.com.cons.Constance;
 import bc.juhao.com.ui.activity.IssueApplication;
+import bc.juhao.com.ui.activity.product.PostedImageActivity;
+import bc.juhao.com.ui.activity.user.VideoShotActivity;
 import bocang.utils.PermissionUtils;
 
 import static android.os.Environment.MEDIA_MOUNTED;
+import static bc.juhao.com.ui.activity.user.SimpleScannerActivity.REQUEST_CODE;
 
 /**
  * Created by xpHuang on 2016/9/5.
@@ -99,11 +104,13 @@ public class FileUtil {
             Date date = new Date(System.currentTimeMillis());
             IssueApplication.imagePath = format.format(date);
             IssueApplication.cameraPath = FileUtil.getOwnFilesDir(context, Constance.CAMERA_PATH);
-            Uri imageUri = Uri.fromFile(new File(IssueApplication.cameraPath, IssueApplication.imagePath + ".jpg"));
-            System.out.println("imageUri" + imageUri.toString());
+//            Uri imageUri = Uri.fromFile(new File(IssueApplication.cameraPath, IssueApplication.imagePath + ".jpg"));
+            Uri apkUri =
+                    FileProvider.getUriForFile(context, "com.bocang.juhao.fileprovider", new File(IssueApplication.cameraPath, IssueApplication.imagePath + ".jpg"));
+            System.out.println("imageUri" + apkUri.toString());
             Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE); // 调用系统相机
             // 指定照片保存路径（SD卡）
-            intent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri);
+            intent.putExtra(MediaStore.EXTRA_OUTPUT, apkUri);
             context.startActivityForResult(intent, Constance.PHOTO_WITH_CAMERA); // 用户点击了从相机获取
         }
 
@@ -154,7 +161,45 @@ public class FileUtil {
             }
         }).show();
     }
-
+    /**
+     * 选择图片
+     *
+     * @param context
+     */
+    public static void openSunImage(final Activity context) {
+        new AlertView(null, null, "取消", null,
+                new String[]{"拍照", "从相册中选择","小视频"},
+                context, AlertView.Style.ActionSheet, new OnItemClickListener() {
+            @Override
+            public void onItemClick(Object o, int position) {
+                switch (position) {
+                    case 0:
+                        PermissionUtils.requestPermission(context, PermissionUtils.CODE_CAMERA, new PermissionUtils.PermissionGrant() {
+                            @Override
+                            public void onPermissionGranted(int requestCode) {
+                                takePhoto(context);
+                            }
+                        });
+                        break;
+                    case 1:
+                        PermissionUtils.requestPermission(context, PermissionUtils.CODE_READ_EXTERNAL_STORAGE, new PermissionUtils.PermissionGrant() {
+                            @Override
+                            public void onPermissionGranted(int requestCode) {
+                                ImageSelectorUtils.openPhoto(context, REQUEST_CODE, false, 3);
+                            }
+                        });
+                        break;
+                    case 2:
+                        PermissionUtils.requestPermission(context, PermissionUtils.CODE_CAMERA, new PermissionUtils.PermissionGrant() {
+                            @Override
+                            public void onPermissionGranted(int requestCode) {
+                                context.startActivityForResult(new Intent(context, VideoShotActivity.class),300);
+                            }
+                        });
+                }
+            }
+        }).show();
+    }
 
     /**
      * 通过Base32将Bitmap转换成Base64字符串

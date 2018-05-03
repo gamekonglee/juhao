@@ -43,8 +43,11 @@ import android.widget.TextView;
 import java.util.Locale;
 
 import bc.juhao.com.R;
+import bc.juhao.com.utils.UIUtils;
 
 public class MyPagerSlidingTabStrip extends HorizontalScrollView {
+
+	public float linePadding=100;
 
 	public interface IconTabProvider {
 		public int getPageIconResId(int position);
@@ -84,7 +87,7 @@ public class MyPagerSlidingTabStrip extends HorizontalScrollView {
 	private int scrollOffset = 52;
 	private int indicatorHeight = 2;
 	private int underlineHeight = 2;
-	private int dividerPadding = 12;
+	private int dividerPadding = 0;
 	private int tabPadding = 24;
 	private int dividerWidth = 1;
 
@@ -101,10 +104,10 @@ public class MyPagerSlidingTabStrip extends HorizontalScrollView {
 //	gaga:pstsSelectTextViewSize="26sp"
 //	gaga:pstsTextViewColor="#00ff23"
 //	gaga:pstsSelectTextViewColor="#ff4d00"
-	private int defaultSize=16;
-	private int selectSize=26;
-	private int defaultColor=0x00FF23;
-	private int selectColor=0xff4d00;
+	public int defaultSize=UIUtils.dip2PX(15);
+	public int selectSize= UIUtils.dip2PX(15);
+	public int defaultColor=0x00FF23;
+	public int selectColor=0xff4d00;
 	private int mcurrent=0;
 //	-----------------end
 
@@ -368,7 +371,7 @@ public class MyPagerSlidingTabStrip extends HorizontalScrollView {
 			lineRight = (currentPositionOffset * nextTabRight + (1f - currentPositionOffset) * lineRight);
 		}
 
-		canvas.drawRect(lineLeft, height - indicatorHeight, lineRight, height, rectPaint);
+		canvas.drawRect(lineLeft+linePadding, height - indicatorHeight, lineRight-linePadding, height, rectPaint);
 
 //		float x1=(lineRight-lineLeft)/2+lineLeft;
 //		float y1= height - indicatorHeight;
@@ -388,6 +391,7 @@ public class MyPagerSlidingTabStrip extends HorizontalScrollView {
 
 		rectPaint.setColor(underlineColor);
 		canvas.drawRect(0, height - underlineHeight, tabsContainer.getWidth(), height, rectPaint);
+//		canvas.drawRect(0, height - underlineHeight, 400, height, rectPaint);
 
 		// draw divider
 

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    android:orientation="vertical"
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <bc.juhao.com.ui.view.PMSwipeRefreshLayout
+        android:id="@+id/pullToRefresh"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <bc.juhao.com.ui.view.EndOfGridView
+            android:id="@+id/priductGridView"
+            android:horizontalSpacing="5dp"
+            android:numColumns="2"
+            android:paddingLeft="10dp"
+            android:background="#ffffff"
+            android:paddingRight="10dp"
+            android:paddingTop="5dp"
+            android:scrollbars="none"
+            android:verticalSpacing="15dp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+    </bc.juhao.com.ui.view.PMSwipeRefreshLayout>
+</LinearLayout>

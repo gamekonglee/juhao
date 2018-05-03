@@ -40,6 +40,8 @@ import android.view.View.OnClickListener;
 import android.widget.ProgressBar;
 
 import bc.juhao.com.R;
+import bc.juhao.com.utils.UIUtils;
+import bocang.utils.LogUtils;
 
 /**
  * download and show original image
@@ -116,6 +118,7 @@ public class EaseShowBigImageActivity extends EaseBaseActivity {
 		pd.setMessage(str1);
 		pd.show();
 		File temp = new File(localFilePath);
+//		LogUtils.logE("local",localFilePath);
 		final String tempPath = temp.getParent() + "/temp_" + temp.getName();
 		final EMCallBack callback = new EMCallBack() {
 			public void onSuccess() {
@@ -141,7 +144,7 @@ public class EaseShowBigImageActivity extends EaseBaseActivity {
 						if (isFinishing() || isDestroyed()) {
 						    return;
 						}
-						if (pd != null) {
+						if(UIUtils.isValidContext(EaseShowBigImageActivity.this)&&pd!=null&&pd.isShowing()){
 							pd.dismiss();
 						}
 					}
@@ -161,7 +164,9 @@ public class EaseShowBigImageActivity extends EaseBaseActivity {
 						    return;
 						}
                         image.setImageResource(default_res);
-                        pd.dismiss();
+						if(UIUtils.isValidContext(EaseShowBigImageActivity.this)&&pd!=null&&pd.isShowing()){
+							pd.dismiss();
+						}
 					}
 				});
 			}

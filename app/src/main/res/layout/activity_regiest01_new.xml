@@ -13,11 +13,13 @@
 
         <RelativeLayout
             android:id="@+id/toolbar"
+            android:background="#ffffff"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             android:minHeight="?attr/actionBarSize">
 
             <RelativeLayout
+                android:background="#ffffff"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
 

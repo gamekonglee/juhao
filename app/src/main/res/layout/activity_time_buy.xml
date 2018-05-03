@@ -13,7 +13,7 @@
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
-            android:background="@drawable/icon_top"
+            android:background="#ffffff"
             android:minHeight="?attr/actionBarSize">
 
             <RelativeLayout
@@ -28,11 +28,11 @@
                     android:paddingLeft="10dp">
                     <ImageView
                         android:id="@+id/topLeftBtn"
-                        android:layout_width="24dp"
-                        android:layout_height="24dp"
+                        android:layout_width="10dp"
+                        android:layout_height="20dp"
                         android:layout_centerVertical="true"
                         android:layout_marginRight="5dp"
-                        android:background="@drawable/goback"
+                        android:background="@mipmap/nav_left"
 
                         android:textColor="#FFFFFF"/>
                 </LinearLayout>
@@ -40,7 +40,7 @@
                     android:id="@+id/title_tv"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textColor="@color/white"
+                    android:textColor="#666666"
                     android:textSize="18dp"
                     android:layout_centerInParent="true"
                     android:text="限时抢购"
@@ -98,13 +98,26 @@
             <RelativeLayout
                 android:id="@+id/time_end_rl"
                 android:layout_width="match_parent"
-                android:layout_height="35dp"
-                android:background="@color/background_color"
+                android:layout_height="70dp"
+                android:background="#ffffff"
                 android:visibility="gone">
+            <bc.juhao.com.ui.view.TextViewPlus
+                android:drawableLeft="@mipmap/xsg_icon_sj"
+                android:drawablePadding="10dp"
+                app:left_width="18dp"
+                app:left_height="18dp"
+                android:layout_width="wrap_content"
+                android:text="正在疯抢中"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="10dp"
+                android:textColor="@color/green"
+                android:textSize="15sp"
+                android:layout_height="wrap_content" />
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="27dp"
-                    android:layout_centerInParent="true"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="30dp"
                     android:background="@drawable/shape_invitation"
                     android:paddingLeft="30dp"
                     android:paddingRight="30dp"
@@ -114,7 +127,7 @@
                         android:id="@+id/end_time_tv"
                         android:layout_width="wrap_content"
                         android:layout_height="27dp"
-                       android:textSize="12dp"
+                       android:textSize="11sp"
                         android:gravity="center_vertical"
                         android:textColor="@color/txt_black"
                         android:text="还剩下："/>
@@ -133,9 +146,9 @@
                         app:suffixSecond="秒"
                         app:isShowSecond="true"
                         app:suffixTextColor="@color/txt_black"
-                        app:suffixTextSize="12dp"
+                        app:suffixTextSize="11sp"
                         app:timeTextColor="@color/txt_black"
-                        app:timeTextSize="12dp" />
+                        app:timeTextSize="11sp" />
                 </LinearLayout>
 
             </RelativeLayout>

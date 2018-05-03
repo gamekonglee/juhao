@@ -29,6 +29,8 @@
             android:layout_weight="1"/>
     </LinearLayout>
     <View
-        style="@style/view_style"
+        android:background="#dddddd"
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
         />
 </LinearLayout>

@@ -11,6 +11,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.provider.MediaStore;
+import android.support.v4.content.FileProvider;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v4.widget.SwipeRefreshLayout.OnRefreshListener;
 import android.view.Gravity;
@@ -887,7 +888,7 @@ public abstract class EaseChatFragment extends EaseBaseFragment implements EMMes
         //noinspection ResultOfMethodCallIgnored
         cameraFile.getParentFile().mkdirs();
         startActivityForResult(
-                new Intent(MediaStore.ACTION_IMAGE_CAPTURE).putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(cameraFile)),
+                new Intent(MediaStore.ACTION_IMAGE_CAPTURE).putExtra(MediaStore.EXTRA_OUTPUT, FileProvider.getUriForFile(getContext(),  "com.bocang.juhao.fileprovider", cameraFile)),
                 REQUEST_CODE_CAMERA);
     }
 

@@ -2,6 +2,7 @@ package bc.juhao.com.ui.activity.user;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -49,7 +50,7 @@ public class MyOrderActivity extends BaseActivity implements OnItemClickListener
     protected void initView() {
         setContentView(R.layout.activity_myorder);
         //沉浸式状态栏
-//        setColor(this, getResources().getColor(R.color.colorPrimary));
+        setColor(this, Color.WHITE);
         search_rl = getViewAndClick(R.id.search_rl);
 
         imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);

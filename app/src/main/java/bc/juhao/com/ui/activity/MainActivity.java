@@ -1,21 +1,21 @@
 package bc.juhao.com.ui.activity;
 
-import android.app.Activity;
 import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.res.Resources;
 import android.graphics.Color;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.text.TextUtils;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.Display;
 import android.view.KeyEvent;
 import android.view.View;
-import android.view.Window;
-import android.view.WindowManager;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.hyphenate.EMCallBack;
@@ -35,6 +35,7 @@ import java.lang.reflect.Method;
 import java.util.List;
 
 import bc.juhao.com.R;
+import bc.juhao.com.bean.LoginResult;
 import bc.juhao.com.chat.DemoHelper;
 import bc.juhao.com.common.BaseActivity;
 import bc.juhao.com.cons.Constance;
@@ -42,7 +43,8 @@ import bc.juhao.com.controller.MainController;
 import bc.juhao.com.ui.activity.user.LoginActivity;
 import bc.juhao.com.ui.fragment.CartFragment;
 import bc.juhao.com.ui.fragment.ClassifyFragment;
-import bc.juhao.com.ui.fragment.HomeFragment;
+import bc.juhao.com.ui.fragment.HomeVpFragment;
+import bc.juhao.com.ui.fragment.home.HomeFragment;
 import bc.juhao.com.ui.fragment.MineFragment;
 import bc.juhao.com.ui.fragment.ProgrammeFragment;
 import bc.juhao.com.ui.view.BottomBar;
@@ -57,7 +59,7 @@ import cn.jpush.android.api.JPushInterface;
 import me.leolin.shortcutbadger.ShortcutBadger;
 
 public class MainActivity extends BaseActivity implements View.OnClickListener {
-    public HomeFragment mHomeFragment;
+    public HomeVpFragment mHomeFragment;
     private ClassifyFragment mProductFragment;
     private CartFragment mCartFragment;
     private ProgrammeFragment mMatchFragment;
@@ -85,13 +87,14 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     private ImageView frag_mine_iv;
 
     public static boolean isForeground = false;
-    private int mFragmentPosition;
+    public static int mFragmentPosition;
+    private int navigationBarHegiht;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         init();
-        fullScreen(this);
+//        fullScreen(this);
         EventBus.getDefault().register(this);
 //        ActivityCompat.requestPermissions(this,
 //                new String[]{Manifest.permission.RECORD_AUDIO, Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.CALL_PHONE},
@@ -139,9 +142,15 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
             case 2:
                 break;
             case 3:
+                if(isToken()){
+                    return;
+                }
                 selectItem(R.id.frag_cart_ll);
                 break;
             case 4:
+                if(isToken()){
+                    return;
+                }
                 selectItem(R.id.frag_mine_ll);
                 break;
         }
@@ -158,9 +167,16 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     @Override
     protected void initView() {
         setContentView(R.layout.activity_main);
-
         //沉浸式状态栏
-//         setColor(this, getResources().getColor(R.color.green));
+        setStatuTextColor(this, Color.WHITE);
+        setFullScreenColor(Color.TRANSPARENT,this);
+        navigationBarHegiht = getNavigationBarHeight2();
+        View ll_main=findViewById(R.id.ll_main);
+        RelativeLayout.LayoutParams layoutParams=new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.MATCH_PARENT);
+        layoutParams.setMargins(0,0,0,navigationBarHegiht);
+//        ll_main.setLayoutParams(layoutParams);
+//            getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
+//        getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
         frag_top_tv = (TextView) findViewById(R.id.frag_top_tv);
         frag_product_tv = (TextView) findViewById(R.id.frag_product_tv);
         frag_match_tv = (TextView) findViewById(R.id.frag_match_tv);
@@ -218,6 +234,45 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         Log.e("520it", "initView: " + getHasVirtualKey() + ":" + getNoHasVirtualKey() );
 
     }
+    private int getNavigationBarHeight() {
+        Resources resources = getResources();
+        int resourceId = resources.getIdentifier("navigation_bar_height","dimen", "android");
+        int height = resources.getDimensionPixelSize(resourceId);
+        Log.v("dbw", "Navi height:" + height);
+        return height;
+    }
+    private int gethdHeight(Context context){
+        int rid=context.getResources().getIdentifier("config_showNavigationBar","bool","android");
+        if(rid!=0){
+            int resourceId=context.getResources().getIdentifier("navigation_bar_height","dimen","android");
+            return context.getResources().getDimensionPixelSize(resourceId);
+        }else {
+            return 0;
+        }
+    }
+    public int getNavigationBarHeight2() {
+
+        Resources resources = getResources();
+
+        int resourceId=resources.getIdentifier("navigation_bar_height","dimen","android");
+
+        int height = resources.getDimensionPixelSize(resourceId);
+
+        Log.v("navigation bar>>>", "height:" + height);
+
+        return height;
+
+    }
+//    private int getDaoHangHeight(Context context) {
+//         int result = 0; 
+//        int rid = context.getResources().getIdentifier("config_showNavigationBar", "bool", "android"); 
+//        if (rid != 0) { 
+//            int resourceId = context.getResources().getIdentifier("navigation_bar_height", "dimen", "android"); 
+//            return context.getResources().getDimensionPixelSize(resourceId); 
+//        } else {
+//            return 0;
+//        } 
+//    }
 
     // 通过反射机制获取手机状态栏高度
     public int getStatusBarHeight() {
@@ -466,10 +521,18 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                     clickTab3Layout();
                     break;
                 case R.id.frag_cart_ll:
+                    if(isToken()){
+                        checkUI();
+                        return;
+                    }
                     mFragmentPosition=3;
                     clickTab4Layout();
                     break;
                 case R.id.frag_mine_ll:
+                    if(isToken()){
+                        checkUI();
+                        return;
+                    }
                     mFragmentPosition=4;
                     clickTab5Layout();
                     break;
@@ -488,7 +551,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
      */
     private void initTab() {
         if (mHomeFragment == null) {
-            mHomeFragment = new HomeFragment();
+            mHomeFragment = new HomeVpFragment();
         }
         if (!mHomeFragment.isAdded()) {
             // 提交事务
@@ -506,7 +569,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
      */
     public void clickTab1Layout() {
         if (mHomeFragment == null) {
-            mHomeFragment = new HomeFragment();
+            mHomeFragment = new HomeVpFragment();
         }
         addOrShowFragment(getSupportFragmentManager().beginTransaction(), mHomeFragment);
 
@@ -636,19 +699,26 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         if (action == Constance.CARTCOUNT) {
             mController.setIsShowCartCount();
         }
-        if (action == Constance.MESSAGE) {
-            unreadMsgCount = IssueApplication.unreadMsgCount;
-            if (unreadMsgCount == 0) {
-                mHomeFragment.unMessageTv.setVisibility(View.GONE);
-                ShortcutBadger.applyCount(this, 0);
-            } else {
-                ShortcutBadger.applyCount(this, this.unreadMsgCount); //for 1.1.4+
-                mHomeFragment.unMessageTv.setVisibility(View.VISIBLE);
-                mHomeFragment.unMessageTv.setText(unreadMsgCount + "");
+//        if (action == Constance.MESSAGE) {
+//            unreadMsgCount = IssueApplication.unreadMsgCount;
+//            if (unreadMsgCount == 0) {
+//                mHomeFragment.unMessageTv.setVisibility(View.GONE);
+//                ShortcutBadger.applyCount(this, 0);
+//            } else {
+//                ShortcutBadger.applyCount(this, this.unreadMsgCount); //for 1.1.4+
+//                mHomeFragment.unMessageTv.setVisibility(View.VISIBLE);
+//                mHomeFragment.unMessageTv.setText(unreadMsgCount + "");
+//            }
+//        }
+    }
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onLoginResult(LoginResult result){
+        if(result.result==1){
+            if(!TextUtils.isEmpty(MyShare.get(this).getString(Constance.TOKEN))){
+                mController.sendUser();
             }
         }
     }
-
     @Override
     public void onClick(View v) {
         //	设置 如果电机的是当前的的按钮 再次点击无效
@@ -711,12 +781,22 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                 clickTab3Layout();
                 break;
             case R.id.frag_cart_ll:
+            case R.id.frag_cart_tv:
+                if(isToken()){
+                    checkUI();
+                    return;
+                }
                 mFragmentPosition=3;
                 frag_cart_tv.setSelected(true);
                 frag_cart_iv.setSelected(true);
                 clickTab4Layout();
                 break;
             case R.id.frag_mine_ll:
+            case R.id.frag_mine_tv:
+                if(isToken()){
+                    checkUI();
+                    return;
+                }
                 mFragmentPosition=4;
                 frag_mine_tv.setSelected(true);
                 frag_mine_iv.setSelected(true);
@@ -739,18 +819,18 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                 frag_match_iv.setSelected(true);
                 clickTab3Layout();
                 break;
-            case R.id.frag_cart_tv:
-                mFragmentPosition=3;
-                frag_cart_tv.setSelected(true);
-                frag_cart_iv.setSelected(true);
-                clickTab4Layout();
-                break;
-            case R.id.frag_mine_tv:
-                mFragmentPosition=4;
-                frag_mine_tv.setSelected(true);
-                frag_mine_iv.setSelected(true);
-                clickTab5Layout();
-                break;
+
+//                mFragmentPosition=3;
+//                frag_cart_tv.setSelected(true);
+//                frag_cart_iv.setSelected(true);
+//                clickTab4Layout();
+//                break;
+
+//                mFragmentPosition=4;
+//                frag_mine_tv.setSelected(true);
+//                frag_mine_iv.setSelected(true);
+//                clickTab5Layout();
+//                break;
         }
     }
 //    /**

@@ -1,6 +1,11 @@
 package bc.juhao.com.ui.activity.product;
 
 import android.content.Intent;
+import android.graphics.Color;
+import android.os.Build;
+import android.support.annotation.RequiresApi;
+import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -15,7 +20,7 @@ import bocang.view.BaseActivity;
 
 /**
  * @author: Jun
- * @date : 2017/2/16 17:30
+ * @date : 1217/2/16 17:30
  * @description :选择产品
  */
 public class SelectGoodsActivity extends BaseActivity {
@@ -23,7 +28,7 @@ public class SelectGoodsActivity extends BaseActivity {
     private TextView topRightBtn;
     private TextView popularityTv, newTv, saleTv;
     private LinearLayout stylell;
-    public String mCategoriesId;
+    public String mCategoriesId="";
     public boolean isSelectGoods = false;
     public String mFilterAttr = "";
     public TextView select_num_tv;
@@ -31,6 +36,7 @@ public class SelectGoodsActivity extends BaseActivity {
     private RelativeLayout select_rl;
     public int mSort=-1;
     public boolean mIsYiJI=false;
+    public String keyword="";
 
     @Override
     protected void InitDataView() {
@@ -41,6 +47,32 @@ public class SelectGoodsActivity extends BaseActivity {
     }
 
     @Override
+    protected void onRestart() {
+        super.onRestart();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+    }
+
+    @Override
+    protected void onNewIntent(Intent intent) {
+        mCategoriesId = intent.getStringExtra(Constance.categories);
+        if(!intent.hasExtra("key"))keyword="";
+        String et_content=intent.getStringExtra("name");
+        if(!TextUtils.isEmpty(et_content)){
+        mController.et_search.setText(et_content);
+        }
+        if (mIsYiJI) {
+            mController.selectYijiProduct(1, "12", null, null, null);
+        } else {
+            mController.selectProduct(1, "12", null, null, null);
+        }
+        super.onNewIntent(intent);
+    }
+
+    @Override
     protected void initController() {
         mController = new SelectGoodsController(this);
         if(getIntent().hasExtra("news")){
@@ -48,6 +80,7 @@ public class SelectGoodsActivity extends BaseActivity {
         }
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
     protected void initView() {
         setContentView(R.layout.activity_select_product);
@@ -58,8 +91,7 @@ public class SelectGoodsActivity extends BaseActivity {
         stylell = getViewAndClick(R.id.stylell);
         select_num_tv = (TextView)findViewById(R.id.select_num_tv);
         select_rl = getViewAndClick(R.id.select_rl);
-
-
+        setColor(this, Color.WHITE);
     }
 
     @Override
@@ -117,6 +149,15 @@ public class SelectGoodsActivity extends BaseActivity {
                 return;
             mFilterAttr=value;
             mController.onRefresh();
+        }else if(requestCode==120&&resultCode==120){
+            keyword = data.getStringExtra("key");
+            mCategoriesId="";
+            mController.et_search.setText(keyword);
+            if (mIsYiJI) {
+                mController.selectYijiProduct(1, "12", null, null, null);
+            } else {
+                mController.selectProduct(1, "12", null, null, null);
+            }
         }
     }
 }

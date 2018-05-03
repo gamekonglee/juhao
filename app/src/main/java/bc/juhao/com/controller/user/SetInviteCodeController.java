@@ -93,6 +93,6 @@ public class SetInviteCodeController extends BaseController implements INetworkC
             AppDialog.messageBox(UIUtils.getString(R.string.server_error));
             return;
         }
-        AppDialog.messageBox(ans.getString(Constance.error_desc));
+//        AppDialog.messageBox(ans.getString(Constance.error_desc));
     }
 }

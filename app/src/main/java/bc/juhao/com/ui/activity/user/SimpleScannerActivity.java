@@ -1,11 +1,15 @@
 package bc.juhao.com.ui.activity.user;
 
+import android.app.Dialog;
 import android.content.ContentResolver;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.Toast;
 
@@ -20,6 +24,7 @@ import java.util.Hashtable;
 
 import bc.juhao.com.R;
 import bc.juhao.com.cons.Constance;
+import bc.juhao.com.controller.SimpleScannerLoginController;
 import bc.juhao.com.ui.activity.product.ProDetailActivity;
 import bc.juhao.com.utils.RGBLuminanceSource;
 import bocang.utils.MyToast;
@@ -36,6 +41,8 @@ public class SimpleScannerActivity extends BaseActivity implements ZXingScannerV
     private Button qrcode_fileAlbum;
     public static final int REQUEST_CODE = 200;
     private Intent mIntent;
+    private Dialog dialog;
+    private SimpleScannerLoginController controller;
 
     @Override
     protected void InitDataView() {
@@ -51,7 +58,7 @@ public class SimpleScannerActivity extends BaseActivity implements ZXingScannerV
     protected void initView() {
         setContentView(R.layout.activity_simplescanner);
         //沉浸式状态栏
-//        setColor(this, getResources().getColor(R.color.colorPrimary));
+        setColor(this, Color.WHITE);
         mScannerView = (ZXingScannerView) findViewById(R.id.qrcode_ZXingScannerView);
         qrcode_fileAlbum = getViewAndClick(R.id.qrcode_fileAlbum);
 
@@ -61,10 +68,7 @@ public class SimpleScannerActivity extends BaseActivity implements ZXingScannerV
 
             }
         });
-
     }
-
-
     @Override
     public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
@@ -103,12 +107,41 @@ public class SimpleScannerActivity extends BaseActivity implements ZXingScannerV
     }
 
     @Override
-    public void handleResult(Result result) {
-        mIntent = new Intent(this, ProDetailActivity.class);
-        int productId = Integer.parseInt(result.getText());
-        mIntent.putExtra(Constance.product, productId);
-        this.startActivity(mIntent);
-        this.finish();
+    public void handleResult(final Result result) {
+        if(result.getText()!=null&&result.getText().contains("scale")){
+            dialog = new Dialog(this, R.style.customDialog);
+            dialog.setContentView(R.layout.dialog_login);
+            dialog.setCancelable(true);
+            dialog.setCanceledOnTouchOutside(true);
+            dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+            dialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
+            Button btn_login= dialog.findViewById(R.id.btn_login);
+            Button btn_cancel= dialog.findViewById(R.id.btn_cancel);
+//            MyToast.show(this,result.getText());
+            btn_cancel.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    dialog.dismiss();
+                    finish();
+                }
+            });
+            btn_login.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    showLoading();
+                    dialog.dismiss();
+                    controller = new SimpleScannerLoginController(SimpleScannerActivity.this,result.getText());
+                }
+            });
+            dialog.show();
+        }else {
+            mIntent = new Intent(this, ProDetailActivity.class);
+            int productId = Integer.parseInt(result.getText());
+            mIntent.putExtra(Constance.product, productId);
+            this.startActivity(mIntent);
+            this.finish();
+        }
+
     }
 
 

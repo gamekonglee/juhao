@@ -1,6 +1,7 @@
 package bc.juhao.com.ui.adapter;
 
 import android.content.Context;
+import android.text.TextUtils;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
@@ -12,7 +13,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 import bc.juhao.com.R;
+import bc.juhao.com.cons.Constance;
 import bc.juhao.com.cons.NetWorkConst;
+import bc.juhao.com.ui.activity.IssueApplication;
+import bc.juhao.com.utils.MyShare;
+import bc.juhao.com.utils.ShareUtil;
+import bocang.json.JSONObject;
 
 /**
  * @author Jun
@@ -64,8 +70,28 @@ public class SunImageAdapter extends BaseAdapter {
         } else {
             holder = (ViewHolder) convertView.getTag();
         }
-        String imageUrl= NetWorkConst.SCENE_HOST+mImageResList.get(position);
-        ImageLoader.getInstance().displayImage(imageUrl, holder.imageView);
+
+        if(position==2){
+            String Token= MyShare.get(mContext).getString(Constance.TOKEN);
+            if(!TextUtils.isEmpty(Token)) {
+                JSONObject mUserObject= IssueApplication.mUserObject;
+                if(mUserObject!=null){
+                    int leve=mUserObject.getInt(Constance.level);
+                    if(leve==0){
+                            holder.imageView.setImageResource(R.mipmap.spxq_icon_st);
+                        }else {
+                        String imageUrl= NetWorkConst.SCENE_HOST+mImageResList.get(position);
+                        ImageLoader.getInstance().displayImage(imageUrl, holder.imageView);
+                    }
+                }
+            }
+        }else {
+            String imageUrl= NetWorkConst.SCENE_HOST+mImageResList.get(position);
+            ImageLoader.getInstance().displayImage(imageUrl, holder.imageView);
+        }
+
+
+
         return convertView;
     }
 

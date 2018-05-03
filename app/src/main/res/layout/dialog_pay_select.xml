@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    android:orientation="vertical"
+    android:gravity="bottom"
+    android:background="#ffffff"
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <TextView
+        android:text="请选择您的支付方式"
+        android:textColor="#333333"
+        android:textSize="15sp"
+        android:gravity="center"
+        android:padding="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+    <View
+        android:background="#dddddd"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"/>
+    <LinearLayout
+        android:id="@+id/ll_alipay"
+        android:gravity="center_vertical"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:orientation="horizontal">
+        <ImageView
+            android:id="@+id/iv_alipay"
+            android:layout_marginLeft="15dp"
+            android:src="@mipmap/shopping_icon_sel"
+            android:layout_width="20dp"
+            android:layout_height="20dp" />
+        <TextView
+            android:text="支付宝支付"
+            android:textSize="14sp"
+            android:textColor="#333333"
+            android:layout_marginLeft="35dp"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content" />
+        <ImageView
+            android:src="@drawable/zs_appliay"
+            android:layout_width="30dp"
+            android:layout_marginRight="35dp"
+            android:layout_height="30dp" />
+    </LinearLayout>
+    <View
+        android:background="#dddddd"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"/>
+    <LinearLayout
+        android:id="@+id/ll_wxpay"
+        android:gravity="center_vertical"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:orientation="horizontal">
+        <ImageView
+            android:id="@+id/iv_wxpay"
+            android:layout_marginLeft="15dp"
+            android:src="@mipmap/shopping_icon_nor"
+            android:layout_width="20dp"
+            android:layout_height="20dp" />
+        <TextView
+            android:text="微信支付"
+            android:textSize="14sp"
+            android:textColor="#333333"
+            android:layout_marginLeft="35dp"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content" />
+        <ImageView
+            android:src="@drawable/zs_weixin"
+            android:layout_width="30dp"
+            android:layout_marginRight="35dp"
+            android:layout_height="30dp" />
+    </LinearLayout>
+    <Button
+        android:id="@+id/btn_submit"
+        android:text="确定支付"
+        android:textColor="#ffffff"
+        android:background="@color/green"
+        android:layout_width="match_parent"
+        android:layout_height="50dp" />
+</LinearLayout>

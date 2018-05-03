@@ -1,5 +1,6 @@
 package bc.juhao.com.ui.activity.user;
 
+import android.graphics.Color;
 import android.view.View;
 import android.widget.Button;
 
@@ -45,7 +46,7 @@ public class Regiest01Activity extends BaseActivity {
     protected void initView() {
         setContentView(R.layout.activity_regiest01_new);
         //沉浸式状态栏
-//        setColor(this, getResources().getColor(R.color.colorPrimary));
+        setColor(this, Color.WHITE);
         find_pwd_btnConfirm=getViewAndClick(R.id.find_pwd_btnConfirm);
     }
 

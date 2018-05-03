@@ -11,6 +11,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.provider.MediaStore;
+import android.support.annotation.RequiresApi;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -121,6 +122,7 @@ import java.io.File;
 import java.util.List;
 
 import bc.juhao.com.R;
+import bc.juhao.com.utils.UIUtils;
 
 /**
  * you can new an BcEaseChatFragment to use or you can inherit it to expand.
@@ -555,11 +557,14 @@ public abstract class BcEaseChatFragment extends EaseBaseFragment implements EMM
             @Override
             public void onSuccess(final EMChatRoom value) {
                 getActivity().runOnUiThread(new Runnable() {
+                    @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR1)
                     @Override
                     public void run() {
                         if (getActivity().isFinishing() || !toChatUsername.equals(value.getId()))
                             return;
-                        pd.dismiss();
+                        if(UIUtils.isValidContext(getActivity())&&pd!=null&&pd.isShowing()){
+                            pd.dismiss();
+                        }
                         EMChatRoom room = EMClient.getInstance().chatroomManager().getChatRoom(toChatUsername);
                         if (room != null) {
                             titleBar.setTitle(room.getName());
@@ -579,9 +584,12 @@ public abstract class BcEaseChatFragment extends EaseBaseFragment implements EMM
                 // TODO Auto-generated method stub
                 EMLog.d(TAG, "join room failure : " + error);
                 getActivity().runOnUiThread(new Runnable() {
+                    @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR1)
                     @Override
                     public void run() {
-                        pd.dismiss();
+                        if(UIUtils.isValidContext(getActivity())&&pd!=null&&pd.isShowing()){
+                            pd.dismiss();
+                        }
                     }
                 });
                 getActivity().finish();

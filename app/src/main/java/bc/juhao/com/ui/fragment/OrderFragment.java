@@ -1,5 +1,6 @@
 package bc.juhao.com.ui.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
@@ -8,12 +9,21 @@ import android.view.ViewGroup;
 
 import com.alibaba.fastjson.JSONObject;
 
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
+
 import java.util.ArrayList;
 import java.util.List;
 
 import bc.juhao.com.R;
+import bc.juhao.com.bean.PayResult;
+import bc.juhao.com.cons.Constance;
 import bc.juhao.com.controller.user.OrderController;
+import bc.juhao.com.ui.activity.buy.ConfirmOrderActivity;
+import bc.juhao.com.ui.activity.user.OrderDetailActivity;
 import bocang.utils.AppUtils;
+import bocang.utils.MyToast;
 
 /**
  * @author: Jun
@@ -36,6 +46,7 @@ public class OrderFragment extends OrderBaseFragment {
             list = bundle.getStringArrayList("content");
             flag = bundle.getInt("flag");
         }
+        EventBus.getDefault().register(this);
     }
 
 
@@ -98,6 +109,41 @@ public class OrderFragment extends OrderBaseFragment {
         OrderFragment orderFm = new OrderFragment();
         orderFm.setArguments(bundle);
         return orderFm;
+
+    }
+//    @Subscribe (threadMode = ThreadMode.MAIN)
+//    public void resultPay(int resultCode){
+//        mController.page = 1;
+//        mController.sendOrderList(mController.page);
+//        Intent intent = new Intent(getActivity(), OrderDetailActivity.class);
+//        intent.putExtra(Constance.order, mController.goodses.getJSONObject(mController.mPosition).toJSONString());
+//        intent.putExtra(Constance.state, 1);
+//        getActivity().startActivity(intent);
+//    }
+    @Subscribe (threadMode = ThreadMode.MAIN)
+    public void resultPay(PayResult result){
+        int state=2;
+        Intent intent = new Intent(getContext(), OrderDetailActivity.class);
+
+        if(result.result.equals("0")){
+            MyToast.show(getContext(), "支付成功");
+            mController.page = 1;
+            flag=0;
+            mController.sendOrderList(mController.page);
+            mController.sendPaySuccess();
+        }else if(result.result.equals("-2")){
+            state=0;
+            MyToast.show(getContext(), "支付失败");
+            intent.putExtra(Constance.order, mController.goodses.getJSONObject(mController.mPosition).toJSONString());
+            intent.putExtra(Constance.state, state);
+            startActivity(intent);
+        }else {
+            state=0;
+            intent.putExtra(Constance.order, mController.goodses.getJSONObject(mController.mPosition).toJSONString());
+            intent.putExtra(Constance.state, state);
+            startActivity(intent);
+        }
+
 
     }
 }

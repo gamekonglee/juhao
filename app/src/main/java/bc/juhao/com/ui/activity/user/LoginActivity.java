@@ -1,6 +1,7 @@
 package bc.juhao.com.ui.activity.user;
 
 import android.Manifest;
+import android.graphics.Color;
 import android.support.v4.app.ActivityCompat;
 import android.view.View;
 import android.widget.Button;
@@ -39,7 +40,7 @@ public class LoginActivity extends BaseActivity {
     protected void initView() {
         setContentView(R.layout.activity_login_new);
         //沉浸式状态栏
-        //        setColor(this, getResources().getColor(R.color.colorPrimary));
+                setColor(this, Color.WHITE);
         type02Tv = getViewAndClick(R.id.type02Tv);
         typeTv = getViewAndClick(R.id.typeTv);
         login_bt = getViewAndClick(R.id.login_bt);

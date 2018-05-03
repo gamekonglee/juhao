@@ -1,6 +1,7 @@
 package bc.juhao.com.ui.activity.product;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -10,6 +11,7 @@ import android.widget.RelativeLayout;
 import bc.juhao.com.R;
 import bc.juhao.com.cons.Constance;
 import bc.juhao.com.controller.product.ProductDetailController;
+import bc.juhao.com.ui.activity.MainActivity;
 import bocang.json.JSONObject;
 import bocang.utils.PermissionUtils;
 import bocang.view.BaseActivity;
@@ -35,6 +37,9 @@ public class ProDetailActivity extends BaseActivity {
     private RelativeLayout shopping_cart_Ll;
     public static  boolean isXianGou;
     public com.alibaba.fastjson.JSONObject mProductObject;
+    private ImageView iv_home;
+    public LinearLayout tuijian_ll;
+    private Button toBuyBtn;
 
 
     @Override
@@ -52,17 +57,20 @@ public class ProDetailActivity extends BaseActivity {
     @Override
     protected void initView() {
         setContentView(R.layout.activity_product_detail);
+        setColor(this, Color.WHITE);
         product_ll = getViewAndClick(R.id.product_ll);
         detail_ll = getViewAndClick(R.id.detail_ll);
         parament_ll = getViewAndClick(R.id.parament_ll);
         sun_image_ll = getViewAndClick(R.id.sun_image_ll);
+        tuijian_ll = getViewAndClick(R.id.tuijian_ll);
         callLl = getViewAndClick(R.id.callLl);
         shopping_cart_Ll = getViewAndClick(R.id.shopping_cart_Ll);
         toDiyBtn = getViewAndClick(R.id.toDiyBtn);
         toCartBtn = getViewAndClick(R.id.toCartBtn);
         share_iv = getViewAndClick(R.id.share_iv);
         go_photo_Ll = getViewAndClick(R.id.go_photo_Ll);
-
+        iv_home = getViewAndClick(R.id.iv_home);
+        toBuyBtn = getViewAndClick(R.id.toBuyBtn);
     }
 
     @Override
@@ -90,11 +98,14 @@ public class ProDetailActivity extends BaseActivity {
             case R.id.detail_ll:
                 mController.selectProductType(R.id.detail_ll);
                 break;
-            case R.id.parament_ll:
-                mController.selectProductType(R.id.parament_ll);
-                break;
+//            case R.id.parament_ll:
+//                mController.selectProductType(R.id.parament_ll);
+//                break;
             case R.id.sun_image_ll:
                 mController.selectProductType(R.id.sun_image_ll);
+                break;
+            case R.id.tuijian_ll:
+                mController.selectProductType(R.id.tuijian_ll);
                 break;
             case R.id.callLl:
                 if (!isToken())
@@ -116,12 +127,21 @@ public class ProDetailActivity extends BaseActivity {
 //                IntentUtil.startActivity(this,ShareProductActivity.class,false);
                 break;
             case R.id.go_photo_Ll:
-                PermissionUtils.requestPermission(ProDetailActivity.this, PermissionUtils.CODE_CAMERA, new PermissionUtils.PermissionGrant() {
-                    @Override
-                    public void onPermissionGranted(int requestCode) {
-                        mController.goPhoto();
-                    }
-                });
+                if (!isToken())
+                    mController.GoDiyProduct();
+//                PermissionUtils.requestPermission(ProDetailActivity.this, PermissionUtils.CODE_CAMERA, new PermissionUtils.PermissionGrant() {
+//                    @Override
+//                    public void onPermissionGranted(int requestCode) {
+//                        mController.goPhoto();
+//                    }
+//                });
+                break;
+            case R.id.iv_home:
+                startActivity(new Intent(this, MainActivity.class));
+                break;
+            case R.id.toBuyBtn:
+                if (!isToken())
+                mController.toBuy();
                 break;
         }
     }

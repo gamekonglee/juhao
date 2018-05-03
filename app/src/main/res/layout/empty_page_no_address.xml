@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/background_color"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:id="@+id/null_rl"
+        android:layout_gravity="center"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        >
+        <ImageView
+            android:id="@+id/iv"
+            android:layout_centerInParent="true"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:src="@mipmap/my_dz_icon"/>
+        <TextView
+            android:id="@+id/tv"
+            android:layout_centerInParent="true"
+            android:layout_marginTop="20dp"
+            android:layout_below="@id/iv"
+            android:textSize="14sp"
+            android:text="你还没有收货地址"
+            android:textColor="#AAACAD"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+        <Button
+            android:id="@+id/go_btn"
+            android:gravity="center"
+            android:text="立刻去配备方案"
+            android:background="@drawable/bg_btn"
+            android:textSize="13dp"
+            android:textColor="@color/green"
+            android:layout_marginTop="10dp"
+            android:layout_below="@id/tv"
+            android:layout_centerInParent="true"
+            android:layout_width="wrap_content"
+            android:layout_height="35dp"
+            android:padding="8dp"
+            android:visibility="gone"/>
+    </RelativeLayout>
+
+</RelativeLayout>

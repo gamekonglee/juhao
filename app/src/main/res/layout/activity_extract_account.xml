@@ -1,13 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               android:orientation="vertical"
+    android:background="#f0eff4"
               android:layout_width="match_parent"
               android:layout_height="match_parent">
     <RelativeLayout
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
-        android:background="@drawable/icon_top"
+        android:background="#ffffff"
         android:minHeight="?attr/actionBarSize">
 
         <RelativeLayout
@@ -22,11 +23,11 @@
                 android:paddingLeft="10dp">
                 <ImageView
                     android:id="@+id/topLeftBtn"
-                    android:layout_width="24dp"
-                    android:layout_height="24dp"
+                    android:layout_width="10dp"
+                    android:layout_height="20dp"
                     android:layout_centerVertical="true"
                     android:layout_marginRight="5dp"
-                    android:background="@drawable/goback"
+                    android:background="@mipmap/nav_left"
 
                     android:textColor="#FFFFFF"/>
             </LinearLayout>
@@ -37,7 +38,7 @@
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
                 android:text="提现帐号"
-                android:textColor="@color/white"
+                android:textColor="#666666"
                 android:textSize="18dp"
                 />
         </RelativeLayout>
@@ -52,19 +53,24 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="50dp"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
-            android:layout_marginTop="20dp"
-            android:background="@drawable/shape_dialog_bg"
+            android:background="#ffffff"
             android:gravity="center_vertical"
             android:orientation="horizontal"
             >
 
             <LinearLayout
                 android:layout_width="0dp"
+                android:background="#ffffff"
+                android:gravity="center_vertical"
                 android:layout_height="match_parent"
                 android:layout_weight="1">
 
+                <ImageView
+                    android:layout_width="33dp"
+                    android:layout_height="33dp"
+                    android:layout_marginLeft="15dp"
+                    android:src="@drawable/icon_zhifubao"
+                    />
                 <EditText
                     android:id="@+id/alipay_et"
                     android:layout_width="match_parent"
@@ -78,24 +84,22 @@
                     />
             </LinearLayout>
 
-            <ImageView
-                android:layout_width="33dp"
-                android:layout_height="33dp"
-                android:layout_marginRight="15dp"
-                android:src="@drawable/icon_zhifubao"/>
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="50dp"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
-            android:layout_marginTop="10dp"
-            android:background="@drawable/shape_dialog_bg"
+            android:layout_marginTop="1dp"
+            android:background="#ffffff"
             android:gravity="center_vertical"
             android:orientation="horizontal"
             >
-
+            <ImageView
+                android:layout_width="33dp"
+                android:layout_height="33dp"
+                android:layout_marginLeft="15dp"
+                android:src="@mipmap/icon_tixian_account"
+                />
             <EditText
                 android:id="@+id/alipay_name_tv"
                 android:layout_width="match_parent"
@@ -111,7 +115,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="@color/fontColor2"
+            android:textColor="#da0000"
             android:textSize="13sp"
             android:layout_marginLeft="10dp"
             android:layout_marginTop="20dp"
@@ -125,6 +129,7 @@
             android:textSize="12sp"
             android:layout_marginLeft="10dp"
             android:layout_marginTop="5dp"
+            android:lineSpacingExtra="2dp"
             android:text="1.提现账号是您本人的支付宝账号,您可以将您的收益兑换成现金然后转至您的支付宝账户中，请务必保证账号安全以及正确。"
             />
         <TextView

@@ -1,5 +1,6 @@
 package bc.juhao.com.controller.product;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Paint;
@@ -31,6 +32,7 @@ import bc.juhao.com.controller.BaseController;
 import bc.juhao.com.listener.INetworkCallBack;
 import bc.juhao.com.ui.activity.product.ProDetailActivity;
 import bc.juhao.com.ui.activity.product.TimeBuyActivity;
+import bc.juhao.com.ui.fragment.home.TimeBuyFragment;
 import bc.juhao.com.ui.view.HorizontalListView;
 import bc.juhao.com.ui.view.countdownview.CountdownView;
 import bc.juhao.com.utils.DateUtils;
@@ -39,6 +41,7 @@ import bocang.json.JSONArray;
 import bocang.json.JSONObject;
 import bocang.utils.AppDialog;
 import bocang.utils.AppUtils;
+import bocang.view.BaseActivity;
 
 import static bc.juhao.com.R.id.name_tv;
 import static bc.juhao.com.R.id.price_tv;
@@ -51,7 +54,7 @@ import static bc.juhao.com.R.id.remaining_num_tv;
  */
 
 public class TimeBuyController extends BaseController implements CountdownView.OnCountdownEndListener {
-    private TimeBuyActivity mView;
+    private bc.juhao.com.common.BaseActivity mView;
     private ConvenientBanner mConvenientBanner;
     public int mScreenWidth;
     private List<String> paths = new ArrayList<>();
@@ -69,11 +72,15 @@ public class TimeBuyController extends BaseController implements CountdownView.O
     private ArrayList<String> mDatas;
     private int mPoistion = 0;
 
-    public TimeBuyController(TimeBuyActivity v) {
+    public TimeBuyController(bc.juhao.com.common.BaseActivity v) {
         mView = v;
         initView();
         initViewData();
     }
+
+//    public TimeBuyController(TimeBuyFragment timeBuyFragment) {
+//        mView= (bc.juhao.com.common.BaseActivity) timeBuyFragment.getActivity();
+//    }
 
     private void initViewData() {
         sendTimeBuyBanner();
@@ -167,13 +174,13 @@ public class TimeBuyController extends BaseController implements CountdownView.O
 
 
     private void sendGrouplist(int page) {
-        mView.setShowDialog(true);
-        mView.setShowDialog("正在获取中!");
-        mView.showLoading();
+//        mView.setShowDialog(true);
+//        mView.setShowDialog("正在获取中!");
+//        mView.showLoading();
         mNetWork.sendGrouplist(page, "100", null, null, null, null, null, new INetworkCallBack() {
             @Override
             public void onSuccessListener(String requestCode, JSONObject ans) {
-                mView.hideLoading();
+//                mView.hideLoading();
                 mTimeBuyDatas = ans.getJSONArray(Constance.products);
                 mStartTimeArry = new ArrayList<String>();
                 mEndTimeArry = new ArrayList<String>();
@@ -215,12 +222,12 @@ public class TimeBuyController extends BaseController implements CountdownView.O
 
             @Override
             public void onFailureListener(String requestCode, JSONObject ans) {
-                mView.hideLoading();
+//                mView.hideLoading();
                 if(AppUtils.isEmpty(ans)){
                     AppDialog.messageBox(UIUtils.getString(R.string.server_error));
                     return;
                 }
-                AppDialog.messageBox(ans.getString(Constance.error_desc));
+//                AppDialog.messageBox(ans.getString(Constance.error_desc));
             }
         })
         ;
@@ -326,7 +333,7 @@ public class TimeBuyController extends BaseController implements CountdownView.O
             holder.time_01_tv.setTextColor(mView.getResources().getColor(R.color.txt_black));
             holder.time_02_tv.setTextColor(mView.getResources().getColor(R.color.txt_black));
             holder.state_tv.setTextColor(mView.getResources().getColor(R.color.fontColor6));
-            holder.main_rl.setBackgroundColor(mView.getResources().getColor(R.color.white));
+            holder.main_rl.setBackgroundColor(mView.getResources().getColor(R.color.item_time_bg));
             if (DateUtils.getTimeStamp(time, "yyyy-MM-dd HH:mm") - System.currentTimeMillis() > 0) {
                 holder.state_tv.setText("即将开始");
 
@@ -387,6 +394,7 @@ public class TimeBuyController extends BaseController implements CountdownView.O
                 holder.price_old_tv = (TextView) convertView.findViewById(R.id.price_old_tv);
                 holder.remaining_num_tv = (TextView) convertView.findViewById(remaining_num_tv);
                 holder.go_buy_tv = (TextView) convertView.findViewById(R.id.go_buy_tv);
+                holder.tv_end=convertView.findViewById(R.id.tv_end);
                 convertView.setTag(holder);
             } else {
                 holder = (ViewHolder) convertView.getTag();
@@ -416,6 +424,13 @@ public class TimeBuyController extends BaseController implements CountdownView.O
             }
 
             String restrictAmount = itemObject.getJSONObject(Constance.group_buy).getJSONObject(Constance.ext_info).getString(Constance.restrict_amount);
+            if("0".equals(restrictAmount)){
+                holder.tv_end.setVisibility(View.VISIBLE);
+                holder.go_buy_tv.setText("去看看");
+            }else {
+                holder.tv_end.setVisibility(View.GONE);
+                holder.go_buy_tv.setText("立即抢购");
+            }
             holder.remaining_num_tv.setText("剩余 " + restrictAmount + " 件");
             JSONArray priceArray = itemObject.getJSONObject(Constance.group_buy).getJSONObject(Constance.ext_info).getJSONArray(Constance.price_ladder);
             int price = priceArray.getJSONObject(0).getInt(Constance.price);
@@ -427,7 +442,7 @@ public class TimeBuyController extends BaseController implements CountdownView.O
 
         class ViewHolder {
             ImageView product_iv;
-            TextView name_tv, price_tv, price_old_tv, remaining_num_tv, go_buy_tv;
+            TextView name_tv, price_tv, price_old_tv, remaining_num_tv, go_buy_tv,tv_end;
         }
     }
 

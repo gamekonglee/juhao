@@ -9,8 +9,44 @@ public class ArticlesBean {
     int id;
     String title;
     String url;
+    String link;
+    String file_url;
+    int display;
 
-    public ArticlesBean(int id,String title,String url){
+    public int getDisplay() {
+        return display;
+    }
+
+    public void setDisplay(int display) {
+        this.display = display;
+    }
+
+    public String getFile_url() {
+        return file_url;
+    }
+
+    public void setFile_url(String file_url) {
+        this.file_url = file_url;
+    }
+
+    public ArticlesBean(int id, String title, String url, String link, String file_url,int display) {
+        this.id = id;
+        this.title = title;
+        this.url = url;
+        this.link = link;
+        this.file_url=file_url;
+        this.display=display;
+    }
+
+    public String getLink() {
+        return link;
+    }
+
+    public void setLink(String link) {
+        this.link = link;
+    }
+
+    public ArticlesBean(int id, String title, String url){
         this.id=id;
         this.title=title;
         this.url=url;

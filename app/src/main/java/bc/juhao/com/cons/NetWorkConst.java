@@ -11,9 +11,11 @@ public class NetWorkConst {
     public static  final String APPNAME="juhao";
     //主地址
     public static final String API_HOST = "http://api."+APPNAME+".com/";
+//    public static final String API_HOST = "http://newapi."+APPNAME+".com/";
 
     //图片主地址
     public static final String SCENE_HOST = "http://www."+APPNAME+".com/";
+//    public static final String SCENE_HOST = "http://newapi."+APPNAME+".com/";
 
     //抢购广告图片
     public static final String TIME_BUY_BANNER_HOST = "http://www."+APPNAME+".com/data/afficheimg/";
@@ -24,6 +26,12 @@ public class NetWorkConst {
 
     public static final String DOWN_APK_URL ="http://app.08138.com/jhsc.apk";
     public static final String VERSION_URL_CONTENT ="http://app.08138.com/version/versioninfo.php?bc_ver_name2=jhsca&bejson=1";
+    public static final String PRODUCT_DETAIL_LINK = API_HOST+"/v2/ecapi.product.link";
+    public static final String ADD_ACCOUNT = API_HOST+"/v2/ecapi.account.add";
+    public static final String LIST_ACCOUNT = API_HOST + "/v2/ecapi.account.list";
+    public static final String TOKEN_ADD = API_HOST+"/v2/ecapi.user.hd.add";
+    public static final String ALIPAY_SEND = API_HOST + "/v2/ecapi.alipay.send";
+    public static final String DEALER_ADD = API_HOST+"/v2/ecapi.dealer.add";
 
     public static String APK_NAME="jhsc_v";
 
@@ -37,9 +45,11 @@ public class NetWorkConst {
 
     //分享方案
     public final static String SHAREFANAN=SCENE_HOST+"fangan.php?id=";
+    public final static String SHAREFANAN_APP=SCENE_HOST+"app_fangan.php?id=";
 
     //分享产品
-    public final static String SHAREPRODUCT=SCENE_HOST+"goods.php?id=";
+//    public final static String SHAREPRODUCT=SCENE_HOST+"goods.php?id=";
+    public final static String SHAREPRODUCT=API_HOST+"/mobile/index.php?m=default&c=goods&a=index&id=";
 
     //获取app最新版本号接口
     public static final String VERSION_URL ="http://app.08138.com/version/versioninfo.php?bc_ver_name2=jhsca";

@@ -2,13 +2,14 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               xmlns:gaga="http://schemas.android.com/apk/res-auto"
               android:orientation="vertical"
+              android:background="#ffffff"
               android:layout_width="match_parent"
               android:layout_height="match_parent">
     <RelativeLayout
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
-        android:background="@drawable/icon_top"
+        android:background="#ffffff"
         android:minHeight="?attr/actionBarSize">
 
         <RelativeLayout
@@ -23,11 +24,11 @@
                 android:paddingLeft="10dp">
                 <ImageView
                     android:id="@+id/topLeftBtn"
-                    android:layout_width="24dp"
-                    android:layout_height="24dp"
+                    android:layout_width="10dp"
+                    android:layout_height="20dp"
                     android:layout_centerVertical="true"
                     android:layout_marginRight="5dp"
-                    android:background="@drawable/goback"
+                    android:background="@mipmap/nav_left"
 
                     android:textColor="#FFFFFF"/>
             </LinearLayout>
@@ -35,7 +36,7 @@
                 android:id="@+id/et_search"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textColor="@color/white"
+                android:textColor="#666666"
                 android:textSize="18dp"
                 android:layout_centerInParent="true"
                 android:text="我的订单"
@@ -50,7 +51,7 @@
                     android:id="@+id/iv_search"
                     android:layout_width="30dp"
                     android:layout_height="30dp"
-                    android:src="@drawable/search"
+                    android:src="@mipmap/nav_search_5"
                     android:layout_centerInParent="true"
                     android:layout_alignParentRight="true"
                     android:layout_marginRight="10dp"
@@ -62,11 +63,12 @@
     <View
         style="@style/view_style"
         />
+
     <!--主体部分-->
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content">
         <astuetz.MyPagerSlidingTabStrip
             android:background="@color/white"
             gaga:pstsIndicatorColor="#e9642b"
@@ -85,6 +87,16 @@
 
         </android.support.v4.view.ViewPager>
 
-
     </LinearLayout>
+    <com.lib.common.hxp.view.GridViewForScrollView
+        android:id="@+id/priductGridView"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:horizontalSpacing="15dp"
+        android:numColumns="2"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:paddingTop="15dp"
+        android:verticalSpacing="15dp"
+        android:visibility="gone"/>
 </LinearLayout>

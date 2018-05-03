@@ -29,7 +29,7 @@ public class ProgrammerActivity extends BaseActivity {
     @Override
     protected void initView() {
         setContentView(R.layout.activity_programmer);
-
+        setColor(this,getResources().getColor(R.color.green));
         if(cartFragment ==null) cartFragment =new ProgrammeFragment();
 //        Bundle bundle = new Bundle();
 //        bundle.putBoolean(Constance.product, true);

@@ -1,24 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               android:orientation="vertical"
+    android:background="#f5f4f8"
               android:layout_width="match_parent"
               android:layout_height="wrap_content">
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="130dp"
+        android:layout_height="135dp"
         android:orientation="horizontal"
+        android:gravity="center_vertical"
         android:paddingTop="5dp"
         >
 
         <LinearLayout
-            android:layout_width="80dp"
+            android:layout_width="95dp"
+            android:layout_marginLeft="5dp"
             android:layout_height="match_parent"
             android:layout_marginRight="5dp">
 
             <ImageView
+                android:background="#ffffff"
                 android:id="@+id/imageView"
-                android:layout_width="70dp"
-                android:layout_height="70dp"
+                android:layout_width="95dp"
+                android:layout_height="125dp"
                 />
         </LinearLayout>
 
@@ -34,11 +38,10 @@
                     android:id="@+id/name_tv"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="5dp"
                     android:layout_marginLeft="5dp"
                     android:text="名称"
                     android:singleLine="true"
-                    android:textSize="16sp"
+                    android:textSize="13sp"
                     android:textColor="@color/txt_black"/>
 
                 <TextView
@@ -48,7 +51,7 @@
                     android:layout_marginTop="5dp"
                     android:layout_marginLeft="5dp"
                     android:singleLine="true"
-                    android:textSize="13sp"
+                    android:textSize="12sp"
                     />
 
                 <TextView
@@ -58,7 +61,7 @@
                     android:layout_alignParentBottom="true"
                     android:layout_marginTop="5dp"
                     android:layout_marginLeft="5dp"
-                    android:textSize="13sp" />
+                    android:textSize="10sp" />
 
                 <TextView
                     android:id="@+id/goods_summoney_tv"
@@ -67,7 +70,7 @@
                     android:layout_alignParentBottom="true"
                     android:layout_margin="5dp"
                     android:textColor="@color/fontColor6"
-                    android:textSize="13sp"
+                    android:textSize="10sp"
                     />
                 <TextView
                     android:id="@+id/agio_priceTv"
@@ -75,7 +78,7 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentBottom="true"
                     android:layout_marginLeft="5dp"
-                    android:textSize="13sp" />
+                    android:textSize="10sp" />
             </LinearLayout>
 
 
@@ -87,21 +90,39 @@
                 android:layout_alignParentRight="true"
                 android:textColor="@color/fontColor6"
                 android:layout_marginBottom="3dp"
-                android:textSize="12dp"
+                android:textSize="10sp"
                 />
 
             <TextView
                 android:id="@+id/update_product_money_tv"
                 android:layout_width="80dp"
                 android:layout_height="25dp"
-                android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
+                android:layout_alignParentBottom="true"
+                android:layout_marginBottom="5dp"
+                android:layout_marginLeft="5dp"
                 android:layout_marginRight="10dp"
                 android:layout_marginTop="5dp"
-                android:layout_weight="1.0"
                 android:background="@drawable/classify_shape_active"
                 android:gravity="center"
                 android:text="@string/update_money"
+                android:textColor="@color/green"
+                android:textSize="12dip"/>
+
+            <TextView
+                android:id="@+id/comment_tv"
+                android:layout_width="80dp"
+                android:layout_height="25dp"
+                android:layout_centerVertical="true"
+                android:layout_alignParentBottom="true"
+                android:layout_marginBottom="5dp"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginTop="5dp"
+                android:background="@drawable/classify_shape_active"
+                android:gravity="center"
+                android:visibility="gone"
+                android:text="@string/comment"
                 android:textColor="@color/green"
                 android:textSize="12dip"/>
         </RelativeLayout>

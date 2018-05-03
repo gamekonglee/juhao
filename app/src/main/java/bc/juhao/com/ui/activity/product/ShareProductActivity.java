@@ -1,6 +1,7 @@
 package bc.juhao.com.ui.activity.product;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -37,6 +38,7 @@ public class ShareProductActivity extends BaseActivity {
     @Override
     protected void initView() {
         setContentView(R.layout.activity_share_product);
+        setColor(this, Color.TRANSPARENT);
         share_01_tv = getViewAndClick(R.id.share_01_tv);
         share_02_tv = getViewAndClick(R.id.share_02_tv);
         share_03_tv = getViewAndClick(R.id.share_03_tv);

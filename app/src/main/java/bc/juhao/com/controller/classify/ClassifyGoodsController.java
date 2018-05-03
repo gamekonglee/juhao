@@ -74,11 +74,8 @@ public class ClassifyGoodsController extends BaseController implements INetworkC
 
 
         });
-
         mItemAdapter = new ItemClassifyAdapter(mView.getActivity());
         itemGridView.setAdapter(mItemAdapter);
-
-
         itemGridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -123,6 +120,7 @@ public class ClassifyGoodsController extends BaseController implements INetworkC
                 if (AppUtils.isEmpty(mClassifyGoodsLists))return;
                 mAdapter.setData(mClassifyGoodsLists);
                 //模拟点击第一项
+//                LogUtils.logE("cate",mClassifyGoodsLists.toString());
                 recyclerview_category.performItemClick(null, 0, 0);
             break;
         }

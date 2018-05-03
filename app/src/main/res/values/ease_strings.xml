@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="text_ack_msg">Read</string>
-    <string name="text_delivered_msg">Delivered</string>
+    <string name="text_ack_msg">已读</string>
+    <string name="text_delivered_msg">发出</string>
     <string name="back">Back</string>
     <!--<string name="save">Save</string>-->
     <string name="button_pushtotalk">Hold to talk</string>
-    <string name="button_send">Send</string>
+    <string name="button_send">发送</string>
     <string name="attach_smile">Emoticon</string>
-    <string name="attach_picture">Image</string>
-    <string name="attach_order">Order</string>
-    <string name="attach_take_pic">Capture</string>
-    <string name="attach_location">Location</string>
+    <string name="attach_picture">相册</string>
+    <string name="attach_order">订单</string>
+    <string name="attach_take_pic">拍照</string>
+    <string name="attach_location">定位</string>
     <string name="attach_video">Video</string>
     <string name="attach_file">File</string>
     <string name="attach_voice_call">Voice call</string>
@@ -19,8 +19,8 @@
     <string name="user_card">Business card</string>
     <string name="move_up_to_cancel">Finger up to cancel sending</string>
     <string name="release_to_cancel">Finger release to cancel sending</string>
-    <string name="send_fail">Send failed</string>
-    <string name="delete_message">Delete message</string>
+    <string name="send_fail">发送失败</string>
+    <string name="delete_message">删除信息</string>
     <string name="delete_conversation_messages">Delete conversation and messages</string>
     <string name="delete_conversation">Delete conversation</string>
     <string name="copy_message">Copy message</string>

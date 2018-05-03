@@ -1,10 +1,12 @@
 package bc.juhao.com.controller.user;
 
+import android.app.Dialog;
 import android.content.Intent;
 import android.os.Message;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -174,15 +176,48 @@ public class MineController extends BaseController implements INetworkCallBack {
      * 获取用户信息
      */
     public void sendUser() {
+        if(!TextUtils.isEmpty(MyShare.get(mView.getActivity()).getString(Constance.TOKEN))){
         mNetWork.sendUser(this);
+        }
     }
 
     /**
      * 分享给好友
      */
     public void getShareApp() {
-        String title = "来自 " + UIUtils.getString(R.string.app_name) + " App的分享";
-        ShareUtil.showShare(mView.getActivity(), title, NetWorkConst.APK_URL, NetWorkConst.SHAREIMAGE);
+        final String title = "来自 " + UIUtils.getString(R.string.app_name) + " App的分享";
+        final Dialog dialog=UIUtils.showBottomInDialog(mView.getActivity(),R.layout.share_dialog,UIUtils.dip2PX(150));
+        TextView tv_cancel=dialog.findViewById(R.id.tv_cancel);
+        LinearLayout ll_wx=dialog.findViewById(R.id.ll_wx);
+        LinearLayout ll_pyq=dialog.findViewById(R.id.ll_pyq);
+        LinearLayout ll_qq=dialog.findViewById(R.id.ll_qq);
+        tv_cancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dialog.dismiss();
+            }
+        });
+        ll_wx.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ShareUtil.shareWx(mView.getActivity(), title, NetWorkConst.APK_URL, NetWorkConst.SHAREIMAGE);
+                dialog.dismiss();
+            }
+        });
+        ll_pyq.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ShareUtil.sharePyq(mView.getActivity(), title, NetWorkConst.APK_URL, NetWorkConst.SHAREIMAGE);
+                dialog.dismiss();
+            }
+        });
+        ll_qq.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ShareUtil.shareQQ(mView.getActivity(), title, NetWorkConst.APK_URL, NetWorkConst.SHAREIMAGE);
+                dialog.dismiss();
+            }
+        });
     }
 
     @Override
@@ -202,6 +237,8 @@ public class MineController extends BaseController implements INetworkCallBack {
                 int level = IssueApplication.mUserObject.getInt(Constance.level);
                 String levelValue = "";
                 mView.user_money_ll.setVisibility(View.VISIBLE);
+                mView.distributor_ll.setVisibility(View.VISIBLE);
+                mView.view_empty.setVisibility(View.GONE);
                 if (level == 0) {
                     levelValue = "一级";
                 } else if (level == 1) {
@@ -209,9 +246,12 @@ public class MineController extends BaseController implements INetworkCallBack {
                 } else if (level == 2) {
                     levelValue = "三级";
                 } else {
-                    mView.user_money_ll.setVisibility(View.GONE);
+                    mView.user_money_ll.setVisibility(View.INVISIBLE);
+                    mView.distributor_ll.setVisibility(View.GONE);
+                    mView.view_empty.setVisibility(View.VISIBLE);
                     levelValue = "消费者";
                 }
+                mView.onRefresh();
                 level_tv.setText(levelValue);
                 Log.v("520it", IssueApplication.mUserObject.getString(Constance.money));
                 JSONArray countArray = ans.getJSONArray("count");

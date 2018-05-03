@@ -1,5 +1,6 @@
 package bc.juhao.com.ui.fragment;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -17,6 +18,7 @@ import java.util.List;
 
 import bc.juhao.com.R;
 import bc.juhao.com.common.BaseFragment;
+import bc.juhao.com.ui.activity.MainActivity;
 import bc.juhao.com.ui.activity.product.SelectGoodsActivity;
 import bocang.utils.IntentUtil;
 
@@ -37,6 +39,7 @@ public class ClassifyFragment extends BaseFragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+//        ((MainActivity)getActivity()).setColor(getActivity(), Color.WHITE);
         return inflater.inflate(R.layout.fm_classify, null);
     }
 
@@ -69,24 +72,29 @@ public class ClassifyFragment extends BaseFragment {
         mFilterGoodsFragment=new FilterGoodsFragment();
         listViews.add(mClassifyGoodsFragment);
         listViews.add(mFilterGoodsFragment);
-        mPager.setAdapter(new MyFrageStatePagerAdapter(getActivity().getSupportFragmentManager()));
-        mPager.setCurrentItem(0);
-        mPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
-            @Override
-            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+        try {
+            mPager.setAdapter(new MyFrageStatePagerAdapter(getActivity().getSupportFragmentManager()));
+            mPager.setCurrentItem(0);
+            mPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+                @Override
+                public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
 
-            }
+                }
 
-            @Override
-            public void onPageSelected(int position) {
-                getCurrentTv(position);
-            }
+                @Override
+                public void onPageSelected(int position) {
+                    getCurrentTv(position);
+                }
 
-            @Override
-            public void onPageScrollStateChanged(int state) {
+                @Override
+                public void onPageScrollStateChanged(int state) {
 
-            }
-        });
+                }
+            });
+        }catch ( Exception e){
+
+        }
+
 
     }
 
@@ -142,7 +150,7 @@ public class ClassifyFragment extends BaseFragment {
                 t1.setTextColor(getResources().getColor(R.color.white));
                 break;
             case 1:
-                t2.setBackgroundResource(R.drawable.classify_shape_pressed);
+                t2.setBackgroundResource(R.drawable.classify_shape_pressed_right);
                 t2.setTextColor(getResources().getColor(R.color.white));
                 break;
         }
@@ -150,7 +158,7 @@ public class ClassifyFragment extends BaseFragment {
 
     private void regiestTv(){
         t1.setBackgroundResource(R.drawable.classify_shape_active);
-        t2.setBackgroundResource(R.drawable.classify_shape_active);
+        t2.setBackgroundResource(R.drawable.classify_shape_active_right);
         t1.setTextColor(getResources().getColor(R.color.green));
         t2.setTextColor(getResources().getColor(R.color.green));
     }

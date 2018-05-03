@@ -305,7 +305,7 @@ public class ProgrammeController extends BaseController implements INetworkCallB
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         Intent intent = new Intent(mView.getActivity(), MessageDetailActivity.class);
         String SceenId = mSchemes.getJSONObject(position).getString(Constance.id);
-        intent.putExtra(Constance.url, NetWorkConst.SHAREFANAN + SceenId);
+        intent.putExtra(Constance.url, NetWorkConst.SHAREFANAN_APP + SceenId);
         intent.putExtra(Constance.FROMTYPE, 1);
         mView.startActivity(intent);
     }
@@ -426,7 +426,7 @@ public class ProgrammeController extends BaseController implements INetworkCallB
                                                     break;
                                                 case 3://分享
                                                     String title = "来自 " + jsonObject.getString(Constance.name) + " 方案的分享";
-                                                    ShareUtil.showShare(mView.getActivity(), title, path, imgPath);
+                                                    ShareUtil.shareWx(mView.getActivity(), title, path, imgPath);
                                                     break;
                                             }
                                         }
@@ -459,7 +459,7 @@ public class ProgrammeController extends BaseController implements INetworkCallB
                                     break;
                                 case 1:
                                     String title = "来自 " + jsonObject.getString(Constance.name) + " 方案的分享";
-                                    ShareUtil.showShare(mView.getActivity(), title, path, imgPath);
+                                    ShareUtil.shareWx(mView.getActivity(), title, path, imgPath);
                                     break;
                             }
                         }

@@ -28,13 +28,17 @@ import bc.juhao.com.cons.NetWorkConst;
 import bc.juhao.com.listener.INetworkCallBack;
 import bc.juhao.com.ui.activity.IssueApplication;
 import bc.juhao.com.ui.activity.MainActivity;
+import bc.juhao.com.ui.activity.user.PerfectMydataActivity;
 import bc.juhao.com.ui.view.ShowDialog;
+import bc.juhao.com.utils.ImageLoadProxy;
 import bc.juhao.com.utils.MyShare;
 import bc.juhao.com.utils.NetWorkUtils;
 import bc.juhao.com.utils.upload.UpAppUtils;
+import bocang.json.JSONArray;
 import bocang.json.JSONObject;
 import bocang.utils.AppUtils;
 import bocang.utils.CommonUtil;
+import bocang.utils.IntentUtil;
 import bocang.utils.MyToast;
 import me.leolin.shortcutbadger.ShortcutBadger;
 
@@ -112,16 +116,23 @@ public class MainController extends BaseController implements INetworkCallBack {
                                 btn_upgrate.setOnClickListener(new View.OnClickListener() {
                                     @Override
                                     public void onClick(View v) {
-                                        AppVersion appVersion = new AppVersion();
-                                        appVersion.setVersion(mAppVersion);
-                                        appVersion.setName(NetWorkConst.APK_NAME);
-                                        appVersion.setDes("");
-                                        appVersion.setForcedUpdate("0");
-                                        appVersion.setUrl(NetWorkConst.DOWN_APK_URL);
-                                        if (appVersion != null) {
-                                            dialog.dismiss();
-                                            new UpAppUtils(mView, appVersion);
-                                        }
+
+                                        Intent intent = new Intent();
+                                        intent.setAction("android.intent.action.VIEW");
+                                        Uri content_url = Uri.parse("http://app.08138.com/jhsc.apk");
+                                        intent.setData(content_url);
+                                        mView.startActivity(intent);
+
+//                                        AppVersion appVersion = new AppVersion();
+//                                        appVersion.setVersion(mAppVersion);
+//                                        appVersion.setName(NetWorkConst.APK_NAME);
+//                                        appVersion.setDes("");
+//                                        appVersion.setForcedUpdate("0");
+//                                        appVersion.setUrl(NetWorkConst.DOWN_APK_URL);
+//                                        if (appVersion != null) {
+//                                            dialog.dismiss();
+//                                            new UpAppUtils(mView, appVersion);
+//                                        }
                                     }
                                 });
                                 iv_close.setOnClickListener(new View.OnClickListener() {
@@ -173,7 +184,7 @@ public class MainController extends BaseController implements INetworkCallBack {
             case NetWorkConst.GETCART:
                 if (ans.getJSONArray(Constance.goods_groups).length() > 0) {
                     IssueApplication.mCartCount = ans.getJSONArray(Constance.goods_groups)
-                            .getJSONObject(0).getInt(Constance.total_amount);
+                            .getJSONObject(0).getJSONArray(Constance.goods).length();
                     setIsShowCartCount();
                 }
                 break;
@@ -322,8 +333,62 @@ public class MainController extends BaseController implements INetworkCallBack {
         });
     }
 
-
     private UpdateApkBroadcastReceiver broadcastReceiver;
+
+    public void sendUser() {
+        mNetWork.sendUser(new INetworkCallBack() {
+            @Override
+            public void onSuccessListener(String requestCode, JSONObject ans) {
+                JSONObject mUserObject = ans.getJSONObject(Constance.user);
+                IssueApplication.mUserObject = mUserObject;
+//                if (AppUtils.isEmpty(mUserObject))
+//                    return;
+//                String avatar = NetWorkConst.SCENE_HOST + mUserObject.getString(Constance.avatar);
+////                if (!AppUtils.isEmpty(avatar))
+////                    ImageLoadProxy.displayHeadIcon(avatar, head_cv);
+//
+//                String username = IssueApplication.mUserObject.getString(Constance.username);
+//                String nickName = IssueApplication.mUserObject.getString(Constance.nickname);
+//                int level = IssueApplication.mUserObject.getInt(Constance.level);
+//                String levelValue = "";
+////                mView.user_money_ll.setVisibility(View.VISIBLE);
+//                if (level == 0) {
+//                    levelValue = "一级";
+//                } else if (level == 1) {
+//                    levelValue = "二级";
+//                } else if (level == 2) {
+//                    levelValue = "三级";
+//                } else {
+////                    mView.user_money_ll.setVisibility(View.GONE);
+//                    levelValue = "消费者";
+//                }
+//                level_tv.setText(levelValue);
+//                Log.v("520it", IssueApplication.mUserObject.getString(Constance.money));
+//                JSONArray countArray = ans.getJSONArray("count");
+//                String count01 = countArray.get(0).toString();
+//                String count02 = countArray.get(1).toString();
+//                String count03 = countArray.get(2).toString();
+//                unMessageReadTv.setText(countArray.get(0).toString());
+//                unMessageRead02Tv.setText(countArray.get(1).toString());
+//                unMessageRead03Tv.setText(countArray.get(2).toString());
+//                unMessageReadTv.setVisibility(Integer.parseInt(count01) > 0 ? View.VISIBLE : View.GONE);
+//                unMessageRead02Tv.setVisibility(Integer.parseInt(count02) > 0 ? View.VISIBLE : View.GONE);
+//                unMessageRead03Tv.setVisibility(Integer.parseInt(count03) > 0 ? View.VISIBLE : View.GONE);
+//                if (AppUtils.isEmpty(nickName)) {
+////                    nickname_tv.setText(username);
+////                    IntentUtil.startActivity(mView.getActivity(), PerfectMydataActivity.class, false);
+//                    return;
+//                } else {
+////                    nickname_tv.setText(nickName);
+//                }
+            }
+
+            @Override
+            public void onFailureListener(String requestCode, JSONObject ans) {
+
+            }
+        });
+    }
 
     private class UpdateApkBroadcastReceiver extends BroadcastReceiver {
 

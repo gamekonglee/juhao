@@ -1,6 +1,7 @@
 package bc.juhao.com.controller.user;
 
 import android.content.Intent;
+import android.graphics.Paint;
 import android.os.Message;
 import android.view.View;
 import android.view.ViewGroup;
@@ -346,37 +347,50 @@ public class CollectController extends BaseController implements INetworkCallBac
                 holder.priceTv = (TextView) convertView.findViewById(R.id.priceTv);
                 holder.name_tv = (TextView) convertView.findViewById(R.id.name_tv);
                 holder.checkbox = (CheckBox) convertView.findViewById(R.id.checkbox);
+                holder.price_old=convertView.findViewById(R.id.price_old_Tv);
                 convertView.setTag(holder);
             } else {
                 holder = (ViewHolder) convertView.getTag();
             }
             JSONObject goodObject = goodses.getJSONObject(position).getJSONObject(Constance.goods);
-            holder.name_tv.setText("型号:" + goodObject.getString(Constance.name));
-            try {
-                String path = goodObject.getJSONObject(Constance.default_photo).getString(Constance.thumb);
-                ImageLoader.getInstance().displayImage(path, holder.imageView);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
+            if(goodObject!=null) {
+                holder.name_tv.setText("型号:" + goodObject.getString(Constance.name));
 
-            holder.checkbox.setVisibility(isCheckShowList.get(position) == true ? View.VISIBLE : View.INVISIBLE);
-            holder.checkbox.setChecked(isCheckList.get(position));
-            JSONArray propertieArray = goodses.getJSONObject(position).getJSONArray(Constance.properties);
-            if (!AppUtils.isEmpty(propertieArray) && propertieArray.length() > 0) {
-                JSONArray attrsArray = propertieArray.getJSONObject(0).getJSONArray(Constance.attrs);
-                int price = attrsArray.getJSONObject(0).getInt(Constance.attr_price);
-                double currentPrice = Double.parseDouble(goodObject.getString(Constance.current_price)) + price;
-                holder.priceTv.setText("￥" + currentPrice);
-            } else {
-                holder.priceTv.setText("￥" + goodObject.getString(Constance.current_price));
-            }
-
-            holder.checkbox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-                @Override
-                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                    isCheckList.set(position, isChecked);
+                try {
+                    String path = goodObject.getJSONObject(Constance.default_photo).getString(Constance.thumb);
+                    ImageLoader.getInstance().displayImage(path, holder.imageView);
+                } catch (Exception e) {
+                    e.printStackTrace();
                 }
-            });
+
+                holder.checkbox.setVisibility(isCheckShowList.get(position) == true ? View.VISIBLE : View.INVISIBLE);
+                holder.checkbox.setChecked(isCheckList.get(position));
+                JSONArray propertieArray = goodses.getJSONObject(position).getJSONArray(Constance.properties);
+                int current = 0;
+                for (int i = 0; i < propertieArray.length(); i++) {
+                    if (propertieArray.getJSONObject(i).getString(Constance.name).equals("规格")) {
+                        current = i;
+                        break;
+                    }
+                }
+                if (!AppUtils.isEmpty(propertieArray) && propertieArray.length() > 0) {
+                    JSONArray attrsArray = propertieArray.getJSONObject(current).getJSONArray(Constance.attrs);
+                    int price = attrsArray.getJSONObject(0).getInt(Constance.attr_price);
+                    double currentPrice = Double.parseDouble(goodObject.getString(Constance.current_price)) + price;
+                    holder.priceTv.setText("￥" + currentPrice);
+
+                } else {
+                    holder.priceTv.setText("￥" + goodObject.getString(Constance.current_price));
+                }
+                holder.price_old.setText("￥" + goodObject.getString(Constance.price));
+                holder.price_old.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG);
+                holder.checkbox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                    @Override
+                    public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                        isCheckList.set(position, isChecked);
+                    }
+                });
+            }
             return convertView;
         }
 
@@ -385,6 +399,7 @@ public class CollectController extends BaseController implements INetworkCallBac
             TextView name_tv;
             TextView priceTv;
             CheckBox checkbox;
+            TextView price_old;
 
         }
     }

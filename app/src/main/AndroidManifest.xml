@@ -26,7 +26,7 @@
     <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
-
+    <uses-permission android:name="android.permission.READ_LOGS" /> <!-- 获取logcat日志 -->
     <!-- Optional for location -->
     <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" /> <!-- 用于开启 debug 版本的应用在6.0 系统上 层叠窗口权限 -->
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
@@ -43,16 +43,16 @@
     <uses-permission android:name="android.permission.WAKE_LOCK" />
     <uses-permission android:name="android.permission.READ_CONTACTS" />
     <uses-permission android:name="android.permission.CALL_PHONE" />
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"></uses-permission>
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"></uses-permission>
-    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"></uses-permission>
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"></uses-permission>
-    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE"></uses-permission>
-    <uses-permission android:name="android.permission.READ_PHONE_STATE"></uses-permission>
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"></uses-permission>
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS"></uses-permission>
-    <uses-permission android:name="android.permission.READ_LOGS"></uses-permission>
+    <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS" />
+    <uses-permission android:name="android.permission.READ_LOGS" />
     <uses-permission android:name="android.permission.VIBRATE" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
     <uses-permission android:name="android.permission.WRITE_SETTINGS" />
@@ -76,7 +76,7 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <!-- SD卡读取权限，用户写入离线定位数据 -->
     <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS" />
-
+    <!-- 必选 -->
     <!-- 短信 -->
     <uses-permission android:name="android.permission.READ_CONTACTS" />
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
@@ -88,7 +88,7 @@
     <uses-permission android:name="android.permission.READ_SMS" />
     <uses-permission android:name="android.permission.GET_TASKS" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-
+    <uses-permission android:name="android.permission.CHANGE_CONFIGURATION"/>
     <!-- huanxin -->
     <uses-permission android:name="android.permission.VIBRATE" />
     <uses-permission android:name="android.permission.INTERNET" />
@@ -113,16 +113,43 @@
     <uses-permission android:name="com.hyphenate.chatuidemo.permission.MIPUSH_RECEIVE" />
     <!-- 移除快捷方式 -->
     <uses-permission android:name="com.android.launcher.permission.UNINSTALL_SHORTCUT" />
+    <!-- 这个权限用于进行网络定位 -->
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <!-- 这个权限用于访问GPS定位 -->
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <!-- 用于访问wifi网络信息，wifi信息会用于进行网络定位 -->
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <!-- 获取运营商信息，用于支持提供运营商信息相关的接口 -->
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <!-- 这个权限用于获取wifi的获取权限，wifi信息会用来进行网络定位 -->
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
+    <!-- 用于读取手机当前的状态 -->
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <!-- 写入扩展存储，向扩展卡写入数据，用于写入离线定位数据 -->
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <!-- 访问网络，网络定位需要上网 -->
+    <uses-permission android:name="android.permission.INTERNET" />
+    <!-- SD卡读取权限，用户写入离线定位数据 -->
+    <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS" />
+
     <application
         android:name=".ui.activity.IssueApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
+        android:largeHeap="true"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <meta-data
+            android:name="Mob-AppKey"
+            android:value="24f403caea1a8" />
+        <meta-data
+            android:name="Mob-AppSecret"
+            android:value="ef6e0fecf383f5ea7d896da2b8501321" />
+
         <activity
-            android:icon="@mipmap/ic_launcher"
-            android:name=".ui.activity.SplashActivity">
+            android:name=".ui.activity.SplashActivity"
+            android:icon="@mipmap/ic_launcher">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -137,12 +164,13 @@
         <service
             android:name="com.baidu.location.f"
             android:enabled="true"
-            android:process=":remote"></service>
+            android:process=":remote" />
 
         <activity
             android:name=".ui.activity.MainActivity"
+            android:launchMode="singleTask"
             android:screenOrientation="portrait"
-            android:theme="@style/NoTitleTheme" />
+            android:theme="@style/TranslucentTheme" />
         <!-- <activity -->
         <!-- android:name=".ui.activity.TestDiyActivity" -->
         <!-- android:screenOrientation="portrait" -->
@@ -227,7 +255,7 @@
             android:name=".ui.activity.user.MerchantInfoActivity"
             android:hardwareAccelerated="false"
             android:screenOrientation="portrait"
-            android:theme="@style/NoTitleTheme" />
+            android:theme="@style/TranslucentTheme" />
         <activity
             android:name=".ui.activity.user.UpdatePasswordActivity"
             android:screenOrientation="portrait"
@@ -288,6 +316,7 @@
             android:theme="@style/NoTitleTheme" />
         <activity
             android:name=".ui.activity.product.SelectGoodsActivity"
+            android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:theme="@style/NoTitleTheme" />
         <!-- <activity -->
@@ -397,21 +426,37 @@
             </intent-filter>
         </activity>
 
-        <!-- 微信分享回调 -->
-        <activity
-            android:name="cn.sharesdk.demo.wxapi.WXEntryActivity"
-            android:configChanges="keyboardHidden|orientation|screenSize"
-            android:exported="true"
-            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+        <!-- &lt;!&ndash; 微信分享回调 &ndash;&gt; -->
+        <!-- <activity -->
+        <!-- android:name="cn.sharesdk.demo.wxapi.WXEntryActivity" -->
+        <!-- android:configChanges="keyboardHidden|orientation|screenSize" -->
+        <!-- android:exported="true" -->
+        <!-- android:theme="@android:style/Theme.Translucent.NoTitleBar" /> -->
+
 
         <!-- 极光推送 -->
+        <activity
+            android:name="com.tencent.tauth.AuthActivity"
+            android:launchMode="singleTask"
+            android:noHistory="true">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
 
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
 
+                <data android:scheme="1106021571" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name="com.tencent.connect.common.AssistActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
         <!-- Rich push 核心功能 since 2.0.6 -->
         <activity
             android:name="cn.jpush.android.ui.PopWinActivity"
             android:exported="false"
-            android:theme="@style/MyDialogStyle"></activity>
+            android:theme="@style/MyDialogStyle" />
 
         <!-- Required SDK核心功能 -->
         <activity
@@ -430,7 +475,7 @@
         <service
             android:name="cn.jpush.android.service.DownloadService"
             android:enabled="true"
-            android:exported="false"></service>
+            android:exported="false" />
         <service
             android:name=".service.UpdateApkService"
             android:enabled="true" />
@@ -608,33 +653,97 @@
 
         <activity
             android:name=".ui.activity.WebViewHomeActivity"
+            android:configChanges="orientation|screenSize|keyboardHidden"
             android:label="@string/title_activity_web_view_home"
-            android:theme="@style/AppTheme"
-            android:configChanges="orientation|screenSize|keyboardHidden"></activity>
-        <activity android:name=".ui.activity.ArtiActivity"
+            android:theme="@style/AppTheme" />
+        <activity
+            android:name=".ui.activity.ArtiActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/horizontal_slide"
-            />
-        <activity android:name=".ui.activity.programme.ProgrammerActivity"
-            android:theme="@style/NoTitleTheme"/>
-        <activity android:name=".ui.activity.WiseHomeActivity"
-            android:theme="@style/NoTitleTheme"></activity>
-        <activity android:name=".ui.activity.ErrorTipsActivity"
-            android:theme="@style/NoTitleTheme"></activity>
-        <activity android:name=".ui.activity.ItDevicesActivity"
-            android:theme="@style/NoTitleTheme"></activity>
-        <activity android:name="com.wq.photo.MediaChoseActivity"></activity>
+            android:theme="@style/horizontal_slide" />
+        <activity
+            android:name=".ui.activity.programme.ProgrammerActivity"
+            android:theme="@style/NoTitleTheme" />
+        <activity
+            android:name=".ui.activity.WiseHomeActivity"
+            android:theme="@style/NoTitleTheme" />
+        <activity
+            android:name=".ui.activity.ErrorTipsActivity"
+            android:theme="@style/NoTitleTheme" />
+        <activity
+            android:name=".ui.activity.ItDevicesActivity"
+            android:theme="@style/NoTitleTheme" />
+        <activity android:name="com.wq.photo.MediaChoseActivity" />
 
         <provider
             android:name="android.support.v4.content.FileProvider"
             android:authorities="com.bocang.juhao.fileprovider"
-            android:grantUriPermissions="true"
-            android:exported="false">
-            <!--元数据-->
+            android:exported="false"
+            android:grantUriPermissions="true">
+
+            <!-- 元数据 -->
             <meta-data
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/file_paths" />
         </provider>
+
+        <meta-data
+            android:name="PGYER_APPID"
+            android:value="b7a97eee2a6ed63dc83f361efb1f829d" />
+
+        <activity android:name=".ui.activity.CallSelectActivity" />
+        <activity android:name=".ui.activity.SearchActivity" />
+        <activity android:name=".ui.activity.user.TixianGzActivity" />
+        <activity android:name=".ui.activity.blance.UserExtractProfitActivity" />
+        //图片选择Activity
+        <!-- //去掉Activity的ActionBar。 -->
+        <!-- //使用者可以根据自己的项目去配置，不一定要这样写，只要不Activity的ActionBar去掉就可以了。 -->
+        <!-- //横竖屏切换处理。 -->
+        <!-- //如果要支持横竖屏切换，一定要加上这句，否则在切换横竖屏的时候会发生异常。 -->
+        <activity
+            android:name="com.donkingliang.imageselector.ImageSelectorActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
+        //图片预览Activity
+        <activity
+            android:name="com.donkingliang.imageselector.PreviewActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
+        //图片剪切Activity
+        <activity
+            android:name="com.donkingliang.imageselector.ClipImageActivity"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
+        <activity android:name=".ui.activity.CommentHomeActivity" />
+        <activity
+            android:name=".wxapi.WXPayEntryActivity"
+            android:exported="true"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+
+                <data android:scheme="wxe5dbf8785c4ec928" />
+            </intent-filter>
+        </activity>
+
+        <receiver android:name="net.sourceforge.simcpux.AppRegister">
+            <intent-filter>
+                <action android:name="com.tencent.mm.plugin.openapi.Intent.ACTION_REFRESH_WXAPP" />
+            </intent-filter>
+        </receiver>
+
+        <activity android:name=".ui.activity.NewsDetailActivity" />
+        <activity android:name=".ui.activity.user.ZujiActivity" />
+        <activity
+            android:name=".ui.activity.BrandPlayActivity"
+            android:screenOrientation="landscape"
+            android:theme="@style/NoTitleTheme" />
+        <activity android:name=".ui.activity.BussinessApplyActivity"></activity>
+        <activity android:name=".ui.activity.user.VideoShotActivity"/>
+        <activity android:name=".ui.activity.user.SuccessVideoActivity"/>
+        <activity android:name=".ui.activity.VideoPlayerActivity"/>
+
     </application>
 
 </manifest>

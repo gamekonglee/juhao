@@ -3,6 +3,8 @@ package bc.juhao.com.ui.activity.user;
 import android.content.Intent;
 import android.net.Uri;
 import android.view.View;
+import android.webkit.WebChromeClient;
+import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.TextView;
@@ -11,6 +13,7 @@ import bc.juhao.com.R;
 import bc.juhao.com.cons.Constance;
 import bc.juhao.com.ui.view.MyWebView;
 import bocang.utils.AppUtils;
+import bocang.utils.LogUtils;
 import bocang.view.BaseActivity;
 
 /**
@@ -44,14 +47,14 @@ public class MessageDetailActivity extends BaseActivity {
         if(mFromType==1){
             title_tv.setText("场景详情");
         }
-//        mWebView.setWebChromeClient(new WebChromeClient());
-//        mWebView.setWebViewClient(new WebViewClient());
-//        mWebView.getSettings().setJavaScriptEnabled(true);
-//        mWebView.getSettings().setLayoutAlgorithm(WebSettings.LayoutAlgorithm.NARROW_COLUMNS);
-//        mWebView.getSettings().setSupportZoom(true);
-//        mWebView.getSettings().setUseWideViewPort(true);
-//        mWebView.getSettings().setLoadWithOverviewMode(true);
-//        mWebView.getSettings().setDefaultTextEncodingName("utf-8");
+        mWebView.setWebChromeClient(new WebChromeClient());
+        mWebView.setWebViewClient(new WebViewClient());
+        mWebView.getSettings().setJavaScriptEnabled(true);
+        mWebView.getSettings().setLayoutAlgorithm(WebSettings.LayoutAlgorithm.NARROW_COLUMNS);
+        mWebView.getSettings().setSupportZoom(true);
+        mWebView.getSettings().setUseWideViewPort(true);
+        mWebView.getSettings().setLoadWithOverviewMode(true);
+        mWebView.getSettings().setDefaultTextEncodingName("utf-8");
         mWebView.setWebViewClient(new WebViewClient (){
             @Override
             public boolean shouldOverrideUrlLoading(WebView view, String url) {
@@ -67,10 +70,13 @@ public class MessageDetailActivity extends BaseActivity {
             @Override
             public void onPageFinished(WebView view, String url) {
                 super.onPageFinished(view, url);
+
                 view.loadUrl("javascript:(function() { " +
                         "document.body.innerHTML = "+
-                        "document.body.innerHTML.replace(/api/,'www');"+
+                        "document.body.innerHTML.replace('api','www');"+
                         "})()");
+
+//                view.loadUrl(url.replace("api","wwww"));
             }
         });
     }
@@ -80,6 +86,7 @@ public class MessageDetailActivity extends BaseActivity {
         Intent intent = getIntent();
         mUrl=intent.getStringExtra(Constance.url);
         mFromType=intent.getIntExtra(Constance.FROMTYPE,0);
+        LogUtils.logE("murl",mUrl);
     }
 
     @Override

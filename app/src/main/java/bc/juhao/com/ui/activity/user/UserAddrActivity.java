@@ -1,6 +1,7 @@
 package bc.juhao.com.ui.activity.user;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.view.View;
 import android.widget.Button;
 
@@ -34,7 +35,7 @@ public class UserAddrActivity  extends BaseActivity{
     protected void initView() {
         setContentView(R.layout.activity_user_address);
         //沉浸式状态栏
-//        setColor(this, getResources().getColor(R.color.colorPrimary));
+        setColor(this, Color.WHITE);
         btn_save=getViewAndClick(R.id.btn_save);
 
     }
@@ -48,6 +49,9 @@ public class UserAddrActivity  extends BaseActivity{
     @Override
     protected void onStart() {
         super.onStart();
+        mController.sendAddressList();
+    }
+    public void onResfresh(){
         mController.sendAddressList();
     }
 

@@ -3,6 +3,7 @@
                 android:id="@+id/main_rl"
                 android:layout_width="wrap_content"
                 android:layout_height="55dp"
+    android:background="@color/item_time_bg"
                 android:orientation="vertical"
                 android:paddingBottom="5dp"
                 android:paddingTop="5dp"
@@ -13,6 +14,7 @@
         android:layout_width="100dp"
         android:layout_height="wrap_content"
         android:gravity="center"
+        android:visibility="gone"
         android:text="2018-01-08"
         android:textSize="12dp"/>
 
@@ -23,7 +25,8 @@
         android:layout_below="@id/time_01_tv"
         android:gravity="center"
         android:text="00:00"
-        android:textSize="12dp"/>
+        android:textColor="#444444"
+        android:textSize="18sp"/>
 
     <TextView
         android:id="@+id/state_tv"
@@ -32,5 +35,6 @@
         android:layout_below="@id/time_02_tv"
         android:gravity="center"
         android:text="即将开始"
-        android:textSize="12dp"/>
+        android:textColor="#888888"
+        android:textSize="12sp"/>
 </RelativeLayout>

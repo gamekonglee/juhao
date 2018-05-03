@@ -1,5 +1,7 @@
 package bc.juhao.com.ui.activity.blance;
 
+import android.content.Intent;
+import android.graphics.Color;
 import android.view.View;
 import android.widget.Button;
 import android.widget.RelativeLayout;
@@ -20,6 +22,7 @@ public class UserFinanceActivity extends BaseActivity {
     private TextView topRighttv;
     private UserFinanceController mController;
     private RelativeLayout profit_record_rl;
+    private RelativeLayout tixian_rl;
 
     @Override
     protected void InitDataView() {
@@ -41,10 +44,12 @@ public class UserFinanceActivity extends BaseActivity {
     protected void initView() {
         setContentView(R.layout.activity_user_finance);
         //沉浸式状态栏
+        setColor(this, Color.WHITE);
 //        setColor(this, getResources().getColor(R.color.green));
         user_fnc_btnWithdraw = getViewAndClick(R.id.user_fnc_btnWithdraw);
         topRighttv = getViewAndClick(R.id.topRighttv);
         profit_record_rl = getViewAndClick(R.id.profit_record_rl);
+        tixian_rl = getViewAndClick(R.id.tixian_rl);
     }
 
     @Override
@@ -59,10 +64,17 @@ public class UserFinanceActivity extends BaseActivity {
                 IntentUtil.startActivity(this, ExtractMoneyActivity.class, false);
                 break;
             case R.id.topRighttv:
-                IntentUtil.startActivity(this, ExtractDetailActivity.class, false);
+            case R.id.tixian_rl:
+                Intent intent=new Intent(this,UserExtractProfitActivity.class);
+                intent.putExtra("current",1);
+                startActivity(intent);
+//                IntentUtil.startActivity(this, ExtractDetailActivity.class, false);
                 break;
             case R.id.profit_record_rl:
-                IntentUtil.startActivity(this, ProfitRecordActivity.class, false);
+                Intent intent2=new Intent(this,UserExtractProfitActivity.class);
+                intent2.putExtra("current",0);
+                startActivity(intent2);
+//                IntentUtil.startActivity(this, UserExtractProfitActivity.class, false);
                 break;
         }
     }

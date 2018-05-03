@@ -1,13 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               android:orientation="vertical"
+    android:background="#ffffff"
               android:layout_width="match_parent"
               android:layout_height="match_parent">
     <RelativeLayout
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
-        android:background="@drawable/icon_top"
+        android:background="#ffffff"
         android:minHeight="?attr/actionBarSize"
         >
 
@@ -24,11 +25,11 @@
                 android:paddingLeft="10dp">
                 <ImageView
                     android:id="@+id/topLeftBtn"
-                    android:layout_width="24dp"
-                    android:layout_height="24dp"
+                    android:layout_width="10dp"
+                    android:layout_height="20dp"
                     android:layout_centerVertical="true"
                     android:layout_marginRight="5dp"
-                    android:background="@drawable/goback"
+                    android:background="@mipmap/nav_left"
 
                     android:textColor="#FFFFFF"/>
             </LinearLayout>
@@ -36,7 +37,7 @@
                 android:id="@+id/et_search"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textColor="@color/white"
+                android:textColor="#666666"
                 android:textSize="18dp"
                 android:layout_centerInParent="true"
                 android:text="@string/mydata_setting"
@@ -55,19 +56,57 @@
                     android:layout_alignParentRight="true"
                     android:layout_marginRight="10dp"
                     android:src="@drawable/ic_ok"
+                    android:visibility="gone"
                     />
+                <TextView
+                    android:text="保存"
+                    android:textColor="@color/green"
+                    android:textSize="14sp"
+                    android:layout_centerInParent="true"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
             </RelativeLayout>
         </RelativeLayout>
 
 
     </RelativeLayout>
+    <RelativeLayout
+        android:background="@mipmap/bg_my_bg"
+        android:layout_width="match_parent"
+        android:layout_height="225dp">
+        <RelativeLayout
+            android:layout_centerInParent="true"
+            android:layout_width="61dp"
+            android:layout_height="61dp">
+            <View
+                android:background="@drawable/circle_white"
+                android:layout_width="61dp"
+                android:layout_centerInParent="true"
+                android:layout_height="61dp"/>
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/head_iv"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:src="@drawable/touxian"
+                android:layout_centerInParent="true"
+                />
+            <ImageView
+                android:layout_alignParentRight="true"
+                android:layout_alignParentBottom="true"
+                android:layout_margin="5dp"
+                android:src="@mipmap/my_icon_bj"
+                android:layout_width="15dp"
+                android:layout_height="15dp" />
+        </RelativeLayout>
 
+    </RelativeLayout>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
         android:background="@color/background_color">
         <RelativeLayout
+            android:visibility="gone"
             android:id="@+id/head_rl"
             style="@style/mine_item_style02"
             android:layout_marginTop="10dp"
@@ -78,14 +117,6 @@
                 style="@style/mine_text_style02"
                 android:text="头像"/>
 
-            <de.hdodenhof.circleimageview.CircleImageView
-                android:id="@+id/head_iv"
-                android:layout_width="60dp"
-                android:layout_height="60dp"
-                android:src="@drawable/touxian"
-                android:layout_marginRight="12dp"
-                android:layout_centerVertical="true"
-                android:layout_alignParentRight="true"/>
 
         </RelativeLayout>
         <View
@@ -101,8 +132,16 @@
                 android:id="@+id/name_title_tv"
                 style="@style/mine_text_style02"
                 android:text="昵称"/>
+            <ImageView
+                android:src="@mipmap/my_icon_right"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="15dp"
+                android:layout_width="6dp"
+                android:layout_height="12dp" />
             <TextView
                 android:id="@+id/name_tv"
+                android:layout_marginRight="50dp"
                 style="@style/mine_text_style03"
                 android:hint="必填"
                 />
@@ -120,7 +159,15 @@
                 android:id="@+id/sex_title_tv"
                 style="@style/mine_text_style02"
                 android:text="@string/sex"/>
+            <ImageView
+                android:src="@mipmap/my_icon_right"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="15dp"
+                android:layout_width="6dp"
+                android:layout_height="12dp" />
             <TextView
+                android:layout_marginRight="50dp"
                 android:id="@+id/sex_tv"
                 style="@style/mine_text_style03"
                 android:text="未知"/>
@@ -140,8 +187,16 @@
                 android:text="@string/birthday"/>
             <TextView
                 android:id="@+id/birthday_tv"
+                android:layout_marginRight="50dp"
                 style="@style/mine_text_style03"
                 />
+            <ImageView
+                android:src="@mipmap/my_icon_right"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="15dp"
+                android:layout_width="6dp"
+                android:layout_height="12dp" />
         </RelativeLayout>
 
         <RelativeLayout
@@ -198,16 +253,24 @@
                 style="@style/mine_text_style03"
                 android:text="1458798787@qq.com"/>
         </RelativeLayout>
-
+        <View
+            style="@style/view_style"
+            />
         <RelativeLayout
             android:id="@+id/update_password_rl"
             style="@style/mine_item_style02"
-            android:layout_marginTop="10dp"
             >
             <TextView
                 android:id="@+id/update_password_title_tv"
                 style="@style/mine_text_style02"
                 android:text="@string/update_password"/>
+            <ImageView
+                android:src="@mipmap/my_icon_right"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="15dp"
+                android:layout_width="6dp"
+                android:layout_height="12dp" />
         </RelativeLayout>
         <TextView
             android:id="@+id/tip_tv"

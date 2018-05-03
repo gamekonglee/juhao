@@ -6,30 +6,45 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.GridView;
+import android.widget.ImageView;
 
+
+import com.google.gson.Gson;
+import com.nostra13.universalimageloader.core.ImageLoader;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 import astuetz.MyPagerSlidingTabStrip;
 import bc.juhao.com.R;
+import bc.juhao.com.adapter.BaseAdapterHelper;
+import bc.juhao.com.adapter.QuickAdapter;
+import bc.juhao.com.bean.GoodsBean;
 import bc.juhao.com.cons.Constance;
 import bc.juhao.com.cons.NetWorkConst;
 import bc.juhao.com.controller.BaseController;
 import bc.juhao.com.listener.INetworkCallBack;
+import bc.juhao.com.ui.activity.IssueApplication;
 import bc.juhao.com.ui.activity.buy.SearchActivity;
+import bc.juhao.com.ui.activity.product.ProDetailActivity;
 import bc.juhao.com.ui.activity.user.MyOrderActivity;
 import bc.juhao.com.ui.adapter.FragmentVPAdapter;
 import bc.juhao.com.ui.fragment.OrderFragment;
 import bc.juhao.com.utils.UIUtils;
+import bocang.json.JSONArray;
 import bocang.json.JSONObject;
+import bocang.utils.AppUtils;
 
 /**
  * @author: Jun
  * @date : 2017/2/6 11:10
  * @description :我的订单
  */
-public class MyOrderController extends BaseController implements INetworkCallBack {
+public class MyOrderController extends BaseController implements INetworkCallBack, AdapterView.OnItemClickListener {
     private MyOrderActivity mView;
     private MyPagerSlidingTabStrip mtabs;
     private ViewPager main_viewpager;
@@ -37,6 +52,9 @@ public class MyOrderController extends BaseController implements INetworkCallBac
     private MyPageChangeListener mListener;
     private OrderFragment mOrderFragment;
     public ArrayList<OrderFragment> listFragment;
+    private GridView priductGridView;
+    private QuickAdapter likeGoods;
+    private List<GoodsBean> goodsBeans;
 
     /**
      * 支付订单
@@ -57,19 +75,36 @@ public class MyOrderController extends BaseController implements INetworkCallBac
 
     private void initViewData() {
 //        sendPaymentInfo();
+//        selectProduct(1,"12");
     }
 
     private void initView() {
         titleArrs = UIUtils.getStringArr(R.array.order_titles);
         main_viewpager = (ViewPager)mView.findViewById(R.id.main_viewpager);
         mtabs = (MyPagerSlidingTabStrip) mView.findViewById(R.id.tabs);
+        priductGridView = mView.findViewById(R.id.priductGridView);
+        priductGridView.setOnItemClickListener(this);
+
+//        pd = (ProgressBar) mView.getActivity().findViewById(R.id.pd);
+//        pd.setVisibility(View.VISIBLE);
+        likeGoods = new QuickAdapter<GoodsBean>(mView, R.layout.item_like_goods){
+            @Override
+            protected void convert(BaseAdapterHelper helper, GoodsBean item) {
+
+                helper.setText(R.id.tv_name,""+item.getName());
+                helper.setText(R.id.tv_price,"¥"+item.getCurrent_price());
+                ImageView imageView=helper.getView(R.id.iv);
+                ImageLoader.getInstance().displayImage(NetWorkConst.SCENE_HOST+item.getOriginal_img(),imageView,((IssueApplication)mView.getApplicationContext()).getImageLoaderOption());
+            }
+        };
+        priductGridView.setAdapter(likeGoods);
         listFragment = new ArrayList<>();
         contentList.add("-1");
         contentList.add("0");
         contentList.add("1");
         contentList.add("2");
         contentList.add("4");
-        contentList.add("5");
+        contentList.add("3");
 
         //有多少个标题就有多少个碎片，动态添加
         for(int i=0;i<titleArrs.length;i++){
@@ -101,6 +136,64 @@ public class MyOrderController extends BaseController implements INetworkCallBac
     @Override
     public void onFailureListener(String requestCode, JSONObject ans) {
 
+    }
+    /**
+     * 获取产品列表
+     *
+     * @param page
+     * @param per_page
+     */
+    public void selectProduct(int page, String per_page) {
+        Random random=new Random();
+
+        String sortKey=(random.nextInt(5)+1)+"";
+        String sortValue=(random.nextInt(2)+1)+"";
+        mNetWork.sendGoodsList(page, per_page, null, null, null, null, null, sortKey, sortValue, new INetworkCallBack() {
+            @Override
+            public void onSuccessListener(String requestCode, JSONObject ans) {
+                if (null == mView || mView.isFinishing())
+                    return;
+
+                JSONArray goodsList = ans.getJSONArray(Constance.goodsList);
+                if (AppUtils.isEmpty(goodsList) || goodsList.length() == 0) {
+                    return;
+                }
+
+                getDataSuccess(goodsList);
+            }
+
+            @Override
+            public void onFailureListener(String requestCode, JSONObject ans) {
+
+            }
+        });
+    }
+
+    private void getDataSuccess(JSONArray array) {
+        goodsBeans = new ArrayList<>();
+        for (int i = 0; i < array.length(); i++) {
+            try {
+
+                goodsBeans.add(new Gson().fromJson(String.valueOf(array.getJSONObject(i)),GoodsBean.class));
+            }catch (Exception e){
+                GoodsBean goodsBean=new GoodsBean();
+                goodsBean.setId(array.getJSONObject(i).getInt(Constance.id));
+                goodsBean.setName(array.getJSONObject(i).getString(Constance.name));
+                goodsBean.setCurrent_price(array.getJSONObject(i).getString(Constance.current_price));
+                goodsBean.setOriginal_img(array.getJSONObject(i).getString(Constance.original_img));
+                goodsBeans.add(goodsBean);
+            }
+        }
+        likeGoods.replaceAll(goodsBeans);
+        likeGoods.notifyDataSetChanged();
+    }
+
+    @Override
+    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        int productId = goodsBeans.get(position).getId();
+        Intent intent = new Intent(mView, ProDetailActivity.class);
+        intent.putExtra(Constance.product, productId);
+        mView.startActivity(intent);
     }
 
     class MyPageChangeListener implements ViewPager.OnPageChangeListener{

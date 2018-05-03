@@ -43,6 +43,7 @@ public class ChartListActivity extends BaseActivity
     @Override
     protected void initView() {
         setContentView(R.layout.activity_message);
+        setColor(this,getResources().getColor(R.color.color_chat));
         //必需继承FragmentActivity,嵌套fragment只需要这行代码
         mFragment=new MessageFragment();
         getSupportFragmentManager().beginTransaction().replace(R.id.container,

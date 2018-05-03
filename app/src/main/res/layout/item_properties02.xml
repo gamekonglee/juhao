@@ -8,12 +8,12 @@
         android:id="@+id/item_tv"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@drawable/pay_money_choose_bg"
+        android:background="@drawable/choose_properties"
         android:gravity="center"
         android:ellipsize="end"
         android:lines="1"
         android:padding="5dp"
-        android:textColor="@drawable/choose_properties"
+        android:textColor="@color/goods_details_sku_selector"
         android:textSize="14sp"
         />
 

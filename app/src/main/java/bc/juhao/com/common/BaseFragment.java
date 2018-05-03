@@ -16,6 +16,7 @@ import bc.juhao.com.cons.Constance;
 import bc.juhao.com.ui.activity.user.LoginActivity;
 import bc.juhao.com.ui.view.dialog.SpotsDialog;
 import bc.juhao.com.utils.MyShare;
+import bc.juhao.com.utils.UIUtils;
 import bocang.utils.AppUtils;
 
 /**
@@ -274,18 +275,29 @@ public abstract class BaseFragment extends Fragment {
         errorView.setVisibility(View.GONE);
         mDialog.dismiss();
     }
-
+//
+//    /**
+//     * 判断是否有toKen
+//     */
+//    public Boolean isToken() {
+//        String token = MyShare.get(getActivity()).getString(Constance.TOKEN);
+//        if(AppUtils.isEmpty(token)){
+//            Intent logoutIntent = new Intent(getActivity(), LoginActivity.class);
+//            logoutIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+//            startActivity(logoutIntent);
+//            return true;
+//        }
+//        return  false;
+//    }
     /**
      * 判断是否有toKen
      */
     public Boolean isToken() {
         String token = MyShare.get(getActivity()).getString(Constance.TOKEN);
         if(AppUtils.isEmpty(token)){
-            Intent logoutIntent = new Intent(getActivity(), LoginActivity.class);
-            logoutIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-            startActivity(logoutIntent);
+            UIUtils.showLoginDialog(getActivity());
             return true;
         }
-        return  false;
+        return false;
     }
 }

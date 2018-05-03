@@ -26,11 +26,15 @@ import com.lib.common.hxp.view.PullableScrollView;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.assist.ImageScaleType;
+import com.tencent.mm.opensdk.modelpay.PayReq;
+import com.tencent.mm.opensdk.openapi.IWXAPI;
+import com.tencent.mm.opensdk.openapi.WXAPIFactory;
 import com.yjn.swipelistview.swipelistviewlibrary.widget.SwipeMenuListView;
 
 import bc.juhao.com.R;
 import bc.juhao.com.bean.Logistics;
 import bc.juhao.com.bean.PayResult;
+import bc.juhao.com.bean.PrepayIdInfo;
 import bc.juhao.com.chat.DemoHelper;
 import bc.juhao.com.cons.Constance;
 import bc.juhao.com.cons.NetWorkConst;
@@ -41,6 +45,7 @@ import bc.juhao.com.listener.INetworkCallBack02;
 import bc.juhao.com.ui.activity.ChartListActivity;
 import bc.juhao.com.ui.activity.IssueApplication;
 import bc.juhao.com.ui.activity.buy.ConfirmOrderActivity;
+import bc.juhao.com.ui.activity.product.ProDetailActivity;
 import bc.juhao.com.ui.activity.user.ChatActivity;
 import bc.juhao.com.ui.activity.user.OrderDetailActivity;
 import bc.juhao.com.ui.activity.user.UserAddrActivity;
@@ -48,6 +53,7 @@ import bc.juhao.com.ui.view.ShowDialog;
 import bc.juhao.com.ui.view.popwindow.SelectLogisticsPopWindow;
 import bc.juhao.com.utils.MyShare;
 import bc.juhao.com.utils.UIUtils;
+import bc.juhao.com.utils.WXpayUtils;
 import bocang.json.JSONArray;
 import bocang.json.JSONObject;
 import bocang.utils.AppDialog;
@@ -74,8 +80,9 @@ public class ConfirmOrderController extends BaseController implements INetworkCa
     private Logistics mlogistics;
     private SelectLogisticsPopWindow mPopWindow;
     private PullableScrollView scrollView;
-    private com.alibaba.fastjson.JSONObject mOrderObject;
+    public com.alibaba.fastjson.JSONObject mOrderObject;
     private CheckBox appliay_cb;
+    private String mtotal;
 
 
     public ConfirmOrderController(ConfirmOrderActivity v) {
@@ -83,7 +90,6 @@ public class ConfirmOrderController extends BaseController implements INetworkCa
         initView();
         initViewData();
     }
-
     private void initViewData() {
         mMyAdapter = new MyAdapter();
         listView.setAdapter(mMyAdapter);
@@ -116,7 +122,7 @@ public class ConfirmOrderController extends BaseController implements INetworkCa
         loginstic_address_tv = (TextView) mView.findViewById(R.id.loginstic_address_tv);
         remark_tv = (TextView) mView.findViewById(R.id.remark_tv);
         scrollView = (PullableScrollView) mView.findViewById(R.id.scrollView);
-        scrollView.smoothScrollTo(0,20);
+        scrollView.smoothScrollTo(0, 20);
         listView.setFocusable(false);
     }
 
@@ -136,30 +142,41 @@ public class ConfirmOrderController extends BaseController implements INetworkCa
 
     @Override
     public void onSuccessListener(String requestCode, JSONObject ans) {
-        mView.hideLoading();
-        switch (requestCode) {
-            case NetWorkConst.CONSIGNEELIST:
-                JSONArray consigneeList = ans.getJSONArray(Constance.consignees);
-                if (consigneeList.length() == 0)
-                    return;
-                String name = consigneeList.getJSONObject(0).getString(Constance.name);
-                String address = consigneeList.getJSONObject(0).getString(Constance.address);
-                String phone = consigneeList.getJSONObject(0).getString(Constance.mobile);
-                consignee_tv.setText(name);
-                address_tv.setText("收货地址:" + address);
-                phone_tv.setText(phone);
-                mConsigneeId = consigneeList.getJSONObject(0).getString(Constance.id);
-                break;
-            case NetWorkConst.CheckOutCart:
-                JSONObject orderObject = ans.getJSONObject(Constance.order);
-                if(AppUtils.isEmpty(orderObject)){
-                    MyToast.show(mView,"当前没有可支付的数据!");
-                    return;
-                }
-               String order= orderObject.getString(Constance.id);
-                sendPayment(order, "alipay.app");
-                break;
+        try{
+            mView.hideLoading();
+            switch (requestCode) {
+                case NetWorkConst.CONSIGNEELIST:
+                    JSONArray consigneeList = ans.getJSONArray(Constance.consignees);
+                    if (consigneeList.length() == 0)
+                        return;
+                    String name = consigneeList.getJSONObject(0).getString(Constance.name);
+                    String address = consigneeList.getJSONObject(0).getString(Constance.address);
+                    String phone = consigneeList.getJSONObject(0).getString(Constance.mobile);
+                    consignee_tv.setText(name);
+                    address_tv.setText("收货地址:" + address);
+                    phone_tv.setText(phone);
+                    mConsigneeId = consigneeList.getJSONObject(0).getString(Constance.id);
+                    break;
+                case NetWorkConst.CheckOutCart:
+                    JSONObject orderObject = ans.getJSONObject(Constance.order);
+                    mtotal = orderObject.getString(Constance.total);
+                    if (AppUtils.isEmpty(orderObject)) {
+                        MyToast.show(mView, "当前没有可支付的数据!");
+                        return;
+                    }
+                    String order = orderObject.getString(Constance.id);
+                    if (appliay_cb.isChecked()) {
+                        sendPayment(order, "alipay.app");
+                    } else {
+                        sendPayment(order, "wxpay.app");
+                    }
+
+                    break;
+            }
+        }catch (Exception e){
+            e.printStackTrace();
         }
+
     }
 
     private Handler mHandler = new Handler() {
@@ -180,12 +197,25 @@ public class ConfirmOrderController extends BaseController implements INetworkCa
                     Log.d("TAG", "resultStatus=" + resultStatus);
                     // 判断resultStatus 为“9000”则代表支付成功，具体状态码代表含义可参考接口文档
                     if (TextUtils.equals(resultStatus, "9000")) {
-                        MyToast.show(mView,"支付成功");
-                        Intent intent = new Intent(mView, OrderDetailActivity.class);
+                        MyToast.show(mView, "支付成功");
+                        final Intent intent = new Intent(mView, OrderDetailActivity.class);
                         intent.putExtra(Constance.order, mOrderObject.toJSONString());
                         intent.putExtra(Constance.state, 1);
-                        mView.startActivity(intent);
-                        mView.finish();
+
+                        mNetWork.sendPaySuccess(mOrderObject.getString(Constance.id),mtotal, new INetworkCallBack() {
+                            @Override
+                            public void onSuccessListener(String requestCode, JSONObject ans) {
+                                mView.startActivity(intent);
+                                mView.finish();
+                            }
+
+                            @Override
+                            public void onFailureListener(String requestCode, JSONObject ans) {
+                                mView.startActivity(intent);
+                                mView.finish();
+                            }
+                        });
+
 
                     } else {
                         // 判断resultStatus 为非"9000"则代表可能支付失败
@@ -213,7 +243,6 @@ public class ConfirmOrderController extends BaseController implements INetworkCa
     };
 
 
-
     @Override
     public void onFailureListener(String requestCode, JSONObject ans) {
         mView.hideLoading();
@@ -224,35 +253,66 @@ public class ConfirmOrderController extends BaseController implements INetworkCa
             return;
         }
         AppDialog.messageBox(ans.getString(Constance.error_desc));
-
+        getOutLogin(mView, ans);
     }
 
+    PrepayIdInfo bean;
 
     /**
      * 支付订单
+     *
      * @param order
      * @param code
      */
-    private void sendPayment(String order,String code){
+    private void sendPayment(String order, String code) {
         mNetWork.sendPayment(order, code, new INetworkCallBack02() {
             @Override
             public void onSuccessListener(String requestCode, com.alibaba.fastjson.JSONObject ans) {
-                String notify_url = ans.getString(Constance.alipay);
-                mOrderObject=ans.getJSONObject(Constance.order);
+                try{
+                    String notify_url = ans.getString(Constance.alipay);
+                    mOrderObject = ans.getJSONObject(Constance.order);
 
-                if (AppUtils.isEmpty(notify_url))
-                    return;
-                SubmitAliPay(notify_url);
+                    if (appliay_cb.isChecked()) {
+                        if (AppUtils.isEmpty(notify_url))
+                            return;
+                        SubmitAliPay(notify_url);
+                    } else {
+                        com.alibaba.fastjson.JSONObject wxpayObject = ans.getJSONObject(Constance.wxpay);
+                        String appid = wxpayObject.getString("appid");
+                        String mch_id = wxpayObject.getString("mch_id");
+                        String nonce_str = wxpayObject.getString("nonce_str");
+                        String packages = wxpayObject.getString("packages");
+                        String prepay_id = wxpayObject.getString("prepay_id");
+                        String sign = wxpayObject.getString("sign");
+                        String timestamp = wxpayObject.getString("timestamp");
+                        PayReq request = new PayReq();
+                        request.appId=appid;
+                        request.partnerId=mch_id;
+                        request.prepayId=prepay_id;
+                        request.packageValue=packages;
+                        request.nonceStr=nonce_str;
+                        request.timeStamp=timestamp;
+                        request.sign=sign;
+                        IWXAPI iwxapi= WXAPIFactory.createWXAPI(mView,appid);
+                        iwxapi.sendReq(request);
+                    }
+                }catch (Exception e){
+                    e.printStackTrace();
+
+                }
+
             }
 
             @Override
             public void onFailureListener(String requestCode, com.alibaba.fastjson.JSONObject ans) {
                 mView.hideLoading();
-                MyToast.show(mView, "支付失败!");
+                MyToast.show(mView, ans.getString(Constance.error_desc));
+                if (AppUtils.isEmpty(mOrderObject))
+                    return;
                 Intent intent = new Intent(mView, OrderDetailActivity.class);
                 intent.putExtra(Constance.order, mOrderObject.toJSONString());
                 mView.startActivity(intent);
-
+                getOutLogin02(mView, ans);
             }
         });
 
@@ -325,7 +385,7 @@ public class ConfirmOrderController extends BaseController implements INetworkCa
             loginstic_tv.setText(mlogistics.getName());
             loginstic_phone_tv.setText(mlogistics.getTel());
             loginstic_address_tv.setText("提货地址: " + mlogistics.getAddress());
-        }else if (resultCode == 007) {
+        } else if (resultCode == 007) {
             String value = data.getStringExtra(Constance.VALUE);
             if (AppUtils.isEmpty(value))
                 return;
@@ -339,10 +399,6 @@ public class ConfirmOrderController extends BaseController implements INetworkCa
     public void settleOrder() {
         if (AppUtils.isEmpty(mConsigneeId)) {
             MyToast.show(mView, "请选择收货地址!");
-            return;
-        }
-        if (!appliay_cb.isChecked()) {
-            MyToast.show(mView, "请选择支付方式!");
             return;
         }
         sendCheckOutCart();
@@ -439,6 +495,28 @@ public class ConfirmOrderController extends BaseController implements INetworkCa
         });
     }
 
+    public void sendPaySuccess() {
+        mNetWork.sendPaySuccess(mOrderObject.getString(Constance.id),mtotal, new INetworkCallBack() {
+            @Override
+            public void onSuccessListener(String requestCode, JSONObject ans) {
+                Intent intent = new Intent(mView, OrderDetailActivity.class);
+                intent.putExtra(Constance.order, mOrderObject.toJSONString());
+                intent.putExtra(Constance.state, "2");
+                mView.startActivity(intent);
+                mView.finish();
+            }
+
+            @Override
+            public void onFailureListener(String requestCode, JSONObject ans) {
+                Intent intent = new Intent(mView, OrderDetailActivity.class);
+                intent.putExtra(Constance.order, mOrderObject.toJSONString());
+                intent.putExtra(Constance.state, "2");
+                mView.startActivity(intent);
+                mView.finish();
+            }
+        });
+    }
+
     private class MyAdapter extends BaseAdapter {
         private DisplayImageOptions options;
         private ImageLoader imageLoader;
@@ -447,20 +525,20 @@ public class ConfirmOrderController extends BaseController implements INetworkCa
             options = new DisplayImageOptions.Builder()
                     // 设置图片下载期间显示的图片
                     .showImageOnLoading(R.drawable.bg_default)
-                            // 设置图片Uri为空或是错误的时候显示的图片
+                    // 设置图片Uri为空或是错误的时候显示的图片
                     .showImageForEmptyUri(R.drawable.bg_default)
-                            // 设置图片加载或解码过程中发生错误显示的图片
-                            // .showImageOnFail(R.drawable.ic_error)
-                            // 设置下载的图片是否缓存在内存中
+                    // 设置图片加载或解码过程中发生错误显示的图片
+                    // .showImageOnFail(R.drawable.ic_error)
+                    // 设置下载的图片是否缓存在内存中
                     .cacheInMemory(true)
-                            // 设置下载的图片是否缓存在SD卡中
+                    // 设置下载的图片是否缓存在SD卡中
                     .cacheOnDisk(true)
-                            // .displayer(new RoundedBitmapDisplayer(20)) // 设置成圆角图片
-                            // 是否考虑JPEG图像EXIF参数（旋转，翻转）
+                    // .displayer(new RoundedBitmapDisplayer(20)) // 设置成圆角图片
+                    // 是否考虑JPEG图像EXIF参数（旋转，翻转）
                     .considerExifParams(true)
                     .imageScaleType(ImageScaleType.EXACTLY_STRETCHED)// 设置图片可以放大（要填满ImageView必须配置memoryCacheExtraOptions大于Imageview）
-                            // .displayer(new FadeInBitmapDisplayer(100))//
-                            // 图片加载好后渐入的动画时间
+                    // .displayer(new FadeInBitmapDisplayer(100))//
+                    // 图片加载好后渐入的动画时间
                     .build(); // 构建完成
 
             // 得到ImageLoader的实例(使用的单例模式)
@@ -507,47 +585,34 @@ public class ConfirmOrderController extends BaseController implements INetworkCa
             }
             final JSONObject goodsObject = mView.goodsList.getJSONObject(position);
             holder.nameTv.setText(goodsObject.getJSONObject(Constance.product).getString(Constance.name));
-            try{
+            try {
                 imageLoader.displayImage(goodsObject.getJSONObject(Constance.product).getJSONObject(Constance.default_photo).getString(Constance.large)
                         , holder.imageView, options);
-            }catch (Exception e){
+            } catch (Exception e) {
                 e.printStackTrace();
             }
 
 
             String property = goodsObject.getString(Constance.property);
 
-            if(AppUtils.isEmpty(property)){
+            if (AppUtils.isEmpty(property)) {
                 holder.SpecificationsTv.setVisibility(View.GONE);
-            }else{
+            } else {
                 holder.SpecificationsTv.setVisibility(View.VISIBLE);
             }
 
             holder.SpecificationsTv.setText(property);
             String price = goodsObject.getString(Constance.price);
-            holder.priceTv.setText("优惠价:" + price+"元");
-            String oldPrice = goodsObject.getJSONObject(Constance.product).getString(Constance.price);
-            holder.old_priceTv.setText("零售价:" + oldPrice+"元");
+            holder.priceTv.setText("优惠价:" + price + "元");
+            String oldPrice = goodsObject.getJSONObject(Constance.product).getString(Constance.current_price);
+            holder.old_priceTv.setText("零售价:" + oldPrice + "元");
             String num = goodsObject.getString(Constance.amount);
             holder.numTv.setText("x" + num);
             holder.contact_service_tv.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    int level = IssueApplication.mUserObject.getInt(Constance.level);
-                    if(level==0){
-                        if(!mView.isToken()){
-                            IntentUtil.startActivity(mView, ChartListActivity.class, false);
-                        }
-                        return;
-                    }
-
-                    int id= MyShare.get(mView).getInt(Constance.USERCODEID);
-                    if(id==0){
-                        MyToast.show(mView,"该用户没有客服信息!");
-                    }else{
-
-                        sendCall("尝试连接聊天服务..请连接?");
-                    }
+//                    String id = IssueApplication.mUserObject.getString(Constance.id);
+                    sendCall("联系客服中。。....");
                 }
             });
             return convertView;
@@ -569,106 +634,128 @@ public class ConfirmOrderController extends BaseController implements INetworkCa
      */
     public void sendCall(String msg) {
         try {
+            int level = IssueApplication.mUserObject.getInt(Constance.level);
+            if (level == 0) {
+                if (!mView.isToken()) {
+                    IntentUtil.startActivity(mView, ChartListActivity.class, false);
+                }
+                return;
+            }
+
             String parent_name = IssueApplication.mUserObject.getString("parent_name");
             String parent_id = IssueApplication.mUserObject.getString("parent_id");
-            String userIcon = NetWorkConst.SCENE_HOST+IssueApplication.mUserObject.getString("parent_avatar");
-            EaseUser user=new EaseUser(parent_id);
+            if(ProDetailActivity.isJuHao)
+            {
+                parent_id="37";
+                parent_name="钜豪超市";
+            }
+            String userIcon = NetWorkConst.SCENE_HOST + IssueApplication.mUserObject.getString("parent_avatar");
+            EaseUser user = new EaseUser(parent_id);
             user.setNickname(parent_name);
             user.setNick(parent_name);
             user.setAvatar(userIcon);
             DemoHelper.getInstance().saveContact(user);
 
-            if(!EMClient.getInstance().isLoggedInBefore()){
-                ShowDialog mDialog=new ShowDialog();
+            if (!EMClient.getInstance().isLoggedInBefore()) {
+                ShowDialog mDialog = new ShowDialog();
                 mDialog.show(mView, "提示", msg, new ShowDialog.OnBottomClickListener() {
                     @Override
                     public void positive() {
                         loginHX();
                     }
+
                     @Override
                     public void negtive() {
 
                     }
                 });
-            }else{
+            } else {
                 EMClient.getInstance().contactManager().acceptInvitation(parent_id);
                 mView.startActivity(new Intent(mView, ChatActivity.class).putExtra(EaseConstant.EXTRA_USER_ID, parent_id));
             }
+
+
         } catch (HyphenateException e) {
             e.printStackTrace();
         }
     }
 
+
     //登录环信
-    private void loginHX() {
-        final Toast toast = Toast.makeText(mView,"服务器连接中...!", Toast.LENGTH_SHORT);
-        toast.show();
-        if (NetUtils.hasNetwork(mView)) {
-            final String uid=MyShare.get(mView).getString(Constance.USERID);
-            if(AppUtils.isEmpty(uid)){
-                return;
-            }
-            if (!TextUtils.isEmpty(uid)) {
+        private void loginHX() {
+            final Toast toast = Toast.makeText(mView,"服务器连接中...!", Toast.LENGTH_SHORT);
+            toast.show();
+            if (NetUtils.hasNetwork(mView)) {
+                final String uid=MyShare.get(mView).getString(Constance.USERID);
+                if(AppUtils.isEmpty(uid)){
+                    return;
+                }
+                if (!TextUtils.isEmpty(uid)) {
 
-                new Thread(new Runnable() {
-                    public void run() {
-                        try {
-                            EMClient.getInstance().createAccount(uid,uid);//同步方法
-                            mView.runOnUiThread(new Runnable() {
-                                @Override
-                                public void run() {
-                                    MyLog.e("注册成功!");
-                                    getSuccessLogin(uid, toast);
-                                }
-                            });
+                    new Thread(new Runnable() {
+                        public void run() {
+                            try {
+                                EMClient.getInstance().createAccount(uid,uid);//同步方法
+                                mView.runOnUiThread(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        MyLog.e("注册成功!");
+                                        getSuccessLogin(uid, toast);
+                                    }
+                                });
 
-                        } catch (final HyphenateException e) {
-                            mView.runOnUiThread(new Runnable() {
-                                @Override
-                                public void run() {
-                                    MyLog.e("注册失败!");
-                                    getSuccessLogin(uid,toast);
-                                }
-                            });
+                            } catch (final HyphenateException e) {
+                                mView.runOnUiThread(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        MyLog.e("注册失败!");
+                                        getSuccessLogin(uid,toast);
+                                    }
+                                });
 
+                            }
                         }
-                    }
-                }).start();
+                    }).start();
 
 
+                }
             }
         }
-    }
 
-    private void getSuccessLogin(String uid,final Toast toast) {
-        EMClient.getInstance().login(uid, uid, new EMCallBack() {
-            @Override
-            public void onSuccess() {
-                EMClient.getInstance().groupManager().loadAllGroups();
-                EMClient.getInstance().chatManager().loadAllConversations();
-                MyLog.e("登录环信成功!");
-                toast.cancel();
-                String parent_id = IssueApplication.mUserObject.getString("parent_id");
-                try {
-                    EMClient.getInstance().contactManager().acceptInvitation(parent_id);
-                    mView.startActivity(new Intent(mView, ChatActivity.class).putExtra(EaseConstant.EXTRA_USER_ID, parent_id));
-                } catch (HyphenateException e) {
-                    e.printStackTrace();
+        private void getSuccessLogin(String uid,final Toast toast) {
+            EMClient.getInstance().login(uid, uid, new EMCallBack() {
+                @Override
+                public void onSuccess() {
+                    EMClient.getInstance().groupManager().loadAllGroups();
+                    EMClient.getInstance().chatManager().loadAllConversations();
+                    MyLog.e("登录环信成功!");
+                    toast.cancel();
+                    String parent_id = IssueApplication.mUserObject.getString("parent_id");
+                    try {
+                        EMClient.getInstance().contactManager().acceptInvitation(parent_id);
+                        mView.startActivity(new Intent(mView, ChatActivity.class).putExtra(EaseConstant.EXTRA_USER_ID, parent_id));
+                    } catch (HyphenateException e) {
+                        e.printStackTrace();
+                    }
+
                 }
 
-            }
+                @Override
+                public void onError(int i, String s) {
+                    Toast.makeText(mView, "连接失败,请重试!", Toast.LENGTH_SHORT).show();
+                    MyLog.e("登录环信失败!");
+                    sendCall("连接聊天失败,请重试?");
+                }
 
-            @Override
-            public void onError(int i, String s) {
-                Toast.makeText(mView, "连接失败,请重试!", Toast.LENGTH_SHORT).show();
-                MyLog.e("登录环信失败!");
-                sendCall("连接聊天失败,请重试?");
-            }
+                @Override
+                public void onProgress(int i, String s) {
+                }
+            });
+        }
 
-            @Override
-            public void onProgress(int i, String s) {
-            }
-        });
-    }
+
+
+
+
 
 }

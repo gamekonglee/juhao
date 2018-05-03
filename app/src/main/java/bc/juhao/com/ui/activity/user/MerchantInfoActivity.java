@@ -1,6 +1,8 @@
 package bc.juhao.com.ui.activity.user;
 
+import android.graphics.Color;
 import android.view.View;
+import android.widget.TextView;
 
 import com.baidu.mapapi.map.BaiduMap;
 import com.baidu.mapapi.map.BitmapDescriptor;
@@ -12,10 +14,13 @@ import com.baidu.mapapi.map.MapStatusUpdateFactory;
 import com.baidu.mapapi.map.MapView;
 import com.baidu.mapapi.map.MarkerOptions;
 import com.baidu.mapapi.map.OverlayOptions;
+import com.baidu.mapapi.map.TextureMapView;
 import com.baidu.mapapi.model.LatLng;
 
 import bc.juhao.com.R;
+import bc.juhao.com.cons.NetWorkConst;
 import bc.juhao.com.controller.user.MerchantInfoController;
+import bc.juhao.com.ui.activity.IssueApplication;
 import bc.juhao.com.ui.view.BaiduMapContainer;
 import bc.juhao.com.ui.view.ObservableScrollView;
 import bocang.utils.MyToast;
@@ -35,6 +40,7 @@ public class MerchantInfoActivity extends BaseActivity {
     private ObservableScrollView scrollView;
     public BaiduMapContainer baiduMapContainer;
     public String mAddress="";
+    private TextView tv_kefu;
 
     @Override
     protected void InitDataView() {
@@ -50,7 +56,8 @@ public class MerchantInfoActivity extends BaseActivity {
     @Override
     protected void initView() {
         setContentView(R.layout.activity_merchant_info);
-        bmapView = (MapView) findViewById(R.id.bmapView);
+        setColor(this, Color.WHITE);
+        bmapView =  findViewById(R.id.bmapView);
         mBaiduMap = bmapView.getMap();
         //普通地图
         mBaiduMap.setMapType(BaiduMap.MAP_TYPE_NORMAL);
@@ -58,6 +65,21 @@ public class MerchantInfoActivity extends BaseActivity {
         scrollView = (ObservableScrollView) findViewById(R.id.scrollView);
         baiduMapContainer = (BaiduMapContainer)findViewById(R.id.baiduMapContainer);
         baiduMapContainer.setScrollView(scrollView);
+        tv_kefu = findViewById(R.id.tv_kefu);
+        tv_kefu.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(IssueApplication.mUserObject==null){
+//                    isToken();
+                    MyToast.show(MerchantInfoActivity.this,"数据加载中，请稍等");
+                    return;
+                }
+                String parent_name = IssueApplication.mUserObject.getString("parent_name");
+                String parent_id = IssueApplication.mUserObject.getString("parent_id");
+                String userIcon = NetWorkConst.SCENE_HOST + IssueApplication.mUserObject.getString("parent_avatar");
+                mController.sendCall("尝试连接聊天服务..请连接?", parent_id, parent_name, userIcon);
+            }
+        });
     }
 
     public void initMyLocation() {

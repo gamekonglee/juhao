@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    android:orientation="vertical"
+    android:padding="10dp"
+    android:background="@drawable/bg_corner_f0eff4_5"
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <ImageView
+        android:src="@mipmap/spxq_icon_st"
+        android:layout_width="60dp"
+        android:layout_height="60dp" />
+    <TextView
+        android:text="我要晒图"
+        android:textSize="14sp"
+        android:textColor="#444444"
+        android:layout_marginTop="10dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+</LinearLayout>

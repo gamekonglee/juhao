@@ -81,6 +81,7 @@ public class SunImageFragment extends BaseFragment implements View.OnClickListen
                 Intent intent = new Intent(this.getActivity(), PostedImageActivity.class);
                 intent.putExtra(Constance.id, ((ProDetailActivity) this.getActivity()).mProductId);
                 intent.putExtra(Constance.order_id, ((ProDetailActivity) this.getActivity()).mOrderid);
+
                 this.getActivity().startActivity(intent);
                 break;
         }

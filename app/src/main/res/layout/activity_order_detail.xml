@@ -1,14 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent"
-              android:orientation="vertical">
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical">
 
     <RelativeLayout
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
-        android:background="@drawable/icon_top"
+        android:background="#ffffff"
         android:minHeight="?attr/actionBarSize">
 
         <RelativeLayout
@@ -23,21 +24,22 @@
                 android:paddingLeft="10dp">
                 <ImageView
                     android:id="@+id/topLeftBtn"
-                    android:layout_width="24dp"
-                    android:layout_height="24dp"
+                    android:layout_width="10dp"
+                    android:layout_height="20dp"
                     android:layout_centerVertical="true"
                     android:layout_marginRight="5dp"
-                    android:background="@drawable/goback"
+                    android:background="@mipmap/nav_left"
 
                     android:textColor="#FFFFFF"/>
             </LinearLayout>
 
             <TextView
                 android:id="@+id/title_tv"
+                android:text="订单详情"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
-                android:textColor="@color/white"
+                android:textColor="#444444"
                 android:textSize="18dp"
                 />
 
@@ -57,27 +59,7 @@
                 android:textSize="12dip"/>
         </RelativeLayout>
     </RelativeLayout>
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="80dp"
-        android:background="@drawable/icon_top">
-        <ImageView
-            android:id="@+id/go_state_iv"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:src="@drawable/wait_pay"
-            android:layout_marginRight="10dp"/>
-        <TextView
-            android:id="@+id/go_state_tv"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="等待买家付款"
-            android:textSize="23sp"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="30dp"
-            android:textColor="@color/white"/>
-    </RelativeLayout>
+
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
@@ -91,6 +73,28 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="vertical">
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="80dp"
+                    android:background="@drawable/icon_top">
+                    <ImageView
+                        android:id="@+id/go_state_iv"
+                        android:layout_width="50dp"
+                        android:layout_height="42dp"
+                        android:layout_centerVertical="true"
+                        android:src="@drawable/wait_pay"
+                        android:layout_marginLeft="80dp"
+                        />
+                    <TextView
+                        android:id="@+id/go_state_tv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="等待买家付款"
+                        android:textSize="15sp"
+                        android:layout_toRightOf="@+id/go_state_iv"
+                        android:layout_centerVertical="true"
+                        android:textColor="@color/white"/>
+                </RelativeLayout>
                 <!--<LinearLayout-->
                     <!--android:id="@+id/log_ll"-->
                     <!--android:layout_width="match_parent"-->
@@ -165,7 +169,7 @@
                         android:layout_width="18dp"
                         android:layout_height="20dp"
                         android:layout_centerVertical="true"
-                        android:src="@drawable/address"/>
+                        android:src="@mipmap/icon_address"/>
                     <TextView
                         android:id="@+id/log_sv_title_tv"
                         android:layout_width="wrap_content"
@@ -181,7 +185,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textSize="14dip"
-                        android:textColor="@android:color/holo_green_dark"
+                        android:textColor="@color/green"
                         android:layout_toRightOf="@id/log_sv_title_tv"
                         android:layout_marginLeft="10dp"
                         android:layout_marginTop="10dp"/>
@@ -202,7 +206,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textSize="14dip"
-                        android:textColor="@android:color/holo_green_dark"
+                        android:textColor="@color/green"
                         android:layout_toRightOf="@id/log_remark_title_tv"
                         android:layout_below="@id/log_sv_tv"
                         android:layout_marginLeft="10dp"
@@ -225,7 +229,7 @@
                         android:layout_width="18dp"
                         android:layout_height="20dp"
                         android:layout_centerVertical="true"
-                        android:src="@drawable/address"/>
+                        android:src="@mipmap/icon_address"/>
                     <TextView
                         android:id="@+id/consignee_title_tv"
                         android:layout_width="wrap_content"
@@ -389,6 +393,51 @@
                         android:paddingLeft="5dp"
                         android:paddingRight="5dp"
                         android:text="在线支付"/>
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:background="#ffffff"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+                    <bc.juhao.com.ui.view.TextViewPlus
+                        android:id="@+id/do03_tv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:background="@drawable/bg_goods_detail_intro_corner_normal"
+                        android:gravity="center"
+                        android:text="联系卖家"
+                        app:left_width="21dp"
+                        app:left_height="21dp"
+                        android:drawablePadding="10dp"
+                        android:textColor="@color/green"
+                        android:paddingLeft="10dp"
+                        android:paddingRight="10dp"
+                        android:paddingTop="5dp"
+                        android:paddingBottom="5dp"
+                        android:layout_marginLeft="50dp"
+                        android:drawableLeft="@mipmap/icon_order_call"
+                        android:textSize="12dip"/>
+                    <bc.juhao.com.ui.view.TextViewPlus
+                        android:id="@+id/tv_call"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:background="@drawable/bg_goods_detail_intro_corner_normal"
+                        android:gravity="center"
+                        android:text="拨打电话"
+                        app:left_width="21dp"
+                        app:left_height="21dp"
+                        android:drawablePadding="10dp"
+                        android:textColor="@color/green"
+                        android:paddingLeft="10dp"
+                        android:paddingRight="10dp"
+                        android:paddingTop="5dp"
+                        android:paddingBottom="5dp"
+                        android:layout_marginLeft="50dp"
+                        android:drawableLeft="@mipmap/icon_order_tel"
+                        android:textSize="12dip"/>
                 </LinearLayout>
                 <LinearLayout
                     android:id="@+id/payment_ll"
@@ -600,17 +649,6 @@
             android:text="取消订单"
             android:textColor="@color/txt_black"
             android:textSize="12dip"/>
-        <TextView
-            android:id="@+id/do03_tv"
-            android:layout_width="80dp"
-            android:layout_height="30dp"
-            android:layout_toLeftOf="@id/do02_tv"
-            android:layout_centerVertical="true"
-            android:layout_marginRight="5dp"
-            android:background="@drawable/order02_shape_active"
-            android:gravity="center"
-            android:text="联系卖家"
-            android:textColor="@color/txt_black"
-            android:textSize="12dip"/>
+
     </LinearLayout>
 </LinearLayout>

@@ -1,6 +1,8 @@
 package bc.juhao.com.ui.activity.user;
 
 import android.content.Intent;
+import android.graphics.Color;
+import android.support.annotation.NonNull;
 import android.view.View;
 import android.widget.TextView;
 
@@ -39,6 +41,7 @@ public class OrderDetailActivity extends BaseActivity  {
     @Override
     protected void initView() {
         setContentView(R.layout.activity_order_detail);
+        setColor(this, Color.WHITE);
         do_tv = getViewAndClick(R.id.do_tv);
         do02_tv = getViewAndClick(R.id.do02_tv);
         do03_tv = getViewAndClick(R.id.do03_tv);
@@ -100,5 +103,11 @@ public class OrderDetailActivity extends BaseActivity  {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         mController.ActivityResult(requestCode, resultCode, data);
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        mController.onRequestPermissionsResult(requestCode, permissions, grantResults);
     }
 }

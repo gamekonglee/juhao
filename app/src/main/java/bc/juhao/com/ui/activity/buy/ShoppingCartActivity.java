@@ -1,5 +1,6 @@
 package bc.juhao.com.ui.activity.buy;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
 
@@ -30,7 +31,7 @@ public class ShoppingCartActivity extends BaseActivity {
     protected void initView() {
         setContentView(R.layout.activity_shopping_cart);
         //必需继承FragmentActivity,嵌套fragment只需要这行代码
-
+        setColor(this, Color.TRANSPARENT);
         CartFragment cartFragment=new CartFragment();
         Bundle bundle = new Bundle();
         bundle.putBoolean(Constance.product, true);

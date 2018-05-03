@@ -47,6 +47,7 @@ public class SelectParamentPopWindow extends BasePopwindown implements View.OnCl
     private int mPrice=0;
 
     private IParamentChooseListener mListener;
+    private ImageView goods_iv_02;
 
     public void setListener(IParamentChooseListener listener) {
         mListener = listener;
@@ -71,7 +72,7 @@ public class SelectParamentPopWindow extends BasePopwindown implements View.OnCl
 
         if(!AppUtils.isEmpty(mGoodObject.getJSONObject(Constance.default_photo))){
             String imageUrl= mGoodObject.getJSONObject(Constance.default_photo).getString(Constance.large);
-            ImageLoadProxy.displayImage(imageUrl, goods_iv);
+            ImageLoadProxy.displayImage(imageUrl, goods_iv_02);
         }
         propertiesList=mGoodObject.getJSONArray(Constance.properties);
         mAdapter=new ProAdapter();
@@ -92,6 +93,7 @@ public class SelectParamentPopWindow extends BasePopwindown implements View.OnCl
         close_iv.setOnClickListener(this);
         bg_ll.setOnClickListener(this);
         goods_iv = (ImageView) contentView.findViewById(R.id.goods_iv);
+        goods_iv_02 = contentView.findViewById(R.id.goods_iv_02);
         goods_name_tv = (TextView) contentView.findViewById(R.id.goods_name_tv);
         proPriceTv = (TextView) contentView.findViewById(R.id.proPriceTv);
         btn_goShoppingCart = (Button) contentView.findViewById(R.id.btn_goShoppingCart);

@@ -56,6 +56,7 @@ import bc.juhao.com.ui.activity.programme.DiyActivity;
 import bc.juhao.com.ui.activity.programme.SelectSceneActivity;
 import bc.juhao.com.ui.activity.programme.SelectSchemeActivity;
 import bc.juhao.com.ui.activity.programme.ShareProgrammeActivity;
+import bc.juhao.com.ui.view.ScannerUtils;
 import bc.juhao.com.ui.view.SingleTouchView;
 import bc.juhao.com.ui.view.StickerView;
 import bc.juhao.com.ui.view.TouchView;
@@ -215,7 +216,9 @@ public class DiyController extends BaseController implements INetworkCallBack {
             mCurrentView.setInEdit(false);
 
         //截图
-        final Bitmap imageData = ImageUtil.compressImage(ImageUtil.takeScreenShot(mView));
+//        final Bitmap imageData = ImageUtil.compressImage(ImageUtil.takeScreenShot(mView));
+        final Bitmap imageData = ImageUtil.takeScreenShot(mView);
+        final String imgUri=ScannerUtils.saveImageToGallery(mView, imageData, ScannerUtils.ScannerType.RECEIVER);
         mView.select_ll.setVisibility(View.VISIBLE);
         diyContainerRl.setVisibility(View.VISIBLE);
         mView.setShowDialog(true);
@@ -255,11 +258,13 @@ public class DiyController extends BaseController implements INetworkCallBack {
                         }
                         String title = "来自 " + mTitle + " 方案的分享";
                         final String path = NetWorkConst.SHAREFANAN + object.getJSONObject(Constance.fangan).getString(Constance.id);
-                        final String imgPath = NetWorkConst.SCENE_HOST + object.getJSONObject(Constance.fangan).getString(Constance.path);
+//                        final String imgPath = NetWorkConst.SCENE_HOST + object.getJSONObject(Constance.fangan).getString(Constance.path);
+                        final String imgPath = imgUri;
                         Intent intent = new Intent(mView, ShareProgrammeActivity.class);
                         intent.putExtra(Constance.SHARE_PATH, path);
                         intent.putExtra(Constance.SHARE_IMG_PATH, imgPath);
                         intent.putExtra(Constance.TITLE, title);
+                        intent.putExtra(Constance.id,object.getJSONObject(Constance.fangan).getString(Constance.id));
                         mView.startActivity(intent);
                     }
                 });
@@ -501,25 +506,32 @@ public class DiyController extends BaseController implements INetworkCallBack {
             switch (requestCode) {
                 case Constance.PHOTO_WITH_CAMERA: {// 拍照获取图片
                     String status = Environment.getExternalStorageState();
-                    if (status.equals(Environment.MEDIA_MOUNTED)) { // 是否有SD卡
-                        File imageFile = new File(IssueApplication.cameraPath, IssueApplication.imagePath + ".jpg");
-                        if (imageFile.exists()) {
-                            imageURL = "file://" + imageFile.toString();
-                            IssueApplication.imagePath = null;
-                            IssueApplication.cameraPath = null;
-
-
-                            Intent intent = new Intent("com.android.camera.action.CROP");
-                            intent.setDataAndType(Uri.parse(imageURL), "image/*");
-                            intent.putExtra("crop", "true");
-                            intent.putExtra("aspectX", 1);
-                            intent.putExtra("aspectY", 0.8);
-                            intent.putExtra("outputX", 300);
-                            intent.putExtra("outputY", 300);
-                            intent.putExtra("scale", true);
-                            intent.putExtra("noFaceDetection", false);
-                            intent.putExtra("return-data", true);
-                            mView.startActivityForResult(intent, 3);
+                        if (status.equals(Environment.MEDIA_MOUNTED)) { // 是否有SD卡
+                            File imageFile = new File(IssueApplication.cameraPath, IssueApplication.imagePath + ".jpg");
+                            if (imageFile.exists()) {
+                                imageURL = "file://" + imageFile.toString();
+                                IssueApplication.imagePath = null;
+                                IssueApplication.cameraPath = null;
+                                mView.mPath=imageURL;
+                                displaySceneBg(mView.mPath, 0);
+//                        File imageFile = new File(IssueApplication.cameraPath, IssueApplication.imagePath + ".jpg");
+//                        if (imageFile.exists()) {
+//                            imageURL = "file://" + imageFile.toString();
+//                            IssueApplication.imagePath = null;
+//                            IssueApplication.cameraPath = null;
+//
+//
+//                            Intent intent = new Intent("com.android.camera.action.CROP");
+//                            intent.setDataAndType(Uri.parse(imageURL), "image/*");
+//                            intent.putExtra("crop", "true");
+//                            intent.putExtra("aspectX", 1);
+//                            intent.putExtra("aspectY", 0.8);
+//                            intent.putExtra("outputX", 300);
+//                            intent.putExtra("outputY", 300);
+//                            intent.putExtra("scale", true);
+//                            intent.putExtra("noFaceDetection", false);
+//                            intent.putExtra("return-data", true);
+//                            mView.startActivityForResult(intent, 3);
                             //                            displaySceneBg(imageURL, 0);
                         } else {
                             AppDialog.messageBox("读取图片失败！");
@@ -539,6 +551,7 @@ public class DiyController extends BaseController implements INetworkCallBack {
             mView.mSelectType = 0;
             mView.switchProOrDiy();
         } else if (requestCode == Constance.FROMDIY02) {
+            selectShowData();
             if (AppUtils.isEmpty(data))
                 return;
             mView.mPath = data.getStringExtra(Constance.SCENE);
@@ -609,7 +622,14 @@ public class DiyController extends BaseController implements INetworkCallBack {
     private void displayCheckedGoods(final JSONObject goods) {
         if (AppUtils.isEmpty(goods))
             return;
-        String path = goods.getJSONObject(Constance.app_img).getString(Constance.img);
+        String path="";
+        if(goods.getJSONObject(Constance.app_img)!=null)
+        {
+             path = goods.getJSONObject(Constance.app_img).getString(Constance.img);
+        }else {
+            MyToast.show(mView,"该产品尚无图片");
+            return;
+        }
         imageLoader.loadImage(path, options,
                 new SimpleImageLoadingListener() {
                     @Override
@@ -983,7 +1003,7 @@ public class DiyController extends BaseController implements INetworkCallBack {
             case NetWorkConst.GETCART:
                 if (ans.getJSONArray(Constance.goods_groups).length() > 0) {
                     IssueApplication.mCartCount = ans.getJSONArray(Constance.goods_groups)
-                            .getJSONObject(0).getInt(Constance.total_amount);
+                            .getJSONObject(0).getJSONArray(Constance.goods).length();
                 } else {
                     IssueApplication.mCartCount = 0;
                 }

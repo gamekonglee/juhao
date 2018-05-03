@@ -455,6 +455,45 @@ public class Constance {
     public static String is_jh="is_jh";
     public static String version="version";
     public static String text="text";
+    public static String push_control="push_control";
+    public static String thumbs2="thumbs2";
+    public static String is_discount="is_discount";
+    // appid
+    public static final String APP_ID = "wxe5dbf8785c4ec928";// yum
+
+    // 商户号
+    public static final String MCH_ID = "1495147682";// yum
+
+    // API密钥，在商户平台设置
+    public static final String API_KEY = "51b49eb6c84cd25c58392c8164906968";// yum
+
+    //微信统一下单接口
+    public static final String UNIFIED_ORDER ="https://api.mch.weixin.qq.com/pay/unifiedorder";
+
+    public static String rank="rank";
+
+    public static String wxpay="wxpay";
+
+    public static final int WEISUCCESS = 0X010;
+
+    public static final int WEIFAIL = 0X011;
+
+//    public static final int  PROPERTY= 0X009;
+    public static String remark="remark";
+    public static String cproperty="cproperty";
+    public static String curl="curl";
+    public static String warn_number="warn_number";
+    public static String scene_id="scene_id";
+    public static String sku="sku";
+//    public static String shop_moblie="shop_moblie";
+    public static String shop_mobile="shop_mobile";
+    public static String paged="paged";
+    public static String page="page";
+    public static String apply_remember="apply_remember";
+    public static String is_look="is_look";
+    public static String movie="movie";
+    public static String file_url="file_url";
+    public static String display="display";
 /*
             {
     {

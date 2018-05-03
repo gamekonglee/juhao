@@ -1,5 +1,6 @@
 package bc.juhao.com.ui.fragment;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
@@ -13,10 +14,13 @@ import bc.juhao.com.common.BaseFragment;
 import bc.juhao.com.cons.Constance;
 import bc.juhao.com.controller.user.MineController;
 import bc.juhao.com.ui.activity.IssueApplication;
+import bc.juhao.com.ui.activity.MainActivity;
 import bc.juhao.com.ui.activity.blance.UserFinanceActivity;
 import bc.juhao.com.ui.activity.buy.ShoppingCartActivity;
+import bc.juhao.com.ui.activity.user.ZujiActivity;
 import bocang.utils.AppUtils;
 import bocang.utils.IntentUtil;
+import bocang.utils.MyToast;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 /**
@@ -31,11 +35,17 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
             ,two_code_ll,setting_ll,distributor_ll,service_ll,call_kefu02_ll,setting02_ll,mine03_lv,mine04_lv;
     private MineController mController;
     private RelativeLayout payment_rl,delivery_rl,Receiving_rl;
+    private LinearLayout pingtuan_ll;
+    private LinearLayout zuji_ll;
+    private LinearLayout setting_ll_new;
+    public View view_empty;
 
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+//        ((MainActivity)getActivity()).setFullScreenColor(Color.TRANSPARENT,getActivity());
+
         return inflater.inflate(R.layout.fm_mine_new, null);
     }
 
@@ -48,19 +58,28 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
     public void onStart() {
         super.onStart();
         mController.sendUser();
+        initViewData();
     }
 
     @Override
     protected void initViewData() {
+       onRefresh();
+    }
+
+    public void onRefresh() {
         isToken();
         if(AppUtils.isEmpty( IssueApplication.mUserObject)) return;
         int level=IssueApplication.mUserObject.getInt(Constance.level);
         if(level>2){
             mine03_lv.setVisibility(View.GONE);
+            distributor_ll.setVisibility(View.GONE);
+            view_empty.setVisibility(View.VISIBLE);
 //            mine04_lv.setVisibility(View.VISIBLE);
         }else{
             mine03_lv.setVisibility(View.VISIBLE);
             mine04_lv.setVisibility(View.GONE);
+            distributor_ll.setVisibility(View.VISIBLE);
+            view_empty.setVisibility(View.GONE);
         }
 
     }
@@ -88,7 +107,13 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
         cart_ll = (LinearLayout) getActivity().findViewById(R.id.cart_ll);
         mine03_lv = (LinearLayout) getActivity().findViewById(R.id.mine03_lv);
         mine04_lv = (LinearLayout) getActivity().findViewById(R.id.mine04_lv);
-
+        pingtuan_ll = getView().findViewById(R.id.pingtuan_ll);
+        view_empty = getView().findViewById(R.id.view_empty);
+        zuji_ll = getView().findViewById(R.id.zuji_ll);
+        setting_ll_new = getView().findViewById(R.id.setting_ll_new);
+        pingtuan_ll.setOnClickListener(this);
+        zuji_ll.setOnClickListener(this);
+        setting_ll_new.setOnClickListener(this);
         head_cv.setOnClickListener(this);
         setting_ll.setOnClickListener(this);
         setting02_ll.setOnClickListener(this);
@@ -123,6 +148,7 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
                 mController.setHead();
                 break;
             case R.id.setting_ll://设置
+            case R.id.setting_ll_new:
                 mController.setSetting();
                 break;
             case R.id.setting02_ll://设置
@@ -175,6 +201,13 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
                 break;
             case R.id.cart_ll://购物车
                 IntentUtil.startActivity(getActivity(), ShoppingCartActivity.class, false);
+                break;
+            case R.id.zuji_ll://我的足迹
+//                MyToast.show(getContext(),"该功能尚未开放");
+                IntentUtil.startActivity(getActivity(), ZujiActivity.class,false);
+                break;
+            case R.id.pingtuan_ll:
+                MyToast.show(getContext(),"该功能尚未开放");
                 break;
         }
     }

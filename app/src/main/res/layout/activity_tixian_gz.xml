@@ -1,0 +1,233 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:background="#ffffff"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="bc.juhao.com.ui.activity.user.TixianGzActivity">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp" >
+    <RelativeLayout
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:onClick="goBack">
+        <ImageView
+            android:src="@mipmap/nav_left"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="15dp"
+            android:layout_width="10dp"
+            android:layout_height="20dp" />
+    </RelativeLayout>
+        <TextView
+            android:textSize="15sp"
+            android:text="提现账号"
+            android:textColor="#666666"
+            android:layout_centerInParent="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </RelativeLayout>
+    <View
+        android:background="#dddddd"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"/>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+        <TextView
+            android:text="公司名称："
+            android:textColor="#666666"
+            android:textSize="14sp"
+            android:layout_marginLeft="15dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <EditText
+            android:id="@+id/et_company"
+            android:background="@null"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:gravity="center_vertical"
+            android:paddingLeft="15dp"
+            android:layout_height="match_parent" />
+        <TextView
+            android:text="*必填"
+            android:textSize="14sp"
+            android:textColor="#d10303"
+            android:layout_width="wrap_content"
+            android:layout_marginRight="15dp"
+            android:layout_height="wrap_content" />
+
+    </LinearLayout>
+    <View
+        android:background="#dddddd"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"/>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+        <TextView
+            android:text="开户银行："
+            android:textColor="#666666"
+            android:textSize="14sp"
+            android:layout_marginLeft="15dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <EditText
+            android:id="@+id/et_bank_name"
+            android:background="@null"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:gravity="center_vertical"
+            android:paddingLeft="15dp"
+            android:layout_height="match_parent" />
+        <TextView
+            android:text="*必填"
+            android:textSize="14sp"
+            android:textColor="#d10303"
+            android:layout_width="wrap_content"
+            android:layout_marginRight="15dp"
+            android:layout_height="wrap_content" />
+
+    </LinearLayout>
+    <View
+        android:background="#dddddd"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"/>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+        <TextView
+            android:text="银行账号："
+            android:textColor="#666666"
+            android:textSize="14sp"
+            android:layout_marginLeft="15dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <EditText
+            android:id="@+id/et_bank_account"
+            android:background="@null"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:gravity="center_vertical"
+            android:paddingLeft="15dp"
+            android:layout_height="match_parent" />
+        <TextView
+            android:text="*必填"
+            android:textSize="14sp"
+            android:textColor="#d10303"
+            android:layout_width="wrap_content"
+            android:layout_marginRight="15dp"
+            android:layout_height="wrap_content" />
+
+    </LinearLayout>
+    <View
+        android:background="#dddddd"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"/>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+        <TextView
+            android:text="联系人："
+            android:textColor="#666666"
+            android:textSize="14sp"
+            android:layout_marginLeft="15dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <EditText
+            android:id="@+id/et_name"
+            android:background="@null"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:gravity="center_vertical"
+            android:paddingLeft="15dp"
+            android:layout_height="match_parent" />
+        <TextView
+            android:text="*必填"
+            android:textSize="14sp"
+            android:textColor="#d10303"
+            android:layout_width="wrap_content"
+            android:layout_marginRight="15dp"
+            android:layout_height="wrap_content" />
+
+    </LinearLayout>
+    <View
+        android:background="#dddddd"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"/>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+        <TextView
+            android:text="电话号码："
+            android:textColor="#666666"
+            android:textSize="14sp"
+            android:layout_marginLeft="15dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <EditText
+            android:id="@+id/et_tel"
+            android:background="@null"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:inputType="number"
+            android:gravity="center_vertical"
+            android:paddingLeft="15dp"
+            android:layout_height="match_parent" />
+        <TextView
+            android:text="*必填"
+            android:textSize="14sp"
+            android:textColor="#d10303"
+            android:layout_width="wrap_content"
+            android:layout_marginRight="15dp"
+            android:layout_height="wrap_content" />
+
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:background="@color/goods_details_sku"
+        android:orientation="vertical">
+    <TextView
+        android:text="注意事项："
+        android:textColor="#d10303"
+        android:textSize="11sp"
+        android:layout_margin="12dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+        <TextView
+            android:text="1、提现账号是您本公司的公账，请勿必保证账号安全及正确。\n 2、如因为账号错误而发生的如何意外，责任由您本人承担。"
+            android:textSize="12sp"
+            android:textColor="#666666"
+            android:layout_marginLeft="12dp"
+            android:layout_marginRight="12dp"
+            android:lineSpacingExtra="5dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <Button
+            android:id="@+id/btn_subimit"
+            android:text="确     定"
+            android:textColor="#ffffff"
+            android:textSize="18sp"
+            android:background="@drawable/bg_corner_full_orange_10_selector"
+            android:layout_marginTop="15dp"
+            android:layout_width="match_parent"
+            android:layout_marginRight="15dp"
+            android:layout_marginLeft="15dp"
+            android:layout_height="50dp" />
+    </LinearLayout>
+</LinearLayout>

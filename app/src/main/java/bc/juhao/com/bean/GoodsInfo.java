@@ -29,7 +29,7 @@ public class GoodsInfo {
     private int brand;
     private int shop;
     private String sku;
-    private GoodsBean.Default_photo default_photo;
+    private Default_photo default_photo;
     private List<GoodsBean.Photos> photos;
     private String name;
     private String price;
@@ -122,10 +122,10 @@ public class GoodsInfo {
         return sku;
     }
 
-    public void setDefault_photo(GoodsBean.Default_photo default_photo) {
+    public void setDefault_photo(Default_photo default_photo) {
         this.default_photo = default_photo;
     }
-    public GoodsBean.Default_photo getDefault_photo() {
+    public Default_photo getDefault_photo() {
         return default_photo;
     }
 

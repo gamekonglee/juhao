@@ -1,8 +1,8 @@
 <resources>
     <string name="app_name">钜豪商城</string>
     <string name="frag_top">首页</string>
-    <string name="frag_product">分类</string>
-    <string name="frag_select">筛选</string>
+    <string name="frag_product">分类检索</string>
+    <string name="frag_select">组合筛选</string>
     <string name="frag_match">配灯</string>
     <string name="frag_cart">购物车</string>
     <string name="frag_mine">我的</string>
@@ -18,7 +18,7 @@
     <string name="save">保存</string>
     <string name="all_title">全部</string>
     <string name="my_order">我的订单</string>
-    <string name="my_collet">我的收藏</string>
+    <string name="my_collet">收藏</string>
     <string name="receive_address">管理收货地址</string>
     <string name="stream_address">管理物流地址</string>
     <string name="message">消息中心</string>
@@ -155,6 +155,7 @@
         <item>待发货</item>
         <item>待收货</item>
         <item>已完成</item>
+        <item>待评价</item>
     </string-array>
     <string-array name="style">
         <item>全部</item>
@@ -210,6 +211,7 @@
     <string name="ucrop_menu_crop">裁剪</string>
     <string name="ucrop_error_input_data_is_absent">Both input and output Uri must be specified</string>
     <string name="title_activity_web_view_home">WebViewHomeActivity</string>
+    <string name="comment">晒图有礼</string>
 
 
 </resources>

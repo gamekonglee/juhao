@@ -1,5 +1,6 @@
 package bc.juhao.com.ui.activity.product;
 
+import android.graphics.Color;
 import android.view.View;
 
 import bc.juhao.com.R;
@@ -12,7 +13,7 @@ import bocang.view.BaseActivity;
  * @desc ${TODD}
  */
 
-public class TimeBuyActivity extends BaseActivity {
+public class TimeBuyActivity extends bc.juhao.com.common.BaseActivity {
     private TimeBuyController mController;
 
     @Override
@@ -28,6 +29,7 @@ public class TimeBuyActivity extends BaseActivity {
     @Override
     protected void initView() {
         setContentView(R.layout.activity_time_buy);
+        setColor(this, Color.WHITE);
     }
 
     @Override
@@ -35,8 +37,4 @@ public class TimeBuyActivity extends BaseActivity {
 
     }
 
-    @Override
-    protected void onViewClick(View v) {
-
-    }
 }

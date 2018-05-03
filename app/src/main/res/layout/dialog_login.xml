@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:gravity="center"
+    android:background="@drawable/bg_corner_white_full_15"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <ImageView
+        android:src="@mipmap/icon_login_top"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+    <TextView
+        android:text="钜豪商城登录确认"
+        android:layout_marginTop="15dp"
+        android:textColor="#333333"
+        android:textSize="18sp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+    <TextView
+        android:text="为保障账户安全，请确认是本人操作"
+        android:textColor="#999999"
+        android:textSize="14sp"
+        android:layout_marginTop="15dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+    <Button
+        android:layout_marginTop="20dp"
+        android:id="@+id/btn_login"
+        android:text="允许登录"
+        android:textColor="#ffffff"
+        android:textSize="18sp"
+        android:background="#ff4e00"
+        android:padding="5dp"
+        android:layout_width="match_parent"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:layout_height="50dp" />
+    <Button
+        android:id="@+id/btn_cancel"
+        android:text="取消登录"
+        android:textSize="18sp"
+        android:padding="5dp"
+        android:textColor="#666666"
+        android:background="#efefef"
+        android:layout_marginTop="15dp"
+        android:layout_width="match_parent"
+        android:layout_marginRight="15dp"
+        android:layout_marginLeft="15dp"
+        android:layout_height="50dp" />
+</LinearLayout>

@@ -6,7 +6,7 @@ import android.graphics.Paint;
 import android.net.Uri;
 import android.os.Handler;
 import android.os.Message;
-import android.util.Log;
+import android.text.TextUtils;
 import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.View;
@@ -43,6 +43,7 @@ import bc.juhao.com.adapter.QuickAdapter;
 import bc.juhao.com.bean.ArticlesBean;
 import bc.juhao.com.bean.AttrBean;
 import bc.juhao.com.bean.CategoriesBean;
+import bc.juhao.com.bean.Default_photo;
 import bc.juhao.com.bean.FangAnBean;
 import bc.juhao.com.bean.GoodsBean;
 import bc.juhao.com.bean.GroupBuy;
@@ -52,13 +53,13 @@ import bc.juhao.com.cons.NetWorkConst;
 import bc.juhao.com.listener.INetworkCallBack;
 import bc.juhao.com.ui.activity.ArtiActivity;
 import bc.juhao.com.ui.activity.IssueApplication;
+import bc.juhao.com.ui.activity.NewsDetailActivity;
 import bc.juhao.com.ui.activity.product.ProDetailActivity;
 import bc.juhao.com.ui.activity.product.SelectGoodsActivity;
 import bc.juhao.com.ui.activity.product.TimeBuyActivity;
-import bc.juhao.com.ui.activity.user.LoginActivity;
 import bc.juhao.com.ui.activity.user.MessageDetailActivity;
 import bc.juhao.com.ui.activity.user.SetInviteCodeActivity;
-import bc.juhao.com.ui.fragment.HomeFragment;
+import bc.juhao.com.ui.fragment.home.HomeFragment;
 import bc.juhao.com.ui.view.countdownview.CountdownView;
 import bc.juhao.com.utils.ConvertUtil;
 import bc.juhao.com.utils.DateUtils;
@@ -69,7 +70,6 @@ import bocang.json.JSONArray;
 import bocang.json.JSONObject;
 import bocang.utils.AppUtils;
 import bocang.utils.IntentUtil;
-import bocang.utils.LogUtils;
 import bocang.utils.MyToast;
 import bocang.utils.UniversalUtil;
 import cn.jpush.android.api.JPushInterface;
@@ -92,7 +92,7 @@ public class HomeController extends BaseController implements INetworkCallBack, 
     private ConvenientBanner mConvenientBanner;
     public int mScreenWidth;
     private GridView mProGridView;
-    private int page = 1;
+//    private int page = 1;
     private List<String> iDList;
     private TextView yaoqing_name;//当前被选中的tab
 //    private ProAdapter mProAdapter;
@@ -129,8 +129,9 @@ public class HomeController extends BaseController implements INetworkCallBack, 
     private QuickAdapter likeGoods;
     private TextView tv_home_news_more;
     private List<FangAnBean> fangAnBeans;
+    private List<GoodsBean> goodsBeans;
 
-    public HomeController(HomeFragment v) {
+    public  HomeController(HomeFragment v) {
         super();
         mView = v;
         initView();
@@ -144,31 +145,31 @@ public class HomeController extends BaseController implements INetworkCallBack, 
 
 
     private void initView() {
-        textSwitcher_title = (TextSwitcher) mView.getActivity().findViewById(R.id.textSwitcher_title);
-        mProGridView = (GridView) mView.getActivity().findViewById(R.id.priductGridView);
+        textSwitcher_title = (TextSwitcher) mView.getView().findViewById(R.id.textSwitcher_title);
+        mProGridView = (GridView) mView.getView().findViewById(R.id.priductGridView);
         mProGridView.setOnItemClickListener(this);
-        yaoqing_name = (TextView) mView.getActivity().findViewById(R.id.yaoqing_name);
-        time_buy_ll = (LinearLayout) mView.getActivity().findViewById(R.id.time_buy_ll);
-        yaoqing_rl = (RelativeLayout) mView.getActivity().findViewById(R.id.yaoqing_rl);
-        cv_countdownView = (CountdownView) mView.getActivity().findViewById(R.id.cv_countdownView);
+        yaoqing_name = (TextView) mView.getView().findViewById(R.id.yaoqing_name);
+        time_buy_ll = (LinearLayout) mView.getView().findViewById(R.id.time_buy_ll);
+        yaoqing_rl = (RelativeLayout) mView.getView().findViewById(R.id.yaoqing_rl);
+        cv_countdownView = (CountdownView) mView.getView().findViewById(R.id.cv_countdownView);
 
-        mPullToRefreshLayout = ((PullToRefreshLayout) mView.getActivity().findViewById(R.id.refresh_view));
+        mPullToRefreshLayout = ((PullToRefreshLayout) mView.getView().findViewById(R.id.refresh_view));
         mPullToRefreshLayout.setOnRefreshListener(this);
 
-        ll_supermacket = mView.getActivity().findViewById(R.id.ll_supermacket);
+        ll_supermacket = mView.getView().findViewById(R.id.ll_supermacket);
 
         mScreenWidth = mView.getActivity().getResources().getDisplayMetrics().widthPixels;
-        mConvenientBanner = (ConvenientBanner) mView.getActivity().findViewById(R.id.convenientBanner);
+        mConvenientBanner = (ConvenientBanner) mView.getView().findViewById(R.id.convenientBanner);
         RelativeLayout.LayoutParams rlp = (RelativeLayout.LayoutParams) mConvenientBanner.getLayoutParams();
         rlp.width = mScreenWidth;
         rlp.height = (int) (mScreenWidth * (360f / 800f));
         mConvenientBanner.setLayoutParams(rlp);
-        pd = (ProgressBar) mView.getActivity().findViewById(R.id.pd);
-        priductGv01 = (GridView) mView.getActivity().findViewById(R.id.priductGv01);
+        pd = (ProgressBar) mView.getView().findViewById(R.id.pd);
+        priductGv01 = (GridView) mView.getView().findViewById(R.id.priductGv01);
         priductGv01.setOnItemClickListener(this);
-        popularity_01_iv = (ImageView) mView.getActivity().findViewById(R.id.popularity_01_iv);
-        popularity_02_iv = (ImageView) mView.getActivity().findViewById(R.id.popularity_02_iv);
-        popularity_03_iv = (ImageView) mView.getActivity().findViewById(R.id.popularity_03_iv);
+        popularity_01_iv = (ImageView) mView.getView().findViewById(R.id.popularity_01_iv);
+        popularity_02_iv = (ImageView) mView.getView().findViewById(R.id.popularity_02_iv);
+        popularity_03_iv = (ImageView) mView.getView().findViewById(R.id.popularity_03_iv);
         ll_my_product = mView.getView().findViewById(R.id.ll_my_product);
         ll_my_product_list = mView.getView().findViewById(R.id.ll_my_product_list);
         tv_home_news_more = mView.getView().findViewById(R.id.tv_home_news_more);
@@ -182,19 +183,19 @@ public class HomeController extends BaseController implements INetworkCallBack, 
 //        mProAdapter = new ProAdapter();
 //        mProGridView.setAdapter(mProAdapter);
 
-        time_buy_lv = (GridViewForScrollView) mView.getActivity().findViewById(R.id.time_buy_lv);
+        time_buy_lv = (GridViewForScrollView) mView.getView().findViewById(R.id.time_buy_lv);
         mTimeBuyAdapter = new TimeBuyProAdapter();
         time_buy_lv.setAdapter(mTimeBuyAdapter);
         time_buy_lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                if (!isToken()) {
+                if (!mView.isToken()) {
                     IntentUtil.startActivity(mView.getActivity(), TimeBuyActivity.class, false);
                 }
             }
         });
-        gv_home_lamb = mView.getActivity().findViewById(R.id.gv_home_lamb);
-        mNullView = mView.getActivity().findViewById(R.id.null_programe_view);
+        gv_home_lamb = mView.getView().findViewById(R.id.gv_home_lamb);
+        mNullView = mView.getView().findViewById(R.id.null_programe_view);
         lamb_adapter = new QuickAdapter<FangAnBean>(mView.getActivity(), R.layout.item_fangan){
             @Override
             protected void convert(BaseAdapterHelper helper, FangAnBean item) {
@@ -210,7 +211,7 @@ public class HomeController extends BaseController implements INetworkCallBack, 
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 Intent intent = new Intent(mView.getActivity(), MessageDetailActivity.class);
                 String SceenId = fangAnBeans.get(i).getId()+"";
-                intent.putExtra(Constance.url, NetWorkConst.SHAREFANAN + SceenId);
+                intent.putExtra(Constance.url, NetWorkConst.SHAREFANAN_APP + SceenId);
                 intent.putExtra(Constance.FROMTYPE, 1);
                 mView.startActivity(intent);
             }
@@ -222,7 +223,7 @@ public class HomeController extends BaseController implements INetworkCallBack, 
                 helper.setText(R.id.tv_name,item.getName());
                 helper.setText( R.id.tv_price,item.getCurrent_price());
                 ImageView imageView=helper.getView(R.id.iv);
-                ImageLoader.getInstance().displayImage(NetWorkConst.SCENE_HOST+item.getOriginal_img(),imageView,((IssueApplication)mView.getActivity().getApplicationContext()).getImageLoaderOption());
+                ImageLoader.getInstance().displayImage(item.getDefault_photo().getThumb(),imageView,((IssueApplication)mView.getActivity().getApplicationContext()).getImageLoaderOption());
                 helper.setOnClickListener(R.id.btn_buy, new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
@@ -240,26 +241,26 @@ public class HomeController extends BaseController implements INetworkCallBack, 
                 helper.setText(R.id.tv_name,""+item.getName());
                 helper.setText(R.id.tv_price,"¥"+item.getCurrent_price());
                 ImageView imageView=helper.getView(R.id.iv);
-                ImageLoader.getInstance().displayImage(NetWorkConst.SCENE_HOST+item.getOriginal_img(),imageView,((IssueApplication)mView.getActivity().getApplicationContext()).getImageLoaderOption());
+                ImageLoader.getInstance().displayImage(item.getDefault_photo().getThumb(),imageView,((IssueApplication)mView.getActivity().getApplicationContext()).getImageLoaderOption());
 
             }
         };
         mProGridView.setAdapter(likeGoods);
     }
 
-    /**
-     * 判断是否有toKen
-     */
-    public Boolean isToken() {
-        String token = MyShare.get(mView.getActivity()).getString(Constance.TOKEN);
-        if (AppUtils.isEmpty(token)) {
-            Intent logoutIntent = new Intent(mView.getActivity(), LoginActivity.class);
-            logoutIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-            mView.startActivity(logoutIntent);
-            return true;
-        }
-        return false;
-    }
+//    /**
+//     * 判断是否有toKen
+//     */
+//    public Boolean isToken() {
+//        String token = MyShare.get(mView.getActivity()).getString(Constance.TOKEN);
+//        if (AppUtils.isEmpty(token)) {
+//            Intent logoutIntent = new Intent(mView.getActivity(), LoginActivity.class);
+//            logoutIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+//            mView.startActivity(logoutIntent);
+//            return true;
+//        }
+//        return false;
+//    }
 
     /**
      * 初始化加载数据
@@ -267,18 +268,19 @@ public class HomeController extends BaseController implements INetworkCallBack, 
     private void initViewData() {
         mView.setShowDialog(true);
         mView.showLoading();
-        sendBanner();
-        page = 1;
-        sendRecommendGoodsList(1, 9, null, null, null, null, null, null);
-        sendPopularityGoodsList(1, null, null, null, null, null, null);
-        selectProduct(page, "20");
-
-        if (AppUtils.isEmpty(mArticlesArray)) {
-            sendArticle();
+        missionA();
+//        missionB();
+        String inviteCode=MyShare.get(mView.getContext()).getString(Constance.invite_code);
+        if(!TextUtils.isEmpty(inviteCode)&&inviteCode.equals("bocang")){
+            ll_my_product.setVisibility(View.VISIBLE);
+            mNetWork.selectYijiProduct(1,20+"",null,null,null,null,null,null,null,null,this);
         }
+//        page = 1;
+        setUserInfo();
+        refreshUIWithMessage();
+    }
 
-
-        sendGoodsStyle();
+    public void setUserInfo() {
         String token = MyShare.get(mView.getActivity()).getString(Constance.TOKEN);
         if (!AppUtils.isEmpty(token)) {
             sendUser();
@@ -291,29 +293,40 @@ public class HomeController extends BaseController implements INetworkCallBack, 
                 yaoqing_name.setText(user_name);
             }
         }
-        refreshUIWithMessage();
-
-        sendGrouplist(page);
-        sendGroup(page);
-//        sendAttrList();
-        sendGoodsType();
-        sendJuHaoGoodsList();
-        sendFangAnList();
-
     }
+
+    public void missionB() {
+        selectProduct(1, "20");
+        sendJuHaoGoodsList();
+        sendRecommendGoodsList(1, 9, null, null, null, null, null, null);
+        sendFangAnList();
+    }
+
+    public void missionA() {
+        sendBanner();
+        sendGoodsType();
+        if (AppUtils.isEmpty(mArticlesArray)) {
+            sendArticle();
+        }
+        sendTimeBuylist(1);
+    }
+
     public void getRefershData() {
 //        mView.setShowDialog(true);
 //        mView.showLoading();
         fangAnPage = 1;
+        if(fangAnBeans!=null&&fangAnBeans.size()>0){
+            return;
+        }
         sendFangAnList();
     }
     public void sendFangAnList() {
-        mNetWork.sendFangAnList(fangAnPage, 20, "", "", mView.mProgrammeType, new INetworkCallBack() {
+        mNetWork.sendFangAnList(1, 4, "", "", mView.mProgrammeType, new INetworkCallBack() {
             @Override
             public void onSuccessListener(String requestCode, JSONObject ans) {
 
 //                LogUtils.logE("fangan",ans.getJSONArray(Constance.fangan).toString());
-                if (null == mView || mView.getActivity().isFinishing())
+                if (null == mView ||mView.getActivity()==null|| mView.getActivity().isFinishing())
                     return;
 
                 dismissRefesh();
@@ -326,6 +339,7 @@ public class HomeController extends BaseController implements INetworkCallBack, 
                     }catch (Exception e){
                         FangAnBean fangAnBean=new FangAnBean();
                         fangAnBean.setId(goodsList2.getJSONObject(i).getInt(Constance.id));
+                        fangAnBean.setScene_id(goodsList2.getJSONObject(i).getInt(Constance.scene_id));
                         fangAnBean.setName(goodsList2.getJSONObject(i).getString(Constance.name));
                         fangAnBean.setPath(goodsList2.getJSONObject(i).getString(Constance.path));
                         fangAnBean.setNickname(goodsList2.getJSONObject(i).getString(Constance.nickname));
@@ -334,9 +348,9 @@ public class HomeController extends BaseController implements INetworkCallBack, 
                     }
                 }
                 if (AppUtils.isEmpty(goodsList2) || goodsList2.length() == 0) {
-                    if (fangAnPage == 1) {
-                        mNullView.setVisibility(View.VISIBLE);
-                        gv_home_lamb.setVisibility(View.GONE);
+//                    if (fangAnPage == 1) {
+//                        mNullView.setVisibility(View.VISIBLE);
+//                        gv_home_lamb.setVisibility(View.GONE);
 //                        mView.mPullToRefreshLayout.isMove = true;
 //                        go_btn.setVisibility(View.VISIBLE);
 //                        go_btn.setOnClickListener(new View.OnClickListener() {
@@ -349,10 +363,10 @@ public class HomeController extends BaseController implements INetworkCallBack, 
 //                        mSchemes = new JSONArray();
 //                        dismissRefesh();
 //                        pd.setVisibility(View.GONE);
-                        return;
-                    } else {
-                        MyToast.show(mView.getActivity(), "数据已经到底!");
-                    }
+//                        return;
+//                    } else {
+//                        MyToast.show(mView.getActivity(), "数据已经到底!");
+//                    }
                 }
                 lamb_adapter.replaceAll(fangAnBeans);
                 lamb_adapter.notifyDataSetChanged();
@@ -371,6 +385,7 @@ public class HomeController extends BaseController implements INetworkCallBack, 
         mNetWork.sendGoodsList(1, "" + 20, null, "212", null, null, null, null, null, new INetworkCallBack() {
             @Override
             public void onSuccessListener(String requestCode, JSONObject ans) {
+                sendFangAnList();
                 JSONArray goodsList=ans.getJSONArray(Constance.goodsList);
                 final List<GoodsBean> goodsBeans=new ArrayList<>();
                 for(int i=0;i<goodsList.length();i++){
@@ -384,7 +399,7 @@ public class HomeController extends BaseController implements INetworkCallBack, 
                         goodsBean.setId(goods.getInt(Constance.id));
                         goodsBean.setCurrent_price(goods.getString(Constance.current_price));
                         goodsBean.setPrice(goods.getString(Constance.price));
-                        goodsBean.setDefault_photo(new Gson().fromJson(String.valueOf(goods.getJSONObject(Constance.default_photo)), GoodsBean.Default_photo.class));
+                        goodsBean.setDefault_photo(new Gson().fromJson(String.valueOf(goods.getJSONObject(Constance.default_photo)), Default_photo.class));
                         goodsBean.setGroup_buy(new Gson().fromJson(String.valueOf(goods.getJSONObject(Constance.group_buy)), GroupBuy.class));
                         goodsBeans.add(goodsBean);
 
@@ -392,18 +407,19 @@ public class HomeController extends BaseController implements INetworkCallBack, 
                 }
                 if(goodsBeans==null||goodsBeans.size()<=0)return;
                 for(int i=0;i<goodsBeans.size();i++){
+                    if(mView==null||mView.getActivity()==null||mView.getActivity().isFinishing())return;
                     View view=View.inflate(mView.getActivity(),R.layout.item_home_supermarket,null);
                     TextView tv_name=view.findViewById(R.id.tv_name);
                     TextView tv_price=view.findViewById(R.id.tv_price);
                     ImageView iv=view.findViewById(R.id.iv);
                     tv_name.setText(""+goodsBeans.get(i).getName());
                     if(goodsBeans.get(i).getGroup_buy()==null||goodsBeans.get(i).getGroup_buy().equals("212")){
-                    tv_price.setText(""+goodsBeans.get(i).getCurrent_price());
+                    tv_price.setText("¥"+goodsBeans.get(i).getCurrent_price());
                     }else {
                         if(goodsBeans.get(i).getGroup_buy().getExt_info()!=null&&goodsBeans.get(i).getGroup_buy().getExt_info().getPrice_ladder()!=null&&goodsBeans.get(i).getGroup_buy().getExt_info().getPrice_ladder().size()>0)
                         tv_price.setText("¥"+goodsBeans.get(i).getGroup_buy().getExt_info().getPrice_ladder().get(0).getPrice());
                     }
-                    ImageLoader.getInstance().displayImage(goodsBeans.get(i).getDefault_photo().getLarge(),iv);
+                    ImageLoader.getInstance().displayImage(goodsBeans.get(i).getDefault_photo().getThumb(),iv,IssueApplication.getImageLoaderOption());
                     final int finalI = i;
                     view.setOnClickListener(new View.OnClickListener() {
                         @Override
@@ -473,7 +489,7 @@ public class HomeController extends BaseController implements INetworkCallBack, 
     }
 
 
-    private void sendGrouplist(int page) {
+    private void sendTimeBuylist(int page) {
         mNetWork.sendGrouplist(page, "20", null, null, null, null, null, new INetworkCallBack() {
             @Override
             public void onSuccessListener(String requestCode, JSONObject ans) {
@@ -513,20 +529,20 @@ public class HomeController extends BaseController implements INetworkCallBack, 
         ;
     }
 
-    private void sendGroup(int page) {
-        mNetWork.sendGroup(page, "20", new INetworkCallBack() {
-            @Override
-            public void onSuccessListener(String requestCode, JSONObject ans) {
-
-            }
-
-            @Override
-            public void onFailureListener(String requestCode, JSONObject ans) {
-
-            }
-        })
-        ;
-    }
+//    private void sendGroup(int page) {
+//        mNetWork.sendGroup(page, "20", new INetworkCallBack() {
+//            @Override
+//            public void onSuccessListener(String requestCode, JSONObject ans) {
+//
+//            }
+//
+//            @Override
+//            public void onFailureListener(String requestCode, JSONObject ans) {
+//
+//            }
+//        })
+//        ;
+//    }
 
 
     /**
@@ -544,6 +560,7 @@ public class HomeController extends BaseController implements INetworkCallBack, 
         mNetWork.sendGoodsList(page, 3 + "", brand, category, null, shop, keyword, "2", "1", new INetworkCallBack() {
                     @Override
                     public void onSuccessListener(String requestCode, JSONObject ans) {
+
                         switch (requestCode) {
                             case NetWorkConst.PRODUCT:
                                 mPopularityGoodses = ans.getJSONArray(Constance.goodsList);
@@ -574,7 +591,10 @@ public class HomeController extends BaseController implements INetworkCallBack, 
      * @param per_page
      */
     public void selectProduct(int page, String per_page) {
-        mNetWork.sendGoodsList(page, per_page, null, null, null, null, null, null, null, this);
+//        Random random=new Random();
+        String sortKey="6";
+        String sortValue="2";
+        mNetWork.sendGoodsList(page, per_page, null, null, null, null, null, sortKey, sortValue , this);
     }
 
     /**
@@ -613,7 +633,7 @@ public class HomeController extends BaseController implements INetworkCallBack, 
                         @Override
                         public void onClick(View v) {
                             String url = mArticlesBeans.get(mNewsPoistion).getUrl();
-                            Intent intent = new Intent(mView.getActivity(), MessageDetailActivity.class);
+                            Intent intent = new Intent(mView.getActivity(), NewsDetailActivity.class);
                             intent.putExtra(Constance.url, url);
                             mView.startActivity(intent);
                         }
@@ -663,7 +683,7 @@ public class HomeController extends BaseController implements INetworkCallBack, 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         if (parent == mProGridView) {
-            int productId = goodses.getJSONObject(position).getInt(Constance.id);
+            int productId = goodsBeans.get(position).getId();
             getMoreActivity(productId);
         } else if (parent == priductGv01) {
 //            int productId = recommendGoodses.getJSONObject(position).getInt(Constance.id);
@@ -746,15 +766,15 @@ public class HomeController extends BaseController implements INetworkCallBack, 
     @Override
     public void onRefresh(PullToRefreshLayout pullToRefreshLayout) {
         sendGoodsStyle();
-        page = 1;
-        selectProduct(page, "20");
+//        page = 1;
+        selectProduct(1, "20");
     }
 
     @Override
     public void onLoadMore(PullToRefreshLayout pullToRefreshLayout) {
-        sendGoodsStyle();
-        page = page + 1;
-        selectProduct(page, "20");
+//        sendGoodsStyle();
+//        page = page + 1;
+//        selectProduct(1, "20");
     }
 
     /**
@@ -818,12 +838,17 @@ public class HomeController extends BaseController implements INetworkCallBack, 
         mView.hideLoading();
         switch (requestCode) {
             case NetWorkConst.RECOMMENDPRODUCT:
+//                sendPopularityGoodsList(1, null, null, null, null, null, null);
+//                sendGoodsType();
                 getRecommendGoodsList(ans);
                 break;
             case NetWorkConst.BANNER:
-                if (null == mView.getActivity() || mView.getActivity().isFinishing())
+                if (null == mView.getActivity() ||mView.getActivity()==null|| mView.getActivity().isFinishing())
                     return;
+
                 JSONArray babbersArray = ans.getJSONArray(Constance.banners);
+                paths=new ArrayList<>();
+                ImageLinks=new ArrayList<>();
                 for (int i = 0; i < babbersArray.length(); i++) {
                     try {
                         String imageUri = babbersArray.getJSONObject(i).getString(Constance.url);
@@ -836,6 +861,7 @@ public class HomeController extends BaseController implements INetworkCallBack, 
                 getAd();
                 break;
             case NetWorkConst.CATEGORY:
+//                sendJuHaoGoodsList();
                 JSONArray jsonArray=ans.getJSONArray(Constance.categories);
                 categoriesBeans = new ArrayList<>();
                 for(int i=0;i<jsonArray.length();i++){
@@ -860,22 +886,27 @@ public class HomeController extends BaseController implements INetworkCallBack, 
                 getNews();
                 break;
             case NetWorkConst.PRODUCT:
-                if (null == mView || mView.getActivity().isFinishing())
+                if (null == mView || mView.getActivity()==null||mView.getActivity().isFinishing())
                     return;
+
                 if (null != mPullToRefreshLayout) {
                     dismissRefesh();
                 }
+//                sendBanner();
+//                sendGoodsStyle();
 
+//                sendGroup(page);
+//              sendAttrList();
                 JSONArray goodsList = ans.getJSONArray(Constance.goodsList);
-                if (AppUtils.isEmpty(goodsList) || goodsList.length() == 0) {
-                    if (page == 1) {
-                    } else {
-                        MyToast.show(mView.getActivity(), "没有更多数据了!");
-                    }
-
-                    dismissRefesh();
-                    return;
-                }
+//                if (AppUtils.isEmpty(goodsList) || goodsList.length() == 0) {
+//                    if (page == 1) {
+//                    } else {
+//                        MyToast.show(mView.getActivity(), "没有更多数据了!");
+//                    }
+//
+//                    dismissRefesh();
+//                    return;
+//                }
 
                 getDataSuccess(goodsList);
                 break;
@@ -907,6 +938,7 @@ public class HomeController extends BaseController implements INetworkCallBack, 
                 }
 
                 String aliasId = IssueApplication.mUserObject.getString(Constance.id);
+                if(mView.getActivity()==null||mView.getActivity().isFinishing())return;
                 JPushInterface.setAlias(mView.getActivity(), aliasId, new TagAliasCallback() {
                     @Override
                     public void gotResult(int responseCode, String s, Set<String> set) {
@@ -920,12 +952,13 @@ public class HomeController extends BaseController implements INetworkCallBack, 
                         IntentUtil.startActivity(mView.getActivity(), SetInviteCodeActivity.class, false);
                     }
                 }
-                if(level==0){
+
                     ll_my_product.setVisibility(View.VISIBLE);
                     mNetWork.selectYijiProduct(1,20+"",null,null,null,null,null,null,null,null,this);
-                }else {
-                    ll_my_product.setVisibility(View.GONE);
-                }
+//                if(level==0){
+//                }else {
+//                    ll_my_product.setVisibility(View.GONE);
+//                }
 
 
                 break;
@@ -933,7 +966,7 @@ public class HomeController extends BaseController implements INetworkCallBack, 
                 final JSONArray yijiProducts=ans.getJSONArray(Constance.products);
                 if(yijiProducts==null||yijiProducts.length()==0){
                     ImageView imageView=new ImageView(mView.getActivity());
-                    LinearLayout.LayoutParams params=new LinearLayout.LayoutParams(UIUtils.dip2PX(75),UIUtils.dip2PX(75));
+                    LinearLayout.LayoutParams params=new LinearLayout.LayoutParams(UIUtils.dip2PX(mView.getActivity(),75),UIUtils.dip2PX(mView.getActivity(),75));
                     imageView.setImageDrawable(mView.getResources().getDrawable(R.drawable.bg_default));
                     imageView.setOnClickListener(new View.OnClickListener() {
                         @Override
@@ -971,7 +1004,7 @@ public class HomeController extends BaseController implements INetworkCallBack, 
 
 
     private void getDataSuccess(JSONArray array) {
-        List<GoodsBean> goodsBeans=new ArrayList<>();
+        goodsBeans = new ArrayList<>();
         for (int i = 0; i < array.length(); i++) {
             try {
 
@@ -982,19 +1015,24 @@ public class HomeController extends BaseController implements INetworkCallBack, 
                 goodsBean.setName(array.getJSONObject(i).getString(Constance.name));
                 goodsBean.setCurrent_price(array.getJSONObject(i).getString(Constance.current_price));
                 goodsBean.setOriginal_img(array.getJSONObject(i).getString(Constance.original_img));
+                Default_photo default_photo=new Default_photo();
+                if(array.getJSONObject(i).getJSONObject(Constance.default_photo)!=null){
+                default_photo.setThumb(array.getJSONObject(i).getJSONObject(Constance.default_photo).getString(Constance.thumb));
+                }
+                goodsBean.setDefault_photo(default_photo);
                 goodsBeans.add(goodsBean);
             }
         }
-        if (1 == page)
-            goodses = array;
-        else if (null != goodses) {
-            for (int i = 0; i < array.length(); i++) {
-                goodses.add(array.getJSONObject(i));
-            }
-
-            if (AppUtils.isEmpty(array))
-                MyToast.show(mView.getActivity(), "没有更多内容了");
-        }
+//        if (1 == page)
+//            goodses = array;
+//        else if (null != goodses) {
+//            for (int i = 0; i < array.length(); i++) {
+//                goodses.add(array.getJSONObject(i));
+//            }
+//
+//            if (AppUtils.isEmpty(array))
+//                MyToast.show(mView.getActivity(), "没有更多内容了");
+//        }
         likeGoods.replaceAll(goodsBeans);
         likeGoods.notifyDataSetChanged();
 //        mProAdapter.notifyDataSetChanged();
@@ -1016,8 +1054,6 @@ public class HomeController extends BaseController implements INetworkCallBack, 
         int per_page = 20;
         mNetWork.sendArticle(page, per_page, this);
     }
-
-
     /**
      * 获取最新产品
      *
@@ -1035,24 +1071,27 @@ public class HomeController extends BaseController implements INetworkCallBack, 
                 TheNewGoodsBean temp=new TheNewGoodsBean();
                 temp.setId(goodsList.getJSONObject(i).getInt(Constance.id));
                 temp.setName(goodsList.getJSONObject(i).getString(Constance.name));
-                temp.setDefault_photo(new Gson().fromJson(String.valueOf(goodsList.getJSONObject(i).getJSONObject(Constance.default_photo)), GoodsBean.Default_photo.class));
+                temp.setDefault_photo(new Gson().fromJson(String.valueOf(goodsList.getJSONObject(i).getJSONObject(Constance.default_photo)), Default_photo.class));
                 temp.setOriginal_img(goodsList.getJSONObject(i).getString(Constance.original_img));
+                Default_photo default_photo=new Default_photo();
+                if(goodsList.getJSONObject(i).getJSONObject(Constance.default_photo)!=null)default_photo.setThumb(goodsList.getJSONObject(i).getJSONObject(Constance.default_photo).getString(Constance.thumb));
+                temp.setDefault_photo(default_photo);
                 temp.setPrice(goodsList.getJSONObject(i).getString(Constance.price));
                 temp.setCurrent_price(goodsList.getJSONObject(i).getString(Constance.current_price));
                 goodsBeanList.add(temp);
             }
         }
 
-        if (1 == page)
-            recommendGoodses = goodsList;
-        else if (null != recommendGoodses) {
-            for (int i = 0; i < goodsList.length(); i++) {
-                recommendGoodses.add(goodsList.getJSONObject(i));
-            }
-
-            if (AppUtils.isEmpty(goodsList))
-                MyToast.show(mView.getActivity(), "没有更多内容了");
-        }
+//        if (1 == page)
+//            recommendGoodses = goodsList;
+//        else if (null != recommendGoodses) {
+//            for (int i = 0; i < goodsList.length(); i++) {
+//                recommendGoodses.add(goodsList.getJSONObject(i));
+//            }
+//
+//            if (AppUtils.isEmpty(goodsList))
+//                MyToast.show(mView.getActivity(), "没有更多内容了");
+//        }
 
 //        mReProAdapter = new RecommendProAdapter(recommendGoodses);
 //        mReProAdapter.notifyDataSetChanged();
@@ -1067,14 +1106,14 @@ public class HomeController extends BaseController implements INetworkCallBack, 
     public void onFailureListener(String requestCode, JSONObject ans) {
         if (null == mView.getActivity() || mView.getActivity().isFinishing())
             return;
-        this.page--;
+//        this.page--;
         if (null != mPullToRefreshLayout) {
             mPullToRefreshLayout.refreshFinish(PullToRefreshLayout.SUCCEED);
             mPullToRefreshLayout.loadmoreFinish(PullToRefreshLayout.SUCCEED);
         }
 
         if (requestCode.equals(NetWorkConst.CATEGORY)) {
-            pd.setVisibility(View.INVISIBLE);
+            if(pd!=null)pd.setVisibility(View.INVISIBLE);
             mView.hideLoading();
         }
     }

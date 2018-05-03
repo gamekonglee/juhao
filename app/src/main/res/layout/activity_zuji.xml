@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:background="#ffffff"
+    android:layout_height="match_parent"
+    tools:context="bc.juhao.com.ui.activity.user.ZujiActivity">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp">
+        <RelativeLayout
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:onClick="goBack">
+            <ImageView
+                android:src="@mipmap/nav_left"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="15dp"
+                android:layout_width="10dp"
+                android:layout_height="20dp" />
+        </RelativeLayout>
+        <TextView
+            android:text="我的足迹"
+            android:textColor="#666666"
+            android:textSize="15sp"
+            android:layout_centerInParent="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <ImageView
+            android:id="@+id/iv_edit"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:src="@drawable/edit"
+            android:layout_centerInParent="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="10dp"
+            />
+    </RelativeLayout>
+    <View
+        android:background="#dddddd"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"/>
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+    <bc.juhao.com.ui.view.EndOfListView
+        android:id="@+id/lv_zuji"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+    <RelativeLayout
+        android:id="@+id/rl"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:background="#F5F5F5"
+        android:visibility="gone"
+        android:layout_gravity="bottom"
+        android:focusable ="true"
+        android:focusableInTouchMode="true"
+        android:gravity="center_vertical">
+        <CheckBox
+            android:id="@+id/checkAll"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_centerVertical="true"
+            android:button="@drawable/selector_checkbox"
+            android:textSize="18dp"
+            android:text="全选" />
+        <Button
+            android:id="@+id/delete_bt"
+            style="@style/btndeleteStyle"
+            android:layout_width="80dp"
+            android:layout_height="35dp"
+            android:layout_marginRight="10dp"
+            android:text="删除"
+            android:textSize="14sp"
+            android:layout_alignParentRight="true"
+            android:textColor="@color/txt_black"/>
+    </RelativeLayout>
+    </FrameLayout>
+</LinearLayout>

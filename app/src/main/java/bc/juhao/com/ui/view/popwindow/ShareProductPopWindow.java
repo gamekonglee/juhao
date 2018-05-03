@@ -11,15 +11,18 @@ import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.assist.FailReason;
+import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
+import com.tencent.connect.share.QQShare;
+import com.tencent.mm.opensdk.modelmsg.SendMessageToWX;
+
 import bc.juhao.com.R;
 import bc.juhao.com.listener.IShareProductListener;
 import bc.juhao.com.ui.view.ScannerUtils;
 import bc.juhao.com.utils.ImageUtil;
 import bc.juhao.com.utils.ShareUtil;
 import bocang.view.BaseActivity;
-import cn.sharesdk.tencent.qq.QQ;
-import cn.sharesdk.wechat.friends.Wechat;
-import cn.sharesdk.wechat.moments.WechatMoments;
 
 
 /**
@@ -35,7 +38,7 @@ public class ShareProductPopWindow extends BasePopwindown implements View.OnClic
     public String mSharePath="";
     public String mShareImgPath="";
     public String mShareTitle="";
-    public String typeShare="";
+    public int typeShare=0;
     public BaseActivity mActivity;
     public boolean mIsLocal=false;
     public Bitmap mBitmap;
@@ -92,17 +95,17 @@ public class ShareProductPopWindow extends BasePopwindown implements View.OnClic
                 onDismiss();
             break;
             case R.id.wechat_ll://分享微信
-                typeShare= Wechat.NAME;
+                typeShare= SendMessageToWX.Req.WXSceneSession;
                 getShareData();
                 onDismiss();
             break;
             case R.id.wechatmoments_ll://分享朋友圈
-                typeShare= WechatMoments.NAME;
+                typeShare= SendMessageToWX.Req.WXSceneTimeline;
                 getShareData();
                 onDismiss();
             break;
             case R.id.share_qq_ll://分享QQ
-                typeShare= QQ.NAME;
+                typeShare= 3;
                 getShareData();
                 onDismiss();
             break;
@@ -131,43 +134,80 @@ public class ShareProductPopWindow extends BasePopwindown implements View.OnClic
             mActivity.setShowDialog(true);
 //            mActivity.setShowDialog("正在保存中..");
             mActivity.showLoading();
-            new Thread(new Runnable() {
-                @Override
-                public void run() {
-                    if(mIsLocal){
-                        mActivity.runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-                                ScannerUtils.saveImageToGallery(mActivity, mBitmap, ScannerUtils.ScannerType.RECEIVER);
-                                mActivity.hideLoading();
-                            }
-                        });
-                    }else{
-                        final Bitmap bitmap = ImageUtil.getbitmap(mShareImgPath);
-                        mActivity.runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-                                ScannerUtils.saveImageToGallery(mActivity, bitmap, ScannerUtils.ScannerType.RECEIVER);
-                                bitmap.recycle();
-                                mActivity.hideLoading();
-                            }
-                        });
-                    }
-
-                }
-            }).start();
+            new Thread(runnable).start();
         }
     }
+    Runnable runnable=new Runnable() {
+        @Override
+        public void run() {
+            if(mIsLocal){
+                mActivity.runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        final Bitmap bitmap = ImageUtil.getbitmap(mShareImgPath);
+                        ScannerUtils.saveImageToGallery(mActivity, bitmap, ScannerUtils.ScannerType.RECEIVER);
+                        mActivity.hideLoading();
+                    }
+                });
+            }else{
+                final Bitmap bitmap = ImageUtil.getbitmap(mShareImgPath);
+                mActivity.runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        ScannerUtils.saveImageToGallery(mActivity, bitmap, ScannerUtils.ScannerType.RECEIVER);
+                        bitmap.recycle();
+                        mActivity.hideLoading();
+                    }
+                });
+            }
 
+        }
+    };
     /**
      * 分享数据
      */
     public void getShareData() {
         Toast.makeText(this.mContext, "正在分享..", Toast.LENGTH_LONG).show();
         if(mIsLocal){
-            ShareUtil.showShareType02(mActivity, mShareTitle, mSharePath, mShareImgPath, this.mShareType, this.typeShare,true,mBitmap);
+            if(typeShare==SendMessageToWX.Req.WXSceneSession){
+            ShareUtil.shareWxPic(mActivity,mShareTitle,mBitmap,true);
+            }else if(typeShare==SendMessageToWX.Req.WXSceneTimeline){
+                ShareUtil.shareWxPic(mActivity,mShareTitle,mBitmap,false);
+            }else {
+                ShareUtil.shareQQLocalpic(mActivity,mShareImgPath,mShareTitle);
+            }
+//            ShareUtil.showShareType02(mActivity, mShareTitle, mSharePath, mShareImgPath, this.mShareType, this.typeShare,true,mBitmap);
         }else{
-            ShareUtil.showShareType02(mActivity, mShareTitle, mSharePath, mShareImgPath, this.mShareType, this.typeShare,false,null);
+            ImageLoader.getInstance().loadImage(mSharePath, new ImageLoadingListener() {
+                @Override
+                public void onLoadingStarted(String s, View view) {
+
+                }
+
+                @Override
+                public void onLoadingFailed(String s, View view, FailReason failReason) {
+
+                }
+
+                @Override
+                public void onLoadingComplete(String s, View view, Bitmap bitmap) {
+                    if(typeShare==SendMessageToWX.Req.WXSceneSession){
+                        ShareUtil.shareWxPic(mActivity,mShareTitle,bitmap,true);
+                    }else if(typeShare==SendMessageToWX.Req.WXSceneTimeline){
+                        ShareUtil.shareWxPic(mActivity,mShareTitle,bitmap,false);
+                    }else {
+                        mShareImgPath=ScannerUtils.saveImageToGallery(mContext,bitmap, ScannerUtils.ScannerType.RECEIVER);
+                        ShareUtil.shareQQLocalpic(mActivity,mShareImgPath,mShareTitle);
+                    }
+                }
+
+                @Override
+                public void onLoadingCancelled(String s, View view) {
+
+                }
+            });
+
+//            ShareUtil.showShareType02(mActivity, mShareTitle, mSharePath, mShareImgPath, this.mShareType, this.typeShare,false,null);
         }
 
     }

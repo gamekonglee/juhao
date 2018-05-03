@@ -51,7 +51,6 @@ public class MyDistributorController extends BaseController implements PullToRef
     private View mNullNet;
     private Button mRefeshBtn;
     private TextView mNullNetTv;
-    private TextView mNullViewTv;
     private AlertView mLevelView;
     private String[] mLevels;
     private int mUserLevel;
@@ -75,7 +74,11 @@ public class MyDistributorController extends BaseController implements PullToRef
         mRefeshBtn = (Button) mNullNet.findViewById(R.id.refesh_btn);
         mRefeshBtn.setOnClickListener(this);
         mNullNetTv = (TextView) mNullNet.findViewById(R.id.tv);
-        mNullViewTv = (TextView) mNullView.findViewById(R.id.tv);
+//        mNullViewTv = (TextView) mNullView.findViewById(R.id.tv);
+        if(IssueApplication.mUserObject==null){
+            MyToast.show(mView,"数据加载中");
+            return;
+        }
         mUserLevel = IssueApplication.mUserObject.getInt(Constance.level);
         getLevel();
         mLevelView = new AlertView(null, null, "取消", null,
@@ -133,6 +136,10 @@ public class MyDistributorController extends BaseController implements PullToRef
                 mDistriButorBeans = new ArrayList<>();
                 JSONArray jsonArray = ans.getJSONArray(Constance.data);
                 //01
+                if(jsonArray==null||jsonArray.length()==0)
+                {
+                    return;
+                }
                 for (int i = 0; i < jsonArray.length(); i++) {
                     JSONObject object = jsonArray.getJSONObject(i);
                     int id = object.getInt(Constance.id);

@@ -185,7 +185,6 @@
                         />
 
                 </RelativeLayout>
-
                 <RelativeLayout
                     android:id="@+id/Receiving_rl"
                     android:layout_width="0dp"
@@ -233,7 +232,7 @@
                 android:layout_weight="1"
                 android:orientation="vertical"
                 android:background="@color/white"
-                android:paddingBottom="10dp">
+                >
                 <RelativeLayout
                     android:id="@+id/server_rl"
                     style="@style/mine_item_style02"
@@ -258,33 +257,23 @@
 
 
                 </RelativeLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingBottom="1dp"
+                    android:orientation="vertical"
+                    android:background="#dddddd">
+
 
                 <LinearLayout
+                    android:layout_marginTop="1dp"
                     android:layout_width="match_parent"
                     android:layout_height="80dp"
                     android:orientation="horizontal">
                     <LinearLayout
-                        android:id="@+id/collect_ll"
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:orientation="vertical"
-                        android:gravity="center">
-                        <ImageView
-                            android:layout_width="27dp"
-                            android:layout_height="26dp"
-                            android:src="@mipmap/personal_collection"
-                            />
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="5dp"
-                            android:textColor="@color/fontColor2"
-                            android:textSize="12sp"
-                            android:text="@string/my_collet"/>
-                    </LinearLayout>
-                    <LinearLayout
-                        android:id="@+id/address_ll"
+                        android:visibility="gone"
+                        android:background="#ffffff"
+                        android:id="@+id/pingtuan_ll"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
@@ -293,7 +282,28 @@
                         <ImageView
                             android:layout_width="26dp"
                             android:layout_height="26dp"
-                            android:src="@mipmap/personal_address_management"
+                            android:src="@mipmap/my_pt"
+                            />
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="5dp"
+                            android:textColor="@color/fontColor2"
+                            android:textSize="12sp"
+                            android:text="拼团订单"/>
+                    </LinearLayout>
+                    <LinearLayout
+                        android:id="@+id/address_ll"
+                        android:layout_width="0dp"
+                        android:background="#ffffff"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:orientation="vertical"
+                        android:gravity="center">
+                        <ImageView
+                            android:layout_width="26dp"
+                            android:layout_height="26dp"
+                            android:src="@mipmap/my_dz"
                             />
                         <TextView
                             android:layout_width="wrap_content"
@@ -306,6 +316,8 @@
                     <LinearLayout
                         android:id="@+id/stream_ll"
                         android:layout_width="0dp"
+                        android:layout_marginLeft="1dp"
+                        android:background="#ffffff"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
                         android:orientation="vertical"
@@ -313,7 +325,7 @@
                         <ImageView
                             android:layout_width="31dp"
                             android:layout_height="25dp"
-                            android:src="@mipmap/personal_logistics"
+                            android:src="@mipmap/my_wl"
                             />
                         <TextView
                             android:layout_width="wrap_content"
@@ -323,7 +335,28 @@
                             android:textColor="@color/fontColor2"
                             android:text="物流管理"/>
                     </LinearLayout>
-
+                    <LinearLayout
+                        android:id="@+id/service_ll"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:background="#ffffff"
+                        android:layout_marginLeft="1dp"
+                        android:orientation="vertical"
+                        android:gravity="center">
+                        <ImageView
+                            android:layout_width="26dp"
+                            android:layout_height="26dp"
+                            android:src="@mipmap/personal_service"
+                            />
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="5dp"
+                            android:textSize="12sp"
+                            android:textColor="@color/fontColor2"
+                            android:text="服务"/>
+                    </LinearLayout>
 
                     <LinearLayout
                         android:visibility="gone"
@@ -349,6 +382,7 @@
                 </LinearLayout>
 
                 <LinearLayout
+                    android:layout_marginTop="1dp"
                     android:layout_width="match_parent"
                     android:layout_height="80dp"
                     android:orientation="horizontal">
@@ -356,6 +390,7 @@
                     <LinearLayout
                         android:id="@+id/share_ll"
                         android:layout_width="0dp"
+                        android:background="#ffffff"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
                         android:orientation="vertical"
@@ -375,8 +410,10 @@
                     </LinearLayout>
 
                     <LinearLayout
-                        android:id="@+id/service_ll"
+                        android:id="@+id/zuji_ll"
                         android:layout_width="0dp"
+                        android:layout_marginLeft="1dp"
+                        android:background="#ffffff"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
                         android:orientation="vertical"
@@ -384,7 +421,7 @@
                         <ImageView
                             android:layout_width="26dp"
                             android:layout_height="26dp"
-                            android:src="@mipmap/personal_service"
+                            android:src="@mipmap/my_zj"
                             />
                         <TextView
                             android:layout_width="wrap_content"
@@ -392,12 +429,45 @@
                             android:layout_marginTop="5dp"
                             android:textSize="12sp"
                             android:textColor="@color/fontColor2"
-                            android:text="服务"/>
+                            android:text="足迹"/>
                     </LinearLayout>
+                    <LinearLayout
+                        android:id="@+id/collect_ll"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_marginLeft="1dp"
+                        android:background="#ffffff"
+                        android:layout_weight="1"
+                        android:orientation="vertical"
+                        android:gravity="center">
+                        <ImageView
+                            android:layout_width="27dp"
+                            android:layout_height="26dp"
+                            android:src="@mipmap/my_sc"
+                            />
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="5dp"
+                            android:textColor="@color/fontColor2"
+                            android:textSize="12sp"
+                            android:text="@string/my_collet"/>
+                    </LinearLayout>
+
+
+
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_marginTop="1dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="80dp"
+                    android:orientation="horizontal">
+
                     <LinearLayout
                         android:id="@+id/call_kefu_ll"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
+                        android:background="#ffffff"
                         android:layout_weight="1"
                         android:orientation="vertical"
                         android:gravity="center">
@@ -412,28 +482,43 @@
                             android:layout_marginTop="5dp"
                             android:textColor="@color/fontColor2"
                             android:textSize="12sp"
-                            android:text="联系客服"/>
+                            android:text="客服"/>
                     </LinearLayout>
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:id="@+id/mine03_lv"
-                    android:layout_width="match_parent"
-                    android:layout_height="80dp"
-                    android:orientation="horizontal">
                     <LinearLayout
-                        android:id="@+id/user_money_ll"
+                        android:id="@+id/setting_ll_new"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
+                        android:layout_marginLeft="1dp"
+                        android:background="#ffffff"
                         android:orientation="vertical"
-                        android:gravity="center"
-                        >
+                        android:gravity="center">
                         <ImageView
                             android:layout_width="26dp"
                             android:layout_height="26dp"
-                            android:src="@mipmap/personal_earnings"
+                            android:src="@mipmap/my_sz"
+                            />
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="5dp"
+                            android:textSize="12sp"
+                            android:textColor="@color/fontColor2"
+                            android:text="设置"/>
+                    </LinearLayout>
+                    <LinearLayout
+                        android:id="@+id/distributor_ll"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:layout_marginLeft="1dp"
+                        android:background="#ffffff"
+                        android:orientation="vertical"
+                        android:gravity="center">
+                        <ImageView
+                            android:layout_width="26dp"
+                            android:layout_height="26dp"
+                            android:src="@mipmap/my_fxs"
                             />
                         <TextView
                             android:layout_width="wrap_content"
@@ -441,11 +526,29 @@
                             android:layout_marginTop="5dp"
                             android:textColor="@color/fontColor2"
                             android:textSize="12sp"
-                            android:text="我的收益"/>
+                            android:text="我的分销商"/>
                     </LinearLayout>
+                    <View
+                        android:id="@+id/view_empty"
+                        android:background="#ffffff"
+                        android:visibility="gone"
+                        android:layout_marginLeft="1dp"
+                        android:layout_weight="1"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"/>
+                </LinearLayout>
+                <LinearLayout
+                    android:id="@+id/mine03_lv"
+                    android:layout_width="match_parent"
+                    android:layout_height="80dp"
+                    android:layout_marginTop="1dp"
+                    android:orientation="horizontal">
+
+
                     <LinearLayout
                         android:id="@+id/two_code_ll"
                         android:layout_width="0dp"
+                        android:background="#ffffff"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
                         android:orientation="vertical"
@@ -454,7 +557,7 @@
                         <ImageView
                             android:layout_width="26dp"
                             android:layout_height="26dp"
-                            android:src="@mipmap/personal_invitation_code"
+                            android:src="@mipmap/my_yqm"
                             />
                         <TextView
                             android:layout_width="wrap_content"
@@ -465,16 +568,19 @@
                             android:text="邀请码"/>
                     </LinearLayout>
                     <LinearLayout
-                        android:id="@+id/distributor_ll"
+                        android:id="@+id/user_money_ll"
                         android:layout_width="0dp"
+                        android:background="#ffffff"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
+                        android:layout_marginLeft="1dp"
                         android:orientation="vertical"
-                        android:gravity="center">
+                        android:gravity="center"
+                        >
                         <ImageView
-                            android:layout_width="45dp"
-                            android:layout_height="45dp"
-                            android:src="@mipmap/personal_distributor"
+                            android:layout_width="26dp"
+                            android:layout_height="26dp"
+                            android:src="@mipmap/my_sy"
                             />
                         <TextView
                             android:layout_width="wrap_content"
@@ -482,12 +588,20 @@
                             android:layout_marginTop="5dp"
                             android:textColor="@color/fontColor2"
                             android:textSize="12sp"
-                            android:text="我的分销商"/>
+                            android:text="我的收益"/>
                     </LinearLayout>
 
-
-
+                    <View
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_marginLeft="1dp"
+                        android:background="#ffffff"
+                        android:layout_height="wrap_content"/>
                 </LinearLayout>
+                    <View
+                        android:background="@color/goods_details_sku"
+                        android:layout_width="match_parent"
+                        android:layout_height="30dp"/>
                 <LinearLayout
                     android:id="@+id/mine04_lv"
                     android:layout_width="match_parent"
@@ -542,9 +656,10 @@
                         android:gravity="center">
 
                     </LinearLayout>
+
                 </LinearLayout>
             </LinearLayout>
-
+            </LinearLayout>
             <!--<RelativeLayout-->
             <!--android:id="@+id/user_money_rl"-->
             <!--style="@style/mine_item_style02"-->

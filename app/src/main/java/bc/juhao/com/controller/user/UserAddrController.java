@@ -1,6 +1,9 @@
 package bc.juhao.com.controller.user;
 
+import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.os.Message;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,6 +24,7 @@ import bc.juhao.com.controller.BaseController;
 import bc.juhao.com.listener.INetworkCallBack;
 import bc.juhao.com.ui.activity.user.UserAddrActivity;
 import bc.juhao.com.ui.activity.user.UserAddrAddActivity;
+import bc.juhao.com.utils.UIUtils;
 import bocang.json.JSONArray;
 import bocang.json.JSONObject;
 import bocang.utils.AppUtils;
@@ -222,7 +226,7 @@ public class UserAddrController extends BaseController implements INetworkCallBa
         }
 
         @Override
-        public View getView(int position, View convertView, ViewGroup parent) {
+        public View getView(final int position, View convertView, ViewGroup parent) {
             ViewHolder holder;
             if (convertView == null) {
                 convertView = View.inflate(mView, R.layout.item_user_address, null);
@@ -232,6 +236,7 @@ public class UserAddrController extends BaseController implements INetworkCallBa
                 holder.address_tv = (TextView) convertView.findViewById(R.id.address_tv);
                 holder.phone_tv = (TextView) convertView.findViewById(R.id.phone_tv);
                 holder.default_addr_tv = (TextView) convertView.findViewById(R.id.default_addr_tv);
+                holder.delete_tv=convertView.findViewById(R.id.tv_delete);
                 convertView.setTag(holder);
             } else {
                 holder = (ViewHolder) convertView.getTag();
@@ -241,7 +246,56 @@ public class UserAddrController extends BaseController implements INetworkCallBa
             holder.address_tv.setText(addresses.getJSONObject(position).getString(Constance.address));
             holder.phone_tv.setText(addresses.getJSONObject(position).getString(Constance.mobile));
             boolean isdefault=addresses.getJSONObject(position).getBoolean(Constance.is_default);
-            holder.default_addr_tv.setVisibility(isdefault==true?View.VISIBLE:View.GONE);
+//            holder.default_addr_tv.setVisibility(isdefault==true? View.VISIBLE:View.GONE);
+            Drawable drawable=mView.getResources().getDrawable(R.mipmap.shopping_icon_sel);
+            if(!isdefault){
+                drawable=mView.getResources().getDrawable(R.mipmap.shopping_icon_nor);
+                holder.default_addr_tv.setTextColor(mView.getResources().getColor(R.color.txt_black));
+
+            }else {
+                holder.default_addr_tv.setTextColor(mView.getResources().getColor(R.color.green));
+            }
+            drawable.setBounds(0,0, UIUtils.dip2PX(18),UIUtils.dip2PX(18));
+            holder.default_addr_tv.setCompoundDrawables(drawable,null,null,null);
+            holder.default_addr_tv.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    mNetWork.sendDefaultAddress(addresses.getJSONObject(position).getString(Constance.id), new INetworkCallBack() {
+                        @Override
+                        public void onSuccessListener(String requestCode, JSONObject ans) {
+                            MyToast.show(mView, "设置成功!");
+                            mView.onResfresh();
+                        }
+
+                        @Override
+                        public void onFailureListener(String requestCode, JSONObject ans) {
+
+                        }
+                    });
+                }
+            });
+            holder.delete_tv.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    UIUtils.showSingleWordDialog(mView, "确定要删除该地址吗?", new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            mNetWork.sendDeleteAddress(addresses.getJSONObject(position).getString(Constance.id), new INetworkCallBack() {
+                                @Override
+                                public void onSuccessListener(String requestCode, JSONObject ans) {
+                                    MyToast.show(mView,"删除成功！！");
+                                    mView.onResfresh();
+                                }
+
+                                @Override
+                                public void onFailureListener(String requestCode, JSONObject ans) {
+                                    MyToast.show(mView,"网络异常");
+                                }
+                            });
+                        }
+                    });
+                }
+            });
             return convertView;
         }
 
@@ -250,6 +304,7 @@ public class UserAddrController extends BaseController implements INetworkCallBa
             TextView address_tv;
             TextView phone_tv;
             TextView default_addr_tv;
+            TextView delete_tv;
 
         }
     }

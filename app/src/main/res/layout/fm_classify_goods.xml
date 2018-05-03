@@ -36,7 +36,7 @@
                 android:orientation="horizontal"
                 android:gravity="center_vertical"
                 android:background="@color/white"
-                android:paddingLeft="5dp">
+                >
                 <ImageView
                     android:layout_width="20dp"
                     android:layout_height="20dp"
@@ -58,9 +58,10 @@
                 android:id="@+id/itemGridView02"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="#f9f9f9"
-                android:numColumns="3"
-                android:padding="5dp"
+                android:background="@color/background_color"
+                android:numColumns="1"
+                android:verticalSpacing="5dp"
+                android:paddingRight="5dp"
                 android:scrollbars="none"
                  />
         </LinearLayout>

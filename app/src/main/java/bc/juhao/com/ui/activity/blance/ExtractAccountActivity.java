@@ -1,5 +1,6 @@
 package bc.juhao.com.ui.activity.blance;
 
+import android.graphics.Color;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -39,6 +40,7 @@ public class ExtractAccountActivity extends BaseActivity {
     @Override
     protected void initView() {
         setContentView(R.layout.activity_extract_account);
+        setColor(this, Color.WHITE);
         alipay_et = (EditText)findViewById(R.id.alipay_et);
         alipay_name_tv = (EditText)findViewById(R.id.alipay_name_tv);
         sure_bt=getViewAndClick(R.id.sure_bt);
