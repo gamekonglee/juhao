@@ -3,10 +3,11 @@ package bc.juhao.com.utils;
 /**
  * Created by gamekonglee on 2018/4/3.
  */
+
 import android.content.Context;
 import android.widget.Toast;
 
-
+import com.aliyun.iot.ilop.demo.DemoApplication;
 import com.tencent.mm.opensdk.modelpay.PayReq;
 import com.tencent.mm.opensdk.openapi.IWXAPI;
 import com.tencent.mm.opensdk.openapi.WXAPIFactory;
@@ -57,7 +58,7 @@ public class WXpayUtils {
     public static  String genSign(OrederSendInfo info) {
         StringBuffer sb = new StringBuffer(info.toString());
         if (Constance.API_KEY.equals("")){
-            Toast.makeText(IssueApplication.getContext(),"APP_ID为空",Toast.LENGTH_LONG).show();
+            Toast.makeText(DemoApplication.getInstance(),"APP_ID为空",Toast.LENGTH_LONG).show();
         }
         //拼接密钥
         sb.append("key=");
@@ -107,7 +108,7 @@ public class WXpayUtils {
         req.sign = bean.getSign();
     }
 
-    public static void Pay(PrepayIdInfo bean,String prepayid){
+    public static void Pay(PrepayIdInfo bean, String prepayid){
         if (judgeCanGo()){
             genPayReq(bean,prepayid);
             iwxapi.registerApp(Constance.APP_ID);
@@ -119,9 +120,6 @@ public class WXpayUtils {
         getWXAPI();
         if (!iwxapi.isWXAppInstalled()) {
             Toast.makeText(mContext, "请先安装微信应用", Toast.LENGTH_SHORT).show();
-            return false;
-        } else if (!iwxapi.isWXAppSupportAPI()) {
-            Toast.makeText(mContext, "请先更新微信应用", Toast.LENGTH_SHORT).show();
             return false;
         }
         return true;

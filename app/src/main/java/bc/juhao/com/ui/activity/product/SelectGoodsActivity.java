@@ -5,11 +5,12 @@ import android.graphics.Color;
 import android.os.Build;
 import android.support.annotation.RequiresApi;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+
+import com.aliyun.iot.ilop.demo.DemoApplication;
 
 import bc.juhao.com.R;
 import bc.juhao.com.cons.Constance;
@@ -43,7 +44,7 @@ public class SelectGoodsActivity extends BaseActivity {
         if (isSelectGoods) {
             select_rl.setVisibility(View.VISIBLE);
         }
-        select_num_tv.setText(IssueApplication.mSelectProducts.length()+"");
+        select_num_tv.setText(DemoApplication.mSelectProducts.length()+"");
     }
 
     @Override

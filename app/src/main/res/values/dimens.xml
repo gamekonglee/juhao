@@ -1,5 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!-- Default screen margins, per the Android Design guidelines. -->
+    <dimen name="spot_size">6dp</dimen>
+    <dimen name="progress_width">250dp</dimen>
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
     <dimen name="margin_normal">10dip</dimen>
@@ -18,10 +20,8 @@
     <dimen name="edit_four_left">72dip</dimen>
     <dimen name="edit_five_left">110dip</dimen>
 
-    <dimen name="spot_size">6dp</dimen>
     <dimen name="title_margin">10dp</dimen>
     <dimen name="progress_margin">24dp</dimen>
-    <dimen name="progress_width">250dp</dimen>
 
     <dimen name="font_larger">22sp</dimen>
     <dimen name="font_large">18sp</dimen>
@@ -61,6 +61,12 @@
     <dimen name="ucrop_default_crop_grid_stoke_width">1dp</dimen>
     <dimen name="ucrop_default_crop_frame_stoke_width">1dp</dimen>
     <dimen name="fab_margin">16dp</dimen>
-
+    <dimen name="index_left_icon_size">28dp</dimen>
+    <dimen name="xx10">10dp</dimen>
+    <dimen name="scanner_view_corner_width">14dp</dimen>
+    <dimen name="scanner_view_corner_thick">4dp</dimen>
+    <dimen name="scanner_view_focus_line_thick">1dp</dimen>
+    <dimen name="scanner_view_tip_top">28dp</dimen>
+    <dimen name="scanner_view_tip_size">14sp</dimen>
 
 </resources>

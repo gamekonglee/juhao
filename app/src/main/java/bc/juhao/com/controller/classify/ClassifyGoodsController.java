@@ -2,10 +2,13 @@ package bc.juhao.com.controller.classify;
 
 import android.content.Intent;
 import android.os.Message;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.GridView;
 import android.widget.ListView;
+
+import com.aliyun.iot.ilop.demo.DemoApplication;
 
 import java.util.ArrayList;
 
@@ -14,7 +17,6 @@ import bc.juhao.com.cons.Constance;
 import bc.juhao.com.cons.NetWorkConst;
 import bc.juhao.com.controller.BaseController;
 import bc.juhao.com.listener.INetworkCallBack;
-import bc.juhao.com.ui.activity.IssueApplication;
 import bc.juhao.com.ui.activity.product.ClassifyGoodsActivity;
 import bc.juhao.com.ui.activity.product.SelectGoodsActivity;
 import bc.juhao.com.ui.adapter.ClassifyGoodsAdapter;
@@ -23,7 +25,7 @@ import bc.juhao.com.ui.fragment.ClassifyGoodsFragment;
 import bocang.json.JSONArray;
 import bocang.json.JSONObject;
 import bocang.utils.AppUtils;
-import bocang.utils.LogUtils;
+import bocang.utils.MyToast;
 
 /**
  * @author: Jun
@@ -82,10 +84,11 @@ public class ClassifyGoodsController extends BaseController implements INetworkC
                 JSONObject categoryObject = goodsAllAttr.getJSONArray(Constance.categories).getJSONObject(position);
                 mIntent = new Intent(mView.getActivity(), SelectGoodsActivity.class);
                 String categoriesId = categoryObject.getString(Constance.id);
+                Log.e("cateId",categoriesId);
                 mIntent.putExtra(Constance.categories, categoriesId);
                 mView.getActivity().startActivity(mIntent);
-                if(IssueApplication.isClassify==true){
-                    IssueApplication.isClassify=false;
+                if(DemoApplication.isClassify==true){
+                    DemoApplication.isClassify=false;
                     ClassifyGoodsActivity.mActivity.finish();
                 }
             }
@@ -144,11 +147,15 @@ public class ClassifyGoodsController extends BaseController implements INetworkC
 
     public void getAllData() {
         mIntent = new Intent(mView.getActivity(), SelectGoodsActivity.class);
+        if(goodsAllAttr==null||goodsAllAttr.getString(Constance.id)==null){
+            MyToast.show(mView.getActivity(),"数据加载中，稍等");
+            return;
+        }
         String categoriesId = goodsAllAttr.getString(Constance.id);
         mIntent.putExtra(Constance.categories, categoriesId);
         mView.getActivity().startActivity(mIntent);
-        if(IssueApplication.isClassify==true){
-            IssueApplication.isClassify=false;
+        if(DemoApplication.isClassify==true){
+            DemoApplication.isClassify=false;
             ClassifyGoodsActivity.mActivity.finish();
         }
     }

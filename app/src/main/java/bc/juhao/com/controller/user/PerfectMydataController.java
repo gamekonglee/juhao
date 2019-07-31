@@ -2,9 +2,13 @@ package bc.juhao.com.controller.user;
 
 import android.content.Intent;
 import android.net.Uri;
+import android.os.Build;
+import android.os.Environment;
 import android.os.Message;
+import android.support.v4.content.FileProvider;
 import android.widget.TextView;
 
+import com.aliyun.iot.ilop.demo.DemoApplication;
 import com.bigkoo.alertview.AlertView;
 import com.bigkoo.alertview.OnItemClickListener;
 
@@ -18,6 +22,7 @@ import bc.juhao.com.listener.INetworkCallBack;
 import bc.juhao.com.ui.activity.EditValueActivity;
 import bc.juhao.com.ui.activity.IssueApplication;
 import bc.juhao.com.ui.activity.user.PerfectMydataActivity;
+import bc.juhao.com.utils.FileUtil;
 import bc.juhao.com.utils.ImageLoadProxy;
 import bc.juhao.com.utils.NetWorkUtils;
 import bc.juhao.com.utils.UIUtils;
@@ -45,6 +50,7 @@ public class PerfectMydataController extends BaseController implements OnItemCli
     private AlertView mHeadView;
     private CircleImageView head_iv;
     private int sexType = 0;
+    private String imageURL;
 
     public PerfectMydataController(PerfectMydataActivity v) {
         mView = v;
@@ -53,7 +59,7 @@ public class PerfectMydataController extends BaseController implements OnItemCli
     }
 
     private void initViewData() {
-        JSONObject mUserObject = IssueApplication.mUserObject;
+        JSONObject mUserObject = DemoApplication.mUserObject;
         if(AppUtils.isEmpty(mUserObject)) return;
         if(!AppUtils.isEmpty(mUserObject.getString(Constance.avatar))){
             String avatar = NetWorkConst.SCENE_HOST + mUserObject.getString(Constance.avatar);
@@ -100,7 +106,7 @@ public class PerfectMydataController extends BaseController implements OnItemCli
         mView.startActivityForResult(mIntent, type);
     }
 
-    public void ActivityResult(int requestCode, int resultCode, Intent data) {
+    public void ActivityResult(int requestCode, int resultCode, final Intent data) {
         if (camera != null)
             camera.onActivityResult(requestCode, resultCode, data);
         if (resultCode == 001) {
@@ -128,6 +134,115 @@ public class PerfectMydataController extends BaseController implements OnItemCli
             if (AppUtils.isEmpty(value))
                 return;
             email_tv.setText(value);
+        }else if(resultCode==-1){
+            switch (requestCode) {
+                case Constance.PHOTO_WITH_CAMERA: {// 拍照获取图片
+                    String status = Environment.getExternalStorageState();
+                    if (status.equals(Environment.MEDIA_MOUNTED)) { // 是否有SD卡
+                        File imageFile = new File(DemoApplication.cameraPath, DemoApplication.imagePath + ".jpg");
+                        imageURL = "file://"+imageFile;
+                        final Uri uri=Uri.parse("file://"+imageFile);
+                        head_iv.setImageURI(uri);
+                        new Thread(new Runnable() {
+                            @Override
+                            public void run() {
+                                final String resultJson = NetWorkUtils.uploadFile(head_iv.getDrawable(), NetWorkConst.UPLOADAVATAR, null, uri.toString());
+                                //                            //分享的操作
+                                mView.runOnUiThread(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                    }
+                                });
+                            }
+                        }).start();
+
+//                        File imageFile = new File(IssueApplication.cameraPath, IssueApplication.imagePath + ".jpg");
+//                        if (imageFile.exists()) {
+////                            imageURL = "file://" + imageFile.toString();
+////                            IssueApplication.imagePath = null;
+////                            IssueApplication.cameraPath = null;
+////                            mView.mPath=imageURL;
+////                            displaySceneBg(mView.mPath, 0);
+//                        if (imageFile.exists()) {
+//                            imageURL = "file://" + imageFile.toString();
+//                            IssueApplication.imagePath = null;
+//                            IssueApplication.cameraPath = null;
+//
+//
+//                            Uri uri=FileProvider.getUriForFile(mView, "com.bocang.juhao.fileprovider", new File(imageFile.toString()));
+//                            Intent intent = new Intent("com.android.camera.action.CROP");
+//                            intent.setDataAndType(uri, "image/*");
+//                            intent.putExtra("scale", true);// 是否保留比例
+//                            intent.putExtra("scaleUpIfNeeded", true);//黑边
+//                            intent.putExtra("crop", "true");//发送裁剪信号
+//                            intent.putExtra("aspectX", 1);
+//                            intent.putExtra("aspectY", 0.8);
+//                            intent.putExtra("outputX", 300);
+//                            intent.putExtra("outputY", 300);
+//                            intent.putExtra("return-data", false);
+//                            intent.putExtra(MediaStore.EXTRA_OUTPUT, imageURL);//URI 将URI指向相应的file:///…，
+//                            intent.putExtra("outputFormat", Bitmap.CompressFormat.JPEG.toString());
+//                            intent.putExtra("noFaceDetection", true); // no face detection
+//                            mView.startActivityForResult(intent, Constance.FLAG_UPLOAD_IMAGE_CUT);
+
+//                        } else {
+//                            AppDialog.messageBox("读取图片失败！");
+//                        }
+//                    } else {
+//                        AppDialog.messageBox("没有SD卡！");
+//                    }
+                }
+                break;
+                }
+                case Constance.PHOTO_WITH_DATA: // 从图库中选择图片
+                    // 照片的原始资源地址
+                    imageURL = data.getData().toString();
+                    head_iv.setImageURI(data.getData());
+                    new Thread(new Runnable() {
+                        @Override
+                        public void run() {
+                            final String resultJson = NetWorkUtils.uploadFile(head_iv.getDrawable(), NetWorkConst.UPLOADAVATAR, null, imageURL.toString());
+                            //                            //分享的操作
+                            mView.runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                }
+                            });
+                        }
+                    }).start();
+                    break;
+                case Constance.FLAG_UPLOAD_IMAGE_CUT:
+                    final Uri uri=data.getData();
+                    head_iv.setImageURI(uri);
+                    new Thread(new Runnable() {
+                        @Override
+                        public void run() {
+                            final String resultJson = NetWorkUtils.uploadFile(head_iv.getDrawable(), NetWorkConst.UPLOADAVATAR, null, uri.toString());
+                            //                            //分享的操作
+                            mView.runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                }
+                            });
+                        }
+                    }).start();
+                    break;
+            }
+        }else if(requestCode== Constance.FLAG_UPLOAD_IMAGE_CUT){
+            final Uri uri=data.getData();
+            head_iv.setImageURI(uri);
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    final String resultJson = NetWorkUtils.uploadFile(head_iv.getDrawable(), NetWorkConst.UPLOADAVATAR, null, uri.toString());
+                    //                            //分享的操作
+                    mView.runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                        }
+                    });
+                }
+            }).start();
         }
     }
 
@@ -241,6 +356,9 @@ public class PerfectMydataController extends BaseController implements OnItemCli
      * 头像
      */
     public void setHead() {
+
+        FileUtil.openImage(mView);
+
         if (camera == null) {
             camera = new CameraUtil(mView, new CameraUtil.CameraDealListener() {
                 @Override
@@ -252,14 +370,25 @@ public class PerfectMydataController extends BaseController implements OnItemCli
                 @Override
                 public void onCameraPickSuccess(String path) {
                     MyLog.e("onCameraPickSuccess: " + path);
-                    Uri uri = Uri.parse("file://" + path);
+                    Uri uri ;
+                    if(Build.VERSION.SDK_INT>=Build.VERSION_CODES.N){
+                    uri= FileProvider.getUriForFile(mView, "com.bocang.juhao.fileprovider", new File(path));
+                    }else {
+                        uri = Uri.parse("file://" + path);
+                    }
                     camera.cropImageUri(uri, 1, 1, 256);
                 }
 
                 @Override
                 public void onCameraCutSuccess(final String uri) {
                     File file = new File(uri);
-                    head_iv.setImageURI(Uri.fromFile(file));
+                    Uri uriTemp;
+                    if(Build.VERSION.SDK_INT>=Build.VERSION_CODES.N){
+                        uriTemp= FileProvider.getUriForFile(mView, "com.bocang.juhao.fileprovider", new File(uri));
+                    }else {
+                        uriTemp = Uri.parse("file://" + uri);
+                    }
+                    head_iv.setImageURI(uriTemp);
 
                     new Thread(new Runnable() {
                         @Override
@@ -277,7 +406,7 @@ public class PerfectMydataController extends BaseController implements OnItemCli
             });
         }
 
-        mHeadView.show();
+//        mHeadView.show();
     }
 
 

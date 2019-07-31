@@ -1,23 +1,17 @@
 package bc.juhao.com.ui.activity.user;
 
 import android.content.Intent;
-import android.graphics.Color;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
-import android.widget.VideoView;
 
 import bc.juhao.com.R;
 import bc.juhao.com.common.BaseActivity;
 import bc.juhao.com.cons.Constance;
 import bc.juhao.com.ui.view.FullScreenVideoView;
-import bc.juhao.com.utils.UIUtils;
-import cn.jpush.android.ui.FullScreenView;
 
 /**
  * Created by gamekonglee on 2018/4/19.

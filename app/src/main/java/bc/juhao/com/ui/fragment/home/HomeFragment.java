@@ -2,7 +2,6 @@ package bc.juhao.com.ui.fragment.home;
 
 import android.annotation.TargetApi;
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -19,7 +18,11 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.acker.simplezxing.activity.CaptureActivity;
+import com.aliyun.iot.aep.component.router.Router;
+import com.aliyun.iot.ilop.demo.DemoApplication;
 import com.bigkoo.convenientbanner.ConvenientBanner;
+import com.example.qrcode.ScannerActivity;
 import com.hyphenate.EMCallBack;
 import com.hyphenate.chat.EMClient;
 import com.hyphenate.exceptions.HyphenateException;
@@ -35,14 +38,12 @@ import bc.juhao.com.cons.Constance;
 import bc.juhao.com.controller.HomeController;
 import bc.juhao.com.listener.IScrollViewListener;
 import bc.juhao.com.ui.activity.ChartListActivity;
-import bc.juhao.com.ui.activity.IssueApplication;
 import bc.juhao.com.ui.activity.MainActivity;
 import bc.juhao.com.ui.activity.WebViewHomeActivity;
 import bc.juhao.com.ui.activity.product.SelectGoodsActivity;
 import bc.juhao.com.ui.activity.programme.DiyActivity;
 import bc.juhao.com.ui.activity.programme.ProgrammerActivity;
 import bc.juhao.com.ui.activity.user.MerchantInfoActivity;
-import bc.juhao.com.ui.activity.user.SimpleScannerActivity;
 import bc.juhao.com.ui.view.ObservableScrollView;
 import bc.juhao.com.utils.ColorUtil;
 import bc.juhao.com.utils.DensityUtil;
@@ -61,6 +62,7 @@ import static bc.juhao.com.R.id.keting_home_iv;
  * @desc 首页面
  */
 public class HomeFragment extends BaseFragment implements View.OnClickListener {
+    private static final int RESULT_REQUEST_CODE = 400;
     private HomeController mController;
     private ImageView lineIv;
     private FrameLayout fl_ll;
@@ -85,12 +87,23 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener {
     private View square_view,my_works_view,select_view;
     private View add_rl;
     public int mProgrammeType=0;
-    private LinearLayout ll_jingxuan;
+    public LinearLayout ll_jingxuan;
     private TextView tv_new_product_more;
     private TextView tv_more_lamb;
     private int unreadMsgCount;
     private View hsv_supermarket;
     private boolean startMissionB;
+    private boolean startMissionC;
+    public ImageView iv_diaodeng;
+    public ImageView iv_xidingdeng;
+    public ImageView iv_bideng;
+    public ImageView iv_taideng;
+    public ImageView iv_luodideng;
+    public ImageView iv_diangong;
+    private Intent mIntent;
+    public ImageView iv_chanpin;
+    public ImageView iv_zhuanti;
+    private boolean startMissionD;
 
     @Nullable
     @Override
@@ -107,8 +120,6 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener {
     @Override
     protected void initViewData() {
         initImageView();
-
-
     }
     //在主线程执行
     @Subscribe(threadMode = ThreadMode.MAIN)
@@ -117,7 +128,7 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener {
 //            mController.setIsShowCartCount();
         }
         if (action == Constance.MESSAGE) {
-            unreadMsgCount = IssueApplication.unreadMsgCount;
+            unreadMsgCount = DemoApplication.unreadMsgCount;
             if (unreadMsgCount == 0) {
                 unMessageTv.setVisibility(View.GONE);
                 ShortcutBadger.applyCount(getContext(), 0);
@@ -173,6 +184,8 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener {
         fl_ll = (FrameLayout) getView().findViewById(R.id.fl_ll);
         scrollView = (ObservableScrollView) getView().findViewById(R.id.scrollView);
         startMissionB = false;
+        startMissionC=false;
+        startMissionD = false;
         scrollView.setScrollViewListener(new IScrollViewListener() {
             @Override
             public void onScrollChanged(ObservableScrollView scrollView, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
@@ -184,15 +197,34 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener {
                     bannerViewHeight = DensityUtil.px2dip(getActivity(), convenientBanner.getHeight());
 //                    Log.v("520it", "bannerViewHeight:" + bannerViewHeight);
                 }
-                if(hsv_supermarket!=null&&!startMissionB){
+
+                if(mController.iv_taocan!=null&&!startMissionB){
                     int[] location=new int[2];
-                    hsv_supermarket.getLocationOnScreen(location);
-                    LogUtils.logE("hsv_supermarket",location[1]+"");
+                    mController.iv_taocan.getLocationOnScreen(location);
+                    LogUtils.logE("mController.iv_taocan",location[1]+"");
                     int screenHeight=UIUtils.getScreenHeight(getActivity());
                     if(location[1]<screenHeight){
                         startMissionB=true;
                         mController.missionB();
                         LogUtils.logE("missionB",startMissionB+"");
+                    }
+                }
+                if(mController.iv_xidingdeng_product!=null&&!startMissionC){
+                    int[] location=new int[2];
+                    mController.iv_xidingdeng_product.getLocationOnScreen(location);
+                    int screenHeight=UIUtils.getScreenHeight(getActivity());
+                    if(location[1]<screenHeight){
+                        startMissionC=true;
+                        mController.missionC();
+                    }
+                }
+                if(iv_zhuanti!=null&&!startMissionD){
+                    int[] location=new int[2];
+                    iv_zhuanti.getLocationOnScreen(location);
+                    int screenHeight=UIUtils.getScreenHeight(getActivity());
+                    if(location[1]<screenHeight){
+                        startMissionD=true;
+                        mController.missionD();
                     }
                 }
 
@@ -295,9 +327,24 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener {
         tv_new_product_more.setOnClickListener(this);
         tv_more_lamb = getView().findViewById(R.id.tv_more_lamb);
         tv_more_lamb.setOnClickListener(this);
+        iv_diaodeng = getView().findViewById(R.id.iv_diaodeng);
+        iv_xidingdeng = getView().findViewById(R.id.iv_xidingdeng);
+        iv_bideng = getView().findViewById(R.id.iv_bideng);
+        iv_taideng = getView().findViewById(R.id.iv_taideng);
+        iv_luodideng = getView().findViewById(R.id.iv_luodideng);
+        iv_diangong = getView().findViewById(R.id.iv_diangong);
+        iv_chanpin = getView().findViewById(R.id.iv_chanpin);
+        iv_zhuanti=getView().findViewById(R.id.iv_zhuanti);
+
+        iv_diaodeng.setOnClickListener(this);
+        iv_xidingdeng.setOnClickListener(this);
+        iv_bideng.setOnClickListener(this);
+        iv_taideng.setOnClickListener(this);
+        iv_luodideng.setOnClickListener(this);
+        iv_diangong.setOnClickListener(this);
         ll_jingxuan.removeAllViews();
         for(int i=0;i<3;i++){
-            View view=View.inflate(getActivity(),R.layout.item_jingxuan,null);
+            View view=View.inflate(getActivity(), R.layout.item_jingxuan,null);
             LinearLayout.LayoutParams layoutParams=new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
             layoutParams.setMargins(15,0,0,0);
             ImageView imageView=view.findViewById(R.id.iv);
@@ -306,7 +353,7 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener {
             if(i==0){
                 tv_title.setText("钜豪地插，乐享生活，舍我其谁！");
                 tv_content.setText("地插，平常装修中不起眼的东西");
-                ImageLoader.getInstance().displayImage("https://mmbiz.qpic.cn/mmbiz_jpg/qd3k7nL0re2ibiclbAUUicN2ztgo8j2IicxtshicR3AqwXT08VTupqsVgj7PEiaS7EQDUKDIbX5WoljaU4DIMoRKubcg/640?wx_fmt=jpeg&tp=webp&wxfrom=5&wx_lazy=1",imageView,((IssueApplication)getActivity().getApplicationContext()).getImageLoaderOption());
+                ImageLoader.getInstance().displayImage("https://mmbiz.qpic.cn/mmbiz_jpg/qd3k7nL0re2ibiclbAUUicN2ztgo8j2IicxtshicR3AqwXT08VTupqsVgj7PEiaS7EQDUKDIbX5WoljaU4DIMoRKubcg/640?wx_fmt=jpeg&tp=webp&wxfrom=5&wx_lazy=1",imageView,((DemoApplication)getActivity().getApplicationContext()).getImageLoaderOption());
                 view.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
@@ -318,7 +365,7 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener {
             }else if(i==1){
                 tv_title.setText("2018，让钜豪中式灯为您照亮幸福");
                 tv_content.setText("新的起点是成功的开端，目标是行动的航标。");
-                ImageLoader.getInstance().displayImage("https://mmbiz.qpic.cn/mmbiz_jpg/WF6o844xTr1MHgCd2BEVYO27KbDuxp696Cicn6AldAngM9EicKpiaDIiaJpQqh4WlcO7VkA2iamicicmOSBWiaTrib2poSA/640?wx_fmt=jpeg&tp=webp&wxfrom=5&wx_lazy=1",imageView,((IssueApplication)getActivity().getApplicationContext()).getImageLoaderOption());
+                ImageLoader.getInstance().displayImage("https://mmbiz.qpic.cn/mmbiz_jpg/WF6o844xTr1MHgCd2BEVYO27KbDuxp696Cicn6AldAngM9EicKpiaDIiaJpQqh4WlcO7VkA2iamicicmOSBWiaTrib2poSA/640?wx_fmt=jpeg&tp=webp&wxfrom=5&wx_lazy=1",imageView,((DemoApplication)getActivity().getApplicationContext()).getImageLoaderOption());
                 view.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
@@ -331,7 +378,7 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener {
             }else {
                 tv_title.setText("习近平主席新年贺词视频集锦");
                 tv_content.setText("回首过往，展望新年");
-                ImageLoader.getInstance().displayImage("https://mmbiz.qpic.cn/mmbiz_jpg/71vT6WeWUCW20zaC99CMbrQXFLaBwbaTpZKdRSuclC62P4gUlcavEcOKPWena0UZ6lw4ibQet3eBptAhzWD3VaA/640?wx_fmt=jpeg&tp=webp&wxfrom=5&wx_lazy=1",imageView,((IssueApplication)getActivity().getApplicationContext()).getImageLoaderOption());
+                ImageLoader.getInstance().displayImage("https://mmbiz.qpic.cn/mmbiz_jpg/71vT6WeWUCW20zaC99CMbrQXFLaBwbaTpZKdRSuclC62P4gUlcavEcOKPWena0UZ6lw4ibQet3eBptAhzWD3VaA/640?wx_fmt=jpeg&tp=webp&wxfrom=5&wx_lazy=1",imageView,((DemoApplication)getActivity().getApplicationContext()).getImageLoaderOption());
                 view.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
@@ -372,7 +419,11 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener {
         TranslateAnimation translateAnimation = null;
         switch (v.getId()) {
             case R.id.topLeftBtn://扫描二维码
-                IntentUtil.startActivity(this.getActivity(), SimpleScannerActivity.class, false);
+//                IntentUtil.startActivity(this.getActivity(), SimpleScannerActivity.class, false);
+//                Intent intent2 = new Intent(getActivity(), ScannerActivity.class);
+//                startActivityForResult(intent2, RESULT_REQUEST_CODE);
+                startActivityForResult(new Intent(getActivity(), CaptureActivity.class), CaptureActivity.REQ_CODE);
+//                Router.getInstance().toUrlForResult(getActivity(),"page/scan",RESULT_REQUEST_CODE);
                 break;
             case R.id.topRightBtn://消息
                 if (!isToken()) {
@@ -492,11 +543,13 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener {
                 break;
 
             case R.id.add_rl://新增
+                if(!isToken()){
                 IntentUtil.startActivity(this.getActivity(), DiyActivity.class,false);
+                }
                 break;
             case R.id.select_ll://筛选
                 MainActivity.toFilter=true;
-                IssueApplication.isGoProgramme=true;
+                DemoApplication.isGoProgramme=true;
                 startActivity(new Intent(getActivity(), ProgrammerActivity.class));
                 break;
             case R.id.my_works_ll://我的作品
@@ -517,6 +570,38 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener {
                 intent1.putExtra("news",true);
                 startActivity(intent1);
                 break;
+            case R.id.iv_diaodeng:
+//                JSONObject categoryObject = goodsAllAttr.getJSONArray(Constance.categories).getJSONObject(position);
+                Intent mIntent = new Intent(getActivity(), SelectGoodsActivity.class);
+                mIntent.putExtra(Constance.categories, "247");
+                startActivity(mIntent);
+                break;
+            case R.id.iv_taideng:
+                 mIntent = new Intent(getActivity(), SelectGoodsActivity.class);
+                mIntent.putExtra(Constance.categories, "230");
+                startActivity(mIntent);
+                break;
+            case R.id.iv_xidingdeng:
+                 mIntent = new Intent(getActivity(), SelectGoodsActivity.class);
+                mIntent.putExtra(Constance.categories, "248");
+                startActivity(mIntent);
+                break;
+            case R.id.iv_bideng:
+                 mIntent = new Intent(getActivity(), SelectGoodsActivity.class);
+                mIntent.putExtra(Constance.categories, "263");
+                startActivity(mIntent);
+                break;
+            case R.id.iv_luodideng:
+                mIntent = new Intent(getActivity(), SelectGoodsActivity.class);
+                mIntent.putExtra(Constance.categories, "231");
+                startActivity(mIntent);
+                break;
+            case R.id.iv_diangong:
+                 mIntent = new Intent(getActivity(), SelectGoodsActivity.class);
+                mIntent.putExtra(Constance.categories, "196");
+                startActivity(mIntent);
+                break;
+
 
         }
         if (AppUtils.isEmpty(translateAnimation))

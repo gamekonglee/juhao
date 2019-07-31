@@ -1,24 +1,23 @@
 package bc.juhao.com.ui.activity.blance;
 
 import android.graphics.Color;
+import android.os.Bundle;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ListView;
-import android.widget.TextView;
+
+import com.aliyun.iot.ilop.demo.DemoApplication;
 
 import astuetz.MyPagerSlidingTabStrip;
 import bc.juhao.com.R;
 import bc.juhao.com.adapter.BaseAdapterHelper;
 import bc.juhao.com.adapter.QuickAdapter;
 import bc.juhao.com.bean.ExtractBean;
+import bc.juhao.com.bean.ProfitBean;
 import bc.juhao.com.common.BaseActivity;
 import bc.juhao.com.cons.Constance;
-import bc.juhao.com.cons.ProfitBean;
 import bc.juhao.com.controller.UserExtractProfitController;
 import bc.juhao.com.ui.activity.IssueApplication;
 import bc.juhao.com.ui.view.EndOfListView;
@@ -101,7 +100,7 @@ public class UserExtractProfitActivity extends BaseActivity implements SwipeRefr
                 if(profitAdapter==null)profitAdapter = new QuickAdapter<ProfitBean>(UserExtractProfitActivity.this, R.layout.item_profit) {
                     @Override
                     protected void convert(BaseAdapterHelper helper, ProfitBean item) {
-                        String userId= IssueApplication.mUserObject.getString(Constance.id);
+                        String userId= DemoApplication.mUserObject.getString(Constance.id);
                         if(userId.equals(""+item.getUser_id())){
                             helper.setText(R.id.tv_level,"一级收益");
                             helper.setText(R.id.tv_profit,"+"+item.getMoney());

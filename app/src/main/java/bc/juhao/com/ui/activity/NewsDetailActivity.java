@@ -57,6 +57,8 @@ public class NewsDetailActivity extends BaseActivity {
         title_tv = (TextView)findViewById(R.id.title_tv);
         if(mFromType==1){
             title_tv.setText("场景详情");
+        }else if(mFromType==2){
+            title_tv.setText("专题详情");
         }
         mWebView.setWebChromeClient(new WebChromeClient());
         mWebView.setWebViewClient(new WebViewClient());

@@ -55,8 +55,8 @@ public class FloderAdapter extends BaseAdapter {
 
     public void displayImage(String url, ImageView view) {
         Glide.with(context).load(url)
-                .diskCacheStrategy(DiskCacheStrategy.RESULT)
-                .override(imgsize,imgsize)
+//                .diskCacheStrategy(DiskCacheStrategy.RESULT)
+//                .override(imgsize,imgsize)
                 .into(view);
 
     }

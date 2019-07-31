@@ -5,8 +5,7 @@ import android.view.View;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import java.util.ArrayList;
-import java.util.List;
+import com.aliyun.iot.ilop.demo.DemoApplication;
 
 import bc.juhao.com.R;
 import bc.juhao.com.cons.Constance;
@@ -28,7 +27,7 @@ public class SelectSceneActivity extends BaseActivity {
 
     @Override
     protected void InitDataView() {
-        select_num_tv.setText(IssueApplication.mSelectScreens.length()+"");
+        select_num_tv.setText(DemoApplication.mSelectScreens.length()+"");
     }
 
     @Override

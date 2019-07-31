@@ -1,12 +1,6 @@
 package bc.juhao.com.ui.activity;
 
-import android.view.View;
-
-import com.lib.common.hxp.view.GridViewForScrollView;
-
 import bc.juhao.com.R;
-import bc.juhao.com.adapter.QuickAdapter;
-import bc.juhao.com.bean.ArticlesBean;
 import bc.juhao.com.common.BaseActivity;
 import bc.juhao.com.controller.ArtiController;
 

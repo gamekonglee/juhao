@@ -8,6 +8,7 @@ import android.widget.Button;
 import bc.juhao.com.R;
 import bc.juhao.com.cons.Constance;
 import bc.juhao.com.controller.user.UserAddrController;
+import bocang.json.JSONObject;
 import bocang.utils.IntentUtil;
 import bocang.view.BaseActivity;
 
@@ -16,7 +17,7 @@ import bocang.view.BaseActivity;
  * @time 2017/1/23  23:14
  * @desc ${TODD}收货地址
  */
-public class UserAddrActivity  extends BaseActivity{
+public class UserAddrActivity  extends BaseActivity {
     private Button btn_save;
     private UserAddrController mController;
     public Boolean isSelectAddress=false;
@@ -62,5 +63,20 @@ public class UserAddrActivity  extends BaseActivity{
                 IntentUtil.startActivity(this,UserAddrAddActivity.class,false);
             break;
         }
+    }
+
+
+    @Override
+    public void goBack(View v) {
+        if(isSelectAddress){
+            Intent intent=new Intent();
+            JSONObject jsonObject=null;
+            if(mController.addresses!=null&&mController.addresses.length()>0){
+                jsonObject=mController.addresses.getJSONObject(0);
+            }
+            intent.putExtra(Constance.address, jsonObject);
+            setResult(Constance.FROMADDRESS, intent);//告诉原来的Activity 将数据传递给它
+        }
+        super.goBack(v);
     }
 }

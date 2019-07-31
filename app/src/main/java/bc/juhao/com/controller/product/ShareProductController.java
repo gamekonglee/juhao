@@ -1,5 +1,6 @@
 package bc.juhao.com.controller.product;
 
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Message;
 import android.view.View;
@@ -16,6 +17,7 @@ import bc.juhao.com.R;
 import bc.juhao.com.cons.Constance;
 import bc.juhao.com.cons.NetWorkConst;
 import bc.juhao.com.controller.BaseController;
+import bc.juhao.com.ui.activity.WebViewActivity;
 import bc.juhao.com.ui.activity.product.ShareProductActivity;
 import bc.juhao.com.ui.view.ScannerUtils;
 import bc.juhao.com.ui.view.popwindow.ShareProductPopWindow;
@@ -78,11 +80,15 @@ public class ShareProductController extends BaseController {
         switch (type) {
             case R.id.share_01_tv:
                 mSelectType = 0;
-                displayGoods(NetWorkConst.WEB_PRODUCT_CARD + mId);
+//                displayGoods(NetWorkConst.WEB_PRODUCT_CARD + mId);
+                Intent intent=new Intent(mView, WebViewActivity.class);
+                intent.putExtra(Constance.url, NetWorkConst.WEB_PRODUCT_CARD + mId);
+                mView.startActivityForResult(intent,300);
                 share_01_iv.setVisibility(View.VISIBLE);
                 break;
             case R.id.share_02_tv:
                 mSelectType = 1;
+                mImagePath = mView.mGoodsObject.getJSONObject(Constance.app_img).getString(Constance.img);
                 ImageLoader.getInstance().displayImage(mImagePath, share_03_iv);
                 share_04_iv.setImageBitmap(ImageUtil.getTowCodeImage(ImageUtil.createQRImage(NetWorkConst.SHAREPRODUCT + mId, 180, 180), mName));
                 share_03_iv.setVisibility(View.VISIBLE);
@@ -95,6 +101,7 @@ public class ShareProductController extends BaseController {
                 break;
             case R.id.share_04_tv:
                 mSelectType = 3;
+                mImagePath = mView.mGoodsObject.getJSONObject(Constance.app_img).getString(Constance.img);
                 ImageLoader.getInstance().displayImage(mImagePath, share_02_iv);
                 share_02_iv.setVisibility(View.VISIBLE);
                 break;
@@ -127,17 +134,29 @@ public class ShareProductController extends BaseController {
             case 0:
                 mProductPopWindow = new ShareProductPopWindow(mView);
                 mProductPopWindow.mActivity = mView;
+                mProductPopWindow.mIsLocal = true;
                 mProductPopWindow.mShareTitle = mTitle;
-                mProductPopWindow.mShareImgPath = mImagePath;
-                mProductPopWindow.mSharePath = mCardPath;
-                mProductPopWindow.onShow(main_ll);
-                mView.hideLoading();
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        mProductPopWindow.mBitmap = ImageUtil.createViewBitmap(share_ll);
+                        mShareImagePath = ScannerUtils.saveImageToGallery02(mView, mProductPopWindow.mBitmap, ScannerUtils.ScannerType.RECEIVER);
+                        mView.runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                mProductPopWindow.mShareImgPath = mShareImagePath;
+                                mProductPopWindow.mSharePath = mShareImagePath;
+                                mProductPopWindow.onShow(main_ll);
+                                mView.hideLoading();
+                            }
+                        });
+                    }
+                }).start();
                 break;
             case 1:
                 mProductPopWindow = new ShareProductPopWindow(mView);
                 mProductPopWindow.mActivity = mView;
                 mProductPopWindow.mShareTitle = mTitle;
-
                 mProductPopWindow.mIsLocal = true;
                 new Thread(new Runnable() {
                     @Override
@@ -247,5 +266,12 @@ public class ShareProductController extends BaseController {
 
         // 得到ImageLoader的实例(使用的单例模式)
         imageLoader = ImageLoader.getInstance();
+    }
+
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if(requestCode==300&&data!=null&&data.getStringExtra("path")!=null){
+            mImagePath=data.getStringExtra("path");
+            displayGoods("file://"+data.getStringExtra("path"));
+        }
     }
 }

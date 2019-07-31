@@ -1,15 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
-    android:gravity="center"
+    android:gravity="center_horizontal"
+    android:background="#ffffff"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="167.5dp">
 
     <ImageView
         android:id="@+id/iv"
         android:src="@drawable/juhao02"
-        android:layout_width="165dp"
-        android:layout_height="165dp" />
+        android:scaleType="fitXY"
+        android:layout_width="167.5dp"
+        android:layout_height="110dp" />
     <TextView
         android:id="@+id/tv_name"
         android:text=""
@@ -28,7 +30,7 @@
         android:layout_marginRight="5dp"
         android:lines="1"
         android:layout_marginLeft="5dp"
-        android:layout_marginTop="5dp"
+        android:layout_marginTop="2dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
 </LinearLayout>

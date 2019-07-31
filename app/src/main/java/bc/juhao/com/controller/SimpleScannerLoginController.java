@@ -5,7 +5,6 @@ import android.os.Message;
 import com.alibaba.fastjson.JSONObject;
 
 import bc.juhao.com.listener.INetworkCallBack02;
-import bocang.utils.MyToast;
 import bocang.view.BaseActivity;
 
 /**

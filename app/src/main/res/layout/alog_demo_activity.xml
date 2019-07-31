@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@android:color/white"
+    tools:context="com.aliyun.iot.ilop.demo.page.alog.ALogActivity">
+    <include layout="@layout/topbar_layout_view"></include>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        android:orientation="horizontal">
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingLeft="20dp"
+            android:layout_gravity="center"
+            android:src="@drawable/alog_search"/>
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="text"
+            android:singleLine="true"
+            android:imeOptions="actionSearch"
+            android:paddingLeft="5dp"
+            android:background="@null"
+            android:hint=" input keywords:"
+            android:textColor="@android:color/black"
+            android:id="@+id/alog_keywords_et"/>
+    </LinearLayout>
+
+        <RadioGroup
+            android:id="@+id/alog_rg"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_horizontal">
+
+            <RadioButton
+                android:id="@+id/alog_v_btn"
+                android:layout_width="70dp"
+                android:layout_height="30dp"
+                android:button="@null"
+                android:gravity="center"
+                android:text="Verbose"
+                android:background="@drawable/alog_left_btn_selector"
+                android:textColor="@drawable/alog_btn_text_selector" />
+            <RadioButton
+                android:layout_width="70dp"
+                android:layout_height="30dp"
+                android:id="@+id/alog_d_btn"
+                android:button="@null"
+                android:layout_marginLeft="-1dp"
+                android:background="@drawable/alog_btn_selector"
+                android:textColor="@drawable/alog_btn_text_selector"
+                android:gravity="center"
+                android:text="Debug"/>
+            <RadioButton
+                android:layout_width="70dp"
+                android:layout_height="30dp"
+                android:id="@+id/alog_i_btn"
+                android:button="@null"
+                android:layout_marginLeft="-1dp"
+                android:background="@drawable/alog_btn_selector"
+                android:textColor="@drawable/alog_btn_text_selector"
+                android:gravity="center"
+                android:text="Info"/>
+            <RadioButton
+                android:layout_width="70dp"
+                android:layout_height="30dp"
+                android:id="@+id/alog_w_btn"
+                android:button="@null"
+                android:layout_marginLeft="-1dp"
+                android:background="@drawable/alog_btn_selector"
+                android:textColor="@drawable/alog_btn_text_selector"
+                android:gravity="center"
+                android:text="Warning"/>
+            <RadioButton
+                android:layout_width="70dp"
+                android:layout_height="30dp"
+                android:id="@+id/alog_e_btn"
+                android:button="@null"
+                android:layout_marginLeft="-1dp"
+                android:background="@drawable/alog_right_btn_selector"
+                android:textColor="@drawable/alog_btn_text_selector"
+                android:gravity="center"
+                android:text="Error"/>
+        </RadioGroup>
+
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/alog_show_sv">
+        <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:id="@+id/alog_show_tv"
+            android:layout_margin="5dp"
+            android:textColor="@android:color/black"
+            android:scrollbars="vertical"
+            >
+        </TextView>
+    </ScrollView>
+
+    <Button
+        android:id="@+id/alog_clear_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="30dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="-60dp"
+        android:background="#0279FA"
+        android:text="clear" />
+
+</LinearLayout>

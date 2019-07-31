@@ -3,6 +3,8 @@ package bc.juhao.com.controller.user;
 import android.os.Message;
 import android.widget.EditText;
 
+import com.aliyun.iot.ilop.demo.DemoApplication;
+
 import bc.juhao.com.R;
 import bc.juhao.com.cons.Constance;
 import bc.juhao.com.cons.NetWorkConst;
@@ -52,7 +54,7 @@ public class SetInviteCodeController extends BaseController implements INetworkC
 
     public void editInviteCode() {
         String inviteCode = et_value.getText().toString();
-        String userId = IssueApplication.mUserObject.getString(Constance.id);
+        String userId = DemoApplication.mUserObject.getString(Constance.id);
         if (AppUtils.isEmpty(inviteCode)) {
             MyToast.show(mView, "邀请码不能为空!");
             return;

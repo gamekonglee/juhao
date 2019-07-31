@@ -16,29 +16,25 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.aliyun.iot.ilop.demo.DemoApplication;
 import com.hyphenate.EMCallBack;
 import com.hyphenate.chat.EMClient;
 import com.hyphenate.chat.EMConversation;
 import com.hyphenate.exceptions.HyphenateException;
 
 import bc.juhao.com.R;
-import bc.juhao.com.bean.AppVersion;
 import bc.juhao.com.cons.Constance;
 import bc.juhao.com.cons.NetWorkConst;
 import bc.juhao.com.listener.INetworkCallBack;
-import bc.juhao.com.ui.activity.IssueApplication;
+import bc.juhao.com.listener.INetworkCallBack02;
 import bc.juhao.com.ui.activity.MainActivity;
-import bc.juhao.com.ui.activity.user.PerfectMydataActivity;
 import bc.juhao.com.ui.view.ShowDialog;
-import bc.juhao.com.utils.ImageLoadProxy;
 import bc.juhao.com.utils.MyShare;
 import bc.juhao.com.utils.NetWorkUtils;
-import bc.juhao.com.utils.upload.UpAppUtils;
-import bocang.json.JSONArray;
+import bc.juhao.com.utils.UIUtils;
 import bocang.json.JSONObject;
 import bocang.utils.AppUtils;
 import bocang.utils.CommonUtil;
-import bocang.utils.IntentUtil;
 import bocang.utils.MyToast;
 import me.leolin.shortcutbadger.ShortcutBadger;
 
@@ -51,9 +47,11 @@ public class MainController extends BaseController implements INetworkCallBack {
     private TextView unMessageReadTv;
     private MainActivity mView;
     private String mAppVersion;
+    private final View rl_main;
 
     public MainController(MainActivity v) {
         mView = v;
+        rl_main = mView.findViewById(R.id.rl_main);
         initView();
         initViewData();
 
@@ -63,7 +61,30 @@ public class MainController extends BaseController implements INetworkCallBack {
     private void initViewData() {
         sendShoppingCart();
         sendVersion();
+        checkSystem();
+    }
 
+    private void checkSystem() {
+        mNetWork.checkSystem(new INetworkCallBack() {
+            @Override
+            public void onSuccessListener(String requestCode, JSONObject ans) {
+                JSONObject data=ans.getJSONObject(Constance.data);
+//                data=new JSONObject();
+//                data.add("title","系统维护");
+//                data.add("text","钜豪商城定于今天（2018年8月27日，星期一）晚上 20:00—22:00 对购物系统进行停机维护。受此影响，届时APP将暂停服务。感谢您的支持和谅解！");
+                if(data!=null&&data.length()>0){
+                    mView.isError=true;
+                    UIUtils.showSystemStopDialog(mView,rl_main,data.getString(Constance.title),data.getString(Constance.text));
+                }else {
+                    mView.isError=false;
+                }
+            }
+
+            @Override
+            public void onFailureListener(String requestCode, JSONObject ans) {
+
+            }
+        });
     }
 
     public void sendShoppingCart() {
@@ -88,7 +109,7 @@ public class MainController extends BaseController implements INetworkCallBack {
      * 获取版本号
      */
     private void sendVersion(){
-        mNetWork.sendVersion(this);
+//        mNetWork.sendVersion(this);
         new Thread(new Runnable() {
             @Override
             public void run() {
@@ -119,7 +140,7 @@ public class MainController extends BaseController implements INetworkCallBack {
 
                                         Intent intent = new Intent();
                                         intent.setAction("android.intent.action.VIEW");
-                                        Uri content_url = Uri.parse("http://app.08138.com/jhsc.apk");
+                                        Uri content_url = Uri.parse("http://a.app.qq.com/o/simple.jsp?pkgname=bc.juhao.com");
                                         intent.setData(content_url);
                                         mView.startActivity(intent);
 
@@ -183,7 +204,7 @@ public class MainController extends BaseController implements INetworkCallBack {
         switch (requestCode) {
             case NetWorkConst.GETCART:
                 if (ans.getJSONArray(Constance.goods_groups).length() > 0) {
-                    IssueApplication.mCartCount = ans.getJSONArray(Constance.goods_groups)
+                    DemoApplication.mCartCount = ans.getJSONArray(Constance.goods_groups)
                             .getJSONObject(0).getJSONArray(Constance.goods).length();
                     setIsShowCartCount();
                 }
@@ -202,10 +223,11 @@ public class MainController extends BaseController implements INetworkCallBack {
                 // refresh unread count
                 for (EMConversation conversation : EMClient.getInstance().chatManager().getAllConversations().values()) {
                     mView.unreadMsgCount = conversation.getUnreadMsgCount();
+                    mView.allMsgCount=conversation.getAllMsgCount();
                 }
                 //获取此会话在本地的所有的消息数量
                 //如果只是获取当前在内存的消息数量，调用
-                IssueApplication.unreadMsgCount = mView.unreadMsgCount;
+                DemoApplication.unreadMsgCount = mView.unreadMsgCount;
                 if (mView.unreadMsgCount == 0) {
 //                    ShortcutBadger.applyCount(this, badgeCount); //for 1.1.4+
                     mView.mHomeFragment.unMessageTv.setVisibility(View.GONE);
@@ -229,7 +251,7 @@ public class MainController extends BaseController implements INetworkCallBack {
      * 环信注册成功
      */
     private void sendRegiestSuccess() {
-        final String uid=MyShare.get(mView).getString(Constance.USERID);
+        final String uid= MyShare.get(mView).getString(Constance.USERID);
         if(AppUtils.isEmpty(uid)){
             return;
 
@@ -282,7 +304,7 @@ public class MainController extends BaseController implements INetworkCallBack {
         }
 
         isLoginCount=isLoginCount+1;
-        final String uid=MyShare.get(mView).getString(Constance.USERID);
+        final String uid= MyShare.get(mView).getString(Constance.USERID);
         if(AppUtils.isEmpty(uid)){
             return;
 
@@ -340,16 +362,16 @@ public class MainController extends BaseController implements INetworkCallBack {
             @Override
             public void onSuccessListener(String requestCode, JSONObject ans) {
                 JSONObject mUserObject = ans.getJSONObject(Constance.user);
-                IssueApplication.mUserObject = mUserObject;
+                DemoApplication.mUserObject = mUserObject;
 //                if (AppUtils.isEmpty(mUserObject))
 //                    return;
 //                String avatar = NetWorkConst.SCENE_HOST + mUserObject.getString(Constance.avatar);
 ////                if (!AppUtils.isEmpty(avatar))
 ////                    ImageLoadProxy.displayHeadIcon(avatar, head_cv);
 //
-//                String username = IssueApplication.mUserObject.getString(Constance.username);
-//                String nickName = IssueApplication.mUserObject.getString(Constance.nickname);
-//                int level = IssueApplication.mUserObject.getInt(Constance.level);
+//                String username = DemoApplication.mUserObject.getString(Constance.username);
+//                String nickName = DemoApplication.mUserObject.getString(Constance.nickname);
+//                int level = DemoApplication.mUserObject.getInt(Constance.level);
 //                String levelValue = "";
 ////                mView.user_money_ll.setVisibility(View.VISIBLE);
 //                if (level == 0) {
@@ -363,7 +385,7 @@ public class MainController extends BaseController implements INetworkCallBack {
 //                    levelValue = "消费者";
 //                }
 //                level_tv.setText(levelValue);
-//                Log.v("520it", IssueApplication.mUserObject.getString(Constance.money));
+//                Log.v("520it", DemoApplication.mUserObject.getString(Constance.money));
 //                JSONArray countArray = ans.getJSONArray("count");
 //                String count01 = countArray.get(0).toString();
 //                String count02 = countArray.get(1).toString();
@@ -390,6 +412,28 @@ public class MainController extends BaseController implements INetworkCallBack {
         });
     }
 
+    public void login(String content) {
+        mNetWork.sendTokenAdd(content, new INetworkCallBack02() {
+            @Override
+            public void onSuccessListener(String requestCode, com.alibaba.fastjson.JSONObject ans) {
+//                mView.hideLoading();
+//                mView.finish();
+//                MyToast.show(mView,ans.toJSONString());
+            }
+
+            @Override
+            public void onFailureListener(String requestCode, com.alibaba.fastjson.JSONObject ans) {
+//                mView.hideLoading();
+//                mView.onRefresh();
+//            if(ans!=null){
+//                MyToast.show(mView,"failure"+ans.toJSONString());
+//            }else {
+//                MyToast.show(mView,"failuter");
+//            }
+            }
+        });
+    }
+
     private class UpdateApkBroadcastReceiver extends BroadcastReceiver {
 
         @TargetApi(Build.VERSION_CODES.HONEYCOMB)
@@ -412,8 +456,8 @@ public class MainController extends BaseController implements INetworkCallBack {
 
 
     public void setIsShowCartCount() {
-        unMessageReadTv.setVisibility(IssueApplication.mCartCount==0?View.GONE:View.VISIBLE);
-        unMessageReadTv.setText(IssueApplication.mCartCount+"");
+        unMessageReadTv.setVisibility(DemoApplication.mCartCount==0?View.GONE:View.VISIBLE);
+        unMessageReadTv.setText(DemoApplication.mCartCount+"");
     }
 
 

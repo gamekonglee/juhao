@@ -14,6 +14,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.aliyun.iot.ilop.demo.DemoApplication;
 import com.hyphenate.EMCallBack;
 import com.hyphenate.chat.EMClient;
 import com.hyphenate.easeui.EaseConstant;
@@ -366,7 +367,7 @@ public class MerchantInfoController extends BaseController {
                 EMClient.getInstance().chatManager().loadAllConversations();
                 MyLog.e("登录环信成功!");
                 toast.cancel();
-                String parent_name = IssueApplication.mUserObject.getString("parent_name");
+                String parent_name = DemoApplication.mUserObject.getString("parent_name");
                 try {
                     EMClient.getInstance().contactManager().acceptInvitation(parent_id);
                     mView.startActivity(new Intent(mView, ChatActivity.class).putExtra(EaseConstant.EXTRA_USER_ID, parent_id));

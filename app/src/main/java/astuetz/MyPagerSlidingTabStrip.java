@@ -39,11 +39,10 @@ import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-
 import java.util.Locale;
 
 import bc.juhao.com.R;
-import bc.juhao.com.utils.UIUtils;
+import bocang.utils.UIUtils;
 
 public class MyPagerSlidingTabStrip extends HorizontalScrollView {
 
@@ -104,7 +103,7 @@ public class MyPagerSlidingTabStrip extends HorizontalScrollView {
 //	gaga:pstsSelectTextViewSize="26sp"
 //	gaga:pstsTextViewColor="#00ff23"
 //	gaga:pstsSelectTextViewColor="#ff4d00"
-	public int defaultSize=UIUtils.dip2PX(15);
+	public int defaultSize= UIUtils.dip2PX(15);
 	public int selectSize= UIUtils.dip2PX(15);
 	public int defaultColor=0x00FF23;
 	public int selectColor=0xff4d00;

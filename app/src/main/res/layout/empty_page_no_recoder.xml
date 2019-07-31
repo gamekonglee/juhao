@@ -13,17 +13,17 @@
         >
         <ImageView
             android:id="@+id/iv"
-            android:layout_centerHorizontal="true"
-            android:layout_width="150dp"
-            android:layout_height="150dp"
-            android:src="@mipmap/no_goods"/>
+            android:layout_centerInParent="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@mipmap/shopping_icon"/>
         <TextView
             android:id="@+id/tv"
             android:layout_centerInParent="true"
             android:layout_marginTop="20dp"
             android:layout_below="@id/iv"
             android:textSize="14sp"
-            android:text="去添加商品吧"
+            android:text="购物车空空如也"
             android:textColor="#AAACAD"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>

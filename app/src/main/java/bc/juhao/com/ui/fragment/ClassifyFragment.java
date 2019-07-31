@@ -1,6 +1,5 @@
 package bc.juhao.com.ui.fragment;
 
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -18,7 +17,6 @@ import java.util.List;
 
 import bc.juhao.com.R;
 import bc.juhao.com.common.BaseFragment;
-import bc.juhao.com.ui.activity.MainActivity;
 import bc.juhao.com.ui.activity.product.SelectGoodsActivity;
 import bocang.utils.IntentUtil;
 

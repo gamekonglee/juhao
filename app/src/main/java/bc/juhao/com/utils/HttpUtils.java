@@ -37,8 +37,8 @@ public class HttpUtils {
 	/**
 	 * 商户与订单信息
 	 */
-	public static OrderInfo getOrderInfo(String body,String subject,String money,String notifyUrl,String orderID) {
-		OrderInfo  mOrderInfo=new OrderInfo();
+	public static OrderInfo getOrderInfo(String body, String subject, String money, String notifyUrl, String orderID) {
+		OrderInfo mOrderInfo=new OrderInfo();
 		mOrderInfo.setBody(body);
 		mOrderInfo.setSubject(subject);
 		mOrderInfo.setTotal_fee(money);

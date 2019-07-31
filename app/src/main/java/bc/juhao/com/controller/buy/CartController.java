@@ -4,7 +4,9 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
+import android.graphics.Paint;
 import android.graphics.drawable.ColorDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.Message;
 import android.text.InputType;
 import android.text.TextUtils;
@@ -23,10 +25,10 @@ import android.widget.EditText;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.aliyun.iot.ilop.demo.DemoApplication;
 import com.bigkoo.alertview.AlertView;
 import com.bigkoo.alertview.OnItemClickListener;
 import com.google.gson.Gson;
@@ -46,6 +48,7 @@ import com.yjn.swipelistview.swipelistviewlibrary.widget.SwipeMenuListView;
 
 import org.greenrobot.eventbus.EventBus;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -53,15 +56,14 @@ import java.util.Random;
 import bc.juhao.com.R;
 import bc.juhao.com.adapter.BaseAdapterHelper;
 import bc.juhao.com.adapter.QuickAdapter;
+import bc.juhao.com.bean.Default_photo;
 import bc.juhao.com.bean.GoodsBean;
 import bc.juhao.com.chat.DemoHelper;
 import bc.juhao.com.cons.Constance;
 import bc.juhao.com.cons.NetWorkConst;
 import bc.juhao.com.controller.BaseController;
-import bc.juhao.com.controller.HomeController;
 import bc.juhao.com.listener.INetworkCallBack;
 import bc.juhao.com.ui.activity.ChartListActivity;
-import bc.juhao.com.ui.activity.IssueApplication;
 import bc.juhao.com.ui.activity.buy.ConfirmOrderActivity;
 import bc.juhao.com.ui.activity.buy.ExInventoryActivity;
 import bc.juhao.com.ui.activity.product.ProDetailActivity;
@@ -69,7 +71,6 @@ import bc.juhao.com.ui.activity.user.ChatActivity;
 import bc.juhao.com.ui.fragment.CartFragment;
 import bc.juhao.com.ui.view.NumberInputView;
 import bc.juhao.com.ui.view.ShowDialog;
-import bc.juhao.com.utils.ConvertUtil;
 import bc.juhao.com.utils.MyShare;
 import bc.juhao.com.utils.UIUtils;
 import bocang.json.JSONArray;
@@ -95,15 +96,16 @@ public class CartController extends BaseController implements INetworkCallBack, 
     private boolean isStart=false;
     private LinearLayout sum_ll;
     private Boolean isEdit=false;
-    private  JSONArray goods;
+    private JSONArray goods;
 //    private ProgressBar pd;
-    private  JSONObject mAddressObject;
+    private JSONObject mAddressObject;
     private View null_view;
     private int normal;
     private int juhao;
     private GridView mProGridView;
     private QuickAdapter likeGoods;
     private List<GoodsBean> goodsBeans;
+    private DecimalFormat df;
 
     public CartController(CartFragment v) {
         mView = v;
@@ -166,6 +168,8 @@ public class CartController extends BaseController implements INetworkCallBack, 
                 goodsBean.setName(array.getJSONObject(i).getString(Constance.name));
                 goodsBean.setCurrent_price(array.getJSONObject(i).getString(Constance.current_price));
                 goodsBean.setOriginal_img(array.getJSONObject(i).getString(Constance.original_img));
+                goodsBean.setDefault_photo(new Gson().fromJson(array.getJSONObject(i).getJSONObject(Constance.default_photo).toString(), Default_photo.class));
+
                 goodsBeans.add(goodsBean);
             }
         }
@@ -218,22 +222,25 @@ public class CartController extends BaseController implements INetworkCallBack, 
         null_view =  mView.getActivity().findViewById(R.id.null_cart_view);
         mProGridView = (GridView) mView.getView().findViewById(R.id.priductGridView);
         mProGridView.setOnItemClickListener(this);
-
+        df = new DecimalFormat("#####.00");
 //        pd = (ProgressBar) mView.getActivity().findViewById(R.id.pd);
 //        pd.setVisibility(View.VISIBLE);
         likeGoods = new QuickAdapter<GoodsBean>(mView.getActivity(), R.layout.item_like_goods){
             @Override
             protected void convert(BaseAdapterHelper helper, GoodsBean item) {
 
+
                 helper.setText(R.id.tv_name,""+item.getName());
                 helper.setText(R.id.tv_price,"¥"+item.getCurrent_price());
+                TextView tv_old_price=helper.getView(R.id.tv_old_price);
+                helper.setText(R.id.tv_old_price,"¥"+(df.format(Double.parseDouble(item.getCurrent_price())*1.6)));
+                tv_old_price.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG);
                 ImageView imageView=helper.getView(R.id.iv);
-                ImageLoader.getInstance().displayImage(NetWorkConst.SCENE_HOST+item.getOriginal_img(),imageView,((IssueApplication)mView.getActivity().getApplicationContext()).getImageLoaderOption());
+                ImageLoader.getInstance().displayImage(item.getDefault_photo().getThumb(),imageView,((DemoApplication)mView.getActivity().getApplicationContext()).getImageLoaderOption());
 
             }
         };
         mProGridView.setAdapter(likeGoods);
-
         mExtView= (ViewGroup) LayoutInflater.from(mView.getActivity()).inflate(R.layout.alertext_form, null);
         etNum = (EditText) mExtView.findViewById(R.id.etName);
         etNum.setInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_DECIMAL);
@@ -312,16 +319,19 @@ public class CartController extends BaseController implements INetworkCallBack, 
                 mView.hideLoading();
                 if (ans.getJSONArray(Constance.goods_groups).length() > 0) {
                     goodses = ans.getJSONArray(Constance.goods_groups).getJSONObject(0).getJSONArray(Constance.goods);
+                    if(isCheckList==null||isCheckList.size()!=goodses.length()){
                     myAdapter.addIsCheckAll(false);
+                    }
                     myAdapter.notifyDataSetChanged();
                     myAdapter.getTotalMoney();
-                    IssueApplication.mCartCount = ans.getJSONArray(Constance.goods_groups)
+                    DemoApplication.mCartCount = ans.getJSONArray(Constance.goods_groups)
                             .getJSONObject(0).getInt(Constance.total_amount);
                 } else {
                     goodses = null;
+                    isCheckList=new ArrayList<>();
                     myAdapter.notifyDataSetChanged();
                     myAdapter.getTotalMoney();
-                    IssueApplication.mCartCount=0;
+                    DemoApplication.mCartCount=0;
                     null_view.setVisibility(View.VISIBLE);
                 }
                 EventBus.getDefault().post(Constance.CARTCOUNT);
@@ -437,7 +447,7 @@ public class CartController extends BaseController implements INetworkCallBack, 
      */
     public void exportData() {
         myAdapter.getCartGoodsCheck();
-        if(goods.length()==0){
+        if(goods==null||goods.length()==0){
             MyToast.show(mView.getActivity(),"请选择产品");
             return;
         }
@@ -589,7 +599,7 @@ public class CartController extends BaseController implements INetworkCallBack, 
                 convertView = View.inflate(mView.getActivity(), R.layout.item_lv_cart_new, null);
 
                 holder = new ViewHolder();
-                holder.checkBox = (CheckBox) convertView.findViewById(R.id.checkbox);
+                holder.checkBox = (TextView) convertView.findViewById(R.id.checkbox);
                 holder.imageView = (ImageView) convertView.findViewById(R.id.imageView);
                 holder.leftTv = (ImageView) convertView.findViewById(R.id.leftTv);
                 holder.rightTv = (ImageView) convertView.findViewById(R.id.rightTv);
@@ -600,6 +610,7 @@ public class CartController extends BaseController implements INetworkCallBack, 
                 holder.priceTv = (TextView) convertView.findViewById(R.id.priceTv);
                 holder.old_priceTv = (TextView) convertView.findViewById(R.id.old_priceTv);
                 holder.number_input_et = (NumberInputView) convertView.findViewById(R.id.number_input_et);
+                holder.view_sc_item=convertView.findViewById(R.id.view_sc_item);
 //                //取得设置好的drawable对象
 //                Drawable drawable = mView.getResources().getDrawable(R.drawable.selector_checkbox03);
 //                //设置drawable对象的大小
@@ -619,7 +630,24 @@ public class CartController extends BaseController implements INetworkCallBack, 
             }catch (Exception e){
                 e.printStackTrace();
             }
-
+            holder.view_sc_item.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    int productId = Integer.parseInt(goodsObject.getJSONObject(Constance.product).getString(Constance.id));
+                    Intent intent = new Intent(mView.getActivity(), ProDetailActivity.class);
+                    intent.putExtra(Constance.product, productId);
+                    mView.getActivity().startActivity(intent);
+                }
+            });
+            holder.imageView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    int productId = Integer.parseInt(goodsObject.getJSONObject(Constance.product).getString(Constance.id));
+                    Intent intent = new Intent(mView.getActivity(), ProDetailActivity.class);
+                    intent.putExtra(Constance.product, productId);
+                    mView.getActivity().startActivity(intent);
+                }
+            });
 
             String property = goodsObject.getString(Constance.property);
             if(AppUtils.isEmpty(property)){
@@ -686,8 +714,16 @@ public class CartController extends BaseController implements INetworkCallBack, 
                 }
             });
 
-            holder.checkBox.setChecked(isCheckList.get(position));
-
+//            holder.checkBox.setChecked(isCheckList.get(position));
+            if(!isCheckList.get(position)){
+                Drawable drawable=mView.getActivity().getResources().getDrawable(R.mipmap.shopping_cart_unchecked);
+                drawable.setBounds(0,0,UIUtils.dip2PX(20),UIUtils.dip2PX(20));
+                holder.checkBox.setCompoundDrawables(null,drawable,null,null);
+            }else {
+                Drawable drawable=mView.getActivity().getResources().getDrawable(R.mipmap.shopping_cart_selected);
+                drawable.setBounds(0,0,UIUtils.dip2PX(20),UIUtils.dip2PX(20));
+                holder.checkBox.setCompoundDrawables(null,drawable,null,null);
+            }
             holder.rightTv.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -712,18 +748,36 @@ public class CartController extends BaseController implements INetworkCallBack, 
             });
 
 
-            holder.checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            holder.checkBox.setOnClickListener(new View.OnClickListener() {
                 @Override
-                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                    setIsCheck(position, isChecked);
+                public void onClick(View v) {
+                    setIsCheck(position,!isCheckList.get(position));
+                    myAdapter.notifyDataSetChanged();
                     getTotalMoney();
-
                 }
             });
+//            .setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+//                @Override
+//                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+//                    setIsCheck(position, isChecked);
+//                    getTotalMoney();
+//
+//                }
+//            });
+            if(DemoApplication.mUserObject!=null){
+                if(DemoApplication.mUserObject.getInt(Constance.level)==0){
+                    holder.contact_service_tv.setVisibility(View.GONE);
+                }else {
+                    holder.contact_service_tv.setVisibility(View.VISIBLE);
+                }
+            }else {
+                holder.contact_service_tv.setVisibility(View.GONE);
+            }
+
             holder.contact_service_tv.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    int level = IssueApplication.mUserObject.getInt(Constance.level);
+                    int level = DemoApplication.mUserObject.getInt(Constance.level);
                     if(level==0){
                         if(!mView.isToken()){
                             IntentUtil.startActivity(mView.getActivity(), ChartListActivity.class, false);
@@ -746,7 +800,7 @@ public class CartController extends BaseController implements INetworkCallBack, 
         }
 
         class ViewHolder {
-            CheckBox checkBox;
+            TextView checkBox;
             ImageView imageView;
             TextView nameTv;
             TextView priceTv;
@@ -756,6 +810,7 @@ public class CartController extends BaseController implements INetworkCallBack, 
             ImageView leftTv,rightTv;
             TextView contact_service_tv;
             TextView old_priceTv;
+            View view_sc_item;
         }
     }
 
@@ -769,19 +824,19 @@ public class CartController extends BaseController implements INetworkCallBack, 
      */
     public void sendCall(final int position, String msg) {
         try {
-//            if (AppUtils.isEmpty(IssueApplication.mUserObject.getString("parent_name"))) {
+//            if (AppUtils.isEmpty(DemoApplication.mUserObject.getString("parent_name"))) {
 //                MyToast.show(mView.getActivity(), "不能和自己聊天!");
 //                return;
 //            }
 
-            String parent_name = IssueApplication.mUserObject.getString("parent_name");
-            String parent_id = IssueApplication.mUserObject.getString("parent_id");
+            String parent_name = DemoApplication.mUserObject.getString("parent_name");
+            String parent_id = DemoApplication.mUserObject.getString("parent_id");
             int is_jh=myAdapter.getItem(position).getJSONObject(Constance.product).getInt(Constance.is_jh);
             if(is_jh==1){
                 parent_name="钜豪超市";
                 parent_id="37";
             }
-            String userIcon = NetWorkConst.SCENE_HOST+IssueApplication.mUserObject.getString("parent_avatar");
+            String userIcon = NetWorkConst.SCENE_HOST+ DemoApplication.mUserObject.getString("parent_avatar");
             EaseUser user=new EaseUser(parent_id);
             user.setNickname(parent_name);
             user.setNick(parent_name);
@@ -814,7 +869,7 @@ public class CartController extends BaseController implements INetworkCallBack, 
         final Toast toast = Toast.makeText(mView.getActivity(),"服务器连接中...!", Toast.LENGTH_SHORT);
         toast.show();
         if (NetUtils.hasNetwork(mView.getActivity())) {
-            final String uid=MyShare.get(mView.getActivity()).getString(Constance.USERID);
+            final String uid= MyShare.get(mView.getActivity()).getString(Constance.USERID);
             if(AppUtils.isEmpty(uid)){
                 return;
             }
@@ -858,7 +913,7 @@ public class CartController extends BaseController implements INetworkCallBack, 
                 EMClient.getInstance().chatManager().loadAllConversations();
                 MyLog.e("登录环信成功!");
                 toast.cancel();
-                String parent_id = IssueApplication.mUserObject.getString("parent_id");
+                String parent_id = DemoApplication.mUserObject.getString("parent_id");
                 try {
                     EMClient.getInstance().contactManager().acceptInvitation(parent_id);
                     mView.startActivity(new Intent(mView.getActivity(), ChatActivity.class).putExtra(EaseConstant.EXTRA_USER_ID, parent_id));

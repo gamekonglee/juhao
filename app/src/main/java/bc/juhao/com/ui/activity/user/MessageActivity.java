@@ -26,6 +26,7 @@ public class MessageActivity extends BaseActivity {
     @Override
     protected void initView() {
         setContentView(R.layout.activity_sys_message);
+        setColor(this,getResources().getColor(R.color.green));
     }
 
     @Override

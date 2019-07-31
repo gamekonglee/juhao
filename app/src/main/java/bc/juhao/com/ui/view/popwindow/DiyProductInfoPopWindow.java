@@ -130,9 +130,13 @@ public class DiyProductInfoPopWindow extends BasePopwindown implements View.OnCl
         mParamMsg=new StringBuffer();
         JSONArray attachmentArray = productObject.getJSONArray(Constance.attachments);
         List<String> attachs = new ArrayList<>();
-        attachs.add("名称: " + productObject.getString(Constance.name));
+        String name=productObject.getString(Constance.name);
+        if(name.length()>=8){
+            name=name.substring(0,8);
+        }
+        attachs.add("名称: " + name);
         attachs.add("价格: " +"￥"+ productObject.getString(Constance.current_price) );
-        mParamMsg.append("名称: " + productObject.getString(Constance.name) + "\n");
+        mParamMsg.append("名称: " + name+ "\n");
         mParamMsg.append("价格: ￥" + productObject.getString(Constance.current_price) + "\n");
         for (int i = 0; i < attachmentArray.length(); i++) {
             JSONObject jsonObject = attachmentArray.getJSONObject(i);

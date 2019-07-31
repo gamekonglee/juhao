@@ -81,7 +81,7 @@ public class ClassifyGoodsAdapter extends BaseAdapter {
 
         holder.name_tv.setText(mClassifyGoodsLists.getJSONObject(position).getString("name"));
         holder.divider.setVisibility(mColorList.get(position) == true? View.VISIBLE : View.INVISIBLE);
-        holder.name_tv.setTextColor(mContext.getResources().getColor(mColorList.get(position) == true? R.color.theme_orange:R.color.tv_444444));
+        holder.name_tv.setTextColor(mContext.getResources().getColor(mColorList.get(position) == true? R.color.theme_orange: R.color.tv_444444));
         return convertView;
     }
 

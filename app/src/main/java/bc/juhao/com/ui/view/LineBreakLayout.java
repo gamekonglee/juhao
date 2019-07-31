@@ -136,7 +136,7 @@ public class LineBreakLayout extends ViewGroup {
                     tv.setTextColor(getResources().getColor(R.color.tv_gray));
                 }
                 //点击标签后，重置选中效果
-                tv.setOnClickListener(new View.OnClickListener() {
+                tv.setOnClickListener(new OnClickListener() {
                     @Override
                     public void onClick(View v) {
 //                        tv.setSelected(tv.isSelected() ? false : true);

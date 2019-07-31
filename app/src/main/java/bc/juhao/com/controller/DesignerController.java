@@ -33,7 +33,6 @@ import bc.juhao.com.ui.activity.product.ProDetailActivity;
 import bc.juhao.com.ui.activity.programme.DiyActivity;
 import bc.juhao.com.ui.activity.user.MessageDetailActivity;
 import bc.juhao.com.ui.adapter.MatchItemAdapter;
-import bc.juhao.com.ui.fragment.ProgrammeFragment;
 import bc.juhao.com.ui.fragment.home.DesginerHomeFragment;
 import bc.juhao.com.ui.view.HorizontalListView;
 import bc.juhao.com.utils.ShareUtil;
@@ -102,7 +101,6 @@ public class DesignerController extends BaseController implements INetworkCallBa
     private void initView() {
         mView.mPullToRefreshLayout = ((PullToRefreshLayout) mView.getActivity().findViewById(R.id.mFilterContentView));
         mView.mPullToRefreshLayout.setOnRefreshListener(this);
-
         mProAdapter = new ProAdapter();
         mView.order_sv.setAdapter(mProAdapter);
         mView.order_sv.setOnItemClickListener(this);
@@ -149,7 +147,7 @@ public class DesignerController extends BaseController implements INetworkCallBa
         go_btn.setVisibility(View.GONE);
         switch (requestCode) {
             case NetWorkConst.FANGANLIST:
-                if (null == mView || mView.getActivity().isFinishing())
+                if (null == mView || mView.getActivity()==null||mView.getActivity().isFinishing())
                     return;
 
                 if (null != mView.mPullToRefreshLayout) {
@@ -180,7 +178,7 @@ public class DesignerController extends BaseController implements INetworkCallBa
                 pd.setVisibility(View.GONE);
                 break;
             case NetWorkConst.FANGANALLLIST:
-                if (null == mView || mView.getActivity().isFinishing())
+                if (null == mView || mView.getActivity()==null||mView.getActivity().isFinishing())
                     return;
 
                 if (null != mView.mPullToRefreshLayout) {
@@ -228,7 +226,7 @@ public class DesignerController extends BaseController implements INetworkCallBa
     @Override
     public void onFailureListener(String requestCode, JSONObject ans) {
         mView.hideLoading();
-        if (null == mView || mView.getActivity().isFinishing())
+        if (null == mView || mView.getActivity()==null||mView.getActivity().isFinishing())
             return;
         if (AppUtils.isEmpty(ans)) {
             AppDialog.messageBox(UIUtils.getString(R.string.server_error));

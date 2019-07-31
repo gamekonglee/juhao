@@ -13,8 +13,12 @@ import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
 
+import com.aliyun.iot.ilop.demo.DemoApplication;
 import com.bigkoo.alertview.AlertView;
 import com.bigkoo.alertview.OnItemClickListener;
+import com.example.qrcode.Constant;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import com.lib.common.hxp.view.PullToRefreshLayout;
 
 import java.util.ArrayList;
@@ -22,6 +26,7 @@ import java.util.List;
 
 import bc.juhao.com.R;
 import bc.juhao.com.bean.DistriButorBean;
+import bc.juhao.com.bean.DistribuBean;
 import bc.juhao.com.cons.Constance;
 import bc.juhao.com.cons.NetWorkConst;
 import bc.juhao.com.controller.BaseController;
@@ -34,6 +39,7 @@ import bocang.json.JSONArray;
 import bocang.json.JSONObject;
 import bocang.utils.AppUtils;
 import bocang.utils.CommonUtil;
+import bocang.utils.LogUtils;
 import bocang.utils.MyToast;
 
 /**
@@ -58,6 +64,7 @@ public class MyDistributorController extends BaseController implements PullToRef
 
     public MyDistributorController(MyDistributorActivity v) {
         mView = v;
+        mDistriButorBeans = new ArrayList<>();
         initView();
         initViewData();
     }
@@ -75,11 +82,11 @@ public class MyDistributorController extends BaseController implements PullToRef
         mRefeshBtn.setOnClickListener(this);
         mNullNetTv = (TextView) mNullNet.findViewById(R.id.tv);
 //        mNullViewTv = (TextView) mNullView.findViewById(R.id.tv);
-        if(IssueApplication.mUserObject==null){
+        if(DemoApplication.mUserObject==null){
             MyToast.show(mView,"数据加载中");
             return;
         }
-        mUserLevel = IssueApplication.mUserObject.getInt(Constance.level);
+        mUserLevel = DemoApplication.mUserObject.getInt(Constance.level);
         getLevel();
         mLevelView = new AlertView(null, null, "取消", null,
                 mLevels,
@@ -133,7 +140,8 @@ public class MyDistributorController extends BaseController implements PullToRef
         switch (requestCode) {
             case NetWorkConst.AGENT_ALL_URL://获取我的分销商
                 mView.hideLoading();
-                mDistriButorBeans = new ArrayList<>();
+                List<DistribuBean> distribuBeans=new Gson().fromJson(ans.getJSONArray(Constance.data).toString(),new TypeToken<List<DistribuBean>>(){}.getType());
+                LogUtils.logE("distrubeans",distribuBeans.get(0).getNickname());
                 JSONArray jsonArray = ans.getJSONArray(Constance.data);
                 //01
                 if(jsonArray==null||jsonArray.length()==0)
@@ -145,6 +153,7 @@ public class MyDistributorController extends BaseController implements PullToRef
                     int id = object.getInt(Constance.id);
                     String nickname = object.getString(Constance.nickname);
                     String username = object.getString(Constance.username);
+
                     String mobile = object.getString(Constance.mobile);
                     int level = object.getInt(Constance.level);
                     String joined_at = object.getString(Constance.joined_at);

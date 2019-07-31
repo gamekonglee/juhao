@@ -1371,7 +1371,7 @@ public class NoPreloadViewPager extends ViewGroup {
 
         final VelocityTracker velocityTracker = mVelocityTracker;
         velocityTracker.computeCurrentVelocity(1000, mMaximumVelocity);
-        int initialVelocity = (int)VelocityTrackerCompat.getYVelocity(
+        int initialVelocity = (int) VelocityTrackerCompat.getYVelocity(
                 velocityTracker, mActivePointerId);
         mPopulatePending = true;
         if ((Math.abs(initialVelocity) > mMinimumVelocity)

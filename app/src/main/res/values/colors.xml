@@ -1,12 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <color name="spots_dialog_color">@android:color/holo_blue_dark</color>
+    <color name="green">#EE5500</color>
+    <color name="line">#efefef</color>
+    <color name="theme_orange">#EE5500</color>
+    <color name="background_tab_pressed">#6633B5E5</color>
+    <color name="blue">#0093fa</color>
     <color name="colorPrimaryDark">#303030</color>
     <color name="colorPrimary">#242424</color>
     <color name="colorAccent">#303030</color>
-    <color name="green">#EE5500</color>
     <color name="fontColor92">#929292</color>
     <color name="yellow">#F0AC41</color>
-    <color name="txt_black">#444444</color>
+    <color name="txt_black">#333333</color>
     <color name="divider_gray">#AAacacac</color>
     <color name="colorPrimaryRed">#EE5500</color>
     <color name="fontColor2">#444444</color>
@@ -25,7 +30,6 @@
     <color name="ed_f8">#F8D6A0</color>
     <color name="EC">#ECECEC</color>
     <color name="font_color1">#444444</color>
-    <color name="line">#e6e6e6</color>
     <color name="purple">#8C08EF</color>
     <color name="oushi">#E32C6F</color>
     <color name="xiandai">#FF9376</color>
@@ -43,11 +47,9 @@
     <color name="original_border_color">#EE5500</color>
     <color name="grey_normal_bg">#EEEEEE</color>
     <color name="comment_divider">#cccccc</color>
-    <color name="spots_dialog_color">@android:color/holo_blue_dark</color>
     <color name="lines_tab_grey_C3C3C3" >#C3C3C3</color>
     <color name="jd_8c8e91">#8c8e91</color>
     <color name="jd_red">#EE5500</color>
-    <color name="background_tab_pressed">#6633B5E5</color>
     <color name="actionbar_color">#607D8B</color>
     <color name="actionbar_color_dark">#455A64</color>
 
@@ -67,7 +69,6 @@
     <color name="ucrop_color_default_crop_frame">#ffffff</color>
     <color name="ucrop_color_default_dimmed">#8c000000</color>
     <color name="theme_lines">#dddddd</color>
-    <color name="theme_orange">#EE5500</color>
     <color name="tv_444444">#444444</color>
     <color name="viewfinder_mask">#60000000</color>
     <color name="viewfinder_laser">#ffcc0000</color>
@@ -77,6 +78,70 @@
     <color name="tv_blue">#308BE9</color>
     <color name="color_chat">#ed7600</color>
     <color name="item_time_bg">#ffdac2</color>
-    //蓝色
+    <color name="color_white">#ffffff</color>
+    <color name="color_white_gray">#f9f9f9</color>
+    <color name="color_kg">#303a3b</color>
+    <color name="color_chazuo">#0093fa</color>
+    <!--<color name="common_top_bar_blue">#4ebcd3</color>-->
+    <!--<color name="btn_login_normal">#00acff</color>-->
+    <!--<color name="btn_login_pressed">#46678d</color>-->
+    <!--<color name="btn_logout_normal">#d33f3f</color>-->
+    <!--<color name="btn_logout_pressed">#DA5A4D</color>-->
+    <!--<color name="btn_register_normal">#ffffff</color>-->
+    <!--<color name="btn_register_pressed">#00acff</color>-->
+    <!--<color name="common_bottom_bar_normal_bg">#2d2f31</color>-->
+    <!--<color name="common_bottom_bar_selected_bg">#161718</color>-->
+    <!--<color name="common_botton_bar_blue">#2ea7e0</color>-->
+    <!--<color name="common_bg">#fcfcfc</color>-->
+    <!--<color name="btn_pressed_green_solid">#B6DA53</color>-->
+    <!--<color name="divider_list">#d4d4d4</color>-->
+    <!--<color name="top_bar_normal_bg">#00acff</color>-->
+    <!--<color name="error_item_color">#F6EBE6</color>-->
+    <!--<color name="bottom_bar_normal_bg">#2D2F31</color>-->
+    <!--<color name="bottom_text_color_normal">#ffffff</color>-->
+    <!--<color name="btn_white_normal">#f7f8f8</color>-->
+    <!--<color name="btn_white_pressed">#b5b5b6</color>-->
+    <!--<color name="btn_green_noraml">#68C270</color>-->
+    <!--<color name="btn_green_pressed">#6FCD78</color>-->
+    <!--<color name="btn_gray_normal">#c0c0c0</color>-->
+    <!--<color name="btn_gray_pressed_status">#b5b5b6</color>-->
+    <!--<color name="btn_gray_pressed">#666667</color>-->
+    <!--<color name="btn_blue_normal">#1e90ff</color>-->
+    <!--<color name="btn_blue_pressed">#0066FF</color>-->
+    <!--<color name="orange">#FFA500</color>-->
+    <!--<color name="gray_pressed">#b5b5b6</color>-->
+    <!--<color name="gray_normal">#666667</color>-->
+    <!--<color name="grid_state_pressed">#1Affffff</color>-->
+    <!--<color name="grid_state_focused">#80000000</color>-->
+    <!--<color name="voip_interface_text_color">#bababa</color>-->
+    <!--<color name="black_deep">#FF000000</color>-->
+    <!--<color name="btn_answer_pressed">#4ebcd3</color>-->
+    <!--<color name="btn_answer_normal">#2dafa3</color>-->
+    <!--<color name="list_itease_secondary_color">#888888</color>-->
+    <!--<color name="list_itease_primary_color">#000</color>-->
+    <!--<color name="holo_blue_bright">#ff00ddff</color>-->
+    <!--<color name="holo_green_light">#ff99cc00</color>-->
+    <!--<color name="holo_orange_light">#ffffbb33</color>-->
+    <!--<color name="holo_red_light">#ffff4444</color>-->
+    <!--<color name="emojicon_tab_selected">#D9D9D9</color>-->
+    <!--<color name="emojicon_tab_nomal">#ffffff</color>-->
+
+    <color name="background">#FFFFFF</color>
+    <color name="split_line">#11112233</color>
+    <color name="text1">#59B29C</color>
+    <color name="text2">#333333</color>
+
+    <color name="color1">#F0F0F0</color>
+    <color name="color2">#FFFFFF</color>
+    <color name="color3">#B0B0B0</color>
+    <color name="color4">#666666</color>
+    <color name="color5">#57C5E8</color>
+    <color name="scan_frame_green_color">#65E102</color>
+    <color name="scan_line_color">#98C360</color>
+    <color name="scan_view_bg">#64000000</color>
+    <color name="scan_view_tip_color">#AFAFAF</color>
+
+    <color name="possible_result_points">#c0ffbd21</color> <!-- Android standard ICS color -->
+    <color name="result_view">#b0000000</color>
 
 </resources>

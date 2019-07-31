@@ -196,14 +196,14 @@
                                 android:id="@+id/priductGridView"
                                 android:layout_width="match_parent"
                                 android:layout_height="200dp"
-                                android:horizontalSpacing="5dp"
+                                android:horizontalSpacing="10dp"
                                 android:numColumns="2"
                                 android:paddingLeft="10dp"
-                                android:background="#ffffff"
+                                android:background="@color/line"
                                 android:paddingRight="10dp"
-                                android:paddingTop="5dp"
+                                android:paddingTop="10dp"
                                 android:scrollbars="none"
-                                android:verticalSpacing="15dp" />
+                                android:verticalSpacing="10dp" />
 
                 </bc.juhao.com.ui.view.PMSwipeRefreshLayout>
             </LinearLayout>

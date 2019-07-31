@@ -11,6 +11,7 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.aliyun.iot.ilop.demo.DemoApplication;
 import com.hyphenate.EMCallBack;
 import com.hyphenate.chat.EMClient;
 import com.hyphenate.easeui.EaseConstant;
@@ -25,7 +26,6 @@ import bc.juhao.com.cons.NetWorkConst;
 import bc.juhao.com.controller.BaseController;
 import bc.juhao.com.listener.INetworkCallBack;
 import bc.juhao.com.ui.activity.ChartListActivity;
-import bc.juhao.com.ui.activity.IssueApplication;
 import bc.juhao.com.ui.activity.SettingActivity;
 import bc.juhao.com.ui.activity.user.ChatActivity;
 import bc.juhao.com.ui.activity.user.CollectActivity;
@@ -33,6 +33,7 @@ import bc.juhao.com.ui.activity.user.InvitationCodeActivity;
 import bc.juhao.com.ui.activity.user.MerchantInfoActivity;
 import bc.juhao.com.ui.activity.user.MessageActivity;
 import bc.juhao.com.ui.activity.user.MyDistributorActivity;
+import bc.juhao.com.ui.activity.user.MyDistrubutorNewActivity;
 import bc.juhao.com.ui.activity.user.MyOrderActivity;
 import bc.juhao.com.ui.activity.user.PerfectMydataActivity;
 import bc.juhao.com.ui.activity.user.UserAddrActivity;
@@ -45,7 +46,6 @@ import bc.juhao.com.utils.ShareUtil;
 import bc.juhao.com.utils.UIUtils;
 import bocang.json.JSONArray;
 import bocang.json.JSONObject;
-import bocang.utils.AppDialog;
 import bocang.utils.AppUtils;
 import bocang.utils.IntentUtil;
 import bocang.utils.MyLog;
@@ -64,6 +64,7 @@ public class MineController extends BaseController implements INetworkCallBack {
     public Intent mIntent;
     private ScrollView main_sv;
     private TextView unMessageReadTv, unMessageRead02Tv, unMessageRead03Tv, level_tv;
+
 
     public MineController(MineFragment v) {
         mView = v;
@@ -186,7 +187,7 @@ public class MineController extends BaseController implements INetworkCallBack {
      */
     public void getShareApp() {
         final String title = "来自 " + UIUtils.getString(R.string.app_name) + " App的分享";
-        final Dialog dialog=UIUtils.showBottomInDialog(mView.getActivity(),R.layout.share_dialog,UIUtils.dip2PX(150));
+        final Dialog dialog=UIUtils.showBottomInDialog(mView.getActivity(), R.layout.share_dialog,UIUtils.dip2PX(150));
         TextView tv_cancel=dialog.findViewById(R.id.tv_cancel);
         LinearLayout ll_wx=dialog.findViewById(R.id.ll_wx);
         LinearLayout ll_pyq=dialog.findViewById(R.id.ll_pyq);
@@ -225,16 +226,16 @@ public class MineController extends BaseController implements INetworkCallBack {
         switch (requestCode) {
             case NetWorkConst.PROFILE:
                 mUserObject = ans.getJSONObject(Constance.user);
-                IssueApplication.mUserObject = mUserObject;
+                DemoApplication.mUserObject = mUserObject;
                 if (AppUtils.isEmpty(mUserObject))
                     return;
                 String avatar = NetWorkConst.SCENE_HOST + mUserObject.getString(Constance.avatar);
                 if (!AppUtils.isEmpty(avatar))
                     ImageLoadProxy.displayHeadIcon(avatar, head_cv);
 
-                String username = IssueApplication.mUserObject.getString(Constance.username);
-                String nickName = IssueApplication.mUserObject.getString(Constance.nickname);
-                int level = IssueApplication.mUserObject.getInt(Constance.level);
+                String username = DemoApplication.mUserObject.getString(Constance.username);
+                String nickName = DemoApplication.mUserObject.getString(Constance.nickname);
+                int level = DemoApplication.mUserObject.getInt(Constance.level);
                 String levelValue = "";
                 mView.user_money_ll.setVisibility(View.VISIBLE);
                 mView.distributor_ll.setVisibility(View.VISIBLE);
@@ -253,7 +254,7 @@ public class MineController extends BaseController implements INetworkCallBack {
                 }
                 mView.onRefresh();
                 level_tv.setText(levelValue);
-                Log.v("520it", IssueApplication.mUserObject.getString(Constance.money));
+                Log.v("520it", DemoApplication.mUserObject.getString(Constance.money));
                 JSONArray countArray = ans.getJSONArray("count");
                 String count01 = countArray.get(0).toString();
                 String count02 = countArray.get(1).toString();
@@ -281,7 +282,7 @@ public class MineController extends BaseController implements INetworkCallBack {
     public void onFailureListener(String requestCode, JSONObject ans) {
         try {
             if (AppUtils.isEmpty(ans)) {
-                AppDialog.messageBox(UIUtils.getString(R.string.server_error));
+//                AppDialog.messageBox(UIUtils.getString(R.string.server_error));
                 return;
             }
         } catch (Exception e) {
@@ -294,7 +295,7 @@ public class MineController extends BaseController implements INetworkCallBack {
      */
     public void sendCall(String msg) {
         try {
-            int level = IssueApplication.mUserObject.getInt(Constance.level);
+            int level = DemoApplication.mUserObject.getInt(Constance.level);
             if (level == 0) {
                 if (!mView.isToken()) {
                     IntentUtil.startActivity(mView.getActivity(), ChartListActivity.class, false);
@@ -302,9 +303,9 @@ public class MineController extends BaseController implements INetworkCallBack {
                 return;
             }
 
-            String parent_name = IssueApplication.mUserObject.getString("parent_name");
-            String parent_id = IssueApplication.mUserObject.getString("parent_id");
-            String userIcon = NetWorkConst.SCENE_HOST + IssueApplication.mUserObject.getString("parent_avatar");
+            String parent_name = DemoApplication.mUserObject.getString("parent_name");
+            String parent_id = DemoApplication.mUserObject.getString("parent_id");
+            String userIcon = NetWorkConst.SCENE_HOST + DemoApplication.mUserObject.getString("parent_avatar");
             EaseUser user = new EaseUser(parent_id);
             user.setNickname(parent_name);
             user.setNick(parent_name);
@@ -359,7 +360,7 @@ public class MineController extends BaseController implements INetworkCallBack {
                 EMClient.getInstance().chatManager().loadAllConversations();
                 MyLog.e("登录环信成功!");
                 toast.cancel();
-                String parent_id = IssueApplication.mUserObject.getString("parent_id");
+                String parent_id = DemoApplication.mUserObject.getString("parent_id");
                 try {
                     EMClient.getInstance().contactManager().acceptInvitation(parent_id);
                     mView.startActivity(new Intent(mView.getActivity(), ChatActivity.class).putExtra(EaseConstant.EXTRA_USER_ID, parent_id));
@@ -420,7 +421,7 @@ public class MineController extends BaseController implements INetworkCallBack {
      * 我的分销商
      */
     public void getMyistributor() {
-        IntentUtil.startActivity(mView.getActivity(), MyDistributorActivity.class, false);
+        IntentUtil.startActivity(mView.getActivity(), MyDistrubutorNewActivity.class, false);
     }
 
     /**

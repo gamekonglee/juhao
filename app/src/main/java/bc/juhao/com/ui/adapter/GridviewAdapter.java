@@ -64,7 +64,7 @@ public class GridviewAdapter extends BaseAdapter {
                 list.remove(data.get(position) + "");
             }
 
-            holder.mGridContent.setBackgroundResource(data.get(position).isChecked()==false?R.drawable.shape_recode_btn_active:R.drawable.shape_recode_btn_pressed);
+            holder.mGridContent.setBackgroundResource(data.get(position).isChecked()==false? R.drawable.shape_recode_btn_active: R.drawable.shape_recode_btn_pressed);
         }
         return convertView;
     }

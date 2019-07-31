@@ -57,9 +57,6 @@ public class PostedImageController extends BaseController {
     }
 
     public void reviceOrder() {
-        mView.setShowDialog(true);
-        mView.setShowDialog("正在发布中..");
-        mView.showLoading();
 
         String review = value_et.getText().toString();
         if (AppUtils.isEmpty(review)) {
@@ -71,6 +68,9 @@ public class PostedImageController extends BaseController {
             MyToast.show(mView, "请选择要上传的图片！");
             return;
         }
+        mView.setShowDialog(true);
+        mView.setShowDialog("正在发布中..");
+        mView.showLoading();
 
         String cotentJson = "[{\"goods\":" + mView.mProductId + ",\"grade\":3,\"content\":\"" + review + "\"}]";
 
@@ -103,7 +103,7 @@ public class PostedImageController extends BaseController {
                 });
                 if(mView.files.size()>0){
                     isFinishVideo = false;
-                final String resultJson2=NetWorkUtils.uploadvideo(mView.files,NetWorkConst.REVICE_ORDER_URL,params,"shaitu");
+                final String resultJson2=NetWorkUtils.uploadvideo(mView.files, NetWorkConst.REVICE_ORDER_URL,params,"shaitu");
                 mView.runOnUiThread(new Runnable() {
                     @Override
                     public void run() {

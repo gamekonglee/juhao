@@ -23,10 +23,10 @@ import javax.net.ssl.HttpsURLConnection;
 
 import bc.juhao.com.cons.Constance;
 import bc.juhao.com.utils.MyShare;
-import bc.juhao.com.utils.UIUtils;
 import bocang.utils.AppConfig;
 import bocang.utils.AppLog;
 import bocang.utils.AppUtils;
+import bocang.utils.UIUtils;
 
 public class NetServer {
 

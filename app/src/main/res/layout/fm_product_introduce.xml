@@ -249,8 +249,9 @@
                         android:background="#FFFFFF"
                         android:paddingLeft="10dp"
                         android:textColor="#555555"
-                        android:textSize="18sp"
-                        android:layout_marginRight="40dp"
+                        android:textSize="13sp"
+                        android:lineSpacingExtra="2dp"
+                        android:layout_marginRight="70dp"
                         android:layout_marginTop="5dp"
                         />
                     <RelativeLayout
@@ -476,14 +477,16 @@
                         android:layout_height="5dp"/>
                     <TextView
                         android:text="产品参数"
-                        android:textSize="18sp"
+                        android:textStyle="bold"
+                        android:textSize="14sp"
                         android:layout_marginTop="5dp"
                         android:textColor="#444444"
-                        android:layout_marginLeft="15dp"
+                        android:layout_marginLeft="10dp"
                         android:layout_width="match_parent"
                         android:layout_height="30dp" />
                     <ImageView
                         android:src="@mipmap/spxq_cpcs"
+                        android:visibility="gone"
                         android:layout_width="match_parent"
                         android:layout_height="30dp" />
                     <ListView
@@ -537,14 +540,15 @@
                 android:orientation="vertical">
                 <TextView
                     android:text="商品详情"
-                    android:textSize="18sp"
+                    android:textSize="14sp"
                     android:layout_marginTop="5dp"
                     android:textColor="#444444"
-                    android:layout_marginLeft="15dp"
+                    android:layout_marginLeft="10dp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content" />
                 <ImageView
                     android:src="@mipmap/spxq_spxq"
+                    android:visibility="gone"
                     android:scaleType="fitXY"
                     android:layout_marginTop="5dp"
                     android:layout_width="match_parent"

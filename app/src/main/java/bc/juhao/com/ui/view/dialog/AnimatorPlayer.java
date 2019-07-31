@@ -1,6 +1,8 @@
 package bc.juhao.com.ui.view.dialog;
 
-import android.animation.*;
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
+import android.animation.AnimatorSet;
 
 /**
  * Created by Maxim Dybarsky | maxim.dybarskyy@gmail.com

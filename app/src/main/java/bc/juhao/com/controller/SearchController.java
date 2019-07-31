@@ -13,7 +13,7 @@ import bocang.utils.AppUtils;
  * Created by gamekonglee on 2018/3/28.
  */
 
-public class SearchController extends BaseController{
+public class SearchController extends BaseController {
 
     private final SearchActivity mView;
     public JSONArray mClassifyGoodsLists;

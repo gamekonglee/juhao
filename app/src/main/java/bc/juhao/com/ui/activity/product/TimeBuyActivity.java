@@ -1,11 +1,9 @@
 package bc.juhao.com.ui.activity.product;
 
 import android.graphics.Color;
-import android.view.View;
 
 import bc.juhao.com.R;
 import bc.juhao.com.controller.product.TimeBuyController;
-import bocang.view.BaseActivity;
 
 /**
  * @author Jun

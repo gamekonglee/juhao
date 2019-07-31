@@ -43,15 +43,24 @@
         android:orientation="horizontal"
         android:paddingBottom="5dp"
         android:gravity="center_vertical">
-        <CheckBox
+        <bc.juhao.com.ui.view.TextViewPlus
             android:id="@+id/checkbox"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
-            android:button="@drawable/selector_checkbox"
-            android:checked="false"
-            android:focusable="false" />
+            android:drawableLeft="@mipmap/shopping_cart_unchecked"
+            android:focusable="false"
+            />
+        <!--<bc.juhao.com.ui.view.TextViewPlus-->
+            <!--android:id="@+id/checkbox"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_marginLeft="10dp"-->
+            <!--android:layout_marginRight="10dp"-->
+            <!--android:button="@drawable/selector_checkbox"-->
+            <!--android:checked="false"-->
+            <!--android:focusable="false" />-->
 
 
         <ImageView
@@ -109,7 +118,12 @@
                     android:textSize="13sp"
                     />
             </LinearLayout>
-
+            <View
+                android:id="@+id/view_sc_item"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginRight="120dp"
+                />
             <include
                 android:id="@+id/number_input_et"
                 android:layout_width="wrap_content"

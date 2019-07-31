@@ -2,18 +2,21 @@ package bc.juhao.com.ui.activity.blance;
 
 import android.content.Intent;
 import android.graphics.Color;
-import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+
+import com.aliyun.iot.ilop.demo.DemoApplication;
 
 import bc.juhao.com.R;
 import bc.juhao.com.cons.Constance;
 import bc.juhao.com.controller.blance.ExtractMoneyController;
 import bc.juhao.com.ui.activity.IssueApplication;
+import bc.juhao.com.ui.activity.MainActivity;
+import bc.juhao.com.ui.activity.user.LoginActivity;
 import bc.juhao.com.ui.activity.user.TixianGzActivity;
 import bc.juhao.com.utils.MyShare;
+import bc.juhao.com.utils.UIUtils;
 import bocang.utils.IntentUtil;
 import bocang.view.BaseActivity;
 
@@ -53,10 +56,15 @@ public class ExtractMoneyActivity extends BaseActivity {
     @Override
     protected void onStart() {
         super.onStart();
-        levelid = IssueApplication.mUserObject.getInt(Constance.level);
-        if(levelid==0){
-         mController.sendAccountList();
-        }else {
+        if(DemoApplication.mUserObject==null){
+            MainActivity.mFragmentPosition=0;
+            startActivity(new Intent(this, LoginActivity.class));
+            finish();
+        }
+        levelid = DemoApplication.mUserObject.getInt(Constance.level);
+//        if(levelid==0){
+//         mController.sendAccountList();
+//        }else {
        String alipay= MyShare.get(ExtractMoneyActivity.this).getString(Constance.ALIPAY);
 //       if(TextUtils.isEmpty(alipay)){
 //           add_tv.setVisibility(View.VISIBLE);
@@ -64,7 +72,7 @@ public class ExtractMoneyActivity extends BaseActivity {
 //           add_tv.setVisibility(View.GONE);
 //       }
         alipay_tv.setText(alipay);
-        }
+//        }
     }
 
     @Override
@@ -77,11 +85,11 @@ public class ExtractMoneyActivity extends BaseActivity {
         switch (v.getId()) {
             case R.id.add_tv:
 //                Log.e("level",levelid+"");
-                if(levelid==0){
-                 startActivity(new Intent(this, TixianGzActivity.class));
-                }else {
+//                if(levelid==0){
+//                 startActivity(new Intent(this, TixianGzActivity.class));
+//                }else {
                 IntentUtil.startActivity(this,ExtractAccountActivity.class,false);
-                }
+//                }
                 break;
             case R.id.Withdrawals_bt:
                 mController.WithdrawalsMoney();

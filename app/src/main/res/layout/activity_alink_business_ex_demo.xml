@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <EditText
+        android:id="@+id/edittext_method_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/hint_alink_business_ex_demo_method_name"
+        android:maxLines="1" />
+
+    <EditText
+        android:id="@+id/edittext_method_args"
+        android:gravity="top|left"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/hint_alink_business_ex_demo_method_args"
+        android:minLines="5" />
+
+    <Button
+        android:id="@+id/button_go"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/button_alink_business_ex_demo_go" />
+
+    <TextView
+        android:id="@+id/textview_response"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+</LinearLayout>

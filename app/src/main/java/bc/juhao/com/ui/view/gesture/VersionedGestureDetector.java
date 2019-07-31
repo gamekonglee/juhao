@@ -30,7 +30,7 @@ public abstract class VersionedGestureDetector {
 	
 	OnGestureListener mListener;
 
-	public static VersionedGestureDetector newInstance(Context context,OnGestureListener listener) {
+	public static VersionedGestureDetector newInstance(Context context, OnGestureListener listener) {
 	
 		final int sdkVersion = Build.VERSION.SDK_INT;
 		 VersionedGestureDetector detector = null;

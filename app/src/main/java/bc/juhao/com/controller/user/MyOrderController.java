@@ -11,7 +11,7 @@ import android.widget.AdapterView;
 import android.widget.GridView;
 import android.widget.ImageView;
 
-
+import com.aliyun.iot.ilop.demo.DemoApplication;
 import com.google.gson.Gson;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
@@ -94,7 +94,7 @@ public class MyOrderController extends BaseController implements INetworkCallBac
                 helper.setText(R.id.tv_name,""+item.getName());
                 helper.setText(R.id.tv_price,"¥"+item.getCurrent_price());
                 ImageView imageView=helper.getView(R.id.iv);
-                ImageLoader.getInstance().displayImage(NetWorkConst.SCENE_HOST+item.getOriginal_img(),imageView,((IssueApplication)mView.getApplicationContext()).getImageLoaderOption());
+                ImageLoader.getInstance().displayImage(NetWorkConst.SCENE_HOST+item.getOriginal_img(),imageView,((DemoApplication)mView.getApplicationContext()).getImageLoaderOption());
             }
         };
         priductGridView.setAdapter(likeGoods);

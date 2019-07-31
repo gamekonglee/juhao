@@ -2,8 +2,9 @@ package bocang.utils;
 
 import android.content.SharedPreferences;
 
+import com.aliyun.iot.ilop.demo.DemoApplication;
+
 import bc.juhao.com.cons.NetWorkConst;
-import bocang.view.BaseApplication;
 
 
 public class AppConfig {
@@ -84,7 +85,7 @@ public class AppConfig {
 
     public static int getScreenWidth() {
         if (SCREEN_WIDTH > 0) return SCREEN_WIDTH;
-        SCREEN_WIDTH = BaseApplication.getContext().getResources().getDisplayMetrics().widthPixels;
+        SCREEN_WIDTH = DemoApplication.getContext().getResources().getDisplayMetrics().widthPixels;
         return SCREEN_WIDTH;
     }
 
@@ -95,7 +96,7 @@ public class AppConfig {
 
     public static int getScreenHeight() {
         if (SCREEN_HEIGHT > 0) return SCREEN_HEIGHT;
-        SCREEN_HEIGHT = BaseApplication.getContext().getResources().getDisplayMetrics().heightPixels;
+        SCREEN_HEIGHT = DemoApplication.getContext().getResources().getDisplayMetrics().heightPixels;
         return SCREEN_HEIGHT;
     }
 
@@ -108,7 +109,7 @@ public class AppConfig {
     public static void setValue(String key, String value) {
 
         synchronized (lock) {
-            SharedPreferences sp = BaseApplication.getInstance().getSharedPreferences("b7app", BaseApplication.getContext().MODE_PRIVATE);
+            SharedPreferences sp = DemoApplication.getInstance().getSharedPreferences("b7app", DemoApplication.getContext().MODE_PRIVATE);
             SharedPreferences.Editor editor = sp.edit();
             editor.putString(key, value);
             editor.commit();
@@ -125,7 +126,7 @@ public class AppConfig {
     public static void setValue(String key, int value) {
 
         synchronized (lock) {
-            SharedPreferences sp = BaseApplication.getInstance().getSharedPreferences("b7app", BaseApplication.getContext().MODE_PRIVATE);
+            SharedPreferences sp = DemoApplication.getInstance().getSharedPreferences("b7app", DemoApplication.getContext().MODE_PRIVATE);
             SharedPreferences.Editor editor = sp.edit();
             editor.putInt(key, value);
             editor.commit();
@@ -142,7 +143,7 @@ public class AppConfig {
     public static void setValue(String key, float value) {
 
         synchronized (lock) {
-            SharedPreferences sp = BaseApplication.getInstance().getSharedPreferences("b7app", BaseApplication.getContext().MODE_PRIVATE);
+            SharedPreferences sp = DemoApplication.getInstance().getSharedPreferences("b7app", DemoApplication.getContext().MODE_PRIVATE);
             SharedPreferences.Editor editor = sp.edit();
             editor.putFloat(key, value);
             editor.commit();
@@ -162,8 +163,8 @@ public class AppConfig {
 //        String ret = null;
 //
 //        synchronized (lock) {
-////            SharedPreferences sp = BaseApplication.getInstance().getSharedPreferences("b7app", BaseApplication.getContext().MODE_PRIVATE);
-//            ret=ConfigUtil.getInstance(BaseApplication.getContext()).getString(Constance.TOKEN);
+////            SharedPreferences sp = DemoApplication.getInstance().getSharedPreferences("b7app", DemoApplication.getContext().MODE_PRIVATE);
+//            ret=ConfigUtil.getInstance(DemoApplication.getContext()).getString(Constance.TOKEN);
 //        }
 //
 //        //return
@@ -182,7 +183,7 @@ public class AppConfig {
         int ret = defValue;
 
         synchronized (lock) {
-            SharedPreferences sp = BaseApplication.getInstance().getSharedPreferences("b7app", BaseApplication.getContext().MODE_PRIVATE);
+            SharedPreferences sp = DemoApplication.getInstance().getSharedPreferences("b7app", DemoApplication.getContext().MODE_PRIVATE);
             ret = sp.getInt(key, defValue);
         }
 
@@ -202,7 +203,7 @@ public class AppConfig {
         float ret = defValue;
 
         synchronized (lock) {
-            SharedPreferences sp = BaseApplication.getInstance().getSharedPreferences("b7app", BaseApplication.getContext().MODE_PRIVATE);
+            SharedPreferences sp = DemoApplication.getInstance().getSharedPreferences("b7app", DemoApplication.getContext().MODE_PRIVATE);
             ret = sp.getFloat(key, defValue);
         }
 

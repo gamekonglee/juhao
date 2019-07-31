@@ -18,6 +18,7 @@ import android.util.Base64;
 import android.util.Log;
 import android.webkit.WebView;
 
+import com.aliyun.iot.ilop.demo.DemoApplication;
 import com.bigkoo.alertview.AlertView;
 import com.bigkoo.alertview.OnItemClickListener;
 import com.donkingliang.imageselector.utils.ImageSelectorUtils;
@@ -37,17 +38,17 @@ import java.util.Date;
 
 import bc.juhao.com.cons.Constance;
 import bc.juhao.com.ui.activity.IssueApplication;
-import bc.juhao.com.ui.activity.product.PostedImageActivity;
 import bc.juhao.com.ui.activity.user.VideoShotActivity;
 import bocang.utils.PermissionUtils;
 
 import static android.os.Environment.MEDIA_MOUNTED;
-import static bc.juhao.com.ui.activity.user.SimpleScannerActivity.REQUEST_CODE;
 
 /**
  * Created by xpHuang on 2016/9/5.
  */
 public class FileUtil {
+
+    private static final  int REQUEST_CODE = 400;
 
     /**
      * 获取自定义sd卡上的文件目录
@@ -85,7 +86,19 @@ public class FileUtil {
         snapShot.draw(canvas);
         return bmp;
     }
+    /**
+     * 截取webView快照(webView加载的整个内容的大小)
+     * @param webView
+     * @return
+     */
+    public static Bitmap captureWebView(com.tencent.smtt.sdk.WebView webView){
+        Picture snapShot = webView.capturePicture();
 
+        Bitmap bmp = Bitmap.createBitmap(snapShot.getWidth(),snapShot.getHeight(), Bitmap.Config.ARGB_8888);
+        Canvas canvas = new Canvas(bmp);
+        snapShot.draw(canvas);
+        return bmp;
+    }
 
     /**
      * 拍照获取相片
@@ -102,11 +115,11 @@ public class FileUtil {
             // 图片名称 时间命名
             SimpleDateFormat format = new SimpleDateFormat("yyyyMMddHHmmss");
             Date date = new Date(System.currentTimeMillis());
-            IssueApplication.imagePath = format.format(date);
-            IssueApplication.cameraPath = FileUtil.getOwnFilesDir(context, Constance.CAMERA_PATH);
+            DemoApplication.imagePath = format.format(date);
+            DemoApplication.cameraPath = FileUtil.getOwnFilesDir(context, Constance.CAMERA_PATH);
 //            Uri imageUri = Uri.fromFile(new File(IssueApplication.cameraPath, IssueApplication.imagePath + ".jpg"));
             Uri apkUri =
-                    FileProvider.getUriForFile(context, "com.bocang.juhao.fileprovider", new File(IssueApplication.cameraPath, IssueApplication.imagePath + ".jpg"));
+                    FileProvider.getUriForFile(context, "com.bocang.juhao.fileprovider", new File(DemoApplication.cameraPath, DemoApplication.imagePath + ".jpg"));
             System.out.println("imageUri" + apkUri.toString());
             Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE); // 调用系统相机
             // 指定照片保存路径（SD卡）

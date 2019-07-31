@@ -14,6 +14,8 @@ import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.aliyun.iot.ilop.demo.DemoApplication;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,7 +23,6 @@ import bc.juhao.com.R;
 import bc.juhao.com.bean.GoodsShape;
 import bc.juhao.com.cons.Constance;
 import bc.juhao.com.controller.programme.DiyController;
-import bc.juhao.com.ui.activity.IssueApplication;
 import bc.juhao.com.ui.view.ShowDialog;
 import bc.juhao.com.ui.view.designview.IPicsGestureListener;
 import bc.juhao.com.utils.MyShare;
@@ -256,8 +257,8 @@ public class DiyActivity extends BaseActivity implements IPicsGestureListener {
             @Override
             public void positive() {
                 finish();
-                IssueApplication.mSelectProducts = new JSONArray();
-                IssueApplication.mSelectScreens = new JSONArray();
+                DemoApplication.mSelectProducts = new JSONArray();
+                DemoApplication.mSelectScreens = new JSONArray();
             }
 
             @Override
@@ -346,6 +347,6 @@ public class DiyActivity extends BaseActivity implements IPicsGestureListener {
 
     @Override
     public void onPicsGesturDelete(Boolean isShow) {
-        mSelectedLightSA.remove(IssueApplication.mLightIndex);
+        mSelectedLightSA.remove(DemoApplication.mLightIndex);
     }
 }

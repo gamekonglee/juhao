@@ -4,12 +4,12 @@ import android.os.Message;
 import android.widget.TextView;
 
 import com.alibaba.fastjson.JSONObject;
+import com.aliyun.iot.ilop.demo.DemoApplication;
 
 import bc.juhao.com.R;
 import bc.juhao.com.cons.Constance;
 import bc.juhao.com.controller.BaseController;
 import bc.juhao.com.listener.INetworkCallBack02;
-import bc.juhao.com.ui.activity.IssueApplication;
 import bc.juhao.com.ui.activity.blance.UserFinanceActivity;
 import bocang.utils.AppUtils;
 
@@ -29,8 +29,8 @@ public class UserFinanceController extends BaseController {
     }
 
     public void initViewData() {
-        if(AppUtils.isEmpty(IssueApplication.mUserObject))return;
-        String money= IssueApplication.mUserObject.getString(Constance.money);
+        if(AppUtils.isEmpty(DemoApplication.mUserObject))return;
+        String money= DemoApplication.mUserObject.getString(Constance.money);
         user_fnc_txtBalance.setText("￥" + money);
         sendSalesMoney();
 

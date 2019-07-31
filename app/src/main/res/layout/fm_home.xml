@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                xmlns:app="http://schemas.android.com/apk/res-auto"
-                android:background="#eeeeee"
-                android:focusable="true"
-                android:focusableInTouchMode="true"
-                android:orientation="vertical">
+<RelativeLayout android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="#eeeeee"
+    android:focusable="true"
+    android:focusableInTouchMode="true"
+    android:orientation="vertical"
+    xmlns:android="http://schemas.android.com/apk/res/android">
     <com.lib.common.hxp.view.PullToRefreshLayout
         android:id="@+id/refresh_view"
         android:layout_width="match_parent"
@@ -48,24 +48,6 @@
                     android:gravity="center_vertical"
                     android:orientation="horizontal"
                     >
-
-                    <LinearLayout
-                        android:layout_width="80dp"
-                        android:layout_height="match_parent"
-                        android:gravity="center">
-
-                        <ImageView
-                            android:layout_width="wrap_content"
-                            android:layout_height="25dp"
-                            android:src="@drawable/zuixindongtai"/>
-                    </LinearLayout>
-
-                    <View
-                        android:layout_width="1dp"
-                        android:layout_height="50dp"
-                        android:layout_marginLeft="5dp"
-                        android:layout_marginRight="5dp"
-                        android:background="#e0e0e0"/>
 
                     <TextSwitcher
                         android:id="@+id/textSwitcher_title"
@@ -345,7 +327,7 @@
                                 android:id="@+id/keting_home_iv"
                                 android:layout_width="75dp"
                                 android:layout_height="75dp"
-                                android:src="@mipmap/xiandai1"/>
+                                />
 
                             <TextView
                                 android:layout_width="match_parent"
@@ -373,7 +355,7 @@
                                 android:id="@+id/canting_home_iv"
                                 android:layout_width="75dp"
                                 android:layout_height="75dp"
-                                android:src="@mipmap/zhongshi"/>
+                                />
 
                             <TextView
                                 android:layout_width="match_parent"
@@ -399,7 +381,7 @@
                                 android:id="@+id/meishi_iv"
                                 android:layout_width="75dp"
                                 android:layout_height="75dp"
-                                android:src="@mipmap/meishi"/>
+                                />
 
                             <TextView
                                 android:layout_width="match_parent"
@@ -425,7 +407,7 @@
                                 android:id="@+id/shufang_home_iv"
                                 android:layout_width="75dp"
                                 android:layout_height="75dp"
-                                android:src="@mipmap/oushi"/>
+                                />
 
                             <TextView
                                 android:layout_width="match_parent"
@@ -465,7 +447,7 @@
                                 android:id="@+id/ertongfang_iv"
                                 android:layout_width="75dp"
                                 android:layout_height="75dp"
-                                android:src="@mipmap/houxiandai"/>
+                                />
 
                             <TextView
                                 android:layout_width="match_parent"
@@ -491,7 +473,7 @@
                                 android:id="@+id/weiyujian_iv"
                                 android:layout_width="75dp"
                                 android:layout_height="75dp"
-                                android:src="@mipmap/xinzhongshi"/>
+                                />
 
                             <TextView
                                 android:layout_width="match_parent"
@@ -516,7 +498,7 @@
                                 android:id="@+id/bieshu_iv"
                                 android:layout_width="75dp"
                                 android:layout_height="75dp"
-                                android:src="@mipmap/yijia"/>
+                                />
 
                             <TextView
                                 android:layout_width="match_parent"
@@ -542,7 +524,7 @@
                                 android:id="@+id/louti_iv"
                                 android:layout_width="75dp"
                                 android:layout_height="75dp"
-                                android:src="@mipmap/tianyuan"/>
+                                />
 
                             <TextView
                                 android:layout_width="match_parent"
@@ -673,7 +655,8 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:scaleType="fitStart"
-                        android:src="@mipmap/rexiaotop"/>
+                        
+                        />
 
                     <View
                         android:layout_width="1dp"
@@ -704,7 +687,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:scaleType="fitStart"
-                            android:src="@mipmap/maishoutuijian"/>
+                            />
                     </LinearLayout>
                 </LinearLayout>
 
@@ -763,7 +746,7 @@
                             android:id="@+id/popularity_01_iv"
                             android:layout_width="match_parent"
                             android:layout_height="150dp"
-                            android:src="@mipmap/houxiandai"/>
+                            />
 
                         <ImageView
                             android:layout_width="match_parent"
@@ -794,7 +777,7 @@
                                 android:id="@+id/popularity_02_iv"
                                 android:layout_width="90dp"
                                 android:layout_height="90dp"
-                                android:src="@mipmap/houxiandai"/>
+                                />
 
                             <ImageView
                                 android:layout_width="match_parent"
@@ -817,7 +800,7 @@
                                 android:id="@+id/popularity_03_iv"
                                 android:layout_width="90dp"
                                 android:layout_height="90dp"
-                                android:src="@mipmap/houxiandai"/>
+                                />
 
                             <ImageView
                                 android:layout_width="match_parent"

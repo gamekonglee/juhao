@@ -3,14 +3,17 @@ package bc.juhao.com.ui.activity.buy;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Color;
+import android.os.Build;
+import android.os.Handler;
+import android.os.Message;
+import android.support.annotation.RequiresApi;
 import android.support.v4.app.ActivityCompat;
 import android.text.TextUtils;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.View;
 import android.webkit.WebSettings;
-import android.webkit.WebView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.ScrollView;
@@ -18,12 +21,18 @@ import android.widget.Toast;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
+import com.aliyun.iot.ilop.demo.DemoApplication;
 import com.itextpdf.text.Document;
 import com.itextpdf.text.DocumentException;
 import com.itextpdf.text.Image;
 import com.itextpdf.text.pdf.PdfWriter;
+import com.pgyersdk.crash.PgyCrashManager;
 import com.tencent.connect.share.QQShare;
 import com.tencent.mm.opensdk.modelmsg.SendMessageToWX;
+import com.tencent.smtt.sdk.WebView;
+import com.zhy.http.okhttp.callback.Callback;
+
+import org.json.JSONException;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -37,14 +46,22 @@ import java.util.List;
 import bc.juhao.com.R;
 import bc.juhao.com.cons.Constance;
 import bc.juhao.com.cons.NetWorkConst;
+import bc.juhao.com.controller.ExInventoryConntroller;
+import bc.juhao.com.net.ApiClient;
 import bc.juhao.com.ui.activity.IssueApplication;
 import bc.juhao.com.ui.view.ScannerUtils;
 import bc.juhao.com.utils.FileUtil;
+import bc.juhao.com.utils.ImageLoadProxy;
 import bc.juhao.com.utils.ImageUtil;
+import bc.juhao.com.utils.MyShare;
 import bc.juhao.com.utils.ShareUtil;
+import bc.juhao.com.utils.UIUtils;
 import bocang.json.JSONArray;
 import bocang.utils.AppUtils;
+import bocang.utils.MyToast;
 import bocang.view.BaseActivity;
+import okhttp3.Call;
+import okhttp3.Response;
 
 /**
  * @author: Jun
@@ -60,6 +77,11 @@ public class ExInventoryActivity extends BaseActivity {
     private ScrollView sv;
     private int mShareType = 0;
     private Bitmap bitmap;
+    private String mParentPhone;
+    private String mAddress;
+    private ExInventoryConntroller mController;
+    public int usercodeid;
+    private String mParentName;
 
     @Override
     protected void InitDataView() {
@@ -68,7 +90,7 @@ public class ExInventoryActivity extends BaseActivity {
 
     @Override
     protected void initController() {
-
+        mController = new ExInventoryConntroller(this);
     }
 
     @Override
@@ -82,92 +104,7 @@ public class ExInventoryActivity extends BaseActivity {
         save_ll = getViewAndClick(R.id.save_ll);
         sv = (ScrollView) findViewById(R.id.sv);
         cotent_ll = (LinearLayout) findViewById(R.id.cotent_ll);
-        for (int i = 0; i < (mUids.size()); i++) {
-            WebView mView = new WebView(this);
-            //            WebSettings settings = mView.getSettings();
-            //            settings.setJavaScriptEnabled(true);
-            //            settings.setAppCacheEnabled(true);
-            //            settings.setDatabaseEnabled(true);
-            //            settings.setDomStorageEnabled(true);
-            //            settings.setCacheMode(WebSettings.LOAD_DEFAULT);
-            //            settings.setAllowFileAccess(true);
-            WebSettings webSettings = mView.getSettings();
-            webSettings.setJavaScriptEnabled(true);
-            webSettings.setJavaScriptEnabled(true);
-            webSettings.setJavaScriptCanOpenWindowsAutomatically(true);
-            webSettings.setUseWideViewPort(true);//关键点
-
-            webSettings.setLayoutAlgorithm(WebSettings.LayoutAlgorithm.SINGLE_COLUMN);
-
-            webSettings.setDisplayZoomControls(false);
-            webSettings.setJavaScriptEnabled(true); // 设置支持javascript脚本
-            webSettings.setAllowFileAccess(true); // 允许访问文件
-            webSettings.setBuiltInZoomControls(false); // 设置显示缩放按钮
-            webSettings.setSupportZoom(false); // 支持缩放
-
-            webSettings.setLoadWithOverviewMode(true);
-
-            DisplayMetrics metrics = new DisplayMetrics();
-            getWindowManager().getDefaultDisplay().getMetrics(metrics);
-            int mDensity = metrics.densityDpi;
-            if (mDensity == 240) {
-                webSettings.setDefaultZoom(WebSettings.ZoomDensity.FAR);
-            } else if (mDensity == 160) {
-                webSettings.setDefaultZoom(WebSettings.ZoomDensity.MEDIUM);
-            } else if (mDensity == 120) {
-                webSettings.setDefaultZoom(WebSettings.ZoomDensity.CLOSE);
-            } else if (mDensity == DisplayMetrics.DENSITY_XHIGH) {
-                webSettings.setDefaultZoom(WebSettings.ZoomDensity.FAR);
-            } else if (mDensity == DisplayMetrics.DENSITY_TV) {
-                webSettings.setDefaultZoom(WebSettings.ZoomDensity.FAR);
-            } else {
-                webSettings.setDefaultZoom(WebSettings.ZoomDensity.MEDIUM);
-            }
-            webSettings.setLayoutAlgorithm(WebSettings.LayoutAlgorithm.NARROW_COLUMNS);
-            //        //设置WebView可触摸放大缩小
-            //            mView.setInitialScale(100);
-            mView.setDrawingCacheEnabled(true);
-            mView.setLayoutParams(new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.WRAP_CONTENT));
-            cotent_ll.addView(mView);
-        }
-
-        if (mShareType == 0) {
-            String id = IssueApplication.mUserObject.getString(Constance.id);
-            String path="";
-            String uids="";
-            String numbers="";
-            for(int x=0;x<mUids.size();x++){
-                uids+=mUids.get(x)+",";
-                numbers+=mNumbers.get(x)+",";
-            }
-            uids=uids.substring(0,uids.length()-1);
-            numbers=numbers.substring(0,numbers.length()-1);
-            for (int i = 0; i < cotent_ll.getChildCount(); i++) {
-                 path = NetWorkConst.SCENE_HOST + "order_show.php?uid=" + id + "&goods=" + uids+ "&number=" + numbers+ "&page=" + (i+1);
-                if(i==cotent_ll.getChildCount()-1){
-                path+="&end";
-                }
-                ((WebView) cotent_ll.getChildAt(i)).loadUrl(path);
-            }
-
-        } else {
-            String id = IssueApplication.mUserObject.getString(Constance.id);
-            String uids="";
-            String numbers="";
-            for(int x=0;x<mUids.size();x++){
-                uids+=mUids.get(x)+",";
-                numbers+=mNumbers.get(x)+",";
-            }
-            uids=uids.substring(0,uids.length()-1);
-            numbers=numbers.substring(0,numbers.length()-1);
-            for (int i = 0; i < cotent_ll.getChildCount(); i++) {
-                String path = NetWorkConst.SCENE_HOST + "order_show.php?goods=" + uids + "&number=" + numbers+ "&page=" + (i+1) + morderUserUrl;
-                if(i==cotent_ll.getChildCount()-1){
-                    path+="&end";
-                }
-                ((WebView) cotent_ll.getChildAt(i)).loadUrl(path);
-            }
-        }
+        usercodeid = MyShare.get(this).getInt(Constance.USERCODEID);
 
     }
 
@@ -186,13 +123,125 @@ public class ExInventoryActivity extends BaseActivity {
             goodsList = (JSONArray) intent.getSerializableExtra(Constance.goods);
         }
 
-
-        getInventoryData();
     }
 
     String morderUserUrl = "";
+    public void fillData(org.json.JSONObject shop){
+        try {
+                mParentName = DemoApplication.mUserObject.getString(Constance.parent_name);
+            if(shop!=null){
+                mParentPhone = shop.getString(Constance.phone);
+                mAddress = shop.getString(Constance.address);
+            }
+            if (mShareType != 0) {
+                if(TextUtils.isEmpty(mParentName)){
+                    mParentName=orderObject.getJSONObject(Constance.consignee).getString(Constance.name);
+                }
 
+            if(mParentPhone==null){
+                mParentPhone = orderObject.getJSONObject(Constance.consignee).getString(Constance.mobile);
+            }
+            if(mAddress==null){
+                mAddress=orderObject.getJSONObject(Constance.consignee).getString(Constance.address);
+            }
+            }else {
 
+            }
+            handler.sendEmptyMessage(0);
+//            PgyCrashManager.reportCaughtException(this,new Exception("handler.sendEmptyMessage(0);"));
+         }catch (JSONException e) {
+        e.printStackTrace();
+    }
+
+    }
+Handler handler=new Handler(){
+    @Override
+    public void handleMessage(Message msg) {
+        super.handleMessage(msg);
+        load();
+    }
+};
+    public void load(){
+        getInventoryData();
+//        PgyCrashManager.reportCaughtException(this,new Exception("getInventoryData();"));
+        for (int i = 0; i < (mUids.size()); i++) {
+            com.tencent.smtt.sdk.WebView mView = new com.tencent.smtt.sdk.WebView(ExInventoryActivity.this);
+            com.tencent.smtt.sdk.WebSettings webSettings = mView.getSettings();
+            webSettings.setJavaScriptEnabled(true);
+            webSettings.setJavaScriptCanOpenWindowsAutomatically(true);
+            webSettings.setUseWideViewPort(true);//关键点
+            webSettings.setLayoutAlgorithm(com.tencent.smtt.sdk.WebSettings.LayoutAlgorithm.SINGLE_COLUMN);
+            webSettings.setDisplayZoomControls(false);
+            webSettings.setAllowFileAccess(true); // 允许访问文件
+            webSettings.setBuiltInZoomControls(false); // 设置显示缩放按钮
+            webSettings.setSupportZoom(false); // 支持缩放
+            webSettings.setLoadWithOverviewMode(true);
+            DisplayMetrics metrics = new DisplayMetrics();
+            getWindowManager().getDefaultDisplay().getMetrics(metrics);
+            int mDensity = metrics.densityDpi;
+            if (mDensity == 240) {
+                webSettings.setDefaultZoom(com.tencent.smtt.sdk.WebSettings.ZoomDensity.FAR);
+            } else if (mDensity == 160) {
+                webSettings.setDefaultZoom(com.tencent.smtt.sdk.WebSettings.ZoomDensity.MEDIUM);
+            } else if (mDensity == 120) {
+                webSettings.setDefaultZoom(com.tencent.smtt.sdk.WebSettings.ZoomDensity.CLOSE);
+            } else if (mDensity == DisplayMetrics.DENSITY_XHIGH) {
+                webSettings.setDefaultZoom(com.tencent.smtt.sdk.WebSettings.ZoomDensity.FAR);
+            } else if (mDensity == DisplayMetrics.DENSITY_TV) {
+                webSettings.setDefaultZoom(com.tencent.smtt.sdk.WebSettings.ZoomDensity.FAR);
+            } else {
+                webSettings.setDefaultZoom(com.tencent.smtt.sdk.WebSettings.ZoomDensity.MEDIUM);
+            }
+            webSettings.setLayoutAlgorithm(com.tencent.smtt.sdk.WebSettings.LayoutAlgorithm.NARROW_COLUMNS);
+            //        //设置WebView可触摸放大缩小
+            //            mView.setInitialScale(100);
+            mView.setDrawingCacheEnabled(true);
+            mView.setLayoutParams(new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.WRAP_CONTENT));
+            cotent_ll.addView(mView);
+        }
+
+        if (mShareType == 0) {
+            String id = DemoApplication.mUserObject.getString(Constance.id);
+            String path="";
+            String uids="";
+            String numbers="";
+            for(int x=0;x<mUids.size();x++){
+                uids+=mUids.get(x)+",";
+                numbers+=mNumbers.get(x)+",";
+            }
+            uids=uids.substring(0,uids.length()-1);
+            numbers=numbers.substring(0,numbers.length()-1);
+            for (int i = 0; i < cotent_ll.getChildCount(); i++) {
+//                path = NetWorkConst.SCENE_HOST + "order_show.php?uid=" + id + "&goods=" + uids+ "&number=" + numbers+ "&page=" + (i+1)+morderUserUrl;
+                 path = NetWorkConst.SCENE_HOST + "order_show.php?goods=" + uids + "&number=" + numbers+ "&page=" + (i+1) + morderUserUrl;
+                if(i==cotent_ll.getChildCount()-1){
+                    path+="&end";
+                }
+                Log.e("url",path);
+//                PgyCrashManager.reportCaughtException(this,new Exception("((WebView) cotent_ll.getChildAt(i)).loadUrl("+path+");"));
+                ((WebView) cotent_ll.getChildAt(i)).loadUrl(path);
+            }
+
+        } else {
+            String id = DemoApplication.mUserObject.getString(Constance.id);
+            String uids="";
+            String numbers="";
+            for(int x=0;x<mUids.size();x++){
+                uids+=mUids.get(x)+",";
+                numbers+=mNumbers.get(x)+",";
+            }
+            uids=uids.substring(0,uids.length()-1);
+            numbers=numbers.substring(0,numbers.length()-1);
+            for (int i = 0; i < cotent_ll.getChildCount(); i++) {
+                String path = NetWorkConst.SCENE_HOST + "order_show.php?goods=" + uids + "&number=" + numbers+ "&page=" + (i+1) + morderUserUrl;
+                if(i==cotent_ll.getChildCount()-1){
+                    path+="&end";
+                }
+                Log.e("url",path);
+                ((WebView) cotent_ll.getChildAt(i)).loadUrl(path);
+            }
+        }
+    }
     private void getInventoryData() {
         if (mShareType == 0) {
             if (goodsList.length() <= 8) {
@@ -258,12 +307,14 @@ public class ExInventoryActivity extends BaseActivity {
                 }
             }
 
-            JSONObject consigneeObject = orderObject.getJSONObject(Constance.consignee);
-            String phone = consigneeObject.getString(Constance.mobile);
-            String address = consigneeObject.getString(Constance.address);
-            String username = consigneeObject.getString(Constance.name);
-            morderUserUrl = "&phone=" + phone + "&address=" + address + "&username=" + username;
+//            JSONObject consigneeObject = orderObject.getJSONObject(Constance.consignee);
+            if(DemoApplication.mUserObject==null){
+                bocang.utils.UIUtils.showLoginDialog(this);
+                finish();
+                return;
+            }
         }
+            morderUserUrl = "&phone=" + mParentPhone + "&address=" + mAddress + "&username=" + mParentName;
 
 
     }
@@ -272,6 +323,7 @@ public class ExInventoryActivity extends BaseActivity {
     protected void onViewClick(View v) {
         switch (v.getId()) {
             case R.id.save_rl:
+                MyToast.show(this,"pdf文件已保存");
                 savePDF();
                 break;
             case R.id.wechat_ll://微信分享
@@ -433,8 +485,6 @@ public class ExInventoryActivity extends BaseActivity {
                 PdfWriter.getInstance(document, new FileOutputStream(localFile));
                 document.setMargins(0, 0, 0, 0);
                 document.open();
-
-
                 for (int i = 0; i < cotent_ll.getChildCount(); i++) {
                     ByteArrayOutputStream stream = new ByteArrayOutputStream();
                     Bitmap bitmap = FileUtil.captureWebView(((WebView) cotent_ll.getChildAt(i)));

@@ -7,7 +7,6 @@ import android.text.Spannable;
 import android.text.SpannableStringBuilder;
 import android.text.TextUtils;
 import android.text.style.ForegroundColorSpan;
-import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
@@ -16,6 +15,7 @@ import android.widget.TextView;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
+import com.aliyun.iot.ilop.demo.DemoApplication;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
 import java.text.DecimalFormat;
@@ -26,12 +26,10 @@ import bc.juhao.com.R;
 import bc.juhao.com.cons.Constance;
 import bc.juhao.com.cons.NetWorkConst;
 import bc.juhao.com.listener.IUpdateProductPriceListener;
-import bc.juhao.com.ui.activity.IssueApplication;
 import bc.juhao.com.ui.activity.product.PostedImageActivity;
-import bc.juhao.com.ui.activity.product.ProDetailActivity;
 import bocang.utils.AppUtils;
+import bocang.utils.LogUtils;
 
-import static bc.juhao.com.cons.Constance.id;
 import static bc.juhao.com.cons.Constance.product_price;
 
 /**
@@ -110,10 +108,10 @@ public class OrderGvAdapter extends BaseAdapter {
 
         final JSONObject object = mOrderes.getJSONObject(position);
 //        com.alibaba.fastjson.JSONArray goods=orderobject.getJSONArray(Constance.goods);
-        com.alibaba.fastjson.JSONObject group_buy=new com.alibaba.fastjson.JSONObject();
+        JSONObject group_buy=new JSONObject();
         int group_buyint=-1;
             try {
-                group_buy= (com.alibaba.fastjson.JSONObject)object.get(Constance.group_buy);
+                group_buy= (JSONObject)object.get(Constance.group_buy);
             }catch (Exception e){
                 group_buyint=object.getInteger(Constance.group_buy);
             }
@@ -166,26 +164,23 @@ public class OrderGvAdapter extends BaseAdapter {
             ImageLoader.getInstance().displayImage(object.getJSONObject(Constance.product).
                     getJSONArray(Constance.photos).getJSONObject(0).getString(Constance.thumb), holder.imageView);
         } catch (Exception e) {
-
+            LogUtils.logE("order_photos","id:"+object.toString());
         }
-        int mLevel = IssueApplication.mUserObject.getInt(Constance.level);
+        if(DemoApplication.mUserObject!=null){
+        int mLevel = DemoApplication.mUserObject.getInt(Constance.level);
         if (mLevel == 0) {
-
             if ( state == 0) {
                 if(isJuhao){
                     holder.update_product_money_tv.setVisibility(View.GONE);
                 }else {
                         holder.update_product_money_tv.setVisibility(View.VISIBLE);
                 }
-
             } else {
                 holder.update_product_money_tv.setVisibility(View.GONE);
             }
-
-
-
         } else {
             holder.update_product_money_tv.setVisibility(View.GONE);
+        }
         }
 //        if (mIsUpdate) {
 //            holder.update_product_money_tv.setVisibility(View.VISIBLE);

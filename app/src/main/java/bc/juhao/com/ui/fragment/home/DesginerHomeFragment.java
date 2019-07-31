@@ -28,7 +28,6 @@ import bc.juhao.com.bean.Programme;
 import bc.juhao.com.common.BaseFragment;
 import bc.juhao.com.cons.Constance;
 import bc.juhao.com.controller.DesignerController;
-import bc.juhao.com.controller.programme.ProgrammeController;
 import bc.juhao.com.listener.ILinearLayoutListener;
 import bc.juhao.com.ui.activity.MainActivity;
 import bc.juhao.com.ui.activity.programme.DiyActivity;

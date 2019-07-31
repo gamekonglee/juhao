@@ -2,15 +2,22 @@ package bc.juhao.com.ui.activity.user;
 
 import android.content.ClipboardManager;
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.graphics.Color;
+import android.os.Handler;
+import android.os.Message;
+import android.os.SystemClock;
 import android.text.Spannable;
 import android.text.SpannableStringBuilder;
 import android.text.style.ForegroundColorSpan;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
+
+import com.aliyun.iot.ilop.demo.DemoApplication;
 
 import bc.juhao.com.R;
 import bc.juhao.com.cons.Constance;
@@ -31,21 +38,23 @@ public class InvitationCodeActivity extends BaseActivity implements View.OnLongC
     private String mYaoQing = "";
     private View share_v;
     private ShareProductPopWindow mProductPopWindow;
-    private LinearLayout main_ll;
+    private RelativeLayout main_ll;
     private String mTitle = "";
     private String mCardPath = "";
     private ScrollView sv;
     private String mShareImagePath;
     private TextView tv_tips;
+    private Bitmap mBitmap;
 
     @Override
     protected void InitDataView() {
-        if(IssueApplication.mUserObject==null){
+        if(DemoApplication.mUserObject==null){
             MyToast.show(this,"请稍等，数据加载中");
             return;
         }
-        mYaoQing = IssueApplication.mUserObject.getString(Constance.invite_code);
+        mYaoQing = DemoApplication.mUserObject.getString(Constance.invite_code);
         invitation_code_tv.setText("邀请码:"+mYaoQing);
+//        mBitmap = ImageUtil.getBitmapByView(sv);
     }
 
     @Override
@@ -56,21 +65,38 @@ public class InvitationCodeActivity extends BaseActivity implements View.OnLongC
     @Override
     protected void initView() {
         setContentView(R.layout.activity_invitation_post);
-        setColor(this,Color.WHITE);
+        setStatuTextColor(this, Color.WHITE);
+        setFullScreenColor(Color.TRANSPARENT,this);
         invitation_code_tv = (TextView)findViewById(R.id.invitation_code_tv);
         invitation_code_tv.setOnLongClickListener(this);
         share_v = getViewAndClick(R.id.share_v);
         ImageView iv_code=findViewById(R.id.iv_code);
         iv_code.setOnLongClickListener(this);
-        main_ll = (LinearLayout)findViewById(R.id.main_ll);
+        main_ll = (RelativeLayout) findViewById(R.id.main_ll);
         sv = (ScrollView)findViewById(R.id.sv);
         tv_tips = findViewById(R.id.tv_tips);
         SpannableStringBuilder spannable=new SpannableStringBuilder(tv_tips.getText());
         spannable.setSpan(new ForegroundColorSpan(getResources().getColor(R.color.green)),tv_tips.getText().toString().length()-4,tv_tips.getText().toString().length()
                 , Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
         tv_tips.setText(spannable);
+        showLoading();
+        new Thread(){
+            @Override
+            public void run() {
+                super.run();
+                SystemClock.sleep(1000);
+                handler.sendEmptyMessage(0);
+            }
+        }.start();
     }
-
+    Handler handler=new Handler(){
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            mBitmap=ImageUtil.getBitmapByView(sv);
+            hideLoading();
+        }
+    };
     @Override
     protected void initData() {
     }
@@ -91,7 +117,7 @@ public class InvitationCodeActivity extends BaseActivity implements View.OnLongC
         mProductPopWindow.mActivity = this;
         mProductPopWindow.mShareTitle = mTitle;
         mProductPopWindow.mIsLocal = true;
-        mProductPopWindow.mBitmap = ImageUtil.getBitmapByView(sv);
+        mProductPopWindow.mBitmap =  mBitmap;
         new Thread(new Runnable() {
             @Override
             public void run() {

@@ -28,6 +28,7 @@ import android.widget.Toast;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.alipay.sdk.app.PayTask;
+import com.aliyun.iot.ilop.demo.DemoApplication;
 import com.bigkoo.alertview.AlertView;
 import com.bigkoo.alertview.OnItemClickListener;
 import com.hyphenate.EMCallBack;
@@ -45,7 +46,6 @@ import java.text.DecimalFormat;
 
 import bc.juhao.com.R;
 import bc.juhao.com.bean.PayResult;
-import bc.juhao.com.bean.PrepayIdInfo;
 import bc.juhao.com.chat.DemoHelper;
 import bc.juhao.com.cons.Constance;
 import bc.juhao.com.cons.NetWorkConst;
@@ -53,7 +53,6 @@ import bc.juhao.com.controller.BaseController;
 import bc.juhao.com.listener.INetworkCallBack;
 import bc.juhao.com.listener.INetworkCallBack02;
 import bc.juhao.com.listener.IUpdateProductPriceListener;
-import bc.juhao.com.ui.activity.IssueApplication;
 import bc.juhao.com.ui.activity.buy.ExInventoryActivity;
 import bc.juhao.com.ui.activity.product.ProDetailActivity;
 import bc.juhao.com.ui.activity.user.ChatActivity;
@@ -63,7 +62,6 @@ import bc.juhao.com.ui.view.ShowDialog;
 import bc.juhao.com.utils.DateUtils;
 import bc.juhao.com.utils.MyShare;
 import bc.juhao.com.utils.UIUtils;
-import bc.juhao.com.utils.WXpayUtils;
 import bocang.utils.AppDialog;
 import bocang.utils.AppUtils;
 import bocang.utils.MyLog;
@@ -117,7 +115,7 @@ public class OrderDetailController extends BaseController implements INetworkCal
     public OrderDetailController(OrderDetailActivity v) {
         mView = v;
         initView();
-//        bocang.json.JSONObject jsonObject=IssueApplication.mUserObject;
+//        bocang.json.JSONObject jsonObject=DemoApplication.mUserObject;
 //        Log.e("userObj",jsonObject.toString());
         if(AppUtils.isEmpty(mView.mOrderSn)){
             initViewData();
@@ -218,14 +216,14 @@ public class OrderDetailController extends BaseController implements INetworkCal
     }
 
     private void initViewData() {
-        if (AppUtils.isEmpty(mView.mOrderObject))
+        if (mView.mOrderObject==null)
             return;
         if( mView.mStatus==-1){
             mView.mStatus = mView.mOrderObject.getInteger(Constance.status);
         }
         mShop_mobile = mView.mOrderObject.getString(Constance.shop_mobile);
 
-        mLevel= IssueApplication.mUserObject.getInt(Constance.level);
+        mLevel= DemoApplication.mUserObject.getInt(Constance.level);
         getState(mView.mStatus);
         JSONObject consigneeObject = mView.mOrderObject.getJSONObject(Constance.consignee);
         final int state = mView.mOrderObject.getInteger(Constance.status);
@@ -238,12 +236,12 @@ public class OrderDetailController extends BaseController implements INetworkCal
         order_code_tv.setText(order_code);
         order_time_tv.setText(DateUtils.getStrTime(mView.mOrderObject.getString(Constance.created_at)));
         mProductArray = mView.mOrderObject.getJSONArray(Constance.goods);
-        com.alibaba.fastjson.JSONObject group_buy=new com.alibaba.fastjson.JSONObject();
+        JSONObject group_buy=new JSONObject();
         int group_buyint=-1;
         if(!AppUtils.isEmpty(mProductArray)){
             for(int i=0;i<mProductArray.size();i++){
                 try {
-                    group_buy= (com.alibaba.fastjson.JSONObject) mProductArray.getJSONObject(i).get(Constance.group_buy);
+                    group_buy= (JSONObject) mProductArray.getJSONObject(i).get(Constance.group_buy);
                     if(!AppUtils.isEmpty(group_buy)&&group_buyint!=0)break;
                 }catch (Exception e){
                     group_buyint=mProductArray.getJSONObject(i).getInteger(Constance.group_buy);
@@ -350,8 +348,8 @@ public class OrderDetailController extends BaseController implements INetworkCal
                     update_money_tv.setVisibility(View.VISIBLE);
                 }
                 if (mView.mStatus == 0) {
-                    do_tv.setVisibility(View.GONE);
-                    do02_tv.setVisibility(View.GONE);
+                    do_tv.setVisibility(View.VISIBLE);
+//                    do02_tv.setVisibility(View.GONE);
 //                    do03_tv.setVisibility(View.GONE);
 //                    chat_buy_tv.setVisibility(View.VISIBLE);
                 }
@@ -360,7 +358,10 @@ public class OrderDetailController extends BaseController implements INetworkCal
                 mIsUpdate=false;
                 update_money_tv.setVisibility(View.GONE);
             }
-
+            if(mLevel!=mOrderLevel){
+                do02_tv.setVisibility(View.GONE);
+                do_tv.setVisibility(View.GONE);
+            }
         } else {
             remark_tv.setVisibility(View.GONE);
             update_money_tv.setVisibility(View.GONE);
@@ -515,16 +516,14 @@ public class OrderDetailController extends BaseController implements INetworkCal
             if (id == 0) {
                 MyToast.show(mView, "该用户没有客服信息!");
             } else {
-                String parent_name = IssueApplication.mUserObject.getString("parent_name");
-                String parent_id = IssueApplication.mUserObject.getString("parent_id");
-                String userIcon = NetWorkConst.SCENE_HOST + IssueApplication.mUserObject.getString("parent_avatar");
+                String parent_name = DemoApplication.mUserObject.getString("parent_name");
+                String parent_id = DemoApplication.mUserObject.getString("parent_id");
+                String userIcon = NetWorkConst.SCENE_HOST + DemoApplication.mUserObject.getString("parent_avatar");
                 sendCall("尝试连接聊天服务..请连接?", parent_id, parent_name, userIcon);
                 //                IntentUtil.startActivity(mView, MerchantInfoActivity.class, false);
             }
         } else if (mView.mStatus == 0) {
             showPaySelectDialog(""+mOrderId);
-
-
         } else if (mView.mStatus == 2) {
             //TODO 确认收货
             sendConfirmReceipt(mOrderId+"");
@@ -533,9 +532,9 @@ public class OrderDetailController extends BaseController implements INetworkCal
             if (id == 0) {
                 MyToast.show(mView, "该用户没有客服信息!");
             } else {
-                String parent_name = IssueApplication.mUserObject.getString("parent_name");
-                String parent_id = IssueApplication.mUserObject.getString("parent_id");
-                String userIcon = NetWorkConst.SCENE_HOST + IssueApplication.mUserObject.getString("parent_avatar");
+                String parent_name = DemoApplication.mUserObject.getString("parent_name");
+                String parent_id = DemoApplication.mUserObject.getString("parent_id");
+                String userIcon = NetWorkConst.SCENE_HOST + DemoApplication.mUserObject.getString("parent_avatar");
                 sendCall("尝试连接聊天服务..请连接?", parent_id, parent_name, userIcon);
             }
         } else if (mView.mStatus == 4) {
@@ -543,9 +542,9 @@ public class OrderDetailController extends BaseController implements INetworkCal
             if (id == 0) {
                 MyToast.show(mView, "该用户没有客服信息!");
             } else {
-                String parent_name = IssueApplication.mUserObject.getString("parent_name");
-                String parent_id = IssueApplication.mUserObject.getString("parent_id");
-                String userIcon = NetWorkConst.SCENE_HOST + IssueApplication.mUserObject.getString("parent_avatar");
+                String parent_name = DemoApplication.mUserObject.getString("parent_name");
+                String parent_id = DemoApplication.mUserObject.getString("parent_id");
+                String userIcon = NetWorkConst.SCENE_HOST + DemoApplication.mUserObject.getString("parent_avatar");
                 sendCall("尝试连接聊天服务..请连接?", parent_id, parent_name, userIcon);
             }
         }
@@ -557,7 +556,7 @@ public class OrderDetailController extends BaseController implements INetworkCal
      * @param orderId
      */
     private void showPaySelectDialog(final String orderId) {
-        final Dialog dialog=UIUtils.showBottomInDialog(mView,R.layout.dialog_pay_select,UIUtils.dip2PX(200));
+        final Dialog dialog=UIUtils.showBottomInDialog(mView, R.layout.dialog_pay_select,UIUtils.dip2PX(200));
         LinearLayout ll_alipay=dialog.findViewById(R.id.ll_alipay);
         LinearLayout ll_wx=dialog.findViewById(R.id.ll_wxpay);
         final ImageView iv_alipay=dialog.findViewById(R.id.iv_alipay);
@@ -697,7 +696,7 @@ public class OrderDetailController extends BaseController implements INetworkCal
                         return;
                     SubmitAliPay(notify_url);
                 } else {
-                    com.alibaba.fastjson.JSONObject wxpayObject = ans.getJSONObject(Constance.wxpay);
+                    JSONObject wxpayObject = ans.getJSONObject(Constance.wxpay);
                     String appid = wxpayObject.getString("appid");
                     String mch_id = wxpayObject.getString("mch_id");
                     String nonce_str = wxpayObject.getString("nonce_str");
@@ -796,13 +795,13 @@ public class OrderDetailController extends BaseController implements INetworkCal
             MyToast.show(mView, "该用户没有客服信息!");
         } else {
 
-            String parent_name = IssueApplication.mUserObject.getString("parent_name");
-            String parent_id = IssueApplication.mUserObject.getString("parent_id");
+            String parent_name = DemoApplication.mUserObject.getString("parent_name");
+            String parent_id = DemoApplication.mUserObject.getString("parent_id");
             if(isJuhao){
                 parent_id="37";
                 parent_name="钜豪超市";
             }
-            String userIcon = NetWorkConst.SCENE_HOST + IssueApplication.mUserObject.getString("parent_avatar");
+            String userIcon = NetWorkConst.SCENE_HOST + DemoApplication.mUserObject.getString("parent_avatar");
             sendCall("尝试连接聊天服务..请连接?", parent_id, parent_name, userIcon);
             //            IntentUtil.startActivity(mView, MerchantInfoActivity.class, false);
         }
@@ -871,7 +870,9 @@ public class OrderDetailController extends BaseController implements INetworkCal
         mNetWork.updatePrice(orderId, money, discount,new INetworkCallBack02() {
             @Override
             public void onSuccessListener(String requestCode, JSONObject ans) {
-                sendOrderList(orderId);
+//                sendOrderList(orderId);
+                MyToast.show(mView, "修改成功!");
+                    sendOrderDetail(mView.mOrderSn);
             }
 
             @Override
@@ -905,7 +906,7 @@ public class OrderDetailController extends BaseController implements INetworkCal
      */
     public void sendCall(String msg, final String parent_id, final String parent_name, final String userIcon) {
         try {
-            //            if (AppUtils.isEmpty(IssueApplication.mUserObject.getString("parent_name"))) {
+            //            if (AppUtils.isEmpty(DemoApplication.mUserObject.getString("parent_name"))) {
             //                MyToast.show(mView, "不能和自己聊天!");
             //                return;
             //            }
@@ -964,7 +965,7 @@ public class OrderDetailController extends BaseController implements INetworkCal
                 EMClient.getInstance().chatManager().loadAllConversations();
                 MyLog.e("登录环信成功!");
                 toast.cancel();
-                String parent_name = IssueApplication.mUserObject.getString("parent_name");
+                String parent_name = DemoApplication.mUserObject.getString("parent_name");
                 try {
                     EMClient.getInstance().contactManager().acceptInvitation(parent_id);
                     mView.startActivity(new Intent(mView, ChatActivity.class).putExtra(EaseConstant.EXTRA_USER_ID, parent_id));
@@ -1154,7 +1155,14 @@ public class OrderDetailController extends BaseController implements INetworkCal
                 @Override
                 public void onSuccessListener(String requestCode, JSONObject ans) {
                     mView.hideLoading();
-                    sendOrderList(orderId);
+//                    sendOrderList(orderId);
+                    if(AppUtils.isEmpty(mView.mOrderSn)){
+                        initViewData();
+                        sendOrderDetail(mView.mOrderObject.getString(sn));
+                    }else{
+                        sendOrderDetail(mView.mOrderSn);
+                    }
+                    MyToast.show(mView, "修改成功!");
 //                    updatePrice(mUpdateorderSn, mTotalProductMoney, mDiscount + "");
                 }
 

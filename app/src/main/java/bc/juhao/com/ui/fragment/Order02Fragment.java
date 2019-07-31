@@ -69,7 +69,7 @@ public class Order02Fragment extends BaseFragment {
 
     }
 
-    public static Order02Fragment newInstance(List<String> contentList,int flag){
+    public static Order02Fragment newInstance(List<String> contentList, int flag){
         Bundle bundle = new Bundle();
         bundle.putStringArrayList("content", (ArrayList<String>) contentList);
         bundle.putInt("flag", flag);

@@ -25,6 +25,7 @@ import android.widget.Toast;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alipay.sdk.app.PayTask;
+import com.aliyun.iot.ilop.demo.DemoApplication;
 import com.bigkoo.alertview.AlertView;
 import com.bigkoo.alertview.OnItemClickListener;
 import com.hyphenate.EMCallBack;
@@ -48,7 +49,6 @@ import bc.juhao.com.listener.INetworkCallBack;
 import bc.juhao.com.listener.INetworkCallBack02;
 import bc.juhao.com.listener.IUpdateProductPriceListener;
 import bc.juhao.com.ui.activity.ChartListActivity;
-import bc.juhao.com.ui.activity.IssueApplication;
 import bc.juhao.com.ui.activity.buy.ExInventoryActivity;
 import bc.juhao.com.ui.activity.user.ChatActivity;
 import bc.juhao.com.ui.activity.user.ConsignmentOrderActivity;
@@ -164,6 +164,7 @@ public class Order02Controller extends BaseController implements INetworkCallBac
 
                 mView.mSearchOrder = ans.getJSONObject(Constance.orders);
                 if (AppUtils.isEmpty(mView.mSearchOrder)) {
+                    MyToast.show(mView.getActivity(),"查无此订单");
                     dismissRefesh();
                     return;
                 }
@@ -525,7 +526,7 @@ public class Order02Controller extends BaseController implements INetworkCallBac
                     mAlertViewExt02.show();
                 }
             });
-            mLevel = IssueApplication.mUserObject.getInt(Constance.level);
+            mLevel = DemoApplication.mUserObject.getInt(Constance.level);
 
             String user_name = orderobject.getString(Constance.user_name);
             mOrderLevel = orderobject.getInteger(Constance.level);
@@ -597,9 +598,9 @@ public class Order02Controller extends BaseController implements INetworkCallBac
                     if (id == 0) {
                         MyToast.show(mView.getActivity(), "该用户没有客服信息!");
                     } else {
-                        String parent_name = IssueApplication.mUserObject.getString("parent_name");
-                        String parent_id = IssueApplication.mUserObject.getString("parent_id");
-                        String userIcon = NetWorkConst.SCENE_HOST + IssueApplication.mUserObject.getString("parent_avatar");
+                        String parent_name = DemoApplication.mUserObject.getString("parent_name");
+                        String parent_id = DemoApplication.mUserObject.getString("parent_id");
+                        String userIcon = NetWorkConst.SCENE_HOST + DemoApplication.mUserObject.getString("parent_avatar");
                         sendCall("尝试连接聊天服务..请连接?", parent_id, parent_name, userIcon);
                     }
                 }
@@ -619,9 +620,9 @@ public class Order02Controller extends BaseController implements INetworkCallBac
                         if (id == 0) {
                             MyToast.show(mView.getActivity(), "该用户没有客服信息!");
                         } else {
-                            String parent_name = IssueApplication.mUserObject.getString("parent_name");
-                            String parent_id = IssueApplication.mUserObject.getString("parent_id");
-                            String userIcon = NetWorkConst.SCENE_HOST + IssueApplication.mUserObject.getString("parent_avatar");
+                            String parent_name = DemoApplication.mUserObject.getString("parent_name");
+                            String parent_id = DemoApplication.mUserObject.getString("parent_id");
+                            String userIcon = NetWorkConst.SCENE_HOST + DemoApplication.mUserObject.getString("parent_avatar");
                             sendCall("尝试连接聊天服务..请连接?", parent_id, parent_name, userIcon);
                         }
                     } else if (state == 0) {
@@ -647,9 +648,9 @@ public class Order02Controller extends BaseController implements INetworkCallBac
                         if (id == 0) {
                             MyToast.show(mView.getActivity(), "该用户没有客服信息!");
                         } else {
-                            String parent_name = IssueApplication.mUserObject.getString("parent_name");
-                            String userIcon = NetWorkConst.SCENE_HOST + IssueApplication.mUserObject.getString("parent_avatar");
-                            String parent_id = IssueApplication.mUserObject.getString("parent_id");
+                            String parent_name = DemoApplication.mUserObject.getString("parent_name");
+                            String userIcon = NetWorkConst.SCENE_HOST + DemoApplication.mUserObject.getString("parent_avatar");
+                            String parent_id = DemoApplication.mUserObject.getString("parent_id");
                             sendCall("尝试连接聊天服务..请连接?", parent_id, parent_name, userIcon);
                             //                            IntentUtil.startActivity(mView.getActivity(), MerchantInfoActivity.class, false);
                         }
@@ -664,9 +665,9 @@ public class Order02Controller extends BaseController implements INetworkCallBac
                         if (id == 0) {
                             MyToast.show(mView.getActivity(), "该用户没有客服信息!");
                         } else {
-                            String parent_name = IssueApplication.mUserObject.getString("parent_name");
-                            String userIcon = NetWorkConst.SCENE_HOST + IssueApplication.mUserObject.getString("parent_avatar");
-                            String parent_id = IssueApplication.mUserObject.getString("parent_id");
+                            String parent_name = DemoApplication.mUserObject.getString("parent_name");
+                            String userIcon = NetWorkConst.SCENE_HOST + DemoApplication.mUserObject.getString("parent_avatar");
+                            String parent_id = DemoApplication.mUserObject.getString("parent_id");
                             sendCall("尝试连接聊天服务..请连接?", parent_id, parent_name, userIcon);
                             //                            IntentUtil.startActivity(mView.getActivity(), MerchantInfoActivity.class, false);
                         }
@@ -1051,7 +1052,7 @@ public class Order02Controller extends BaseController implements INetworkCallBac
      */
     public void sendCall(String msg, final String parent_id, final String parent_name, final String userIcon) {
         try {
-            //            if (AppUtils.isEmpty(IssueApplication.mUserObject.getString("parent_name"))) {
+            //            if (AppUtils.isEmpty(DemoApplication.mUserObject.getString("parent_name"))) {
             //                MyToast.show(mView.getActivity(), "不能和自己聊天!");
             //                return;
             //            }
@@ -1110,7 +1111,7 @@ public class Order02Controller extends BaseController implements INetworkCallBac
                 EMClient.getInstance().chatManager().loadAllConversations();
                 MyLog.e("登录环信成功!");
                 toast.cancel();
-                String parent_name = IssueApplication.mUserObject.getString("parent_name");
+                String parent_name = DemoApplication.mUserObject.getString("parent_name");
                 try {
                     EMClient.getInstance().contactManager().acceptInvitation(parent_id);
                     mView.startActivity(new Intent(mView.getActivity(), ChatActivity.class).putExtra(EaseConstant.EXTRA_USER_ID, parent_id));

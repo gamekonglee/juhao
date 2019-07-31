@@ -14,6 +14,7 @@ import bocang.net.NetJSONObject;
 import bocang.net.NetJSONObject02;
 import bocang.utils.AppLog;
 import bocang.utils.AppUtils;
+import bocang.utils.LogUtils;
 
 /**
  * filename :
@@ -131,7 +132,7 @@ public class Network {
         JSONObject params = new JSONObject();
         params.add("username", username);
         params.add("password", password);
-        params.add("state", "no");
+//        params.add("state", "no");
         sendRequest(params, NetWorkConst.LOGIN, 2, 0, iNetworkCallBack);
     }
 
@@ -167,7 +168,16 @@ public class Network {
         params.add("code", code);
         sendRequest(params, NetWorkConst.RESET, 2, 0, iNetworkCallBack);
     }
-
+    /**
+     * 重置密码
+     */
+    public void sendUpdatePwdByOld(String mobile, String password, String oldPwd, INetworkCallBack iNetworkCallBack) {
+        JSONObject params = new JSONObject();
+        params.add("mobile", mobile);
+        params.add("password", password);
+        params.add("old_password", oldPwd);
+        sendRequest(params, NetWorkConst.UPDATE, 2, 0, iNetworkCallBack);
+    }
     /**
      * 获取验证码
      *
@@ -472,7 +482,7 @@ public class Network {
         params.add("id", 2);
         params.add("page", page);
         params.add("per_page", per_page);
-        sendRequest(params, NetWorkConst.ARTICLELIST, 2, 0, iNetworkCallBack);
+        sendRequest(params, NetWorkConst.ARTICLELIST, 1, 0, iNetworkCallBack);
 
     }
 
@@ -731,6 +741,18 @@ public class Network {
      */
     public void getAgentAll(INetworkCallBack iNetworkCallBack) {
         JSONObject params = new JSONObject();
+        params.add("page","1");
+        params.add("per_page","20");
+        sendRequest(params, NetWorkConst.AGENT_ALL_URL, 1, 0, iNetworkCallBack);
+    }
+
+    /**
+     * 获取我的分销商
+     */
+    public void getAgentAll(String page,String per_page,INetworkCallBack iNetworkCallBack) {
+        JSONObject params = new JSONObject();
+        params.add("page",page);
+        params.add("per_page",per_page);
         sendRequest(params, NetWorkConst.AGENT_ALL_URL, 1, 0, iNetworkCallBack);
     }
 
@@ -757,6 +779,8 @@ public class Network {
         JSONObject params = new JSONObject();
         params.add("level", level);
         params.add("uid", uid);
+//        LogUtils.logE("level:",level+"");
+//        LogUtils.logE("uid:",uid);
         sendRequest(params, NetWorkConst.LEVEL_EDIT_URL, 1, 0, iNetworkCallBack);
     }
 
@@ -788,7 +812,7 @@ public class Network {
     public void sendproductLink(String productId, INetworkCallBack iNetworkCallBack) {
         JSONObject jsonObject=new JSONObject();
         jsonObject.add("product",productId);
-        sendRequest(jsonObject,NetWorkConst.PRODUCT_DETAIL_LINK,1,0,iNetworkCallBack);
+        sendRequest(jsonObject, NetWorkConst.PRODUCT_DETAIL_LINK,1,0,iNetworkCallBack);
     }
     public void sendAddAccount(String company, String bank, String account, String name, String tel, INetworkCallBack iNetworkCallBack) {
         JSONObject jsonObject=new JSONObject();
@@ -797,19 +821,19 @@ public class Network {
         jsonObject.add("account",account);
         jsonObject.add("name",name);
         jsonObject.add("phone",tel);
-        sendRequest(jsonObject,NetWorkConst.ADD_ACCOUNT,1,0,iNetworkCallBack);
+        sendRequest(jsonObject, NetWorkConst.ADD_ACCOUNT,1,0,iNetworkCallBack);
     }
 
     public void sendAccountList(INetworkCallBack iNetworkCallBack) {
         JSONObject jsonObject=new JSONObject();
-        sendRequest(jsonObject,NetWorkConst.LIST_ACCOUNT,1,0,iNetworkCallBack);
+        sendRequest(jsonObject, NetWorkConst.LIST_ACCOUNT,1,0,iNetworkCallBack);
     }
 
     public void sendPaySuccess(String orderid,String mTotal, INetworkCallBack iNetworkCallBack) {
         JSONObject jsonObject=new JSONObject();
         jsonObject.add("amount",mTotal);
         jsonObject.add("order",orderid);
-        sendRequest(jsonObject,NetWorkConst.ALIPAY_SEND,1,0,iNetworkCallBack);
+        sendRequest(jsonObject, NetWorkConst.ALIPAY_SEND,1,0,iNetworkCallBack);
     }
     public void sendDealer(String name, String phone, String region, String address, String remark, INetworkCallBack iNetworkCallBack) {
         JSONObject jsonObject=new JSONObject();
@@ -817,7 +841,7 @@ public class Network {
         jsonObject.add("phone",phone);
         jsonObject.add("region",region);
         jsonObject.add("address",address);
-        sendRequest(jsonObject,NetWorkConst.DEALER_ADD,1,0,iNetworkCallBack);
+        sendRequest(jsonObject, NetWorkConst.DEALER_ADD,1,0,iNetworkCallBack);
     }
     public void getShopMobile(INetworkCallBack iNetworkCallBack) {
         JSONObject jsonObject=new JSONObject();
@@ -949,10 +973,38 @@ public class Network {
     public void sendTokenAdd(String android_id, INetworkCallBack02 iNetworkCallBack02) {
         JSONObject jsonObject=new JSONObject();
         jsonObject.add("sid",android_id);
-        sendRequest02(jsonObject,NetWorkConst.TOKEN_ADD,2,iNetworkCallBack02);
+        sendRequest02(jsonObject, NetWorkConst.TOKEN_ADD,2,iNetworkCallBack02);
     }
 
 
+    public void sendBannerIndex(INetworkCallBack iNetworkCallBack) {
+        JSONObject jsonObject=new JSONObject();
+        sendRequest(jsonObject, NetWorkConst.BANNER_INDEX,1,0,iNetworkCallBack);
+    }
+    public void sendHomeIndex(INetworkCallBack iNetworkCallBack) {
+        JSONObject jsonObject=new JSONObject();
+        jsonObject.add("id","275");
+        sendRequest(jsonObject, NetWorkConst.BANNER_INDEX,1,0,iNetworkCallBack);
+    }
+
+    public void sendZhuanti(INetworkCallBack iNetworkCallBack) {
+        JSONObject jsonObject=new JSONObject();
+        jsonObject.add("id","11");
+        jsonObject.add("page", "1");
+        jsonObject.add("per_page", "10");
+        sendRequest(jsonObject, NetWorkConst.ARTICLE_ZHUANTI,1,0,iNetworkCallBack);
+    }
+
+    public void sendScene(INetworkCallBack iNetworkCallBack) {
+        JSONObject jsonObject=new JSONObject();
+        sendRequest(jsonObject, NetWorkConst.CATEGORY_SCENE,1,0,iNetworkCallBack);
+    }
+
+    public void checkSystem(INetworkCallBack iNetworkCallBack) {
+        JSONObject jsonObject=new JSONObject();
+        jsonObject.add("is_hd",0);
+        sendRequest(jsonObject,NetWorkConst.CHECK_SYSTEM,1,0,iNetworkCallBack);
+    }
 }
 
 

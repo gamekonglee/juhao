@@ -2,6 +2,8 @@ package bc.juhao.com.ui.activity;
 
 import android.content.BroadcastReceiver;
 import android.content.Intent;
+import android.graphics.Color;
+import android.util.Log;
 import android.view.View;
 
 import com.hyphenate.EMMessageListener;
@@ -43,7 +45,7 @@ public class ChartListActivity extends BaseActivity
     @Override
     protected void initView() {
         setContentView(R.layout.activity_message);
-        setColor(this,getResources().getColor(R.color.color_chat));
+        setColor(this, Color.WHITE);
         //必需继承FragmentActivity,嵌套fragment只需要这行代码
         mFragment=new MessageFragment();
         getSupportFragmentManager().beginTransaction().replace(R.id.container,
@@ -79,6 +81,7 @@ public class ChartListActivity extends BaseActivity
 
             @Override
             public void onMessageReceived(List<EMMessage> messages) {
+                Log.e("onMessageReceived",messages.size()+"");
                 for (EMMessage message : messages) {
                     //                    EMLog.d(TAG, "onMessageReceived id : " + message.getMsgId());
                     EaseUI.getInstance().getNotifier().onNewMsg(message);
@@ -98,6 +101,7 @@ public class ChartListActivity extends BaseActivity
 
             @Override
             public void onCmdMessageReceived(List<EMMessage> messages) {
+                Log.e("onCmdMessageReceived",messages.size()+"");
                 for (EMMessage message : messages) {
                     //                    EMLog.d(TAG, "receive command message");
                     //get message body

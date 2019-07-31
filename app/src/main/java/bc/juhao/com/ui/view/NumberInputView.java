@@ -111,7 +111,7 @@ public class NumberInputView extends LinearLayout implements View.OnClickListene
         mCurrentNum=Integer.parseInt(number);
         if (v.getId()== R.id.rightTv) {
             mCurrentNum++;
-        }else if (v.getId()==R.id.leftTv) {
+        }else if (v.getId()== R.id.leftTv) {
             mCurrentNum--;
         }
         mNumberTv.setText(mCurrentNum+"");

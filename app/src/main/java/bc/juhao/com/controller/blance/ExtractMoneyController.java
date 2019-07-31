@@ -2,11 +2,11 @@ package bc.juhao.com.controller.blance;
 
 import android.content.Intent;
 import android.os.Message;
-import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
 import com.alibaba.fastjson.JSONObject;
+import com.aliyun.iot.ilop.demo.DemoApplication;
 import com.google.gson.Gson;
 
 import bc.juhao.com.R;
@@ -43,8 +43,8 @@ public class ExtractMoneyController extends BaseController {
     }
 
     private void initViewData() {
-        if(AppUtils.isEmpty(IssueApplication.mUserObject))return;
-        money= IssueApplication.mUserObject.getString(Constance.money);
+        if(AppUtils.isEmpty(DemoApplication.mUserObject))return;
+        money= DemoApplication.mUserObject.getString(Constance.money);
         money_tv.setText("￥" + money);
 
     }
@@ -85,6 +85,10 @@ public class ExtractMoneyController extends BaseController {
             MyToast.show(mView,"提现金额不能大于余额!");
             return;
         }
+//        if(exchange_num.contains(".")){
+//            MyToast.show(mView,"提现金额必须为整数");
+//            return;
+//        }
         mView.setShowDialog(true);
         mView.setShowDialog("正在提现中...");
         mView.showLoading();
@@ -103,7 +107,11 @@ public class ExtractMoneyController extends BaseController {
             @Override
             public void onFailureListener(String requestCode, JSONObject ans) {
                 mView.hideLoading();
+                if(ans!=null&&ans.getString(Constance.error_desc)!=null){
+                    MyToast.show(mView, ""+ans.getString(Constance.error_desc));
+                }else {
                 MyToast.show(mView, "提现失败!,请重试!");
+                }
             }
         });
     }
@@ -118,7 +126,7 @@ public class ExtractMoneyController extends BaseController {
                 switch (requestCode) {
                     case NetWorkConst.PROFILE:
                         bocang.json.JSONObject mUserObject = ans.getJSONObject(Constance.user);
-                        IssueApplication.mUserObject=mUserObject;
+                        DemoApplication.mUserObject=mUserObject;
                         money_tv.setText("￥" + money);
                         Intent intent=new Intent(mView, WithDrawalDetailActivity.class);
                         intent.putExtra(Constance.alipay,alipay);

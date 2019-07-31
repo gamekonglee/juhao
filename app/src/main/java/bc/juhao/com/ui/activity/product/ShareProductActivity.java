@@ -79,6 +79,11 @@ public class ShareProductActivity extends BaseActivity {
 
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        mController.onActivityResult(requestCode,resultCode,data);
+    }
 
     @Override
     protected void onDestroy() {

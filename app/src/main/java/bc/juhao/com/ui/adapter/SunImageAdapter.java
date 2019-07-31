@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 
+import com.aliyun.iot.ilop.demo.DemoApplication;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
 import java.util.ArrayList;
@@ -17,7 +18,6 @@ import bc.juhao.com.cons.Constance;
 import bc.juhao.com.cons.NetWorkConst;
 import bc.juhao.com.ui.activity.IssueApplication;
 import bc.juhao.com.utils.MyShare;
-import bc.juhao.com.utils.ShareUtil;
 import bocang.json.JSONObject;
 
 /**
@@ -74,7 +74,7 @@ public class SunImageAdapter extends BaseAdapter {
         if(position==2){
             String Token= MyShare.get(mContext).getString(Constance.TOKEN);
             if(!TextUtils.isEmpty(Token)) {
-                JSONObject mUserObject= IssueApplication.mUserObject;
+                JSONObject mUserObject= DemoApplication.mUserObject;
                 if(mUserObject!=null){
                     int leve=mUserObject.getInt(Constance.level);
                     if(leve==0){

@@ -158,30 +158,37 @@
 
                             <RadioGroup
                                 android:id="@+id/radioGroup"
-
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_toRightOf="@id/conveytype_title_tv"
                                 android:contentDescription="性别"
                                 android:orientation="horizontal">
-
+                                <RadioButton
+                                    android:id="@+id/radioSelf"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginLeft="20dp"
+                                    android:button="@drawable/selector_checkbox"
+                                    android:text="  门店自提"
+                                    android:checked="true"
+                                    android:textColor="@color/txt_black" />
                                 <RadioButton
                                     android:id="@+id/radioLogistic"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:layout_marginLeft="50dp"
+                                    android:layout_marginLeft="20dp"
                                     android:button="@drawable/selector_checkbox"
-                                    android:text="物流"
+                                    android:text="  物流"
                                     android:textColor="@color/txt_black"></RadioButton>
 
                                 <RadioButton
                                     android:id="@+id/radioEMS"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:layout_marginLeft="50dp"
+                                    android:layout_marginLeft="20dp"
                                     android:button="@drawable/selector_checkbox"
-                                    android:checked="true"
-                                    android:text="快递"
+                                    android:checked="false"
+                                    android:text="  快递"
                                     android:textColor="@color/txt_black"></RadioButton>
                             </RadioGroup>
 

@@ -12,7 +12,6 @@ import android.widget.LinearLayout;
 import bc.juhao.com.R;
 import bc.juhao.com.common.BaseFragment;
 import bc.juhao.com.ui.activity.ErrorTipsActivity;
-import bc.juhao.com.ui.activity.ItDevicesActivity;
 
 /**
  * Created by bocang on 18-2-8.

@@ -20,7 +20,6 @@ import bc.juhao.com.R;
 import bc.juhao.com.bean.PayResult;
 import bc.juhao.com.cons.Constance;
 import bc.juhao.com.controller.user.OrderController;
-import bc.juhao.com.ui.activity.buy.ConfirmOrderActivity;
 import bc.juhao.com.ui.activity.user.OrderDetailActivity;
 import bocang.utils.AppUtils;
 import bocang.utils.MyToast;
@@ -102,7 +101,7 @@ public class OrderFragment extends OrderBaseFragment {
         isPrepared=false;
     }
 
-    public static OrderFragment newInstance(List<String> contentList,int flag){
+    public static OrderFragment newInstance(List<String> contentList, int flag){
         Bundle bundle = new Bundle();
         bundle.putStringArrayList("content", (ArrayList<String>) contentList);
         bundle.putInt("flag", flag);
@@ -143,7 +142,5 @@ public class OrderFragment extends OrderBaseFragment {
             intent.putExtra(Constance.state, state);
             startActivity(intent);
         }
-
-
     }
 }

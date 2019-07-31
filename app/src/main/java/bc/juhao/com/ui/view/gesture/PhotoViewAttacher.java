@@ -20,6 +20,8 @@ import android.graphics.Matrix;
 import android.graphics.Matrix.ScaleToFit;
 import android.graphics.RectF;
 import android.graphics.drawable.Drawable;
+import android.os.Build;
+import android.support.annotation.RequiresApi;
 import android.util.Log;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
@@ -30,7 +32,6 @@ import android.widget.ImageView;
 import android.widget.ImageView.ScaleType;
 
 import java.lang.ref.WeakReference;
-
 
 
 public class PhotoViewAttacher implements IPhotoView, View.OnTouchListener, VersionedGestureDetector.OnGestureListener,
@@ -132,6 +133,7 @@ public class PhotoViewAttacher implements IPhotoView, View.OnTouchListener, Vers
 	private boolean mZoomEnabled;
 	private ScaleType mScaleType = ScaleType.FIT_CENTER;
 
+	@RequiresApi(api = Build.VERSION_CODES.CUPCAKE)
 	public PhotoViewAttacher(ImageView imageView) {
 		mImageView = new WeakReference<ImageView>(imageView);
 

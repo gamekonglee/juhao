@@ -1,0 +1,206 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context="com.alibaba.alink.opensdksample.envconfig.ConfigEnvActivity"
+    android:orientation="vertical">
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="15dp"
+        android:text="切换环境" />
+
+    <RadioGroup
+        android:id="@+id/radiogroup_envconfig_alinkenv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="10dp">
+
+        <RadioButton
+            android:id="@+id/radiobutton_envconfig_alinkenv_online"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="2dp"
+            android:button="@null"
+            android:gravity="center"
+            android:paddingTop="5dp"
+            android:paddingBottom="5dp"
+            android:paddingLeft="8dp"
+            android:paddingRight="8dp"
+            android:background="@drawable/envconfig_radiobtn"
+            android:textSize="13dp"
+            android:text="线上" />
+
+        <RadioButton
+            android:id="@+id/radiobutton_envconfig_alinkenv_pre"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="2dp"
+            android:button="@null"
+            android:gravity="center"
+            android:paddingTop="5dp"
+            android:paddingBottom="5dp"
+            android:paddingLeft="8dp"
+            android:paddingRight="8dp"
+            android:background="@drawable/envconfig_radiobtn"
+            android:textSize="13dp"
+            android:text="预发" />
+
+        <RadioButton
+            android:id="@+id/radiobutton_envconfig_alinkenv_sandbox"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="2dp"
+            android:button="@null"
+            android:gravity="center"
+            android:paddingTop="5dp"
+            android:paddingBottom="5dp"
+            android:paddingLeft="8dp"
+            android:paddingRight="8dp"
+            android:background="@drawable/envconfig_radiobtn"
+            android:textSize="13dp"
+            android:text="沙箱" />
+
+        <RadioButton
+            android:id="@+id/radiobutton_envconfig_alinkenv_daily"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="2dp"
+            android:button="@null"
+            android:gravity="center"
+            android:paddingTop="5dp"
+            android:paddingBottom="5dp"
+            android:paddingLeft="8dp"
+            android:paddingRight="8dp"
+            android:background="@drawable/envconfig_radiobtn"
+            android:textSize="13dp"
+            android:text="日常" />
+    </RadioGroup>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:textSize="15dp"
+        android:text="切换 Bone CDN 环境" />
+
+    <RadioGroup
+        android:id="@+id/radiogroup_envconfig_cdnenv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="10dp">
+
+        <RadioButton
+            android:id="@+id/radiobutton_envconfig_cdnenv_release"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="2dp"
+            android:button="@null"
+            android:gravity="center"
+            android:paddingTop="5dp"
+            android:paddingBottom="5dp"
+            android:paddingLeft="8dp"
+            android:paddingRight="8dp"
+            android:background="@drawable/envconfig_radiobtn"
+            android:textSize="13dp"
+            android:text="Release" />
+
+        <RadioButton
+            android:id="@+id/radiobutton_envconfig_cdnenv_test"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="2dp"
+            android:button="@null"
+            android:gravity="center"
+            android:paddingTop="5dp"
+            android:paddingBottom="5dp"
+            android:paddingLeft="8dp"
+            android:paddingRight="8dp"
+            android:background="@drawable/envconfig_radiobtn"
+            android:textSize="13dp"
+            android:text="Test" />
+    </RadioGroup>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:textSize="15dp"
+        android:text="模组认证模式" />
+
+    <RadioGroup
+        android:id="@+id/radiogroup_envconfig_device_config_mode"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="10dp">
+
+        <RadioButton
+            android:id="@+id/radiobutton_envconfig_device_config_mode_normal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="2dp"
+            android:button="@null"
+            android:gravity="center"
+            android:paddingTop="5dp"
+            android:paddingBottom="5dp"
+            android:paddingLeft="8dp"
+            android:paddingRight="8dp"
+            android:background="@drawable/envconfig_radiobtn"
+            android:textSize="13dp"
+            android:text="关闭" />
+
+        <RadioButton
+            android:id="@+id/radiobutton_envconfig_device_config_mode_auth"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="2dp"
+            android:button="@null"
+            android:gravity="center"
+            android:paddingTop="5dp"
+            android:paddingBottom="5dp"
+            android:paddingLeft="8dp"
+            android:paddingRight="8dp"
+            android:background="@drawable/envconfig_radiobtn"
+            android:textSize="13dp"
+            android:text="打开" />
+
+        <RadioButton
+            android:id="@+id/radiobutton_envconfig_device_config_mode_strong_auth"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="2dp"
+            android:button="@null"
+            android:gravity="center"
+            android:paddingTop="5dp"
+            android:paddingBottom="5dp"
+            android:paddingLeft="8dp"
+            android:paddingRight="8dp"
+            android:background="@drawable/envconfig_radiobtn"
+            android:textSize="13dp"
+            android:text="打开并优选热点配网" />
+
+    </RadioGroup>
+
+    <Button
+        android:id="@+id/button_envconfig_save"
+        android:layout_width="match_parent"
+        android:layout_height="35dp"
+        android:layout_marginTop="50dp"
+        android:background="@drawable/normalbutton_background"
+        android:textColor="@drawable/normalbutton_textcolor"
+        android:textSize="16dp"
+        android:text="切换并保存"
+        android:onClick="swithSaveEnv"/>
+
+</LinearLayout>

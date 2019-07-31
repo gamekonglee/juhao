@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    android:background="#ffffff"
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <bc.juhao.com.ui.view.TextViewPlus
+        android:drawableTop="@mipmap/list_icon"
+        android:layout_width="wrap_content"
+        android:text="暂无聊天记录哟~"
+        android:textColor="#888888"
+        android:textSize="16sp"
+        android:drawablePadding="15dp"
+        android:layout_centerInParent="true"
+        android:layout_height="wrap_content" />
+</RelativeLayout>

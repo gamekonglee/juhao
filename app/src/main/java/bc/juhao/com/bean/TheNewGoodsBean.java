@@ -9,7 +9,10 @@ package bc.juhao.com.bean;
  */
 
 import java.util.List;
-import bc.juhao.com.bean.GoodsBean.*;
+
+import bc.juhao.com.bean.GoodsBean.App_img;
+import bc.juhao.com.bean.GoodsBean.Photos;
+
 /**
  * Auto-generated: 2018-02-07 13:53:22
  *

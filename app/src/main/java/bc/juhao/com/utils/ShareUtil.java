@@ -5,11 +5,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
-import android.text.TextUtils;
-import android.widget.ImageView;
 
-import com.nostra13.universalimageloader.core.ImageLoader;
-import com.tencent.connect.common.Constants;
 import com.tencent.connect.share.QQShare;
 import com.tencent.mm.opensdk.modelmsg.SendMessageToWX;
 import com.tencent.mm.opensdk.modelmsg.WXFileObject;
@@ -23,14 +19,9 @@ import com.tencent.tauth.IUiListener;
 import com.tencent.tauth.Tencent;
 import com.tencent.tauth.UiError;
 
-import java.util.HashMap;
-
 import bc.juhao.com.R;
 import bc.juhao.com.cons.Constance;
-import bc.juhao.com.cons.NetWorkConst;
-import bc.juhao.com.listener.IShareCallBack;
 import bocang.utils.MyToast;
-import bocang.view.BaseActivity;
 //import cn.sharesdk.onekeyshare.OnekeyShare;
 //import cn.sharesdk.onekeyshare.ShareContentCustomizeCallback;
 
@@ -49,7 +40,7 @@ public class ShareUtil {
         wxWebpageObject.webpageUrl=path;
         WXMediaMessage wxMediaMessage=new WXMediaMessage(wxWebpageObject);
         wxMediaMessage.title=title;
-        Bitmap thumb= BitmapFactory.decodeResource(activity.getResources(),R.mipmap.ic_launcher);
+        Bitmap thumb= BitmapFactory.decodeResource(activity.getResources(), R.mipmap.ic_launcher);
         wxMediaMessage.thumbData=ImageUtil.getBitmapByte(thumb);
         SendMessageToWX.Req req=new SendMessageToWX.Req();
         req.transaction="urlpage";
@@ -83,7 +74,7 @@ public class ShareUtil {
      */
     public  static void shareWxFile(final Activity activity, String title,String imgpath ,boolean isSession){
         IWXAPI api=WXAPIFactory.createWXAPI(activity,"wxe5dbf8785c4ec928",true);
-        Bitmap bmp=BitmapFactory.decodeResource(activity.getResources(),R.mipmap.ic_launcher);
+        Bitmap bmp=BitmapFactory.decodeResource(activity.getResources(), R.mipmap.ic_launcher);
         WXFileObject wxImageObject=new WXFileObject();
         wxImageObject.setFilePath(imgpath);
         WXMediaMessage wxMediaMessage=new WXMediaMessage();
@@ -109,7 +100,7 @@ public class ShareUtil {
         wxWebpageObject.webpageUrl=path;
         WXMediaMessage wxMediaMessage=new WXMediaMessage(wxWebpageObject);
         wxMediaMessage.title=title;
-        Bitmap thumb= BitmapFactory.decodeResource(activity.getResources(),R.mipmap.ic_launcher);
+        Bitmap thumb= BitmapFactory.decodeResource(activity.getResources(), R.mipmap.ic_launcher);
         wxMediaMessage.thumbData=ImageUtil.getBitmapByte(thumb);
         SendMessageToWX.Req req=new SendMessageToWX.Req();
         req.transaction="urlpage";
@@ -124,7 +115,7 @@ public class ShareUtil {
         WXMediaMessage mediaMessage=new WXMediaMessage(videoObject);
         mediaMessage.title=title;
         mediaMessage.description="来自"+ activity.getResources().getString(R.string.app_name)+"的分享";
-        Bitmap bitmap=BitmapFactory.decodeResource(activity.getResources(),R.mipmap.ic_launcher);
+        Bitmap bitmap=BitmapFactory.decodeResource(activity.getResources(), R.mipmap.ic_launcher);
         mediaMessage.thumbData=ImageUtil.getBitmapByte(bitmap);
         SendMessageToWX.Req req=new SendMessageToWX.Req();
         req.message=mediaMessage;
@@ -479,7 +470,7 @@ public class ShareUtil {
 
 
     public static void shareQQ(FragmentActivity activity, String title, String apkUrl, String shareimage) {
-        Tencent mTencent=Tencent.createInstance("1106021571",activity);
+        Tencent mTencent= Tencent.createInstance("1106021571",activity);
         final Bundle params = new Bundle();
         params.putInt(QQShare.SHARE_TO_QQ_KEY_TYPE, QQShare.SHARE_TO_QQ_TYPE_DEFAULT);
         params.putString(QQShare.SHARE_TO_QQ_TITLE, title);
@@ -491,7 +482,7 @@ public class ShareUtil {
         mTencent.shareToQQ(activity, params, null);
     }
     public static void shareQQLocalpic(final Activity activity, String imageUrl, String appName) {
-        Tencent mTencent=Tencent.createInstance("1106021571",activity);
+        Tencent mTencent= Tencent.createInstance("1106021571",activity);
         Bundle params = new Bundle();
         params.putString(QQShare.SHARE_TO_QQ_IMAGE_LOCAL_URL,imageUrl);
         params.putString(QQShare.SHARE_TO_QQ_APP_NAME, appName);

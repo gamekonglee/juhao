@@ -29,6 +29,7 @@ public class SelectSchemeActivity extends BaseActivity {
     @Override
     protected void initView() {
         setContentView(R.layout.activity_scheme_type);
+        setColor(this,getResources().getColor(R.color.green));
         iv_save=getViewAndClick(R.id.iv_save);
     }
 

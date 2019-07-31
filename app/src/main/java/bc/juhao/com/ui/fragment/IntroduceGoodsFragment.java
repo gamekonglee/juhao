@@ -6,7 +6,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -150,8 +149,8 @@ public class IntroduceGoodsFragment extends BaseFragment implements View.OnClick
             if (AppUtils.isEmpty(property))
                 return;
             mParamentTv.setText("已选 " + (property));
-            unPriceTv.setText("￥"+(Double.parseDouble(mController.mOldPrice)+price));
-            proPriceTv.setText("￥"+(Double.parseDouble(mController.mCurrentPrice)+price));
+//            unPriceTv.setText("￥"+(Double.parseDouble(mController.mOldPrice)+price));
+//            proPriceTv.setText("￥"+(Double.parseDouble(mController.mCurrentPrice)+price));
         }
     }
 

@@ -39,7 +39,6 @@ import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-
 import java.util.Locale;
 
 import bc.juhao.com.R;

@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 
+import com.aliyun.iot.ilop.demo.DemoApplication;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
 import java.util.ArrayList;
@@ -76,7 +77,7 @@ public class SunImageAddMovieAdapter extends BaseAdapter {
         if(position==getCount()-1){
             String Token= MyShare.get(mContext).getString(Constance.TOKEN);
             if(!TextUtils.isEmpty(Token)) {
-                JSONObject mUserObject= IssueApplication.mUserObject;
+                JSONObject mUserObject= DemoApplication.mUserObject;
                 if(mUserObject!=null){
                     int leve=mUserObject.getInt(Constance.level);
                     if(leve==0){

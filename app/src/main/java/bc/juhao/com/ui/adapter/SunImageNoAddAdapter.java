@@ -1,7 +1,6 @@
 package bc.juhao.com.ui.adapter;
 
 import android.content.Context;
-import android.text.TextUtils;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
@@ -14,11 +13,7 @@ import java.util.List;
 
 import bc.juhao.com.R;
 import bc.juhao.com.bean.PostImageVideoBean;
-import bc.juhao.com.cons.Constance;
 import bc.juhao.com.cons.NetWorkConst;
-import bc.juhao.com.ui.activity.IssueApplication;
-import bc.juhao.com.utils.MyShare;
-import bocang.json.JSONObject;
 
 /**
  * @author Jun

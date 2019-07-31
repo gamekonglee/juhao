@@ -9,9 +9,9 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.aliyun.iot.ilop.demo.DemoApplication;
 import com.bigkoo.alertview.AlertView;
 
-import bocang.view.BaseApplication;
 
 
 /**
@@ -36,7 +36,7 @@ public class AppDialog {
 	 */
 	public static void messageBox(Object o) {
 		String text = o == null ? "" : o.toString();
-		Toast toast = Toast.makeText(BaseApplication.getInstance(), text, Toast.LENGTH_SHORT);
+		Toast toast = Toast.makeText(DemoApplication.getInstance(), text, Toast.LENGTH_SHORT);
 		LinearLayout linearLayout = (LinearLayout) toast.getView();  
 		TextView messageTextView = (TextView) linearLayout.getChildAt(0);  
 		messageTextView.setTextSize(17);  

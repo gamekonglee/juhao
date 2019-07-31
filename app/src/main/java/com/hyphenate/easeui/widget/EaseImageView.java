@@ -1,5 +1,6 @@
 package com.hyphenate.easeui.widget;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Bitmap;
@@ -123,17 +124,19 @@ public class EaseImageView extends ImageView {
      * @param canvas
      * @param bitmap
      */
+    @SuppressLint("WrongConstant")
     private void drawDrawable(Canvas canvas, Bitmap bitmap) {
         Paint paint = new Paint();
         paint.setColor(0xffffffff);
         paint.setAntiAlias(true); //smooths out the edges of what is being drawn
         PorterDuffXfermode xfermode = new PorterDuffXfermode(PorterDuff.Mode.SRC_IN);
         // set flags
-        int saveFlags = Canvas.MATRIX_SAVE_FLAG
-                | Canvas.CLIP_SAVE_FLAG
-                | Canvas.HAS_ALPHA_LAYER_SAVE_FLAG
-                | Canvas.FULL_COLOR_LAYER_SAVE_FLAG
-                | Canvas.CLIP_TO_LAYER_SAVE_FLAG;
+//        int saveFlags = Canvas.MATRIX_SAVE_FLAG
+//                | Canvas.CLIP_SAVE_FLAG
+//                | Canvas.HAS_ALPHA_LAYER_SAVE_FLAG
+//                | Canvas.FULL_COLOR_LAYER_SAVE_FLAG
+//                | Canvas.CLIP_TO_LAYER_SAVE_FLAG;
+        int saveFlags =31;
         canvas.saveLayer(0, 0, width, height, null, saveFlags);
 
         if (shapeType == 1) {

@@ -7,13 +7,13 @@ import android.content.Intent;
 import android.support.v4.app.ActivityCompat;
 import android.view.View;
 
+import com.aliyun.iot.ilop.demo.DemoApplication;
 import com.hyphenate.chat.EMMessage;
 import com.hyphenate.easeui.ui.EaseChatFragment;
 import com.hyphenate.easeui.widget.chatrow.EaseCustomChatRowProvider;
 
 import bc.juhao.com.cons.Constance;
 import bc.juhao.com.cons.NetWorkConst;
-import bc.juhao.com.ui.activity.IssueApplication;
 import bc.juhao.com.ui.activity.buy.SelectOrderActivity;
 import bc.juhao.com.ui.activity.user.UserDataActivity;
 import bocang.utils.MyToast;
@@ -42,9 +42,9 @@ public class ChatLFragment extends EaseChatFragment implements EaseChatFragment.
 
     @Override
     public void onSetMessageAttributes(EMMessage message) {
-        message.setAttribute(Constance.User_ID, IssueApplication.mUserObject.getString(Constance.id));
-        message.setAttribute(Constance.USER_ICON, NetWorkConst.SCENE_HOST + IssueApplication.mUserObject.getString(Constance.avatar));
-        message.setAttribute(Constance.USER_NICE, IssueApplication.mUserObject.getString(Constance.username));
+        message.setAttribute(Constance.User_ID, DemoApplication.mUserObject.getString(Constance.id));
+        message.setAttribute(Constance.USER_ICON, NetWorkConst.SCENE_HOST + DemoApplication.mUserObject.getString(Constance.avatar));
+        message.setAttribute(Constance.USER_NICE, DemoApplication.mUserObject.getString(Constance.username));
     }
 
 

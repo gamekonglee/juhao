@@ -62,7 +62,6 @@ public class ImagePreviewFragemnt extends Fragment {
     }
     public void displayImage(String url, ImageView view) {
         Glide.with(getActivity()).load(url)
-                .placeholder(R.drawable.loadfaild)
                 .into(view);
     }
     public String delete(){

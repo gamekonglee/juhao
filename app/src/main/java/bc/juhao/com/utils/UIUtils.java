@@ -6,7 +6,10 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.res.Resources;
+import android.graphics.Bitmap;
+import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
@@ -14,16 +17,18 @@ import android.os.Build;
 import android.support.annotation.RequiresApi;
 import android.telephony.TelephonyManager;
 import android.util.DisplayMetrics;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Adapter;
+import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
+
+import com.aliyun.iot.ilop.demo.DemoApplication;
 
 import java.net.NetworkInterface;
 import java.net.SocketException;
@@ -31,10 +36,10 @@ import java.util.Enumeration;
 
 import bc.juhao.com.R;
 import bc.juhao.com.ui.activity.IssueApplication;
+import bc.juhao.com.ui.activity.MainActivity;
 import bc.juhao.com.ui.activity.user.LoginActivity;
 import bc.juhao.com.ui.activity.user.Regiest01Activity;
-import bc.juhao.com.ui.activity.user.RegiestActivity;
-import bocang.utils.IntentUtil;
+import bc.juhao.com.ui.view.popwindow.SystemCheckPopWindow;
 
 /**
  * @author Jun
@@ -49,14 +54,14 @@ UIUtils {
      * @return
      */
     public static Context getContext(){
-        return IssueApplication.getcontext();
+        return DemoApplication.getInstance();
     }
 
 
-    public static String getDeviceId(){
-        return ((TelephonyManager) getContext().getSystemService(getContext().TELEPHONY_SERVICE))
-                .getDeviceId();
-    }
+//    public static String getDeviceId(){
+//        return ((TelephonyManager) getContext().getSystemService(getContext().TELEPHONY_SERVICE))
+//                .getDeviceId();
+//    }
 
 
     /**
@@ -204,7 +209,6 @@ UIUtils {
         dialog.setContentView(R.layout.dialog_layout);
         TextView tv_num= (TextView) dialog.findViewById(R.id.tv_num);
         tv_num.setText(tittle);
-
         TextView btn = (TextView) dialog.findViewById(R.id.tv_ensure);
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -244,38 +248,38 @@ UIUtils {
         }
         return verName;
     }
-    public static Dialog showLoginDialog(final Context acticity){
-        final Dialog dialog=new Dialog(acticity,R.style.customDialog);
-        dialog.setContentView(R.layout.dialog_login_toast);
-        TextView tv_login=dialog.findViewById(R.id.tv_login);
-        TextView tv_register=dialog.findViewById(R.id.tv_register);
-        tv_login.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent logoutIntent = new Intent(acticity, LoginActivity.class);
-//                logoutIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-                acticity.startActivity(logoutIntent);
-                dialog.dismiss();
-            }
-        });
-        tv_register.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-//                IntentUtil.startActivity(acticity, Regiest01Activity.class, false);
-                acticity.startActivity(new Intent(acticity, Regiest01Activity.class));
-                dialog.dismiss();
-            }
-        });
-        ImageView iv_dismiss=dialog.findViewById(R.id.iv_dismiss);
-        iv_dismiss.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                dialog.dismiss();
-            }
-        });
-        dialog.show();
-        return dialog;
-    }
+//    public static Dialog showLoginDialog(final Context acticity){
+//        final Dialog dialog=new Dialog(acticity, R.style.customDialog);
+//        dialog.setContentView(R.layout.dialog_login_toast);
+//        TextView tv_login=dialog.findViewById(R.id.tv_login);
+//        TextView tv_register=dialog.findViewById(R.id.tv_register);
+//        tv_login.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Intent logoutIntent = new Intent(acticity, LoginActivity.class);
+////                logoutIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+//                acticity.startActivity(logoutIntent);
+//                dialog.dismiss();
+//            }
+//        });
+//        tv_register.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+////                IntentUtil.startActivity(acticity, Regiest01Activity.class, false);
+//                acticity.startActivity(new Intent(acticity, Regiest01Activity.class));
+//                dialog.dismiss();
+//            }
+//        });
+//        ImageView iv_dismiss=dialog.findViewById(R.id.iv_dismiss);
+//        iv_dismiss.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                dialog.dismiss();
+//            }
+//        });
+//        dialog.show();
+//        return dialog;
+//    }
 
     public static int  initListViewHeight(ListView listView) {
         if(listView==null){
@@ -300,6 +304,28 @@ UIUtils {
         return total;
     }
 
+    public static int  initGridViewHeight(GridView listView) {
+        if(listView==null){
+            return 0;
+        }
+        Adapter adapter=listView.getAdapter();
+        if(adapter==null){
+            return 0;
+        }
+        int count=adapter.getCount();
+        int total=0;
+        for(int i=0;i<count;i++){
+            View view=adapter.getView(i,null,listView);
+            view.measure(0,0);
+            total+=view.getMeasuredHeight();
+        }
+//        System.out.println("total:"+total);
+        ViewGroup.LayoutParams layoutParams=listView.getLayoutParams();
+        layoutParams.height=total;
+        listView.setLayoutParams(layoutParams);
+        listView.requestLayout();
+        return total/2;
+    }
     public static void diallPhone(Context context,String mShop_mobile) {
         Intent intent = new Intent(Intent.ACTION_DIAL);
         Uri data = Uri.parse("tel:" + mShop_mobile);
@@ -307,6 +333,9 @@ UIUtils {
         context.startActivity(intent);
     }
     public static int getScreenWidth(Activity activity){
+        if(activity==null||activity.isFinishing()||activity.isDestroyed()){
+            return UIUtils.dip2PX(480);
+        }
         WindowManager manager = activity.getWindowManager();
         DisplayMetrics outMetrics = new DisplayMetrics();
         manager.getDefaultDisplay().getMetrics(outMetrics);
@@ -333,5 +362,48 @@ UIUtils {
         } else {
             return true;
         }
+    }
+
+    public static Bitmap drawableToBitmap(int width,int height,Drawable drawable) {
+
+        int w = width;
+        int h =height;
+//        System.out.println("Drawable转Bitmap");
+        Bitmap.Config config = Bitmap.Config.ARGB_8888;
+
+        Bitmap bitmap = Bitmap.createBitmap(w, h, config);
+        //注意，下面三行代码要用到，否则在View或者SurfaceView里的canvas.drawBitmap会看不到图
+        Canvas canvas = new Canvas(bitmap);
+        drawable.setBounds(0, 0, w, h);
+        drawable.draw(canvas);
+
+        return bitmap;
+    }
+
+    public static void showSystemStopDialog(final MainActivity activity,View v, String string,String content) {
+//        final Dialog dialog = new Dialog(activity, R.style.customDialog);
+//        dialog.setContentView(R.layout.dialog_layout_system);
+//        TextView tv_num= (TextView) dialog.findViewById(R.id.tv_num);
+//        tv_num.setText(string);
+//        dialog.setCanceledOnTouchOutside(false);
+//        dialog.setCancelable(false);
+//        TextView btn = (TextView) dialog.findViewById(R.id.tv_ensure);
+//        btn.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                dialog.dismiss();
+//                activity.finish();
+//            }
+//        });
+//           /*
+//         * 获取圣诞框的窗口对象及参数对象以修改对话框的布局设置, 可以直接调用getWindow(),表示获得这个Activity的Window
+//         * 对象,这样这可以以同样的方式改变这个Activity的属性.
+//         */
+//        Window dialogWindow = dialog.getWindow();
+//        dialogWindow.setBackgroundDrawableResource(android.R.color.transparent);
+//        dialog.show();
+
+        SystemCheckPopWindow popWindow=new SystemCheckPopWindow(activity,string,content);
+        popWindow.onShow(v);
     }
 }

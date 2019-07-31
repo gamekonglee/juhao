@@ -8,14 +8,13 @@ import android.view.ViewGroup;
 
 import bc.juhao.com.R;
 import bc.juhao.com.common.BaseFragment;
-import bc.juhao.com.controller.product.TimeBuyController;
 import bc.juhao.com.controller.product.TimeBuyFragController;
 
 /**
  * Created by gamekonglee on 2018/4/16.
  */
 
-public class TimeBuyFragment extends BaseFragment{
+public class TimeBuyFragment extends BaseFragment {
 
     private TimeBuyFragController mController;
 

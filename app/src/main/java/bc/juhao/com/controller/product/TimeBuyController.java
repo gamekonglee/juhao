@@ -1,6 +1,5 @@
 package bc.juhao.com.controller.product;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Paint;
@@ -31,8 +30,6 @@ import bc.juhao.com.cons.NetWorkConst;
 import bc.juhao.com.controller.BaseController;
 import bc.juhao.com.listener.INetworkCallBack;
 import bc.juhao.com.ui.activity.product.ProDetailActivity;
-import bc.juhao.com.ui.activity.product.TimeBuyActivity;
-import bc.juhao.com.ui.fragment.home.TimeBuyFragment;
 import bc.juhao.com.ui.view.HorizontalListView;
 import bc.juhao.com.ui.view.countdownview.CountdownView;
 import bc.juhao.com.utils.DateUtils;
@@ -41,7 +38,6 @@ import bocang.json.JSONArray;
 import bocang.json.JSONObject;
 import bocang.utils.AppDialog;
 import bocang.utils.AppUtils;
-import bocang.view.BaseActivity;
 
 import static bc.juhao.com.R.id.name_tv;
 import static bc.juhao.com.R.id.price_tv;

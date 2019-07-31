@@ -87,6 +87,7 @@ public class ArtiController extends BaseController implements PullToRefreshLayou
         mNetWork.sendArticle(page, 20, new INetworkCallBack() {
             @Override
             public void onSuccessListener(String requestCode, JSONObject ans) {
+                LogUtils.logE("ans:",ans.toString()+"");
                 if (null != mPullToRefreshLayout) {
                     dismissRefesh();
                 }
@@ -96,17 +97,17 @@ public class ArtiController extends BaseController implements PullToRefreshLayou
                     mArticlesBeans=new ArrayList<>();
                     for(int i=0;i<mArticlesArray.length();i++){
                         JSONObject jsonObject = mArticlesArray.getJSONObject(i);
-                        if (jsonObject.getInt(Constance.article_type) == 1) {
+//                        if (jsonObject.getInt(Constance.article_type) == 1) {
                             mArticlesBeans.add(new Gson().fromJson(String.valueOf(mArticlesArray.getJSONObject(i)), ArticlesBean.class));
-                        }
+//                        }
                     }
                 }
                 else if (null != mArticlesBeans) {
                     for (int i = 0; i < mArticlesArray.length(); i++) {
                         JSONObject jsonObject = mArticlesArray.getJSONObject(i);
-                        if (jsonObject.getInt(Constance.article_type) == 1) {
+//                        if (jsonObject.getInt(Constance.article_type) == 1) {
                             mArticlesBeans.add(new Gson().fromJson(String.valueOf(mArticlesArray.getJSONObject(i)), ArticlesBean.class));
-                        }
+//                        }
                     }
 
                     if (AppUtils.isEmpty(mArticlesArray))

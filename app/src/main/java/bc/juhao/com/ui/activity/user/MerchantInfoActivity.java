@@ -4,6 +4,7 @@ import android.graphics.Color;
 import android.view.View;
 import android.widget.TextView;
 
+import com.aliyun.iot.ilop.demo.DemoApplication;
 import com.baidu.mapapi.map.BaiduMap;
 import com.baidu.mapapi.map.BitmapDescriptor;
 import com.baidu.mapapi.map.BitmapDescriptorFactory;
@@ -14,7 +15,6 @@ import com.baidu.mapapi.map.MapStatusUpdateFactory;
 import com.baidu.mapapi.map.MapView;
 import com.baidu.mapapi.map.MarkerOptions;
 import com.baidu.mapapi.map.OverlayOptions;
-import com.baidu.mapapi.map.TextureMapView;
 import com.baidu.mapapi.model.LatLng;
 
 import bc.juhao.com.R;
@@ -69,14 +69,14 @@ public class MerchantInfoActivity extends BaseActivity {
         tv_kefu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(IssueApplication.mUserObject==null){
+                if(DemoApplication.mUserObject==null){
 //                    isToken();
                     MyToast.show(MerchantInfoActivity.this,"数据加载中，请稍等");
                     return;
                 }
-                String parent_name = IssueApplication.mUserObject.getString("parent_name");
-                String parent_id = IssueApplication.mUserObject.getString("parent_id");
-                String userIcon = NetWorkConst.SCENE_HOST + IssueApplication.mUserObject.getString("parent_avatar");
+                String parent_name = DemoApplication.mUserObject.getString("parent_name");
+                String parent_id = DemoApplication.mUserObject.getString("parent_id");
+                String userIcon = NetWorkConst.SCENE_HOST + DemoApplication.mUserObject.getString("parent_avatar");
                 mController.sendCall("尝试连接聊天服务..请连接?", parent_id, parent_name, userIcon);
             }
         });

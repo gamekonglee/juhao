@@ -13,7 +13,6 @@ import bc.juhao.com.cons.Constance;
 import bc.juhao.com.controller.product.ProductDetailController;
 import bc.juhao.com.ui.activity.MainActivity;
 import bocang.json.JSONObject;
-import bocang.utils.PermissionUtils;
 import bocang.view.BaseActivity;
 
 /**
@@ -129,12 +128,6 @@ public class ProDetailActivity extends BaseActivity {
             case R.id.go_photo_Ll:
                 if (!isToken())
                     mController.GoDiyProduct();
-//                PermissionUtils.requestPermission(ProDetailActivity.this, PermissionUtils.CODE_CAMERA, new PermissionUtils.PermissionGrant() {
-//                    @Override
-//                    public void onPermissionGranted(int requestCode) {
-//                        mController.goPhoto();
-//                    }
-//                });
                 break;
             case R.id.iv_home:
                 startActivity(new Intent(this, MainActivity.class));

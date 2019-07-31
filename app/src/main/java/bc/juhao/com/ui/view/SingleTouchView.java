@@ -21,6 +21,8 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.aliyun.iot.ilop.demo.DemoApplication;
+
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
@@ -436,7 +438,7 @@ public class SingleTouchView extends View {
 			
 			mStatus = JudgeStatus(event.getX(), event.getY());
 
-			IssueApplication.mLightIndex=mLightCount;
+			DemoApplication.mLightIndex=mLightCount;
 
 			break;
 		case MotionEvent.ACTION_UP:

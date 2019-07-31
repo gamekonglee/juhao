@@ -1,7 +1,5 @@
 package bc.juhao.com.controller.user;
 
-import android.app.AlertDialog;
-import android.app.Dialog;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Message;
@@ -38,7 +36,7 @@ import bocang.utils.MyToast;
 public class UserAddrController extends BaseController implements INetworkCallBack, PullToRefreshLayout.OnRefreshListener, AdapterView.OnItemClickListener {
     private UserAddrActivity mView;
 
-    private JSONArray addresses;
+    public JSONArray addresses;
     private PullToRefreshLayout mPullToRefreshLayout;
     private ProAdapter mProAdapter;
     private ListViewForScrollView order_sv;

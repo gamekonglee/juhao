@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    android:orientation="vertical"
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <View
+        android:background="@color/line"
+        android:layout_width="match_parent"
+        android:layout_height="10dp"/>
+    <LinearLayout
+        android:id="@+id/ll_like"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:gravity="center"
+            android:background="#ffffff"
+            android:orientation="horizontal">
+            <ImageView
+                android:src="@mipmap/my_hot"
+                android:layout_width="15dp"
+                android:layout_height="20dp" />
+            <TextView
+                android:text="大家都在买"
+                android:textColor="#555555"
+                android:textSize="14sp"
+                android:layout_marginLeft="15dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+
+        <com.lib.common.hxp.view.GridViewForScrollView
+            android:id="@+id/priductGridView"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:horizontalSpacing="15dp"
+            android:numColumns="2"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:paddingTop="15dp"
+            android:verticalSpacing="15dp"
+            />
+    </LinearLayout>
+</LinearLayout>

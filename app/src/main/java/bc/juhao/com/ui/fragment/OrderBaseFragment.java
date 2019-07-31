@@ -7,7 +7,7 @@ import bc.juhao.com.common.BaseFragment;
  * @date : 2017/8/2 15:39
  * @description :
  */
-public abstract class OrderBaseFragment extends BaseFragment{
+public abstract class OrderBaseFragment extends BaseFragment {
     @Override
     protected void initController() {
 

@@ -4,12 +4,9 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Paint;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
@@ -29,16 +26,12 @@ import bc.juhao.com.bean.DaoMaster;
 import bc.juhao.com.bean.DaoSession;
 import bc.juhao.com.bean.DbGoodsBean;
 import bc.juhao.com.bean.DbGoodsBeanDao;
-import bc.juhao.com.common.BaseActivity;
 import bc.juhao.com.cons.Constance;
-import bc.juhao.com.controller.user.CollectController;
 import bc.juhao.com.ui.activity.product.ProDetailActivity;
 import bc.juhao.com.ui.view.EndOfListView;
 import bc.juhao.com.utils.DbHelper;
-import bocang.json.JSONArray;
-import bocang.json.JSONObject;
 import bocang.utils.AppUtils;
-import bocang.utils.MyToast;
+import bocang.view.BaseActivity;
 
 public class ZujiActivity extends BaseActivity implements View.OnClickListener {
 
@@ -132,6 +125,11 @@ public class ZujiActivity extends BaseActivity implements View.OnClickListener {
                 senDeleteCollect();
                 break;
         }
+    }
+
+    @Override
+    protected void onViewClick(View v) {
+
     }
 
 

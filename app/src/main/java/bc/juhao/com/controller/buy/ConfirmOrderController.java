@@ -16,6 +16,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.alipay.sdk.app.PayTask;
+import com.aliyun.iot.ilop.demo.DemoApplication;
 import com.hyphenate.EMCallBack;
 import com.hyphenate.chat.EMClient;
 import com.hyphenate.easeui.EaseConstant;
@@ -43,7 +44,6 @@ import bc.juhao.com.listener.ILogisticsChooseListener;
 import bc.juhao.com.listener.INetworkCallBack;
 import bc.juhao.com.listener.INetworkCallBack02;
 import bc.juhao.com.ui.activity.ChartListActivity;
-import bc.juhao.com.ui.activity.IssueApplication;
 import bc.juhao.com.ui.activity.buy.ConfirmOrderActivity;
 import bc.juhao.com.ui.activity.product.ProDetailActivity;
 import bc.juhao.com.ui.activity.user.ChatActivity;
@@ -53,7 +53,6 @@ import bc.juhao.com.ui.view.ShowDialog;
 import bc.juhao.com.ui.view.popwindow.SelectLogisticsPopWindow;
 import bc.juhao.com.utils.MyShare;
 import bc.juhao.com.utils.UIUtils;
-import bc.juhao.com.utils.WXpayUtils;
 import bocang.json.JSONArray;
 import bocang.json.JSONObject;
 import bocang.utils.AppDialog;
@@ -252,7 +251,7 @@ public class ConfirmOrderController extends BaseController implements INetworkCa
             AppDialog.messageBox(UIUtils.getString(R.string.server_error));
             return;
         }
-        AppDialog.messageBox(ans.getString(Constance.error_desc));
+//        AppDialog.messageBox(ans.getString(Constance.error_desc));
         getOutLogin(mView, ans);
     }
 
@@ -365,7 +364,12 @@ public class ConfirmOrderController extends BaseController implements INetworkCa
     }
 
     public void ActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode == Constance.FROMADDRESS && !AppUtils.isEmpty(data)) {
+        if (requestCode == Constance.FROMADDRESS ) {
+            if(data==null||data.getSerializableExtra(Constance.address)==null){
+                consignee_tv.setText("");
+                address_tv.setText("收货地址:" );
+                phone_tv.setText("");
+            }else {
             JSONObject consignee = (JSONObject) data.getSerializableExtra(Constance.address);
             if (AppUtils.isEmpty(consignee))
                 return;
@@ -376,6 +380,7 @@ public class ConfirmOrderController extends BaseController implements INetworkCa
             consignee_tv.setText(name);
             address_tv.setText("收货地址:" + address);
             phone_tv.setText(phone);
+            }
         } else if (requestCode == Constance.FROMLOG && !AppUtils.isEmpty(data)) {
             mlogistics = (Logistics) data.getSerializableExtra(Constance.logistics);
             logistic_title_tv.setVisibility(View.GONE);
@@ -463,8 +468,11 @@ public class ConfirmOrderController extends BaseController implements INetworkCa
                 loginstic_address_tv.setVisibility(View.VISIBLE);
             }
 
-        } else {
+        } else if(type==R.id.radioEMS){
             mType = 1;
+            logistic_type_rl.setVisibility(View.GONE);
+        }else {
+            mType=2;
             logistic_type_rl.setVisibility(View.GONE);
         }
     }
@@ -603,15 +611,22 @@ public class ConfirmOrderController extends BaseController implements INetworkCa
 
             holder.SpecificationsTv.setText(property);
             String price = goodsObject.getString(Constance.price);
-            holder.priceTv.setText("优惠价:" + price + "元");
+            holder.priceTv.setText("¥" + price + "");
             String oldPrice = goodsObject.getJSONObject(Constance.product).getString(Constance.current_price);
-            holder.old_priceTv.setText("零售价:" + oldPrice + "元");
+            holder.old_priceTv.setText("");
             String num = goodsObject.getString(Constance.amount);
             holder.numTv.setText("x" + num);
+            if(DemoApplication.mUserObject!=null){
+            if(DemoApplication.mUserObject.getInt(Constance.level)==0){
+                holder.contact_service_tv.setVisibility(View.INVISIBLE);
+            }else {
+                holder.contact_service_tv.setVisibility(View.VISIBLE);
+            }
+            }
             holder.contact_service_tv.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-//                    String id = IssueApplication.mUserObject.getString(Constance.id);
+//                    String id = DemoApplication.mUserObject.getString(Constance.id);
                     sendCall("联系客服中。。....");
                 }
             });
@@ -634,7 +649,7 @@ public class ConfirmOrderController extends BaseController implements INetworkCa
      */
     public void sendCall(String msg) {
         try {
-            int level = IssueApplication.mUserObject.getInt(Constance.level);
+            int level = DemoApplication.mUserObject.getInt(Constance.level);
             if (level == 0) {
                 if (!mView.isToken()) {
                     IntentUtil.startActivity(mView, ChartListActivity.class, false);
@@ -642,14 +657,14 @@ public class ConfirmOrderController extends BaseController implements INetworkCa
                 return;
             }
 
-            String parent_name = IssueApplication.mUserObject.getString("parent_name");
-            String parent_id = IssueApplication.mUserObject.getString("parent_id");
+            String parent_name = DemoApplication.mUserObject.getString("parent_name");
+            String parent_id = DemoApplication.mUserObject.getString("parent_id");
             if(ProDetailActivity.isJuHao)
             {
                 parent_id="37";
                 parent_name="钜豪超市";
             }
-            String userIcon = NetWorkConst.SCENE_HOST + IssueApplication.mUserObject.getString("parent_avatar");
+            String userIcon = NetWorkConst.SCENE_HOST + DemoApplication.mUserObject.getString("parent_avatar");
             EaseUser user = new EaseUser(parent_id);
             user.setNickname(parent_name);
             user.setNick(parent_name);
@@ -686,7 +701,7 @@ public class ConfirmOrderController extends BaseController implements INetworkCa
             final Toast toast = Toast.makeText(mView,"服务器连接中...!", Toast.LENGTH_SHORT);
             toast.show();
             if (NetUtils.hasNetwork(mView)) {
-                final String uid=MyShare.get(mView).getString(Constance.USERID);
+                final String uid= MyShare.get(mView).getString(Constance.USERID);
                 if(AppUtils.isEmpty(uid)){
                     return;
                 }
@@ -730,7 +745,7 @@ public class ConfirmOrderController extends BaseController implements INetworkCa
                     EMClient.getInstance().chatManager().loadAllConversations();
                     MyLog.e("登录环信成功!");
                     toast.cancel();
-                    String parent_id = IssueApplication.mUserObject.getString("parent_id");
+                    String parent_id = DemoApplication.mUserObject.getString("parent_id");
                     try {
                         EMClient.getInstance().contactManager().acceptInvitation(parent_id);
                         mView.startActivity(new Intent(mView, ChatActivity.class).putExtra(EaseConstant.EXTRA_USER_ID, parent_id));

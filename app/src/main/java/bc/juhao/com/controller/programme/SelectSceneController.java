@@ -11,6 +11,7 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.aliyun.iot.ilop.demo.DemoApplication;
 import com.baiiu.filter.DropDownMenu;
 import com.baiiu.filter.interfaces.OnFilterDoneListener;
 import com.lib.common.hxp.view.PullToRefreshLayout;
@@ -26,7 +27,6 @@ import bc.juhao.com.cons.Constance;
 import bc.juhao.com.cons.NetWorkConst;
 import bc.juhao.com.controller.BaseController;
 import bc.juhao.com.listener.INetworkCallBack;
-import bc.juhao.com.ui.activity.IssueApplication;
 import bc.juhao.com.ui.activity.programme.SelectSceneActivity;
 import bc.juhao.com.ui.adapter.SceneDropMenuAdapter;
 import bc.juhao.com.utils.FileUtil;
@@ -191,11 +191,11 @@ public class SelectSceneController extends BaseController implements INetworkCal
                 case Constance.PHOTO_WITH_CAMERA: {// 拍照获取图片
                     String status = Environment.getExternalStorageState();
                     if (status.equals(Environment.MEDIA_MOUNTED)) { // 是否有SD卡
-                        File imageFile = new File(IssueApplication.cameraPath, IssueApplication.imagePath + ".jpg");
+                        File imageFile = new File(DemoApplication.cameraPath, DemoApplication.imagePath + ".jpg");
                         if (imageFile.exists()) {
                             imageURL = "file://" + imageFile.toString();
-                            IssueApplication.imagePath = null;
-                            IssueApplication.cameraPath = null;
+                            DemoApplication.imagePath = null;
+                            DemoApplication.cameraPath = null;
                         } else {
                             AppDialog.messageBox("读取图片失败！");
                         }
@@ -223,8 +223,11 @@ public class SelectSceneController extends BaseController implements INetworkCal
     @Override
     public void onFilterDone(int titlePos, int itemPos, String itemStr) {
         dropDownMenu.close();
-        if (0 == itemPos)
+        if (0 == itemPos&&titlePos<sceneAllAttrs.length())
             itemStr = sceneAllAttrs.getJSONObject(titlePos).getString(Constance.attr_name);
+        if(titlePos==sceneAllAttrs.length()){
+            itemStr="全部";
+        }
         dropDownMenu.setPositionIndicatorText(titlePos, itemStr);
 
         if (titlePos < itemPosList.size())
@@ -263,20 +266,19 @@ public class SelectSceneController extends BaseController implements INetworkCal
         //        mIntent.putExtra(Constance.SCENE, path);
         //        mView.setResult(Constance.FROMDIY02, mIntent);//告诉原来的Activity 将数据传递给它
         //        mView.finish();//一定要调用该方法 关闭新的AC 此时 老是AC才能获取到Itent里面的值
-
-        for (int i = 0; i < IssueApplication.mSelectScreens.length(); i++) {
-            String selectName = IssueApplication.mSelectScreens.getJSONObject(i).getJSONObject(Constance.scene).getString(Constance.original_img);
+        for (int i = 0; i < DemoApplication.mSelectScreens.length(); i++) {
+            String selectName = DemoApplication.mSelectScreens.getJSONObject(i).getJSONObject(Constance.scene).getString(Constance.original_img);
             String name = goodses.getJSONObject(position).getJSONObject(Constance.scene).getString(Constance.original_img);
             if (selectName.equals(name)) {
-                IssueApplication.mSelectScreens.delete(i);
+                DemoApplication.mSelectScreens.delete(i);
                 mProAdapter.notifyDataSetChanged();
-                mView.select_num_tv.setText(IssueApplication.mSelectScreens.length() + "");
+                mView.select_num_tv.setText(DemoApplication.mSelectScreens.length() + "");
                 return;
             }
         }
-        IssueApplication.mSelectScreens.add(goodses.getJSONObject(position));
+        DemoApplication.mSelectScreens.add(goodses.getJSONObject(position));
         mProAdapter.notifyDataSetChanged();
-        mView.select_num_tv.setText(IssueApplication.mSelectScreens.length() + "");
+        mView.select_num_tv.setText(DemoApplication.mSelectScreens.length() + "");
     }
 
     public void goPhoto() {
@@ -331,8 +333,8 @@ public class SelectSceneController extends BaseController implements INetworkCal
             }
 
             holder.check_iv.setVisibility(View.GONE);
-            for (int i = 0; i < IssueApplication.mSelectScreens.length(); i++) {
-                String screenPath = IssueApplication.mSelectScreens.getJSONObject(i).getJSONObject(Constance.scene).getString(Constance.original_img);
+            for (int i = 0; i < DemoApplication.mSelectScreens.length(); i++) {
+                String screenPath = DemoApplication.mSelectScreens.getJSONObject(i).getJSONObject(Constance.scene).getString(Constance.original_img);
                 if (path.equals(screenPath)) {
                     holder.check_iv.setVisibility(View.VISIBLE);
                     break;

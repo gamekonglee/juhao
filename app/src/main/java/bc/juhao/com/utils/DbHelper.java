@@ -4,7 +4,6 @@ import android.app.Activity;
 
 import bc.juhao.com.bean.DaoMaster;
 import bc.juhao.com.bean.DaoSession;
-import bc.juhao.com.bean.DbGoodsBeanDao;
 
 /**
  * Created by gamekonglee on 2018/4/9.

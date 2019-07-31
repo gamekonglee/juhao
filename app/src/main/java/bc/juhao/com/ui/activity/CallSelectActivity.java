@@ -1,12 +1,9 @@
 package bc.juhao.com.ui.activity;
 
-import android.app.Activity;
 import android.graphics.Color;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
 import bc.juhao.com.R;
-import bocang.view.BaseActivity;
 
 public class CallSelectActivity extends bc.juhao.com.common.BaseActivity {
 

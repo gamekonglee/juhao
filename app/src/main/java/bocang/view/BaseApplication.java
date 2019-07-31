@@ -1,8 +1,8 @@
 package bocang.view;
 
-import android.app.Application;
 import android.content.Context;
-import android.support.multidex.MultiDexApplication;
+
+import com.aliyun.iot.aep.sdk.framework.AApplication;
 
 
 /**
@@ -17,7 +17,7 @@ import android.support.multidex.MultiDexApplication;
  * @date : 2016-09-01
  * modify :
  */
-public class BaseApplication extends Application {
+public class BaseApplication extends AApplication {
 
     protected static BaseApplication mInstance = null;
     protected static Context mContext = null;
@@ -33,6 +33,8 @@ public class BaseApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
+        mInstance=this;
+        mContext=this;
     }
 
 }

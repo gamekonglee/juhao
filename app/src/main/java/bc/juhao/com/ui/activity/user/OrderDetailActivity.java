@@ -20,7 +20,7 @@ import bocang.view.BaseActivity;
  * @date : 2017/3/20 15:30
  * @description :
  */
-public class OrderDetailActivity extends BaseActivity  {
+public class OrderDetailActivity extends BaseActivity {
     private OrderDetailController mController;
     public JSONObject mOrderObject;
     private Intent mIntent;

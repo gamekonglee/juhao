@@ -1,7 +1,7 @@
 package bocang.view;
 
 import android.app.Activity;
-import android.content.Intent;
+import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
@@ -10,6 +10,7 @@ import android.support.annotation.RequiresApi;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.ViewCompat;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
@@ -19,18 +20,17 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import bc.juhao.com.R;
+import java.lang.reflect.Field;
+
 import bc.juhao.com.cons.Constance;
-import bc.juhao.com.ui.activity.user.LoginActivity;
-import bc.juhao.com.ui.view.dialog.SpotsDialog;
 import bc.juhao.com.utils.MyShare;
-import bc.juhao.com.utils.UIUtils;
+import bc.juhao.com.ui.view.dialog.SpotsDialog;
 import bocang.utils.AppUtils;
+import bocang.utils.UIUtils;
 
 
 public abstract class BaseActivity extends FragmentActivity implements View.OnClickListener {
 //    public LoadingDialog mDialog;
-
     public SpotsDialog mDialog;
 //    mDialog=new SpotsDialog(mView);
 
@@ -115,6 +115,15 @@ public abstract class BaseActivity extends FragmentActivity implements View.OnCl
 
             }
         }
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.N){
+            try {
+                Class decorViewClazz = Class.forName("com.android.internal.policy.DecorView");
+                Field field = decorViewClazz.getDeclaredField("mSemiTransparentStatusBarColor");
+                field.setAccessible(true);
+                field.setInt(activity.getWindow().getDecorView(), Color.TRANSPARENT);  //改为透明
+            } catch (Exception e) {}
+        }
+        setStatusBarDarkIcon(activity.getWindow(),true);
     }
 
 
@@ -333,18 +342,10 @@ public abstract class BaseActivity extends FragmentActivity implements View.OnCl
     }
 
     private void errorinit() {
-        errorView = findViewById(R.id.errorView);
-//        errorView.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                if (onReloadDataListener!=null){
-//                    onReloadDataListener.request(true);
-//                }
-//            }
-//        });
-        error_iv = (ImageView)findViewById(R.id.error_iv);
-        error_tv = (TextView) findViewById(R.id.error_tv);
-        contentView = findViewById(R.id.contentView);
+//        errorView = findViewById(R.id.errorView);
+//        error_iv = (ImageView)findViewById(R.id.error_iv);
+//        error_tv = (TextView) findViewById(R.id.error_tv);
+//        contentView = findViewById(R.id.contentView);
     }
 
 
@@ -384,5 +385,70 @@ public abstract class BaseActivity extends FragmentActivity implements View.OnCl
 
     public void onRefresh() {
         onResume();
+    }
+    public static boolean setStatusBarDarkIcon(Window window, boolean dark) {
+        boolean result = false;
+        if (window != null) {
+            try {
+                WindowManager.LayoutParams lp = window.getAttributes();
+                Field darkFlag = WindowManager.LayoutParams.class.getDeclaredField("MEIZU_FLAG_DARK_STATUS_BAR_ICON");
+                Field meizuFlags = WindowManager.LayoutParams.class.getDeclaredField("meizuFlags");
+                darkFlag.setAccessible(true);
+                meizuFlags.setAccessible(true);
+                int bit = darkFlag.getInt(null);
+                int value = meizuFlags.getInt(lp);
+                if (dark) {
+                    value |= bit;
+                } else {
+                    value &= ~bit;
+                }
+                meizuFlags.setInt(lp, value);
+                window.setAttributes(lp);
+                result = true;
+            } catch (Exception e) {
+                Log.e("MeiZu", "setStatusBarDarkIcon: failed");
+            }
+        }
+        return result;
+    }
+    public void setStatuTextColor(Activity activity, int color) {
+        if(Build.VERSION.SDK_INT>=Build.VERSION_CODES.LOLLIPOP) {
+            Window window = activity.getWindow();
+            //取消状态栏透明
+            window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+            //添加Flag把状态栏设为可绘制模式
+            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+            //设置状态栏颜色
+            window.setStatusBarColor(color);
+            //设置系统状态栏处于可见状态
+            window.getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_VISIBLE);
+            if(Build.VERSION.SDK_INT>=Build.VERSION_CODES.M) {
+                //设置状态栏文字颜色及图标为深色
+                window.getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN | View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
+            }
+        }
+    }
+    public static void setFullScreenColor(int color,Activity activity){
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+//            // 设置状态栏透明
+            activity.getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+//            // 生成一个状态栏大小的矩形
+//            View statusView = createStatusView(activity, color);
+            // 添加 statusView 到布局中
+//            ViewGroup decorView = (ViewGroup) activity.getWindow().getDecorView();
+//            decorView.addView(statusView);
+            // 设置根布局的参数
+            ViewGroup rootView = (ViewGroup) ((ViewGroup) activity.findViewById(android.R.id.content)).getChildAt(0);
+//            rootView.setFitsSystemWindows(true);
+//            rootView.setClipToPadding(true);
+            if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.N){
+                try {
+                    Class decorViewClazz = Class.forName("com.android.internal.policy.DecorView");
+                    Field field = decorViewClazz.getDeclaredField("mSemiTransparentStatusBarColor");
+                    field.setAccessible(true);
+                    field.setInt(activity.getWindow().getDecorView(), Color.TRANSPARENT);  //改为透明
+                } catch (Exception e) {}
+            }
+        }
     }
 }

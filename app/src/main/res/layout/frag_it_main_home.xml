@@ -1,0 +1,286 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:gaga="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:background="#ffffff"
+    android:layout_height="match_parent">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="44dp">
+            <RelativeLayout
+                android:onClick="goBack"
+                android:layout_width="50dp"
+                android:layout_height="match_parent">
+                <ImageView
+                    android:src="@mipmap/nav_left"
+                    android:layout_centerInParent="true"
+                    android:layout_width="11dp"
+                    android:layout_height="20dp" />
+            </RelativeLayout>
+            <bc.juhao.com.ui.view.TextViewPlus
+                android:text="我的家"
+                android:textColor="#333333"
+                android:textSize="16sp"
+                android:drawableRight="@mipmap/home_fh"
+                app:right_width="10dp"
+                app:right_height="5dp"
+                android:drawablePadding="5dp"
+                android:layout_centerInParent="true"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+            <ImageView
+                android:id="@+id/iv_add"
+                android:src="@mipmap/homg_tj"
+                android:layout_centerVertical="true"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="10dp"
+                android:layout_width="18dp"
+                android:layout_height="18dp" />
+        </RelativeLayout>
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:background="@drawable/bg_corner_orange_full_granit"
+            android:layout_marginRight="10dp"
+            android:gravity="center_vertical"
+            android:layout_marginLeft="10dp"
+            android:layout_height="95dp">
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:orientation="vertical">
+                <TextView
+                    android:id="@+id/tv_temp_outside"
+                    android:text="加载中"
+                    android:textSize="20sp"
+                    android:textColor="#ffffff"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:text="室内温度"
+                    android:textColor="#ffffff"
+                    android:textSize="12sp"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="20dp"
+                android:orientation="vertical">
+                <TextView
+                    android:id="@+id/tv_pm_outside"
+                    android:text="加载中"
+                    android:textSize="20sp"
+                    android:textColor="#ffffff"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:text="室外PM2.5"
+                    android:textColor="#ffffff"
+                    android:textSize="12sp"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="20dp"
+                android:orientation="vertical">
+                <TextView
+                    android:id="@+id/tv_air_outside"
+                    android:text="优"
+                    android:textSize="20sp"
+                    android:textColor="#ffffff"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:text="室外空气"
+                    android:textColor="#ffffff"
+                    android:textSize="12sp"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
+            <ImageView
+                android:background="@mipmap/home_yy"
+                android:layout_marginLeft="50dp"
+                android:layout_width="37dp"
+                android:layout_height="37dp" />
+        </LinearLayout>
+<LinearLayout
+    android:id="@+id/ll_cmd"
+    android:layout_marginLeft="10dp"
+    android:layout_marginRight="10dp"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+    <LinearLayout
+        android:layout_marginTop="15dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <RelativeLayout
+            android:id="@+id/rl_hj"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+            <bc.juhao.com.ui.view.CircleImageView
+                android:src="@mipmap/hj"
+                android:scaleType="centerCrop"
+                android:layout_width="111.5dp"
+                android:layout_height="65dp" />
+            <TextView
+                android:text="回家"
+                android:textColor="#ffffff"
+                android:textSize="11sp"
+                android:layout_centerInParent="true"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </RelativeLayout>
+        <View
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="1dp"/>
+        <RelativeLayout
+            android:id="@+id/rl_lj"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+            <bc.juhao.com.ui.view.CircleImageView
+                android:src="@mipmap/img_dqg"
+                android:scaleType="centerCrop"
+                android:layout_width="111.5dp"
+                android:layout_height="65dp" />
+            <TextView
+                android:text="离家"
+                android:textColor="#ffffff"
+                android:textSize="11sp"
+                android:layout_centerInParent="true"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </RelativeLayout>
+        <View
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="1dp"/>
+        <RelativeLayout
+            android:id="@+id/rl_qc"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+            <bc.juhao.com.ui.view.CircleImageView
+                android:src="@mipmap/img_qc"
+                android:scaleType="centerCrop"
+                android:layout_width="111.5dp"
+                android:layout_height="65dp" />
+            <TextView
+                android:text="起床"
+                android:textColor="#ffffff"
+                android:textSize="11sp"
+                android:layout_centerInParent="true"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </RelativeLayout>
+    </LinearLayout>
+    <LinearLayout
+        android:layout_marginTop="15dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <RelativeLayout
+            android:id="@+id/rl_sj"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+            <bc.juhao.com.ui.view.CircleImageView
+                android:src="@mipmap/img_sj"
+                android:scaleType="centerCrop"
+                android:layout_width="111.5dp"
+                android:layout_height="65dp" />
+            <TextView
+                android:text="睡觉"
+                android:textColor="#ffffff"
+                android:textSize="11sp"
+                android:layout_centerInParent="true"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </RelativeLayout>
+        <View
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="1dp"/>
+        <RelativeLayout
+            android:id="@+id/rl_xx"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+            <bc.juhao.com.ui.view.CircleImageView
+                android:src="@mipmap/img_xx"
+                android:scaleType="centerCrop"
+                android:layout_width="111.5dp"
+                android:layout_height="65dp" />
+            <TextView
+                android:text="休闲"
+                android:textColor="#ffffff"
+                android:textSize="11sp"
+                android:layout_centerInParent="true"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </RelativeLayout>
+        <View
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="1dp"/>
+        <RelativeLayout
+            android:id="@+id/rl_jc"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+            <bc.juhao.com.ui.view.CircleImageView
+                android:src="@mipmap/img_jc"
+                android:scaleType="centerCrop"
+                android:layout_width="111.5dp"
+                android:layout_height="65dp" />
+            <TextView
+                android:text="就餐"
+                android:textColor="#ffffff"
+                android:textSize="11sp"
+                android:layout_centerInParent="true"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </RelativeLayout>
+    </LinearLayout>
+</LinearLayout>
+        <astuetz.MyPagerSlidingTabStrip
+            android:background="#ffffff"
+            gaga:pstsIndicatorColor="#e9642b"
+            gaga:pstsTextViewSize="14dip"
+            gaga:pstsDividerColor="@color/white"
+            gaga:pstsSelectTextViewSize="14dip"
+            gaga:pstsTextViewColor="@color/fontColor3"
+            gaga:pstsSelectTextViewColor="#e9642b"
+            android:id="@+id/tabs"
+            android:layout_width="match_parent"
+            android:layout_height="35dip" />
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <android.support.v4.view.ViewPager
+                android:id="@+id/vp_it"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+        </LinearLayout>
+        </ScrollView>
+    </LinearLayout>
+</LinearLayout>

@@ -9,6 +9,8 @@ public class Constance {
 
     public static final String NORMAL_GOODS = "normal_goods";
     public static final String JUGAO_GOODS = "juhao_goods";
+    public static final String ACCOUNT_CONFLICT_INT = "ACCOUNT_CONFLICT_INT";
+    public static final int REQUEST_CODE = 400;
     public static String OK="0";
 
     public static  String USERCODE = "USERCODE";
@@ -494,6 +496,29 @@ public class Constance {
     public static String movie="movie";
     public static String file_url="file_url";
     public static String display="display";
+    public static String desc="desc";
+    public static String app_key="24938534";
+    public static String iotId="iotId";
+    public static String statu="statu";
+    public static String PowerSwitch="PowerSwitch";
+    public static String value="value";
+    public static String night="night";
+    public static String nightswitch="nightswitch";
+    public static String socket="socket";
+    public static String lock="lock";
+    public static String pwd="pwd";
+    public static String islogin="islogin";
+    public static String days="days";
+    public static String hour="hour";
+    public static String minute="minute";
+    public static String PowerSwitch_1="PowerSwitch_1";
+    public static String PowerSwitch_2="PowerSwitch_2";
+    public static String PowerSwitch_3="PowerSwitch_3";
+    public static String PowerSwitch_4="PowerSwitch_4";
+    public static String ColorTemperature="ColorTemperature";
+    public static String success="success";
+    public static String count_down_json="count_down_json";
+    public static String LightSwitch="LightSwitch";
 /*
             {
     {

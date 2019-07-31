@@ -1,6 +1,5 @@
 package bc.juhao.com.ui.fragment;
 
-import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.Gravity;
@@ -19,9 +18,6 @@ import android.widget.TextView;
 
 import com.lib.common.hxp.view.PullToRefreshLayout;
 import com.lib.common.hxp.view.PullableGridView;
-import com.nostra13.universalimageloader.core.ImageLoader;
-import com.nostra13.universalimageloader.core.assist.FailReason;
-import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -72,7 +68,7 @@ public class ProgrammeFragment extends BaseFragment implements View.OnClickListe
     public int mProgrammeType=0;
     private SearchNestedScrollParent contentView;
     private MyLinearLayout contentView_ll;
-    public  PullToRefreshLayout mPullToRefreshLayout;
+    public PullToRefreshLayout mPullToRefreshLayout;
     public PullableGridView order_sv;
 
 

@@ -8,7 +8,6 @@ import android.media.MediaScannerConnection;
 import android.net.Uri;
 import android.os.Environment;
 import android.util.Log;
-import android.widget.Toast;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -51,7 +50,7 @@ public class ScannerUtils {
         // bitmap.recycle(); 当存储大图片时，为避免出现OOM ，及时回收Bitmap
         System.gc(); // 通知系统回收
       }
-      Toast.makeText(context, "图片保存为" + file.getAbsolutePath(), Toast.LENGTH_SHORT).show();
+//      Toast.makeText(context, "图片保存为" + file.getAbsolutePath(), Toast.LENGTH_SHORT).show();
       return file.getAbsolutePath();
     }
   }

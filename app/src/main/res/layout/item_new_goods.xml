@@ -1,16 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        android:orientation="horizontal" android:layout_width="match_parent"
-    android:layout_height="125dp">
+        android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:padding="5dp"
+    android:background="#ffffff"
+    android:layout_height="220dp">
 
     <ImageView
         android:id="@+id/iv"
         android:src="@drawable/juhao02"
-        android:layout_width="125dp"
+        android:layout_width="match_parent"
+        android:layout_gravity="center_horizontal"
         android:layout_marginLeft="15dp"
-        android:layout_height="125dp" />
+        android:layout_marginRight="15dp"
+        android:layout_height="155dp" />
     <LinearLayout
-        android:layout_marginLeft="5dp"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
@@ -18,21 +22,39 @@
             android:text=""
             android:id="@+id/tv_name"
             android:textColor="#444444"
-            android:textSize="15sp"
-            android:lines="1"
-            android:layout_marginTop="5dp"
+            android:textSize="12sp"
+            android:layout_marginLeft="10dp"
+            android:lines="2"
+            android:ellipsize="end"
+            android:lineSpacingExtra="2dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
-        <TextView
-            android:id="@+id/tv_price"
-            android:textSize="15sp"
-            android:textColor="@color/theme_orange"
+        <RelativeLayout
+            android:layout_marginTop="2dp"
+            android:layout_marginLeft="10dp"
             android:layout_width="wrap_content"
-            android:layout_marginTop="15dp"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content">
+            <TextView
+                android:id="@+id/tv_price"
+                android:textSize="15sp"
+                android:textColor="@color/theme_orange"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+            <TextView
+                android:id="@+id/tv_old_price"
+                android:textColor="#333333"
+                android:textSize="11sp"
+                android:layout_marginTop="2dp"
+                android:layout_marginLeft="10dp"
+                android:layout_toRightOf="@+id/tv_price"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </RelativeLayout>
+
         <Button
             android:id="@+id/btn_buy"
             android:text="立即购买"
+            android:visibility="gone"
             android:textColor="#ffffff"
             android:textSize="15sp"
             android:clickable="false"

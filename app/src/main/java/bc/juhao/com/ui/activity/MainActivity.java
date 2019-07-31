@@ -1,10 +1,12 @@
 package bc.juhao.com.ui.activity;
 
+import android.app.Dialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
@@ -14,10 +16,23 @@ import android.util.Log;
 import android.view.Display;
 import android.view.KeyEvent;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.acker.simplezxing.activity.CaptureActivity;
+import com.alibaba.sdk.android.openaccount.OpenAccountSDK;
+import com.alibaba.sdk.android.openaccount.OpenAccountService;
+import com.alibaba.sdk.android.openaccount.callback.LogoutCallback;
+import com.aliyun.iot.aep.component.router.Router;
+import com.aliyun.iot.aep.sdk.credential.IotCredentialManager.IoTCredentialManageImpl;
+import com.aliyun.iot.ilop.demo.DemoApplication;
+import com.aliyun.iot.ilop.demo.page.main.IndexActivity;
+//import com.example.qrcode.Constant;
+import com.example.qrcode.Constant;
 import com.hyphenate.EMCallBack;
 import com.hyphenate.EMMessageListener;
 import com.hyphenate.chat.EMClient;
@@ -36,15 +51,17 @@ import java.util.List;
 
 import bc.juhao.com.R;
 import bc.juhao.com.bean.LoginResult;
+import bc.juhao.com.bean.UserLogin;
 import bc.juhao.com.chat.DemoHelper;
 import bc.juhao.com.common.BaseActivity;
 import bc.juhao.com.cons.Constance;
 import bc.juhao.com.controller.MainController;
+import bc.juhao.com.controller.SimpleScannerLoginController;
+import bc.juhao.com.ui.activity.product.ProDetailActivity;
 import bc.juhao.com.ui.activity.user.LoginActivity;
 import bc.juhao.com.ui.fragment.CartFragment;
 import bc.juhao.com.ui.fragment.ClassifyFragment;
 import bc.juhao.com.ui.fragment.HomeVpFragment;
-import bc.juhao.com.ui.fragment.home.HomeFragment;
 import bc.juhao.com.ui.fragment.MineFragment;
 import bc.juhao.com.ui.fragment.ProgrammeFragment;
 import bc.juhao.com.ui.view.BottomBar;
@@ -56,7 +73,6 @@ import bocang.json.JSONArray;
 import bocang.utils.MyToast;
 import cn.jiguang.analytics.android.api.JAnalyticsInterface;
 import cn.jpush.android.api.JPushInterface;
-import me.leolin.shortcutbadger.ShortcutBadger;
 
 public class MainActivity extends BaseActivity implements View.OnClickListener {
     public HomeVpFragment mHomeFragment;
@@ -89,6 +105,9 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     public static boolean isForeground = false;
     public static int mFragmentPosition;
     private int navigationBarHegiht;
+    private Dialog dialog;
+    public int allMsgCount;
+    public boolean isError;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -100,8 +119,6 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
 //                new String[]{Manifest.permission.RECORD_AUDIO, Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.CALL_PHONE},
 //                1);
         JAnalyticsInterface.onPageStart(this, this.getClass().getCanonicalName());
-
-
     }
 
 
@@ -122,14 +139,16 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     @Override
     protected void onStart() {
         super.onStart();
-        if (IssueApplication.isGoProgramme) {
-            IssueApplication.isGoProgramme = false;
+        if (DemoApplication.isGoProgramme) {
+            DemoApplication.isGoProgramme = false;
 //            selectItem(R.id.frag_match_ll);
 //            clickTab3Layout();
         }
         checkUI();
 
+
     }
+
 
     private void checkUI() {
         switch (mFragmentPosition){
@@ -165,13 +184,23 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     }
 
     @Override
+    public void onBackPressed() {
+
+        if(isError){
+            finish();
+        }else {
+            super.onBackPressed();
+        }
+    }
+
+    @Override
     protected void initView() {
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_main_jh);
         //沉浸式状态栏
         setStatuTextColor(this, Color.WHITE);
         setFullScreenColor(Color.TRANSPARENT,this);
         navigationBarHegiht = getNavigationBarHeight2();
-        View ll_main=findViewById(R.id.ll_main);
+//        View ll_main=findViewById(R.id.ll_main);
         RelativeLayout.LayoutParams layoutParams=new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.MATCH_PARENT);
         layoutParams.setMargins(0,0,0,navigationBarHegiht);
 //        ll_main.setLayoutParams(layoutParams);
@@ -202,6 +231,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         initTab();
         registerMessageListener();
         mFragmentPosition = 0;
+        isError = false;
 
 //        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
 //            WindowManager.LayoutParams localLayoutParams = getWindow().getAttributes();
@@ -330,10 +360,10 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
 
     @Override
     protected void initData() {
-        Intent intent = getIntent();
-        if (intent.getBooleanExtra(Constance.ACCOUNT_CONFLICT, false)) {
-            showConflictDialog();
-        }
+//        Intent intent = getIntent();
+//        if (intent.getBooleanExtra(Constance.ACCOUNT_CONFLICT, false)) {
+//            showConflictDialog();
+//        }
 
     }
 
@@ -366,7 +396,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         MyShare.get(MainActivity.this).putString(Constance.USERNAME, "");
         MyShare.get(MainActivity.this).putString(Constance.USERCODE, "");
         MyShare.get(MainActivity.this).putString(Constance.USERCODEID, "");
-
+        MyShare.get(MainActivity.this).putString(Constance.invite_code,"");
         ShowDialog mDialog = new ShowDialog();
         mDialog.show(this, "提示", UIUtils.getString(R.string.connect_conflict), new ShowDialog.OnBottomClickListener() {
             @Override
@@ -392,9 +422,9 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                     }
                 });
                 Intent logoutIntent = new Intent(MainActivity.this, LoginActivity.class);
-                logoutIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+//                logoutIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(logoutIntent);
-                finish();
+//                finish();
 
 
             }
@@ -594,7 +624,10 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
 //            mMatchFragment = new ProgrammeFragment();
 //        }
 //        addOrShowFragment(getSupportFragmentManager().beginTransaction(), mMatchFragment);
-        startActivity(new Intent(this,WiseHomeActivity.class));
+        if(isToken()){
+            return;
+        }
+        startActivity(new Intent(this, com.aliyun.iot.ilop.demo.page.ilopmain.MainActivity.class));
     }
 
     /**
@@ -629,7 +662,6 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                                    Fragment fragment) {
         if (currentFragmen == fragment)
             return;
-
         if (!fragment.isAdded()) { // 如果当前fragment未被添加，则添加到Fragment管理器中
             transaction.hide(currentFragmen)
                     .add(R.id.top_bar, fragment).commit();
@@ -641,7 +673,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     }
 
     @Override
-    public boolean onKeyDown(int keyCode, KeyEvent event) {
+    public boolean onKeyDown(int keyCode, KeyEvent event){
         if (pager == 2) {
             if (keyCode == KeyEvent.KEYCODE_BACK && event.getAction() == KeyEvent.ACTION_DOWN) {
                 if ((System.currentTimeMillis() - exitTime) > 2000) {
@@ -678,6 +710,10 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     protected void onResume() {
         isForeground = true;
         super.onResume();
+//        boolean confict=getIntent().getBooleanExtra(Constance.ACCOUNT_CONFLICT,false);
+//        if (getIntent()!=null&&getIntent().getBooleanExtra(Constance.ACCOUNT_CONFLICT, false)) {
+//            showConflictDialog();
+//        }
     }
 
 
@@ -692,7 +728,13 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         super.onDestroy();
         EventBus.getDefault().unregister(this);
     }
-
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onUserLogin(UserLogin action){
+//        int confict=getIntent().getIntExtra(Constance.ACCOUNT_CONFLICT,-1);
+        if (action!=null&&action.getValue().equals("1")) {
+            showConflictDialog();
+        }
+    }
     //在主线程执行
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onUserEvent(Integer action) {
@@ -700,7 +742,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
             mController.setIsShowCartCount();
         }
 //        if (action == Constance.MESSAGE) {
-//            unreadMsgCount = IssueApplication.unreadMsgCount;
+//            unreadMsgCount = DemoApplication.unreadMsgCount;
 //            if (unreadMsgCount == 0) {
 //                mHomeFragment.unMessageTv.setVisibility(View.GONE);
 //                ShortcutBadger.applyCount(this, 0);
@@ -775,7 +817,11 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                 clickTab2Layout();
                 break;
             case R.id.frag_match_ll:
-
+                if(isToken()){
+                    checkUI();
+                    return;
+                }
+                mFragmentPosition=0;
 //                frag_match_tv.setSelected(true);
 //                frag_match_iv.setSelected(true);
                 clickTab3Layout();
@@ -865,4 +911,58 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
 //    }
 
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (resultCode == RESULT_OK) {
+            if (data == null) return;
+//            Log.e("data",data.getStringExtra(Constant.EXTRA_RESULT_CONTENT));
+            final String content=data.getStringExtra(CaptureActivity.EXTRA_SCAN_RESULT);
+            if(content!=null&&content.contains("scale")){
+                dialog = new Dialog(this, R.style.customDialog);
+                dialog.setContentView(R.layout.dialog_login);
+                dialog.setCancelable(true);
+                dialog.setCanceledOnTouchOutside(true);
+                dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                dialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
+                Button btn_login= dialog.findViewById(R.id.btn_login);
+                Button btn_cancel= dialog.findViewById(R.id.btn_cancel);
+//            MyToast.show(this,result.getText());
+                btn_cancel.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        dialog.dismiss();
+                    }
+                });
+                btn_login.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+//                        showLoading();
+                        dialog.dismiss();
+                        mController.login(content) ;
+                    }
+                });
+                dialog.show();
+            }else {
+                try{Intent mIntent = new Intent(this, ProDetailActivity.class);
+                int productId = Integer.parseInt(content);
+                mIntent.putExtra(Constance.product, productId);
+                this.startActivity(mIntent);
+                this.finish();}catch (Exception e){
+
+                }
+            }
+            switch (requestCode) {
+                case 400:
+//                    String type = data.getStringExtra(Constant.EXTRA_RESULT_CODE_TYPE);
+//                    String content = data.getStringExtra(Constant.EXTRA_RESULT_CONTENT);
+//                    Toast.makeText(MainActivity.this,"codeType:" + type
+//                            + "-----content:" + content, Toast.LENGTH_SHORT).show();
+                    break;
+                default:
+                    break;
+
+            }
+        }
+        super.onActivityResult(requestCode, resultCode, data);
+    }
 }

@@ -31,6 +31,7 @@ public class UpdatePasswordController extends BaseController implements INetwork
     private UpdatePasswordActivity mView;
     private EditText find_pwd_edtPhone,find_pwd_edtCode,find_pwd_edtNewPwd,find_pwd_edtAffirmPwd;
     private int mSmsCount=0;
+    private EditText edPwd_old;
 
     public UpdatePasswordController(UpdatePasswordActivity v){
         mView=v;
@@ -54,7 +55,7 @@ public class UpdatePasswordController extends BaseController implements INetwork
                         //提交验证码成功
                     }else if (event == SMSSDK.EVENT_GET_VERIFICATION_CODE){
                         //获取验证码成功
-                    }else if (event ==SMSSDK.EVENT_GET_SUPPORTED_COUNTRIES){
+                    }else if (event == SMSSDK.EVENT_GET_SUPPORTED_COUNTRIES){
                         //返回支持发送验证码的国家列表
                     }
                 }else{
@@ -92,6 +93,7 @@ public class UpdatePasswordController extends BaseController implements INetwork
         find_pwd_edtCode = (EditText)mView.findViewById(R.id.edtCode);
         find_pwd_edtNewPwd = (EditText)mView.findViewById(R.id.edPwd);
         find_pwd_edtAffirmPwd = (EditText)mView.findViewById(R.id.edtAffirmPwd);
+        edPwd_old = mView.findViewById(R.id.edPwd_old);
 
     }
 
@@ -141,6 +143,7 @@ public class UpdatePasswordController extends BaseController implements INetwork
         String code=find_pwd_edtCode.getText().toString();
         String newPwd=find_pwd_edtNewPwd.getText().toString();
         String affirmPwd=find_pwd_edtAffirmPwd.getText().toString();
+        String oldPwd=edPwd_old.getText().toString();
 
         if (HyUtil.isEmpty(mPhone)){
             AppDialog.messageBox(UIUtils.getString(R.string.isnull_phone));
@@ -150,9 +153,12 @@ public class UpdatePasswordController extends BaseController implements INetwork
             AppDialog.messageBox(UIUtils.getString(R.string.mobile_assert));
             return;
         }
-        if(HyUtil.isEmpty(code)){
-            AppDialog.messageBox(UIUtils.getString(R.string.isnull_verification_code));
-            return;
+//        if(HyUtil.isEmpty(code)){
+//            AppDialog.messageBox(UIUtils.getString(R.string.isnull_verification_code));
+//            return;
+//        }
+        if(TextUtils.isEmpty(oldPwd)){
+            AppDialog.messageBox("旧密码不能为空");
         }
         if(HyUtil.isEmpty(newPwd)){
             AppDialog.messageBox(UIUtils.getString(R.string.isnull_pwd));
@@ -174,7 +180,7 @@ public class UpdatePasswordController extends BaseController implements INetwork
         mView.showLoading();
 
         String pwd=find_pwd_edtNewPwd.getText().toString();
-        mNetWork.sendUpdatePwd(mPhone, pwd, code, UpdatePasswordController.this);
+        mNetWork.sendUpdatePwdByOld(mPhone, pwd, oldPwd, UpdatePasswordController.this);
 
     }
 
@@ -182,10 +188,10 @@ public class UpdatePasswordController extends BaseController implements INetwork
     public void onSuccessListener(String requestCode, JSONObject ans) {
         mView.hideLoading();
         switch (requestCode) {
-            case NetWorkConst.RESET:
+            case NetWorkConst.UPDATE:
                 String token=ans.getString(Constance.TOKEN);
                 MyShare.get(mView).putString(Constance.TOKEN, token);//保存TOKEN
-                AppDialog.messageBox(UIUtils.getString(R.string.reset_ok));
+                MyToast.show(mView,"密码修改成功");
                 mView.finish();
                 break;
         }

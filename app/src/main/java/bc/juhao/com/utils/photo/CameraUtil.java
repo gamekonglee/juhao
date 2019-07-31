@@ -11,6 +11,7 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Environment;
 import android.provider.MediaStore;
+import android.support.v4.content.FileProvider;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -173,7 +174,15 @@ public class CameraUtil {
 
     public Uri getImageUri() {
         String path = MyShare.get(getContext()).getString(URI_IMAGE);
-        return path == null ? null : Uri.parse(path);
+        if(path==null){
+            return null;
+        }else {
+        if(Build.VERSION.SDK_INT>=Build.VERSION_CODES.N){
+                return FileProvider.getUriForFile(getContext(), "com.bocang.juhao.fileprovider", new File(path));
+            }else {
+            return  Uri.parse(path);
+        }
+        }
     }
 
     public void onActivityResult(int requestCode, int resultCode, Intent data) {

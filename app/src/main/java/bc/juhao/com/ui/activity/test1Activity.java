@@ -2,6 +2,7 @@ package bc.juhao.com.ui.activity;
 
 import android.view.View;
 
+
 import com.baidu.mapapi.map.BaiduMap;
 import com.baidu.mapapi.map.BitmapDescriptor;
 import com.baidu.mapapi.map.BitmapDescriptorFactory;

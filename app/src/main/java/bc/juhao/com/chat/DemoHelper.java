@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.aliyun.iot.ilop.demo.DemoApplication;
 import com.hyphenate.EMConnectionListener;
 import com.hyphenate.EMError;
 import com.hyphenate.EMMessageListener;
@@ -21,11 +22,14 @@ import com.hyphenate.easeui.model.EaseNotifier;
 import com.hyphenate.easeui.utils.EaseCommonUtils;
 import com.hyphenate.util.EMLog;
 
+import org.greenrobot.eventbus.EventBus;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
 import bc.juhao.com.R;
+import bc.juhao.com.bean.UserLogin;
 import bc.juhao.com.chat.db.InviteMessgeDao;
 import bc.juhao.com.chat.db.UserDao;
 import bc.juhao.com.cons.Constance;
@@ -331,7 +335,9 @@ public class DemoHelper {
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
         intent.putExtra(exception, true);
         intent.putExtra(Constance.ACCOUNT_CONFLICT, true);
+        intent.putExtra(Constance.ACCOUNT_CONFLICT_INT, 1);
         appContext.startActivity(intent);
+        EventBus.getDefault().post(new UserLogin("","1"));
     }
 
     /**
@@ -410,8 +416,8 @@ public class DemoHelper {
         EaseUser user = null;
         if (username.equals(EMClient.getInstance().getCurrentUser())) {
             user = new EaseUser(username);
-            user.setNick(IssueApplication.mUserObject.getString(Constance.username));
-            user.setAvatar(NetWorkConst.SCENE_HOST + IssueApplication.mUserObject.getString(Constance.avatar));
+            user.setNick(DemoApplication.mUserObject.getString(Constance.username));
+            user.setAvatar(NetWorkConst.SCENE_HOST + DemoApplication.mUserObject.getString(Constance.avatar));
 //            if (!AppUtils.isEmpty((IssueApplication.mUserObject)) {
 //
 //

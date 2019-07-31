@@ -3,7 +3,6 @@ package bc.juhao.com.controller.programme;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Matrix;
-import android.net.Uri;
 import android.os.Environment;
 import android.os.Message;
 import android.view.View;
@@ -18,6 +17,7 @@ import android.widget.RelativeLayout;
 import android.widget.SeekBar;
 
 import com.alibaba.fastjson.JSON;
+import com.aliyun.iot.ilop.demo.DemoApplication;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.assist.FailReason;
@@ -50,7 +50,7 @@ import bc.juhao.com.controller.BaseController;
 import bc.juhao.com.listener.IDiyProductInfoListener;
 import bc.juhao.com.listener.INetworkCallBack;
 import bc.juhao.com.listener.ISelectScreenListener;
-import bc.juhao.com.ui.activity.IssueApplication;
+import bc.juhao.com.ui.activity.WebViewActivity;
 import bc.juhao.com.ui.activity.product.SelectGoodsActivity;
 import bc.juhao.com.ui.activity.programme.DiyActivity;
 import bc.juhao.com.ui.activity.programme.SelectSceneActivity;
@@ -133,7 +133,7 @@ public class DiyController extends BaseController implements INetworkCallBack {
             }
         }
 
-        goodses = IssueApplication.mSelectProducts;
+        goodses = DemoApplication.mSelectProducts;
         mAdapter = new ProAdapter();
         product_lv.setAdapter(mAdapter);
     }
@@ -284,9 +284,9 @@ public class DiyController extends BaseController implements INetworkCallBack {
      * 删除
      */
     public void goDetele() {
-        mFrameLayout.removeView(mFrameLayout.findViewWithTag(IssueApplication.mLightIndex));
+        mFrameLayout.removeView(mFrameLayout.findViewWithTag(DemoApplication.mLightIndex));
         mViews.remove(mCurrentView);
-        mView.mSelectedLightSA.remove(IssueApplication.mLightIndex);
+        mView.mSelectedLightSA.remove(DemoApplication.mLightIndex);
     }
 
 
@@ -295,7 +295,7 @@ public class DiyController extends BaseController implements INetworkCallBack {
      */
     public void sendProductJinxianImage() {
         try {
-            StickerView stickerView = (StickerView) mFrameLayout.findViewWithTag(IssueApplication.mLightIndex);
+            StickerView stickerView = (StickerView) mFrameLayout.findViewWithTag(DemoApplication.mLightIndex);
             stickerView.getFlipView();
         } catch (Exception e) {
             e.printStackTrace();
@@ -507,18 +507,27 @@ public class DiyController extends BaseController implements INetworkCallBack {
                 case Constance.PHOTO_WITH_CAMERA: {// 拍照获取图片
                     String status = Environment.getExternalStorageState();
                         if (status.equals(Environment.MEDIA_MOUNTED)) { // 是否有SD卡
-                            File imageFile = new File(IssueApplication.cameraPath, IssueApplication.imagePath + ".jpg");
+                            File imageFile = new File(DemoApplication.cameraPath, DemoApplication.imagePath + ".jpg");
                             if (imageFile.exists()) {
                                 imageURL = "file://" + imageFile.toString();
-                                IssueApplication.imagePath = null;
-                                IssueApplication.cameraPath = null;
+                                DemoApplication.imagePath = null;
+                                DemoApplication.cameraPath = null;
                                 mView.mPath=imageURL;
+                                JSONObject jsonObject=new JSONObject();
+                                jsonObject.add(Constance.original_img,imageURL);
+                                JSONObject scene=new JSONObject();
+                                scene.add(Constance.scene,jsonObject);
+                                mView.mSelectType=1;
+                                DemoApplication.mSelectScreens.add(scene);
+                                goodses=DemoApplication.mSelectScreens;
+                                mView.switchProOrDiy();
                                 displaySceneBg(mView.mPath, 0);
-//                        File imageFile = new File(IssueApplication.cameraPath, IssueApplication.imagePath + ".jpg");
+                                mAdapter.notifyDataSetChanged();
+//                        File imageFile = new File(DemoApplication.cameraPath, DemoApplication.imagePath + ".jpg");
 //                        if (imageFile.exists()) {
 //                            imageURL = "file://" + imageFile.toString();
-//                            IssueApplication.imagePath = null;
-//                            IssueApplication.cameraPath = null;
+//                            DemoApplication.imagePath = null;
+//                            DemoApplication.cameraPath = null;
 //
 //
 //                            Intent intent = new Intent("com.android.camera.action.CROP");
@@ -544,18 +553,41 @@ public class DiyController extends BaseController implements INetworkCallBack {
                 case Constance.PHOTO_WITH_DATA: // 从图库中选择图片
                     // 照片的原始资源地址
                     imageURL = data.getData().toString();
-                    displaySceneBg(imageURL, 1);
+                    mView.mPath=imageURL;
+                    JSONObject jsonObject=new JSONObject();
+                    jsonObject.add(Constance.original_img,imageURL);
+                    JSONObject scene=new JSONObject();
+                    scene.add(Constance.scene,jsonObject);
+                    mView.mSelectType=1;
+                    DemoApplication.mSelectScreens.add(scene);
+                    goodses=DemoApplication.mSelectScreens;
+                    mView.switchProOrDiy();
+                    displaySceneBg(mView.mPath, 1);
+                    mAdapter.notifyDataSetChanged();
+//                    displaySceneBg(imageURL, 1);
                     break;
             }
         } else if (requestCode == Constance.FROMDIY) {
             mView.mSelectType = 0;
             mView.switchProOrDiy();
         } else if (requestCode == Constance.FROMDIY02) {
+            mView.mSelectType=1;
             selectShowData();
             if (AppUtils.isEmpty(data))
                 return;
             mView.mPath = data.getStringExtra(Constance.SCENE);
             if (!AppUtils.isEmpty(mView.mPath)) {
+                JSONObject jsonObject=new JSONObject();
+                jsonObject.add(Constance.original_img,mView.mPath);
+                JSONObject scene=new JSONObject();
+                scene.add(Constance.scene,jsonObject);
+                mView.mSelectType=1;
+                DemoApplication.mSelectScreens.add(scene);
+                goodses=DemoApplication.mSelectScreens;
+                mView.switchProOrDiy();
+                displaySceneBg(mView.mPath, 0);
+                mAdapter.notifyDataSetChanged();
+
                 displaySceneBg(mView.mPath, 0);
             }
         } else if (requestCode == Constance.FROMSCHEME) {
@@ -565,7 +597,6 @@ public class DiyController extends BaseController implements INetworkCallBack {
             mSpace = data.getStringExtra(Constance.space);
             mContent = data.getStringExtra(Constance.content);
             mTitle = data.getStringExtra(Constance.title);
-
             new Thread(new Runnable() {
                 @Override
                 public void run() {
@@ -582,8 +613,8 @@ public class DiyController extends BaseController implements INetworkCallBack {
                     }
                 }
             }).start();
-
-
+        }if(requestCode==300){
+            displayCheckedGoods03("file://"+data.getStringExtra("path"));
         }
     }
 
@@ -675,7 +706,7 @@ public class DiyController extends BaseController implements INetworkCallBack {
             public void onDeleteClick() {
                 mViews.remove(stickerView);
                 mFrameLayout.removeView(stickerView);
-                mView.mSelectedLightSA.remove(IssueApplication.mLightIndex);
+                mView.mSelectedLightSA.remove(DemoApplication.mLightIndex);
             }
 
             @Override
@@ -723,7 +754,7 @@ public class DiyController extends BaseController implements INetworkCallBack {
         pd2.setVisibility(View.GONE);
         // 被点击的灯的编号加1
         mLightNumber++;
-        IssueApplication.mLightIndex = mLightNumber;
+        DemoApplication.mLightIndex = mLightNumber;
         // 设置灯图的ImageView的初始宽高和位置
         FrameLayout.LayoutParams lp = new FrameLayout.LayoutParams(
                 mScreenWidth / 3 * 2 / 3,
@@ -737,7 +768,6 @@ public class DiyController extends BaseController implements INetworkCallBack {
             leftMargin = 0;
         }
         lp.setMargins(mScreenWidth / 2 - (mScreenWidth / 3 * 2 / 6), 20, 0, 0);
-
 
         TouchView02 touchView = new TouchView02(mView);
         touchView.setLayoutParams(lp);
@@ -1002,10 +1032,10 @@ public class DiyController extends BaseController implements INetworkCallBack {
                 break;
             case NetWorkConst.GETCART:
                 if (ans.getJSONArray(Constance.goods_groups).length() > 0) {
-                    IssueApplication.mCartCount = ans.getJSONArray(Constance.goods_groups)
+                    DemoApplication.mCartCount = ans.getJSONArray(Constance.goods_groups)
                             .getJSONObject(0).getJSONArray(Constance.goods).length();
                 } else {
-                    IssueApplication.mCartCount = 0;
+                    DemoApplication.mCartCount = 0;
                 }
                 EventBus.getDefault().post(Constance.CARTCOUNT);
                 break;
@@ -1024,7 +1054,7 @@ public class DiyController extends BaseController implements INetworkCallBack {
      */
     public void getProductDetail() {
         mPopWindow = new DiyProductInfoPopWindow(mView, mView);
-        final JSONObject jsonObject = mView.mSelectedLightSA.get(IssueApplication.mLightIndex);
+        final JSONObject jsonObject = mView.mSelectedLightSA.get(DemoApplication.mLightIndex);
         if (AppUtils.isEmpty(jsonObject)) {
             MyToast.show(mView, "请选择产品!");
             return;
@@ -1047,7 +1077,6 @@ public class DiyController extends BaseController implements INetworkCallBack {
         String productId = jsonObject.getString(Constance.id);
         switch (type) {
             case 0://二维码
-
                 String name = jsonObject.getString(Constance.name);
                 String path = NetWorkConst.SHAREPRODUCT + productId;
                 addImageView(ImageUtil.getTowCodeImage(ImageUtil.createQRImage(path, 150, 150), name));
@@ -1061,7 +1090,10 @@ public class DiyController extends BaseController implements INetworkCallBack {
                 break;
             case 3://产品卡
                 String cardPath = NetWorkConst.WEB_PRODUCT_CARD + productId;
-                displayCheckedGoods03(cardPath);
+                Intent intent=new Intent(mView, WebViewActivity.class);
+                intent.putExtra(Constance.url,cardPath);
+                mView.startActivityForResult(intent,300);
+//                displayCheckedGoods03(cardPath);
                 break;
         }
     }
@@ -1085,11 +1117,11 @@ public class DiyController extends BaseController implements INetworkCallBack {
 
     public void selectShowData() {
         if (mView.mSelectType == 0) {
-            goodses = IssueApplication.mSelectProducts;
+            goodses = DemoApplication.mSelectProducts;
             mAdapter = new ProAdapter();
             product_lv.setAdapter(mAdapter);
         } else {
-            goodses = IssueApplication.mSelectScreens;
+            goodses = DemoApplication.mSelectScreens;
             mAdapter = new ProAdapter();
             product_lv.setAdapter(mAdapter);
         }
@@ -1097,7 +1129,7 @@ public class DiyController extends BaseController implements INetworkCallBack {
 
     public void setRestart() {
         try {
-            ((SingleTouchView) (mFrameLayout.findViewWithTag(IssueApplication.mLightIndex))).isScale = false;
+            ((SingleTouchView) (mFrameLayout.findViewWithTag(DemoApplication.mLightIndex))).isScale = false;
         } catch (Exception e) {
 
         }
@@ -1152,9 +1184,12 @@ public class DiyController extends BaseController implements INetworkCallBack {
                     holder.imageView.setScaleType(ImageView.ScaleType.FIT_CENTER);
                 } else {
                     holder.imageView.setImageResource(R.drawable.bg_default);
-                    ImageLoader.getInstance().displayImage(NetWorkConst.SCENE_HOST +
-                            goodses.getJSONObject(position).getJSONObject(Constance.scene).getString(Constance.original_img)
-                            + "!400X400.png", holder.imageView);
+                    String url= goodses.getJSONObject(position).getJSONObject(Constance.scene).getString(Constance.original_img);
+                    if(!url.contains("file://")&&!url.contains("content")){
+                        url=NetWorkConst.SCENE_HOST+url+ "!400X400.png";
+                    }
+                    ImageLoader.getInstance().displayImage(url
+                           , holder.imageView);
                     holder.imageView.setScaleType(ImageView.ScaleType.FIT_XY);
                 }
             } catch (Exception e) {
@@ -1173,14 +1208,19 @@ public class DiyController extends BaseController implements INetworkCallBack {
                     } else {
                         if (AppUtils.isEmpty(goodses.getJSONObject(position)))
                             return;
-                        mView.mPath = NetWorkConst.SCENE_HOST + goodses.getJSONObject(position).getJSONObject(Constance.scene).getString(Constance.original_img);
+                        mView.mPath= goodses.getJSONObject(position).getJSONObject(Constance.scene).getString(Constance.original_img);
+                        if(!mView.mPath.contains("file://")&&!mView.mPath.contains("content")){
+                            mView.mPath=NetWorkConst.SCENE_HOST+mView.mPath+ "!400X400.png";
+                        }
+
+//                        mView.mPath = NetWorkConst.SCENE_HOST + goodses.getJSONObject(position).getJSONObject(Constance.scene).getString(Constance.original_img);
                         if (!AppUtils.isEmpty(mView.mPath)) {
                             displaySceneBg(mView.mPath, 0);
                         }
                     }
 
                     try {
-                        ((SingleTouchView) (mFrameLayout.findViewWithTag(IssueApplication.mLightIndex))).isScale = false;
+                        ((SingleTouchView) (mFrameLayout.findViewWithTag(DemoApplication.mLightIndex))).isScale = false;
                     } catch (Exception e) {
 
                     }
@@ -1191,11 +1231,11 @@ public class DiyController extends BaseController implements INetworkCallBack {
                 @Override
                 public void onClick(View v) {
                     if (mView.mSelectType == 0) {
-                        IssueApplication.mSelectProducts.delete(position);
+                        DemoApplication.mSelectProducts.delete(position);
                         notifyDataSetChanged();
 
                     } else {
-                        IssueApplication.mSelectScreens.delete(position);
+                        DemoApplication.mSelectScreens.delete(position);
                         notifyDataSetChanged();
                     }
 

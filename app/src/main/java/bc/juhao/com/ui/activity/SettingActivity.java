@@ -17,7 +17,6 @@ import java.util.Set;
 import bc.juhao.com.R;
 import bc.juhao.com.cons.Constance;
 import bc.juhao.com.controller.SettingController;
-import bc.juhao.com.ui.activity.user.LoginActivity;
 import bc.juhao.com.ui.activity.user.PerfectMydataActivity;
 import bc.juhao.com.ui.view.ShowDialog;
 import bc.juhao.com.utils.MyShare;

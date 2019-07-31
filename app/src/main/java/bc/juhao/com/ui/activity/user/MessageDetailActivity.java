@@ -41,6 +41,7 @@ public class MessageDetailActivity extends BaseActivity {
     @Override
     protected void initView() {
         setContentView(R.layout.activity_sys_message_detail);
+        setColor(this,getResources().getColor(R.color.green));
         mWebView = (MyWebView)findViewById(R.id.webview);
         mWebView.setActivity(this);
         title_tv = (TextView)findViewById(R.id.title_tv);

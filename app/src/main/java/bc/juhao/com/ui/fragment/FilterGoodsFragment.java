@@ -73,7 +73,7 @@ public class FilterGoodsFragment extends BaseFragment implements View.OnClickLis
         if(!AppUtils.isEmpty(mController.mFilterList)){
             mController.mAdapter.setData(mController.mFilterList);
         }else{
-            this.showLoadingPage("",R.drawable.ic_loading);
+            this.showLoadingPage("", R.drawable.ic_loading);
             mController.sendAttrList();
         }
     }

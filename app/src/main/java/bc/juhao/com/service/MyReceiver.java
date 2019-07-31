@@ -63,10 +63,17 @@ public class MyReceiver extends BroadcastReceiver {
 			if(type==0){//产品推送
 				if(AppUtils.isEmpty(messageObject.getString(Constance.id)))return;
 				int id=Integer.valueOf(messageObject.getString(Constance.id));
+				if(id==0){
+					Intent i = new Intent(context, MainActivity.class);
+					i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_EXCLUDE_FROM_RECENTS);
+					i.putExtra(Constance.product, id);
+					context.startActivity(i);
+				}else {
 				Intent i = new Intent(context, ProDetailActivity.class);
 				i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_EXCLUDE_FROM_RECENTS);
 				i.putExtra(Constance.product, id);
 				context.startActivity(i);
+				}
 
 			}else if(type==1){//系统消息推送
 				if(AppUtils.isEmpty(messageObject.getString(Constance.id)))return;

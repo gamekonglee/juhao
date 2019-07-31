@@ -75,6 +75,11 @@ public class VideoController extends BaseController implements SwipeRefreshLayou
             @Override
             protected void convert(BaseAdapterHelper helper, final ArticlesBean item) {
             helper.setText(R.id.tv_title,item.getTitle());
+            if(mView.currentType==0){
+                helper.setVisible(R.id.iv_share,true);
+            }else {
+                helper.setVisible(R.id.iv_share,false);
+            }
             helper.setOnClickListener(R.id.iv_share, new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {

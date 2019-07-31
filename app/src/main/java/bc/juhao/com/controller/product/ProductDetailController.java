@@ -16,6 +16,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.aliyun.iot.ilop.demo.DemoApplication;
 import com.hyphenate.EMCallBack;
 import com.hyphenate.chat.EMClient;
 import com.hyphenate.easeui.EaseConstant;
@@ -37,7 +38,6 @@ import bc.juhao.com.controller.BaseController;
 import bc.juhao.com.listener.INetworkCallBack;
 import bc.juhao.com.listener.IParamentChooseListener;
 import bc.juhao.com.ui.activity.ChartListActivity;
-import bc.juhao.com.ui.activity.IssueApplication;
 import bc.juhao.com.ui.activity.buy.ConfirmOrderActivity;
 import bc.juhao.com.ui.activity.buy.ShoppingCartActivity;
 import bc.juhao.com.ui.activity.product.ProDetailActivity;
@@ -146,11 +146,11 @@ public class ProductDetailController extends BaseController implements INetworkC
      * 购物车数量显示
      */
     public void getCartMun() {
-        if (IssueApplication.mCartCount == 0) {
+        if (DemoApplication.mCartCount == 0) {
             unMessageReadTv.setVisibility(View.GONE);
         } else {
             unMessageReadTv.setVisibility(View.VISIBLE);
-            unMessageReadTv.setText(IssueApplication.mCartCount + "");
+            unMessageReadTv.setText(DemoApplication.mCartCount + "");
         }
     }
 
@@ -160,12 +160,6 @@ public class ProductDetailController extends BaseController implements INetworkC
      * @param type
      */
     public void selectProductType(int type) {
-//        product_view.setVisibility(View.INVISIBLE);
-//        detail_view.setVisibility(View.INVISIBLE);
-//        parament_view.setVisibility(View.INVISIBLE);
-//        sun_image_view.setVisibility(View.INVISIBLE);
-
-//        parament_tv.setTextColor(mView.getResources().getColor(R.color.txt_black));
         sun_image_tv.setTextColor(mView.getResources().getColor(R.color.txt_black));
         tuijian_tv.setTextColor(mView.getResources().getColor(R.color.txt_black));
         detail_tv.setTextColor(mView.getResources().getColor(R.color.txt_black));
@@ -187,11 +181,6 @@ public class ProductDetailController extends BaseController implements INetworkC
                 detail_tv.setTextColor(Color.WHITE);
                 container_vp.setCurrentItem(1, true);
                 break;
-//            case R.id.parament_ll:
-//                parament_view.setVisibility(View.VISIBLE);
-//                parament_tv.setTextColor(mView.getResources().getColor(R.color.colorPrimaryRed));
-//                container_vp.setCurrentItem(2, true);
-//                break;
             case R.id.tuijian_ll:
                 tuijian_tv.setTextColor(Color.WHITE);
                 tuijian_tv.setBackgroundResource(R.drawable.bg_goods_detail_intro_corner);
@@ -232,7 +221,7 @@ public class ProductDetailController extends BaseController implements INetworkC
             case NetWorkConst.PRODUCTDETAIL:
                 mView.goodses = ans.getJSONObject(Constance.product);
                 try{
-                    int level = IssueApplication.mUserObject.getInt(Constance.level);
+                    int level = DemoApplication.mUserObject.getInt(Constance.level);
                     if (level > 0) {
                         mView.mOrderId = mView.goodses.getInt(Constance.order_id);
                     } else {
@@ -252,7 +241,7 @@ public class ProductDetailController extends BaseController implements INetworkC
 
                 break;
             case NetWorkConst.GETCART:
-                //                int level = IssueApplication.mUserObject.getInt(Constance.level);
+                //                int level = DemoApplication.mUserObject.getInt(Constance.level);
                 //                if (level == 0) {
                 //                    if (!mView.isToken()) {
                 //                        IntentUtil.startActivity(mView, ChartListActivity.class, false);
@@ -281,17 +270,16 @@ public class ProductDetailController extends BaseController implements INetworkC
 
 
         if (ans.getJSONArray(Constance.goods_groups).length() > 0) {
-            IssueApplication.mCartCount = ans.getJSONArray(Constance.goods_groups)
+            DemoApplication.mCartCount = ans.getJSONArray(Constance.goods_groups)
                     .getJSONObject(0).getJSONArray(Constance.goods).length();
             unMessageReadTv.setVisibility(View.VISIBLE);
-            unMessageReadTv.setText(IssueApplication.mCartCount + "");
+            unMessageReadTv.setText(DemoApplication.mCartCount + "");
         } else {
-            IssueApplication.mCartCount = 0;
+            DemoApplication.mCartCount = 0;
             unMessageReadTv.setVisibility(View.GONE);
         }
 
         Toast.makeText(mView, "加入购物车成功!", Toast.LENGTH_SHORT).show();
-
     }
 
 
@@ -319,10 +307,10 @@ public class ProductDetailController extends BaseController implements INetworkC
      */
     public void sendCall(String msg) {
         try {
-            if(IssueApplication.mUserObject==null){
+            if(DemoApplication.mUserObject==null){
                 return;
             }
-            int level = IssueApplication.mUserObject.getInt(Constance.level);
+            int level = DemoApplication.mUserObject.getInt(Constance.level);
             if (level == 0) {
                 if (!mView.isToken()) {
                     IntentUtil.startActivity(mView, ChartListActivity.class, false);
@@ -330,14 +318,14 @@ public class ProductDetailController extends BaseController implements INetworkC
                 return;
             }
 
-            String parent_name = IssueApplication.mUserObject.getString("parent_name");
-            String parent_id = IssueApplication.mUserObject.getString("parent_id");
+            String parent_name = DemoApplication.mUserObject.getString("parent_name");
+            String parent_id = DemoApplication.mUserObject.getString("parent_id");
             if(ProDetailActivity.isJuHao)
             {
                 parent_id="37";
                 parent_name="钜豪超市";
             }
-            String userIcon = NetWorkConst.SCENE_HOST + IssueApplication.mUserObject.getString("parent_avatar");
+            String userIcon = NetWorkConst.SCENE_HOST + DemoApplication.mUserObject.getString("parent_avatar");
             EaseUser user = new EaseUser(parent_id);
             user.setNickname(parent_name);
             user.setNick(parent_name);
@@ -393,7 +381,7 @@ public class ProductDetailController extends BaseController implements INetworkC
                 EMClient.getInstance().chatManager().loadAllConversations();
                 MyLog.e("登录环信成功!");
                 toast.cancel();
-                String parent_id = IssueApplication.mUserObject.getString("parent_id");
+                String parent_id = DemoApplication.mUserObject.getString("parent_id");
                 if(ProDetailActivity.isJuHao){
                     parent_id="37";
                 }
@@ -466,7 +454,7 @@ public class ProductDetailController extends BaseController implements INetworkC
         mIntent = new Intent(mView, DiyActivity.class);
         mIntent.putExtra(Constance.product, mView.goodses);
         mIntent.putExtra(Constance.property, mView.mProperty);
-        IssueApplication.mSelectProducts.add(mView.goodses);
+        DemoApplication.mSelectProducts.add(mView.goodses);
         mView.startActivity(mIntent);
     }
 
@@ -537,38 +525,6 @@ public class ProductDetailController extends BaseController implements INetworkC
         mIntent.putExtra(Constance.property, mView.mProperty);
         mView.startActivity(mIntent);
 
-        //        if (AppUtils.isEmpty(mView.mProductObject))
-        //            return;
-        //        final String title = "来自 " + mView.mProductObject.getString(Constance.name) + " 产品的分享";
-        //        final String path = mView.mProductObject.getString(Constance.share_url);
-        //        String imagePath = "";
-        //        if (!AppUtils.isEmpty(mView.mProductObject.getJSONObject(Constance.default_photo))) {
-        //            imagePath = mView.mProductObject.getJSONObject(Constance.default_photo).getString(Constance.thumb);
-        //        }
-        //
-        //        final String finalImagePath = imagePath;
-        //        new AlertView(null, null, "取消", null,
-        //                new String[]{"复制链接", "分享链接"},
-        //                mView, AlertView.Style.ActionSheet, new OnItemClickListener() {
-        //            @Override
-        //            public void onItemClick(Object o, int position) {
-        //                switch (position) {
-        //                    case 0:
-        //                        if (!mView.isToken()) {
-        //                            ClipboardManager cm = (ClipboardManager) mView.getSystemService(Context.CLIPBOARD_SERVICE);
-        //                            cm.setText(path);
-        //                        }
-        //                        break;
-        //                    case 1:
-        //                        ShareUtil.showShare(mView, title, path, finalImagePath);
-        //                        //                        ShareUtil.showShare01(mView, title, "1", finalImagePath);
-        //                        break;
-        //                    //                    case 2:
-        //                    //                        ShareUtil.showShare(mView, title, path, finalImagePath);
-        //                    //                        break;
-        //                }
-        //            }
-        //        }).show();
     }
 
     @Override
@@ -628,7 +584,8 @@ public class ProductDetailController extends BaseController implements INetworkC
                     public void onSuccessListener(String requestCode, JSONObject ans) {
                         JSONArray consigneeList = ans.getJSONArray(Constance.consignees);
                         if (consigneeList.length() == 0)
-                        {MyToast.show(mView,"请先添加收货地址");
+                        {
+                            MyToast.show(mView,"请先添加收货地址");
                         mView.hideLoading();
                             return;}
                         mAddressObject = consigneeList.getJSONObject(0);

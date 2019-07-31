@@ -5,12 +5,8 @@ import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.os.Message;
 import android.support.v4.app.ActivityCompat;
-import android.view.View;
 import android.widget.Toast;
 
-import com.nostra13.universalimageloader.core.ImageLoader;
-import com.nostra13.universalimageloader.core.assist.FailReason;
-import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
 import com.tencent.mm.opensdk.modelmsg.SendMessageToWX;
 
 import java.io.IOException;
@@ -18,8 +14,6 @@ import java.io.IOException;
 import bc.juhao.com.cons.Constance;
 import bc.juhao.com.cons.NetWorkConst;
 import bc.juhao.com.controller.BaseController;
-import bc.juhao.com.ui.activity.IssueApplication;
-import bc.juhao.com.ui.activity.MainActivity;
 import bc.juhao.com.ui.activity.programme.ShareProgrammeActivity;
 import bc.juhao.com.ui.activity.user.MessageDetailActivity;
 import bc.juhao.com.ui.view.ScannerUtils;

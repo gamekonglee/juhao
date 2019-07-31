@@ -20,7 +20,7 @@ public class FragmentVPAdapter extends FragmentPagerAdapter {
     private ArrayList<OrderFragment> fragments;
     private FragmentManager fm;
     private String[] mTitleArrs;
-    public FragmentVPAdapter(FragmentManager fm, ArrayList<OrderFragment> fragments,String[] titleArrs) {
+    public FragmentVPAdapter(FragmentManager fm, ArrayList<OrderFragment> fragments, String[] titleArrs) {
         super(fm);
         this.fm = fm;
         this.fragments = fragments;

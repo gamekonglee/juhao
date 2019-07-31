@@ -65,13 +65,10 @@ public class UserAddrAddActivity extends BaseActivity {
                 break;
             case R.id.user_addr_llyCity:
                 mController.selectAddress();
-
                 break;
             case R.id.tv_delete:
                 mController.deleteAddress();
-
                 break;
-
         }
     }
 

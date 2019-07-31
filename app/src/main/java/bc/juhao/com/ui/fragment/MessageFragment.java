@@ -25,6 +25,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.aliyun.iot.ilop.demo.DemoApplication;
 import com.hyphenate.EMCallBack;
 import com.hyphenate.EMConnectionListener;
 import com.hyphenate.EMConversationListener;
@@ -91,6 +92,7 @@ public class MessageFragment extends EaseBaseFragment {
         }
 
     };
+    private View null_view;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -108,7 +110,7 @@ public class MessageFragment extends EaseBaseFragment {
     protected void initView() {
         inputMethodManager = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
         conversationListView = (EaseConversationList) getView().findViewById(R.id.list);
-
+        null_view = getView().findViewById(R.id.null_view);
         query = (EditText) getView().findViewById(R.id.query);
         // button to clear content in search bar
         clearSearch = (ImageButton) getView().findViewById(R.id.search_clear);
@@ -122,7 +124,6 @@ public class MessageFragment extends EaseBaseFragment {
         reflesh_rl.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 loginHX();
             }
         });
@@ -134,7 +135,7 @@ public class MessageFragment extends EaseBaseFragment {
         final Toast toast = Toast.makeText(MessageFragment.this.getActivity(),"服务器连接中...!", Toast.LENGTH_SHORT);
         toast.show();
         if (NetUtils.hasNetwork(getActivity())&&!isConnecting) {
-            final String uid=MyShare.get(this.getActivity()).getString(Constance.USERID);
+            final String uid= MyShare.get(this.getActivity()).getString(Constance.USERID);
             if(AppUtils.isEmpty(uid)){
                 return;
             }
@@ -152,7 +153,7 @@ public class MessageFragment extends EaseBaseFragment {
                 EMClient.getInstance().groupManager().loadAllGroups();
                 EMClient.getInstance().chatManager().loadAllConversations();
                 MyLog.e("登录环信成功!");
-                MyToast.show(getActivity(), "连接成功!");
+//                MyToast.show(getActivity(), "连接成功!");
                 toast.cancel();
                 isConnecting = false;
                 refresh();
@@ -214,7 +215,11 @@ public class MessageFragment extends EaseBaseFragment {
 //        conversationList = new ArrayList<EMConversation>();
         conversationList.addAll(loadConversationList());
         conversationListView.init(conversationList);
-
+        if(conversationList.size()==0||listItemClickListener==null){
+            null_view.setVisibility(View.VISIBLE);
+            conversationListView.setVisibility(View.GONE);
+            return;
+        }
         if(listItemClickListener != null){
             conversationListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
@@ -582,7 +587,7 @@ public class MessageFragment extends EaseBaseFragment {
                 for (EMConversation conversation : EMClient.getInstance().chatManager().getAllConversations().values()) {
                     unreadMsgCount = conversation.getUnreadMsgCount();
                 }
-                IssueApplication.unreadMsgCount=unreadMsgCount;
+                DemoApplication.unreadMsgCount=unreadMsgCount;
                 EventBus.getDefault().post(Constance.MESSAGE);
             }
         });

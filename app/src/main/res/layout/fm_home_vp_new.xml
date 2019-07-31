@@ -71,7 +71,13 @@
                     android:layout_marginLeft="50dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
-
+                <ImageView
+                    android:src="@mipmap/home_xj"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="15dp"
+                    android:layout_width="20dp"
+                    android:layout_height="16.5dp" />
             </RelativeLayout>
 
             <RelativeLayout
@@ -102,10 +108,10 @@
 
                 <TextView
                     android:id="@+id/unMessageTv"
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
                     android:layout_alignParentRight="true"
-                    android:background="@drawable/bg_unread_count"
+                    android:layout_width="18dp"
+                    android:layout_height="18dp"
+                    android:background="@drawable/bg_unread_count_red"
                     android:gravity="center"
                     android:text="0"
                     android:textColor="#FFFFFF"

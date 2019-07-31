@@ -45,8 +45,12 @@ public class SceneDropMenuAdapter implements MenuAdapter {
         if (position < itemPosList.size()) {
             int itemPos = itemPosList.get(position);
             if (itemPos != 0) {
+                if(itemPos<itemPosList.size()){
+
                 return sceneAllAttrs.getJSONObject(position).getJSONArray(Constance.attrVal).getString(itemPos)
                         ;
+                }
+
             }
         }
         String name=sceneAllAttrs.getJSONObject(position).getString(Constance.attr_name);

@@ -79,7 +79,7 @@ public class SchemeTypeGvAdapter extends BaseAdapter {
         }
         String name=mProgrammes.get(position);
         holder.name_tv.setText(name);
-        holder.name_tv.setBackgroundResource(mIsClick.get(position)==false?R.color.EC:R.color.green);
+        holder.name_tv.setBackgroundResource(mIsClick.get(position)==false? R.color.EC: R.color.green);
         return convertView;
     }
 

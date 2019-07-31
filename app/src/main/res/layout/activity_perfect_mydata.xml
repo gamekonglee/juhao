@@ -253,9 +253,6 @@
                 style="@style/mine_text_style03"
                 android:text="1458798787@qq.com"/>
         </RelativeLayout>
-        <View
-            style="@style/view_style"
-            />
         <RelativeLayout
             android:id="@+id/update_password_rl"
             style="@style/mine_item_style02"

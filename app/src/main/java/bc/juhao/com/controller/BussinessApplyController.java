@@ -16,7 +16,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 import bc.juhao.com.R;
-import bc.juhao.com.cons.Constance;
 import bc.juhao.com.listener.INetworkCallBack;
 import bc.juhao.com.ui.activity.BussinessApplyActivity;
 import bc.juhao.com.ui.activity.MainActivity;

@@ -8,7 +8,6 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.GridView;
 import android.widget.ImageView;
-import android.widget.ListView;
 import android.widget.TextView;
 
 import com.google.gson.Gson;
@@ -25,11 +24,9 @@ import bc.juhao.com.bean.GoodsBean;
 import bc.juhao.com.cons.Constance;
 import bc.juhao.com.controller.BaseController;
 import bc.juhao.com.listener.INetworkCallBack;
-import bc.juhao.com.ui.activity.IssueApplication;
 import bc.juhao.com.ui.activity.product.ProDetailActivity;
 import bc.juhao.com.ui.adapter.ParamentAdapter;
 import bc.juhao.com.ui.fragment.ParameterFragment;
-import bc.juhao.com.utils.ImageLoadProxy;
 import bocang.json.JSONArray;
 import bocang.json.JSONObject;
 import bocang.utils.AppUtils;
@@ -93,12 +90,11 @@ public class ParameterController extends BaseController {
             public void onSuccessListener(String requestCode, JSONObject ans) {
                 JSONArray jsonArray=ans.getJSONArray(Constance.products);
                 if(jsonArray==null||jsonArray.length()==0)return;
-                Log.e("size",jsonArray.length()+"");
+//                Log.e("size",jsonArray.length()+"");
                 try {
                     for(int i=0;i<jsonArray.length();i++){
                         goodsBeans.add(new Gson().fromJson(jsonArray.getJSONObject(i).toString(),GoodsBean.class));
                     }
-
                 }catch (Exception e){
                     goodsBeans=new ArrayList<>();
                     for(int i=0;i<jsonArray.length();i++){
@@ -109,11 +105,14 @@ public class ParameterController extends BaseController {
                         goodsBean.setPrice(jsonObject.getString(Constance.price));
                         goodsBean.setCurrent_price(jsonObject.getString(Constance.current_price));
                         Default_photo default_photo=new Default_photo();
+                        if(jsonObject.getJSONObject(Constance.default_photo)!=null){
                         default_photo.setThumb(jsonObject.getJSONObject(Constance.default_photo).getString(Constance.thumb));
+                        }else {
+                            default_photo.setThumb("");
+                        }
                         goodsBean.setDefault_photo(default_photo);
                         goodsBeans.add(goodsBean);
                     }
-
                 }
                 parameter_lv.setAdapter(adapter);
                 adapter.replaceAll(goodsBeans);

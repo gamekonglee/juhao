@@ -8,6 +8,8 @@ import android.graphics.PointF;
 import android.graphics.RectF;
 import android.util.Log;
 
+import com.aliyun.iot.ilop.demo.DemoApplication;
+
 import bc.juhao.com.ui.activity.IssueApplication;
 
 public class ImageWrapper {
@@ -147,7 +149,7 @@ public class ImageWrapper {
 	public boolean onTap(float x, float y) {
 		if (testPosition(x, y)) {
 			this.isChecked = true;
-			IssueApplication.mLightIndex=mLightCount;
+			DemoApplication.mLightIndex=mLightCount;
 			return true;
 		}
 		this.isChecked = false;

@@ -19,6 +19,7 @@ import com.lib.common.hxp.view.GridViewForScrollView;
 import com.lib.common.hxp.view.PullToRefreshLayout;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 
 import bc.juhao.com.R;
@@ -213,6 +214,7 @@ public class CollectController extends BaseController implements INetworkCallBac
         //        mProAdapter.notifyDataSetChanged();
         mProAdapter.getCheck(false, true);
         mProAdapter.getIsCheck(false, true);
+
     }
 
     private View.OnClickListener mRefeshBtnListener = new View.OnClickListener() {
@@ -252,7 +254,7 @@ public class CollectController extends BaseController implements INetworkCallBac
             mProAdapter.getIsCheck(true, false);
         }
     }
-
+    DecimalFormat df=new DecimalFormat("###.00");
     private boolean isLastDelete = false;
 
     /**
@@ -266,14 +268,47 @@ public class CollectController extends BaseController implements INetworkCallBac
         mProAdapter.getGoodCheck();
         for (int i = 0; i < goodCheckList.length(); i++) {
             String id = goodCheckList.getJSONObject(i).getJSONObject(Constance.goods).getString(Constance.id);
-            mNetWork.sendUnLikeCollect(id, this);
             if (i == goodCheckList.length() - 1) {
                 isLastDelete = true;
             }
+            sendUnLike(id,isLastDelete);
+                if(isLastDelete)setEdit();
         }
 
     }
+    public void sendUnLike(String id, final boolean last){
+        mNetWork.sendUnLikeCollect(id+"", new INetworkCallBack() {
+            @Override
+            public void onSuccessListener(String requestCode, JSONObject ans) {
+                if (last) {
+                    page = 1;
+                    isCheckShowList=new ArrayList<>();
+                    sendCollectProduct(page, 20);
 
+                }
+            }
+
+            @Override
+            public void onFailureListener(String requestCode, JSONObject ans) {
+                mView.hideLoading();
+                pd.setVisibility(View.INVISIBLE);
+                if (null == mView || mView.isFinishing())
+                    return;
+                page--;
+
+                if (AppUtils.isEmpty(ans)) {
+                    mNullNet.setVisibility(View.VISIBLE);
+                    mRefeshBtn.setOnClickListener(mRefeshBtnListener);
+                    return;
+                }
+
+                if (null != mPullToRefreshLayout) {
+                    dismissRefesh();
+                }
+            }
+        });
+
+    }
     private class ProAdapter extends BaseAdapter {
         public ProAdapter() {
         }
@@ -382,12 +417,14 @@ public class CollectController extends BaseController implements INetworkCallBac
                 } else {
                     holder.priceTv.setText("￥" + goodObject.getString(Constance.current_price));
                 }
-                holder.price_old.setText("￥" + goodObject.getString(Constance.price));
+                holder.price_old.setText("￥" + df.format(Double.parseDouble(goodObject.getString(Constance.current_price))*1.6));
                 holder.price_old.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG);
                 holder.checkbox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                     @Override
                     public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                        isCheckList.set(position, isChecked);
+                        if(position<isCheckList.size()){
+                            isCheckList.set(position, isChecked);
+                        }
                     }
                 });
             }

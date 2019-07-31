@@ -14,7 +14,6 @@ import java.util.ArrayList;
 
 import bc.juhao.com.R;
 import bc.juhao.com.cons.Constance;
-import bc.juhao.com.ui.activity.user.LoginActivity;
 import bc.juhao.com.utils.MyShare;
 import bocang.utils.IntentUtil;
 import bocang.view.BaseActivity;

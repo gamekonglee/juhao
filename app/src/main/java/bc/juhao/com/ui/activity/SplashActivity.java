@@ -1,6 +1,5 @@
 package bc.juhao.com.ui.activity;
 
-import android.Manifest;
 import android.app.Dialog;
 import android.content.ContentResolver;
 import android.content.Context;
@@ -8,15 +7,11 @@ import android.content.Intent;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
-import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
-import android.os.Build;
+import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.content.ContextCompat;
-import android.telephony.TelephonyManager;
 import android.util.Log;
 import android.view.View;
 import android.view.Window;
@@ -24,95 +19,96 @@ import android.view.WindowManager;
 import android.view.animation.AlphaAnimation;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.baiiu.filter.util.UIUtil;
+import com.aliyun.iot.aep.sdk.framework.AActivity;
 import com.hyphenate.EMCallBack;
 import com.hyphenate.chat.EMClient;
 import com.hyphenate.exceptions.HyphenateException;
 
-import java.util.Timer;
 import java.util.TimerTask;
 
 import bc.juhao.com.R;
 import bc.juhao.com.common.BaseActivity;
 import bc.juhao.com.cons.Constance;
-import bc.juhao.com.ui.activity.user.LoginActivity;
+import bc.juhao.com.controller.SplashController;
 import bc.juhao.com.utils.MyShare;
-import bc.juhao.com.utils.UIUtils;
 import bocang.utils.AppUtils;
 import bocang.utils.CommonUtil;
 import bocang.utils.IntentUtil;
-import bocang.utils.LogUtils;
 
 /**
  * @author Jun
  * @time 2017/1/5  10:29
  * @desc 启动页
  */
-public class SplashActivity extends BaseActivity {
-    private ImageView mLogoIv;
-    private AlphaAnimation mAnimation;
-    private TextView version_tv;
+public class SplashActivity extends AActivity {
+    public ImageView mLogoIv;
+    public AlphaAnimation mAnimation;
+    public TextView version_tv;
     private String imei;
     private int WRITE_EXTERNAL_STORAGE_REQUEST_CODE = 1;
-    private String version;
+    public String version="";
     private boolean remember;
+    private SplashController mController;
+    public TimerSchedule mTimerSc;
+    private int count;
+    private TextView tv_countDown;
+    private TextView tv_jump;
+
+//    @Override
+//    protected void InitDataView() {
+//
+//    }
+//
+//    @Override
+//    protected void initController() {
+//
+//    }
+//
+//
+//    @Override
+//    protected void initView() {
+//        //去除title
+//
+//
+//    }
 
     @Override
-    protected void InitDataView() {
-        String localVersion = CommonUtil.localVersionName(this);
-        version_tv.setText("V "+localVersion);
-    }
-
-    @Override
-    protected void initController() {
-
-    }
-
-    @Override
-    protected void initView() {
-        //去除title
+    protected void onCreate(Bundle bundle) {
+        super.onCreate(bundle);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
-        //去掉Activity上面的状态栏
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
         setContentView(R.layout.activity_splash);
-//        setColor(this, Color.WHITE);
+        mTimerSc = new TimerSchedule();
+        count = 4;
+        version_tv = (TextView)findViewById(R.id.version_tv);
+//        setColor(this, Color.TRANSPARENT);
         mLogoIv = (ImageView) findViewById(R.id.logo_iv);
         mLogoIv.setScaleType(ImageView.ScaleType.CENTER_CROP);
-        //布置透明度动画
-        mAnimation.setDuration(2500);
-        mAnimation.setFillAfter(true);
-        mLogoIv.startAnimation(mAnimation);
-        String token = MyShare.get(this).getString(Constance.TOKEN);
-        if (AppUtils.checkNetwork() && !AppUtils.isEmpty(token)){
-            getSuccessLogin();
-        }
-        version_tv = (TextView)findViewById(R.id.version_tv);
-        version = Build.VERSION.RELEASE;
-//        LogUtils.logE("codename",Build.VERSION.CODENAME);
-//        LogUtils.logE("realease",Build.VERSION.RELEASE);
-            int osVersion = Integer.valueOf(android.os.Build.VERSION.SDK);
-            if (osVersion>22){
-
-                if (ContextCompat.checkSelfPermission(this, Manifest.permission.UNINSTALL_SHORTCUT)
-                        != PackageManager.PERMISSION_GRANTED) {
-                    //申请WRITE_EXTERNAL_STORAGE权限
-                    ActivityCompat.requestPermissions(this, new String[]{Manifest.permission_group.STORAGE,Manifest.permission_group.PHONE},
-                            WRITE_EXTERNAL_STORAGE_REQUEST_CODE);
-                }else{
-                    getImei();
+        tv_countDown = findViewById(R.id.tv_countdown);
+        tv_jump = findViewById(R.id.tv_jump);
+        tv_jump.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(mTimerSc!=null)mTimerSc.cancel();
+                boolean remember= MyShare.get(SplashActivity.this).getBoolean(Constance.apply_remember);
+                if(!remember){
+                    showDialog();
+                }else {
+                    startAct();
                 }
-            }else{
-                //如果SDK小于6.0则不去动态申请权限
-                getImei();
             }
-
-
+        });
+        String localVersion = CommonUtil.localVersionName(this);
+        version_tv.setText("V "+localVersion);
+        version=localVersion;
+        mController = new SplashController(this);
+//        //布置透明度动画
 
     }
+
     @Override
     public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
@@ -125,8 +121,8 @@ public class SplashActivity extends BaseActivity {
     /**
      * 登录成功处理事件
      */
-    private void getSuccessLogin() {
-        final String uid=MyShare.get(this).getString(Constance.USERID);
+    public void getSuccessLogin() {
+        final String uid= MyShare.get(this).getString(Constance.USERID);
         if(AppUtils.isEmpty(uid)){
             return;
         }
@@ -186,7 +182,7 @@ public class SplashActivity extends BaseActivity {
      * 环信注册
      */
     private void sendRegiestSuccess() {
-        final String uid=MyShare.get(this).getString(Constance.USERID);
+        final String uid= MyShare.get(this).getString(Constance.USERID);
         if(AppUtils.isEmpty(uid)){
             return;
         }
@@ -219,27 +215,42 @@ public class SplashActivity extends BaseActivity {
     }
 
 
-    @Override
-    protected void initData() {
-        mAnimation = new AlphaAnimation (0.2f, 1.0f);
-        new Timer().schedule(new TimerSchedule(), 2600);
-    }
+//    @Override
+//    protected void initData() {
+//
+//    }
+    public static int countDown=0;
+    public static int finishEnd=1;
     Handler handler=new Handler(){
         @Override
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
-            showDialog();
+            if(msg.what==countDown){
+                tv_countDown.setText(count+"s");
+            }else {
+                mTimerSc.cancel();
+                boolean remember= MyShare.get(SplashActivity.this).getBoolean(Constance.apply_remember);
+                if(!remember){
+                    showDialog();
+                }else {
+                    startAct();
+                }
+
+            }
+
         }
     };
-    private class TimerSchedule extends TimerTask {
+    public class TimerSchedule extends TimerTask {
         @Override
         public void run() {
-            boolean remember=MyShare.get(SplashActivity.this).getBoolean(Constance.apply_remember);
-            if(!remember){
-          handler.sendEmptyMessage(0);
+            count--;
+            if(count==0){
+            handler.sendEmptyMessage(1);
+
             }else {
-                startAct();
+                handler.sendEmptyMessage(0);
             }
+
         }
     }
     public static boolean isInstallShortcut(Context context, String applicationName) {

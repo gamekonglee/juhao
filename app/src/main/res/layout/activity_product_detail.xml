@@ -62,7 +62,7 @@
                             android:textColor="#ffffff"
                             android:background="@drawable/bg_goods_detail_intro_corner_left"
                             android:text="@string/product"
-                            android:textSize="17sp" />
+                            android:textSize="15sp" />
 
                         <View
                             android:id="@+id/product_view"
@@ -87,7 +87,7 @@
                             android:textColor="@color/txt_black"
                             android:text="@string/detail"
                             android:background="@drawable/bg_goods_detail_intro_corner_normal"
-                            android:textSize="17sp"  />
+                            android:textSize="15sp"  />
 
                         <View
                             android:id="@+id/detail_view"
@@ -111,7 +111,7 @@
                             android:textColor="@color/txt_black"
                             android:text="推荐"
                             android:background="@drawable/bg_goods_detail_intro_corner_normal"
-                            android:textSize="17sp"  />
+                            android:textSize="15sp"  />
 
                     </LinearLayout>
                     <LinearLayout
@@ -275,9 +275,9 @@
                     android:text="@string/shopping_cart" />
                 <TextView
                     android:id="@+id/unMessageReadTv"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/bg_unread_count"
+                    android:layout_width="18dp"
+                    android:layout_height="18dp"
+                    android:background="@drawable/bg_unread_count_red"
                     android:layout_alignParentRight="true"
                     android:gravity="center"
                     android:textColor="#FFFFFF"

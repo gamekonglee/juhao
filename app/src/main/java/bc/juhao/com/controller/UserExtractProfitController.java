@@ -1,7 +1,6 @@
 package bc.juhao.com.controller;
 
 import android.os.Message;
-import android.util.Log;
 import android.view.View;
 
 import com.alibaba.fastjson.JSONArray;
@@ -13,20 +12,19 @@ import java.util.List;
 
 import bc.juhao.com.R;
 import bc.juhao.com.bean.ExtractBean;
+import bc.juhao.com.bean.ProfitBean;
 import bc.juhao.com.cons.Constance;
 import bc.juhao.com.cons.NetWorkConst;
-import bc.juhao.com.cons.ProfitBean;
 import bc.juhao.com.listener.INetworkCallBack02;
 import bc.juhao.com.ui.activity.blance.UserExtractProfitActivity;
 import bocang.utils.AppUtils;
 import bocang.utils.LogUtils;
-import bocang.utils.MyToast;
 
 /**
  * Created by gamekonglee on 2018/3/31.
  */
 
-public class UserExtractProfitController extends BaseController{
+public class UserExtractProfitController extends BaseController {
 
     private final UserExtractProfitActivity mView;
     public int[] page={0,0};

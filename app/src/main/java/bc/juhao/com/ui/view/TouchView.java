@@ -11,6 +11,7 @@ import android.view.animation.TranslateAnimation;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 
+import com.aliyun.iot.ilop.demo.DemoApplication;
 import com.nineoldandroids.view.ViewHelper;
 
 import bc.juhao.com.listener.ITouchViewListener;
@@ -99,7 +100,7 @@ public class TouchView extends ImageView {
 				start_y = stop_y - this.getTop();
 //				MyToast.show(mContext, mLightIndex + "");
 				mode = DRAG;
-				IssueApplication.mLightIndex=mLightCount;
+				DemoApplication.mLightIndex=mLightCount;
 				if (event.getPointerCount() == 2)
 					beforeLenght = spacing(event);
 				break;

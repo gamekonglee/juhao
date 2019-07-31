@@ -1,5 +1,4 @@
 <resources>
-    <string name="app_name">钜豪商城</string>
     <string name="frag_top">首页</string>
     <string name="frag_product">分类检索</string>
     <string name="frag_select">组合筛选</string>
@@ -213,5 +212,28 @@
     <string name="title_activity_web_view_home">WebViewHomeActivity</string>
     <string name="comment">晒图有礼</string>
 
+    <string name="activity_name_ble_scan">蓝牙扫描</string>
 
+    <string name="menu_event_dispatcher_clear">清空</string>
+
+    <string name="hint_alink_business_ex_demo_method_name">请输入方法名</string>
+    <string name="hint_alink_business_ex_demo_method_args">请输入参数（JSON格式）</string>
+    <string name="button_alink_business_ex_demo_go">Go</string>
+    <string name="app_name_jh">钜豪商城</string>
+    <string name="cancle">取消</string>
+    <string name="title">请选择时间</string>
+    <string name="commit">确定</string>
+    <string name="year">年</string>
+    <string name="month">月</string>
+    <string name="day">日</string>
+    <string name="hour">时</string>
+    <string name="minute">分</string>
+    <string name="select_date">选择日期</string>
+    <string name="current_date">当前日期</string>
+    <string name="select_time">选择时间</string>
+    <string name="current_time">当前时间</string>
+    <string name="scanner_view_tip_text">将二维码/条形码放入框内，即可自动扫描</string>
+
+    <string name="msg_camera_framework_bug">Sorry, the Android camera encountered a problem. Have you given the camera permission to the APP? Or you may need to restart the device.</string>
+    <string name="hint_scan">Please put the code in the frame to scan automatically.</string>
 </resources>

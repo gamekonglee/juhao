@@ -25,7 +25,6 @@
 
         <bc.juhao.com.ui.view.ObservableScrollView
             android:id="@+id/scrollView"
-
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:fillViewport="false"
@@ -45,7 +44,7 @@
                     <com.bigkoo.convenientbanner.ConvenientBanner
                         android:id="@+id/convenientBanner"
                         android:layout_width="wrap_content"
-                        android:layout_height="200dp"
+                        android:layout_height="220dp"
                         />
                 </RelativeLayout>
                 <RelativeLayout
@@ -160,6 +159,7 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:visibility="gone"
                     android:orientation="vertical"
                     android:background="#ffffff">
 
@@ -431,9 +431,13 @@
                         </LinearLayout>
                     </LinearLayout>
                 </LinearLayout>
+                <View
+                    android:background="#f9f9f9"
+                    android:layout_width="match_parent"
+                    android:layout_height="10dp"/>
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="46dp"
+                    android:layout_height="60dp"
                     android:background="@color/white"
                     android:gravity="center_vertical"
                     android:orientation="horizontal"
@@ -445,7 +449,7 @@
                         android:gravity="center">
 
                         <ImageView
-                            android:layout_width="42dp"
+                            android:layout_width="60dp"
                             android:layout_height="wrap_content"
                             android:src="@mipmap/home_news"/>
                     </LinearLayout>
@@ -549,6 +553,7 @@
                 </LinearLayout>
 
                 <LinearLayout
+                    android:visibility="gone"
                     android:background="#ffffff"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -583,18 +588,434 @@
 
                 </LinearLayout>
 
-
                 <LinearLayout
-                    android:background="#ffffff"
                     android:layout_width="match_parent"
-                    android:layout_height="550dp"
+                    android:layout_height="344dp"
+                    android:paddingBottom="10dp"
                     android:orientation="vertical">
                     <View
                         android:background="#f9f9f9"
                         android:layout_width="match_parent"
                         android:layout_height="10dp"/>
+                    <ImageView
+                        android:src="@mipmap/home_fldh"
+                        android:layout_width="match_parent"
+                        android:layout_height="71dp" />
+
+                    <LinearLayout
+                        android:paddingLeft="15dp"
+                        android:paddingRight="15dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+                        <ImageView
+                            android:id="@+id/iv_diaodeng"
+                            android:src="@mipmap/img_dd"
+                            android:layout_width="0dp"
+                            android:layout_weight="1"
+                            android:layout_height="80dp" />
+                        <ImageView
+                            android:id="@+id/iv_xidingdeng"
+                            android:src="@mipmap/img_xxd"
+                            android:layout_width="0dp"
+                            android:layout_weight="1"
+                            android:layout_marginLeft="10dp"
+                            android:layout_height="80dp" />
+                    </LinearLayout>
+                    <LinearLayout
+                        android:layout_marginTop="10dp"
+                        android:paddingLeft="15dp"
+                        android:paddingRight="15dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+                        <ImageView
+                            android:id="@+id/iv_bideng"
+                            android:src="@mipmap/img_bd"
+                            android:layout_width="0dp"
+                            android:layout_weight="1"
+                            android:layout_height="80dp" />
+                        <ImageView
+                            android:id="@+id/iv_taideng"
+                            android:src="@mipmap/img_td"
+                            android:layout_width="0dp"
+                            android:layout_weight="1"
+                            android:layout_marginLeft="10dp"
+                            android:layout_height="80dp" />
+                    </LinearLayout>
+                    <LinearLayout
+                        android:layout_marginTop="10dp"
+                        android:paddingLeft="15dp"
+                        android:paddingRight="15dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+                        <ImageView
+                            android:id="@+id/iv_luodideng"
+                            android:src="@mipmap/img_ld"
+                            android:layout_width="0dp"
+                            android:layout_weight="1"
+                            android:layout_height="80dp" />
+                        <ImageView
+                            android:id="@+id/iv_diangong"
+                            android:src="@mipmap/img_dgdq"
+                            android:layout_width="0dp"
+                            android:layout_weight="1"
+                            android:layout_marginLeft="10dp"
+                            android:layout_height="80dp" />
+                    </LinearLayout>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:background="#ffffff"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+                    <View
+                        android:background="@color/line"
+                        android:layout_width="match_parent"
+                        android:layout_height="15dp"/>
+                    <ImageView
+                        android:id="@+id/iv_taocan"
+                        android:layout_width="match_parent"
+                        android:layout_height="75dp"/>
+                    <LinearLayout
+                        android:orientation="horizontal"
+                        android:gravity="center_vertical"
+                        android:visibility="gone"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+                    <!--<bc.juhao.com.ui.view.TextViewPlus-->
+                        <!--android:text="  套餐秒杀"-->
+                        <!--android:textSize="15sp"-->
+                        <!--android:textColor="#444444"-->
+                        <!--android:textStyle="bold"-->
+                        <!--android:gravity="center"-->
+                        <!--app:left_width="16dp"-->
+                        <!--app:left_height="16dp"-->
+                        <!--android:layout_margin="10dp"-->
+                        <!--android:drawableLeft="@mipmap/home_ms"-->
+                        <!--android:layout_width="wrap_content"-->
+                        <!--android:layout_height="wrap_content" />-->
+                        <!--<View-->
+                            <!--android:layout_weight="1"-->
+                            <!--android:layout_width="wrap_content"-->
+                            <!--android:layout_height="wrap_content"/>-->
+                    <bc.juhao.com.ui.view.TextViewPlus
+                        android:id="@+id/tv_more_taocan"
+                        android:text="更多"
+                        android:textColor="#444444"
+                        android:textSize="15sp"
+                        android:drawablePadding="5dp"
+                        android:layout_marginRight="15dp"
+                        android:drawableRight="@mipmap/into"
+                        android:layout_marginLeft="15dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+                    </LinearLayout>
+                    <View
+                        android:background="@color/line"
+                        android:layout_width="match_parent"
+                        android:layout_height="10dp"/>
+                    <HorizontalScrollView
+                        android:id="@+id/hsv_taocan"
+                        android:layout_width="match_parent"
+                        android:scrollbars="none"
+                        android:layout_height="match_parent">
+                        <LinearLayout
+                            android:id="@+id/ll_taocan"
+                            android:orientation="horizontal"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"/>
+                    </HorizontalScrollView>
+                </LinearLayout>
+                <View
+                    android:background="@color/line"
+                    android:layout_width="match_parent"
+                    android:layout_height="10dp"/>
+                <LinearLayout
+                    android:background="#ffffff"
+                    android:layout_width="match_parent"
+                    android:layout_height="540dp"
+                    android:orientation="vertical">
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="80dp"
+                        >
+                        <ImageView
+                            android:scaleType="fitXY"
+                            android:id="@+id/iv_new_product"
+                            android:layout_width="match_parent"
+                            android:layout_height="80dp"/>
+                        <TextView
+                            android:id="@+id/tv_new_product_more"
+                            android:text="查看更多"
+                            android:textColor="@color/theme_orange"
+                            android:textSize="15sp"
+                            android:visibility="gone"
+                            android:layout_alignParentBottom="true"
+                            android:layout_marginBottom="10dp"
+                            android:background="@drawable/bg_corner_empty_theme_25"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" />
+                    </RelativeLayout>
+                    <com.lib.common.hxp.view.GridViewForScrollView
+                        android:id="@+id/priductGv01"
+                        android:layout_width="match_parent"
+                        android:layout_height="460dp"
+                        android:background="@color/line"
+                        android:horizontalSpacing="10dp"
+                        android:numColumns="2"
+                        android:paddingLeft="10dp"
+                        android:paddingRight="10dp"
+                        android:verticalSpacing="10dp"
+                        android:paddingTop="10dp"
+                        android:paddingBottom="10dp"
+                        />
+                    <!--<HorizontalScrollView-->
+                        <!--android:id="@+id/hsv_xinpin"-->
+                        <!--android:layout_width="match_parent"-->
+                        <!--android:scrollbars="none"-->
+                        <!--android:layout_height="match_parent">-->
+                        <!--<LinearLayout-->
+                            <!--android:id="@+id/ll_xinpin"-->
+                            <!--android:orientation="horizontal"-->
+                            <!--android:layout_width="match_parent"-->
+                            <!--android:layout_height="match_parent"/>-->
+                    <!--</HorizontalScrollView>-->
+                </LinearLayout>
+
+                <LinearLayout
+                    android:background="#ffffff"
+                    android:layout_width="match_parent"
+                    android:layout_height="570dp"
+                    android:orientation="vertical">
+                    <View
+                        android:background="@color/line"
+                        android:layout_width="match_parent"
+                        android:layout_height="10dp"/>
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="100dp"
+                        >
+                        <ImageView
+                            android:scaleType="fitXY"
+                            android:id="@+id/iv_diaodeng_product"
+                            android:layout_width="match_parent"
+                            android:layout_height="100dp"/>
+                    </RelativeLayout>
+                    <com.lib.common.hxp.view.GridViewForScrollView
+                        android:id="@+id/gv_diaodeng"
+                        android:layout_width="match_parent"
+                        android:layout_height="460dp"
+                        android:background="@color/line"
+                        android:horizontalSpacing="10dp"
+                        android:numColumns="2"
+                        android:paddingLeft="10dp"
+                        android:paddingRight="10dp"
+                        android:verticalSpacing="10dp"
+                        android:paddingTop="10dp"
+                        android:paddingBottom="10dp"
+                        />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:background="#ffffff"
+                    android:layout_width="match_parent"
+                    android:layout_height="570dp"
+                    android:orientation="vertical">
+                    <View
+                        android:background="@color/line"
+                        android:layout_width="match_parent"
+                        android:layout_height="10dp"/>
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="100dp"
+                        >
+                        <ImageView
+                            android:scaleType="fitXY"
+                            android:id="@+id/iv_xidingdeng_product"
+                            android:layout_width="match_parent"
+                            android:layout_height="100dp"/>
+                    </RelativeLayout>
+                    <com.lib.common.hxp.view.GridViewForScrollView
+                        android:id="@+id/gv_xidingdeng"
+                        android:layout_width="match_parent"
+                        android:layout_height="460dp"
+                        android:background="@color/line"
+                        android:horizontalSpacing="10dp"
+                        android:numColumns="2"
+                        android:paddingLeft="10dp"
+                        android:paddingRight="10dp"
+                        android:verticalSpacing="10dp"
+                        android:paddingTop="10dp"
+                        android:paddingBottom="10dp"
+                        />
+                </LinearLayout>
+
+
+
+                <LinearLayout
+                    android:background="#ffffff"
+                    android:layout_width="match_parent"
+                    android:layout_height="570dp"
+                    android:orientation="vertical">
+                    <View
+                        android:background="@color/line"
+                        android:layout_width="match_parent"
+                        android:layout_height="10dp"/>
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="100dp"
+                        >
+                        <ImageView
+                            android:scaleType="fitXY"
+                            android:id="@+id/iv_bideng_product"
+                            android:layout_width="match_parent"
+                            android:layout_height="100dp"/>
+                    </RelativeLayout>
+                    <com.lib.common.hxp.view.GridViewForScrollView
+                        android:id="@+id/gv_bideng"
+                        android:layout_width="match_parent"
+                        android:layout_height="460dp"
+                        android:background="@color/line"
+                        android:horizontalSpacing="10dp"
+                        android:numColumns="2"
+                        android:paddingLeft="10dp"
+                        android:paddingRight="10dp"
+                        android:verticalSpacing="10dp"
+                        android:paddingTop="10dp"
+                        android:paddingBottom="10dp"
+                        />
+                </LinearLayout>
+
+
+
+                <LinearLayout
+                    android:background="#ffffff"
+                    android:layout_width="match_parent"
+                    android:layout_height="570dp"
+                    android:orientation="vertical">
+                    <View
+                        android:background="@color/line"
+                        android:layout_width="match_parent"
+                        android:layout_height="10dp"/>
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="100dp"
+                        >
+                        <ImageView
+                            android:scaleType="fitXY"
+                            android:id="@+id/iv_taideng_product"
+                            android:layout_width="match_parent"
+                            android:layout_height="100dp"/>
+                    </RelativeLayout>
+                    <com.lib.common.hxp.view.GridViewForScrollView
+                        android:id="@+id/gv_taideng"
+                        android:layout_width="match_parent"
+                        android:layout_height="460dp"
+                        android:background="@color/line"
+                        android:horizontalSpacing="10dp"
+                        android:numColumns="2"
+                        android:paddingLeft="10dp"
+                        android:paddingRight="10dp"
+                        android:verticalSpacing="10dp"
+                        android:paddingTop="10dp"
+                        android:paddingBottom="10dp"
+                        />
+                </LinearLayout>
+
+
+
+                <LinearLayout
+                    android:background="#ffffff"
+                    android:layout_width="match_parent"
+                    android:layout_height="570dp"
+                    android:orientation="vertical">
+                    <View
+                        android:background="@color/line"
+                        android:layout_width="match_parent"
+                        android:layout_height="10dp"/>
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="100dp"
+                        >
+                        <ImageView
+                            android:scaleType="fitXY"
+                            android:id="@+id/iv_luodideng_product"
+                            android:layout_width="match_parent"
+                            android:layout_height="100dp"/>
+                    </RelativeLayout>
+                    <com.lib.common.hxp.view.GridViewForScrollView
+                        android:id="@+id/gv_luodideng"
+                        android:layout_width="match_parent"
+                        android:layout_height="460dp"
+                        android:background="@color/line"
+                        android:horizontalSpacing="10dp"
+                        android:numColumns="2"
+                        android:paddingLeft="10dp"
+                        android:paddingRight="10dp"
+                        android:verticalSpacing="10dp"
+                        android:paddingTop="10dp"
+                        android:paddingBottom="10dp"
+                        />
+                </LinearLayout>
+
+
+
+                <LinearLayout
+                    android:background="#ffffff"
+                    android:layout_width="match_parent"
+                    android:layout_height="570dp"
+                    android:orientation="vertical">
+                    <View
+                        android:background="@color/line"
+                        android:layout_width="match_parent"
+                        android:layout_height="10dp"/>
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="100dp"
+                        >
+                        <ImageView
+                            android:scaleType="fitXY"
+                            android:id="@+id/iv_diangong_product"
+                            android:layout_width="match_parent"
+                            android:layout_height="100dp"/>
+                    </RelativeLayout>
+                    <com.lib.common.hxp.view.GridViewForScrollView
+                        android:id="@+id/gv_diangong"
+                        android:layout_width="match_parent"
+                        android:layout_height="460dp"
+                        android:background="@color/line"
+                        android:horizontalSpacing="10dp"
+                        android:numColumns="2"
+                        android:paddingLeft="10dp"
+                        android:paddingRight="10dp"
+                        android:verticalSpacing="10dp"
+                        android:paddingTop="10dp"
+                        android:paddingBottom="10dp"
+                        />
+                </LinearLayout>
+
+
+
+
+
+
+
+
+                <LinearLayout
+                    android:background="#efefef"
+                    android:layout_width="match_parent"
+                    android:layout_height="268dp"
+                    android:orientation="vertical">
+                    <View
+                        android:background="@color/line"
+                        android:layout_width="match_parent"
+                        android:layout_height="10dp"/>
                 <LinearLayout
                     android:layout_width="match_parent"
+                    android:background="#ffffff"
                     android:layout_height="wrap_content"
                     android:gravity="center_vertical"
                     android:orientation="horizontal">
@@ -607,7 +1028,6 @@
                         app:left_height="16dp"
                         android:gravity="center"
                         android:layout_margin="10dp"
-                        android:drawableLeft="@mipmap/home_lamp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content" />
                     <View
@@ -623,14 +1043,14 @@
                     <TextView
                         android:text="新增配灯"
                         android:textSize="15sp"
-                        android:textColor="@color/theme_orange"
+                        android:textColor="#444444"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content" />
                     </RelativeLayout>
                     <bc.juhao.com.ui.view.TextViewPlus
                         android:id="@+id/tv_more_lamb"
                         android:text="更多"
-                        android:textColor="#444444"
+                        android:textColor="@color/theme_orange"
                         android:textSize="15sp"
                         android:drawablePadding="5dp"
                         android:layout_marginRight="15dp"
@@ -737,125 +1157,89 @@
                 <GridView
                     android:id="@+id/gv_home_lamb"
                     android:numColumns="2"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="10dp"
+                    android:paddingBottom="10dp"
+                    android:paddingTop="10dp"
                     android:verticalSpacing="10dp"
                     android:horizontalSpacing="10dp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"/>
                 </LinearLayout>
 
-                <LinearLayout
-                    android:background="#ffffff"
-                    android:layout_width="match_parent"
-                    android:layout_height="314dp"
-                    android:orientation="vertical">
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal">
-                        <bc.juhao.com.ui.view.TextViewPlus
-                            android:text="新品发布"
-                            android:textSize="15sp"
-                            android:textColor="#444444"
-                            android:textStyle="bold"
-                            android:drawableLeft="@mipmap/home_new_product"
-                            android:gravity="center"
-                            app:left_width="18dp"
-                            app:left_height="18dp"
-                            android:layout_margin="10dp"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content" />
-                        <View
-                            android:layout_width="0dp"
-                            android:layout_height="match_parent"
-                            android:layout_weight="1"/>
-                        <TextView
-                            android:id="@+id/tv_new_product_more"
-                            android:text="更多"
-                            android:textColor="#444444"
-                            android:textSize="15sp"
-                            android:layout_marginRight="15dp"
-                            android:layout_gravity="center_vertical"
-                            android:drawableRight="@mipmap/into"
-                            android:drawablePadding="5dp"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content" />
-                    </LinearLayout>
-                    <com.lib.common.hxp.view.GridViewForScrollView
-                        android:id="@+id/priductGv01"
-                        android:layout_width="match_parent"
-                        android:layout_height="274dp"
-                        android:background="@color/white"
-                        android:horizontalSpacing="5dp"
-                        android:numColumns="1"
-                        android:paddingLeft="5dp"
-                        android:paddingRight="5dp"
-                        android:verticalSpacing="5dp"
-                        android:paddingTop="5dp"
-                        android:paddingBottom="10dp"
-                        android:visibility="visible"/>
-                </LinearLayout>
+
 
                 <LinearLayout
                     android:id="@+id/ll_my_product"
+                    android:background="#efefef"
                     android:visibility="gone"
-                    android:background="#ffffff"
                     android:layout_width="match_parent"
-                    android:layout_height="127dp"
+                    android:layout_height="200dp"
                     android:orientation="vertical">
-                    <View
-                        android:background="#f9f9f9"
+                    <!--<bc.juhao.com.ui.view.TextViewPlus-->
+                        <!--android:text="我的产品"-->
+                        <!--android:textSize="15sp"-->
+                        <!--android:textColor="#444444"-->
+                        <!--android:textStyle="bold"-->
+                        <!--android:gravity="center"-->
+                        <!--android:layout_margin="10dp"-->
+                        <!--android:drawableLeft="@mipmap/home_my_product"-->
+                        <!--app:left_width="17dp"-->
+                        <!--app:left_height="18dp"-->
+                        <!--android:layout_width="wrap_content"-->
+                        <!--android:layout_height="wrap_content" />-->
+                    <ImageView
+                        android:id="@+id/iv_chanpin"
+                        android:scaleType="fitXY"
                         android:layout_width="match_parent"
-                        android:layout_height="10dp"/>
-                    <bc.juhao.com.ui.view.TextViewPlus
-                        android:text="我的产品"
-                        android:textSize="15sp"
-                        android:textColor="#444444"
-                        android:textStyle="bold"
-                        android:gravity="center"
-                        android:layout_margin="10dp"
-                        android:drawableLeft="@mipmap/home_my_product"
-                        app:left_width="17dp"
-                        app:left_height="18dp"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" />
+                        android:layout_height="100dp"
+                        />
                     <HorizontalScrollView
                         android:scrollbars="none"
+                        android:background="#efefef"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent">
                         <LinearLayout
                             android:id="@+id/ll_my_product_list"
+                            android:background="#efefef"
                             android:orientation="horizontal"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"/>
                     </HorizontalScrollView>
                 </LinearLayout>
                 <View
-                    android:background="#f9f9f9"
+                    android:background="@color/line"
                     android:layout_width="match_parent"
                     android:layout_height="10dp"/>
                 <LinearLayout
                     android:background="#ffffff"
                     android:layout_width="match_parent"
-                    android:layout_height="230dp"
+                    android:layout_height="305dp"
                     android:orientation="vertical">
-                    <LinearLayout
+                    <ImageView
+                        android:id="@+id/iv_zhuanti"
+                        android:scaleType="fitXY"
                         android:layout_width="match_parent"
-                        android:layout_height="40dp"
-                        android:orientation="horizontal">
-                        <bc.juhao.com.ui.view.TextViewPlus
-                            android:text="专题精选"
-                            android:textStyle="bold"
-                            android:textColor="#444444"
-                            android:textSize="15sp"
-                            app:left_width="15dp"
-                            app:left_height="19dp"
-                            android:drawableLeft="@mipmap/home_thematic"
-                            android:gravity="center"
-                            android:layout_margin="10dp"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content" />
+                        android:layout_height="100dp"
+                        android:orientation="horizontal"/>
+                        <!--<bc.juhao.com.ui.view.TextViewPlus-->
+                            <!--android:text="专题精选"-->
+                            <!--android:textStyle="bold"-->
+                            <!--android:textColor="#444444"-->
+                            <!--android:textSize="15sp"-->
+                            <!--app:left_width="15dp"-->
+                            <!--app:left_height="19dp"-->
+                            <!--android:drawableLeft="@mipmap/home_thematic"-->
+                            <!--android:gravity="center"-->
+                            <!--android:layout_margin="10dp"-->
+                            <!--android:layout_width="wrap_content"-->
+                            <!--android:layout_height="wrap_content" />-->
 
-                    </LinearLayout>
+                    <View
+                        android:background="@color/line"
+                        android:layout_width="match_parent"
+                        android:layout_height="10dp"
+                        />
                     <HorizontalScrollView
                         android:layout_width="match_parent"
                         android:scrollbars="none"
@@ -871,40 +1255,46 @@
                     android:background="#f9f9f9"
                     android:layout_width="match_parent"
                     android:layout_height="10dp"/>
+                <!--<bc.juhao.com.ui.view.TextViewPlus-->
+                    <!--android:text="猜你喜欢"-->
+                    <!--android:textStyle="bold"-->
+                    <!--android:background="#ffffff"-->
+                    <!--android:textColor="#444444"-->
+                    <!--android:textSize="15sp"-->
+                    <!--app:left_width="17dp"-->
+                    <!--app:left_height="15dp"-->
+                    <!--android:drawableLeft="@mipmap/home_like"-->
+                    <!--android:gravity="center_vertical"-->
+                    <!--android:paddingLeft="10dp"-->
+                    <!--android:layout_width="match_parent"-->
+                    <!--android:layout_height="40dp" />-->
                 <ImageView
-                    android:visibility="gone"
-                    android:layout_width="match_parent"
-                    android:layout_height="50dp"
-                    android:layout_marginTop="5dp"
-                    android:scaleType="fitStart"
-                    android:src="@mipmap/cainixihuan"/>
-                <bc.juhao.com.ui.view.TextViewPlus
-                    android:text="猜你喜欢"
-                    android:textStyle="bold"
-                    android:background="#ffffff"
-                    android:textColor="#444444"
-                    android:textSize="15sp"
-                    app:left_width="17dp"
-                    app:left_height="15dp"
-                    android:drawableLeft="@mipmap/home_like"
-                    android:gravity="center_vertical"
-                    android:paddingLeft="10dp"
-                    android:layout_width="match_parent"
-                    android:layout_height="40dp" />
-
+                    android:id="@+id/iv_cnxh"
+                    android:scaleType="fitXY"
+                    android:layout_height="100dp"
+                    android:layout_width="match_parent"/>
                 <com.lib.common.hxp.view.GridViewForScrollView
                     android:id="@+id/priductGridView"
                     android:layout_width="match_parent"
                     android:layout_height="200dp"
-                    android:horizontalSpacing="15dp"
+                    android:horizontalSpacing="10dp"
                     android:numColumns="2"
                     android:background="#f6f6f6"
                     android:paddingLeft="10dp"
                     android:paddingRight="10dp"
-                    android:paddingTop="15dp"
-                    android:verticalSpacing="15dp"
+                    android:paddingTop="10dp"
+                    android:verticalSpacing="10dp"
                     android:visibility="visible"/>
+                <View
+                    android:layout_width="match_parent"
+                    android:background="@color/line"
+                    android:layout_height="20dp"
 
+                    />
+                <ImageView
+                    android:id="@+id/iv_tyd"
+                    android:layout_width="match_parent"
+                    android:layout_height="395dp"/>
                 <LinearLayout
                     android:gravity="center_vertical"
                     android:layout_width="match_parent"
@@ -1003,12 +1393,6 @@
                 <View
                     style="@style/view_style"
                     />
-
-
-
-
-
-
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -1145,7 +1529,7 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:scaleType="fitStart"
-                        android:src="@mipmap/rexiaotop"/>
+                        />
 
                     <View
                         android:layout_width="1dp"
@@ -1176,7 +1560,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:scaleType="fitStart"
-                            android:src="@mipmap/maishoutuijian"/>
+                            />
                     </LinearLayout>
                 </LinearLayout>
 
@@ -1227,7 +1611,7 @@
                             android:id="@+id/popularity_01_iv"
                             android:layout_width="match_parent"
                             android:layout_height="150dp"
-                            android:src="@mipmap/houxiandai"/>
+                            />
 
                         <ImageView
                             android:layout_width="match_parent"
@@ -1258,7 +1642,7 @@
                                 android:id="@+id/popularity_02_iv"
                                 android:layout_width="90dp"
                                 android:layout_height="90dp"
-                                android:src="@mipmap/houxiandai"/>
+                                />
 
                             <ImageView
                                 android:layout_width="match_parent"
@@ -1281,7 +1665,7 @@
                                 android:id="@+id/popularity_03_iv"
                                 android:layout_width="90dp"
                                 android:layout_height="90dp"
-                                android:src="@mipmap/houxiandai"/>
+                                />
 
                             <ImageView
                                 android:layout_width="match_parent"

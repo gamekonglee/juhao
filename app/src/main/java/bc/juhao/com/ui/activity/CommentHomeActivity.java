@@ -4,15 +4,15 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Build;
-import android.support.annotation.RequiresApi;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.annotation.RequiresApi;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.ListView;
 
+import com.aliyun.iot.ilop.demo.DemoApplication;
 import com.zhy.http.okhttp.callback.FileCallBack;
 
 import java.io.File;
@@ -30,7 +30,6 @@ import bc.juhao.com.cons.Constance;
 import bc.juhao.com.cons.NetWorkConst;
 import bc.juhao.com.net.ApiClient;
 import bc.juhao.com.ui.activity.user.SuccessVideoActivity;
-import bc.juhao.com.ui.adapter.SunImageAdapter;
 import bc.juhao.com.ui.adapter.SunImageNoAddAdapter;
 import bc.juhao.com.utils.DateUtils;
 import bc.juhao.com.utils.ImageLoadProxy;
@@ -70,9 +69,9 @@ public class CommentHomeActivity extends BaseActivity {
                 Author author=item.getAuthor();
                 if(author==null){
                     author=new Author();
-                    if(IssueApplication.mUserObject!=null){
-                    author.setUsername(IssueApplication.mUserObject.getString(Constance.username));
-                    author.setAvatar(IssueApplication.mUserObject.getString(Constance.avatar));
+                    if(DemoApplication.mUserObject!=null){
+                    author.setUsername(DemoApplication.mUserObject.getString(Constance.username));
+                    author.setAvatar(DemoApplication.mUserObject.getString(Constance.avatar));
                     }else {
                         author.setUsername("");
                         author.setAvatar("");
@@ -143,8 +142,8 @@ public class CommentHomeActivity extends BaseActivity {
             }
         };
         lv_comment.setAdapter(adapter);
-        commentBeans = IssueApplication.getCommentList();
-        IssueApplication.setCommentList(null);
+        commentBeans = DemoApplication.getCommentList();
+        DemoApplication.setCommentList(null);
         adapter.replaceAll(commentBeans);
 //        Bundle bundle=getIntent().getExtras();
 //        if(bundle!=null){

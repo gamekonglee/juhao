@@ -1,11 +1,9 @@
 package bc.juhao.com.ui.activity;
 
 import android.annotation.TargetApi;
-import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.content.res.Configuration;
-import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
@@ -14,7 +12,6 @@ import android.support.v4.view.ViewCompat;
 import android.transition.Transition;
 import android.util.Log;
 import android.view.View;
-import android.widget.Toast;
 
 import com.alibaba.fastjson.JSONObject;
 import com.shuyu.gsyvideoplayer.GSYVideoPlayer;

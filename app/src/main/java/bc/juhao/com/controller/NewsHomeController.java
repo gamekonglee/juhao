@@ -19,11 +19,8 @@ import java.text.DecimalFormat;
 
 import bc.juhao.com.R;
 import bc.juhao.com.cons.Constance;
-import bc.juhao.com.controller.product.SelectGoodsController;
 import bc.juhao.com.listener.INetworkCallBack;
-import bc.juhao.com.ui.activity.IssueApplication;
 import bc.juhao.com.ui.activity.product.ProDetailActivity;
-import bc.juhao.com.ui.adapter.ProAdapter;
 import bc.juhao.com.ui.fragment.home.NewsHomeFragment;
 import bc.juhao.com.ui.view.EndOfGridView;
 import bc.juhao.com.ui.view.EndOfListView;
@@ -138,7 +135,7 @@ public class NewsHomeController extends BaseController implements EndOfListView.
         });
     }
 
-    private void getDataSuccess(JSONArray array,int page) {
+    private void getDataSuccess(JSONArray array, int page) {
         if (1 == page)
             goodses = array;
         else if (null != goodses) {
@@ -227,16 +224,16 @@ public class NewsHomeController extends BaseController implements EndOfListView.
                 holder.groupbuy_tv.setVisibility(isFinished==0? View.VISIBLE : View.GONE);
                 double old_Price=0;
                 JSONArray propertieArray = goodses.getJSONObject(position).getJSONArray(Constance.properties);
-                if (!AppUtils.isEmpty(propertieArray)&&propertieArray.length()>0) {
-                    JSONArray attrsArray = propertieArray.getJSONObject(0).getJSONArray(Constance.attrs);
-                    int price = attrsArray.getJSONObject(0).getInt(Constance.attr_price);
-                    double currentPrice = price;
-                    old_Price=currentPrice;
-                    holder.price_tv.setText("￥" + currentPrice);
-                } else {
-                    old_Price= Double.parseDouble(goodses.getJSONObject(position).getString(Constance.current_price));
-                    holder.price_tv.setText("￥" + goodses.getJSONObject(position).getString(Constance.current_price));
-                }
+//                if (!AppUtils.isEmpty(propertieArray)&&propertieArray.length()>0) {
+//                    JSONArray attrsArray = propertieArray.getJSONObject(0).getJSONArray(Constance.attrs);
+//                    int price = attrsArray.getJSONObject(0).getInt(Constance.attr_price);
+//                    double currentPrice = price;
+//                    old_Price=currentPrice;
+//                    holder.price_tv.setText("￥" + currentPrice);
+//                } else {
+//                }
+                old_Price= Double.parseDouble(goodses.getJSONObject(position).getString(Constance.current_price));
+                holder.price_tv.setText("￥" + goodses.getJSONObject(position).getString(Constance.current_price));
                 old_Price=old_Price*1.6;
                 DecimalFormat df=new DecimalFormat("###.00");
                 holder.old_price_tv.setText("￥" + df.format(old_Price));

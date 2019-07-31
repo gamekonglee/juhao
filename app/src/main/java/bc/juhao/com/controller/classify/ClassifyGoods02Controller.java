@@ -64,7 +64,7 @@ public class ClassifyGoods02Controller extends BaseController implements INetwor
         mView.showContentView();
         switch (requestCode) {
             case NetWorkConst.ATTRLIST:
-//                LogUtils.logE("attrlist",ans.toString());
+                LogUtils.logE("attrlist",ans.toString());
                 mFilterList = ans.getJSONArray(Constance.goods_attr_list);
 
                 mAdapter.setData(mFilterList);

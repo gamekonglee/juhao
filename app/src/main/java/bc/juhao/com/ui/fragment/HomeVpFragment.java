@@ -1,6 +1,6 @@
 package bc.juhao.com.ui.fragment;
 
-import android.app.Fragment;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -13,6 +13,10 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.acker.simplezxing.activity.CaptureActivity;
+import com.aliyun.iot.aep.component.router.Router;
+import com.example.qrcode.ScannerActivity;
+
 import java.util.ArrayList;
 
 import astuetz.MyPagerSlidingTabStrip;
@@ -20,7 +24,6 @@ import bc.juhao.com.R;
 import bc.juhao.com.common.BaseFragment;
 import bc.juhao.com.ui.activity.ChartListActivity;
 import bc.juhao.com.ui.activity.product.SelectGoodsActivity;
-import bc.juhao.com.ui.activity.user.SimpleScannerActivity;
 import bc.juhao.com.ui.fragment.home.DesginerHomeFragment;
 import bc.juhao.com.ui.fragment.home.HomeFragment;
 import bc.juhao.com.ui.fragment.home.JuHaoMkFragment;
@@ -36,6 +39,7 @@ import bocang.utils.IntentUtil;
 
 public class HomeVpFragment extends BaseFragment implements View.OnClickListener {
 
+    private static final int RESULT_REQUEST_CODE = 400;
     private MyPagerSlidingTabStrip pagerSlidingTabStrip;
     private ViewPager vp_home;
     private String[] titles;
@@ -77,6 +81,7 @@ public class HomeVpFragment extends BaseFragment implements View.OnClickListener
         pagerSlidingTabStrip.setDividerColor(Color.TRANSPARENT);
         pagerSlidingTabStrip.setIndicatorColor(getActivity().getResources().getColor(R.color.green));
         pagerSlidingTabStrip.setUnderlineColor(getActivity().getResources().getColor(R.color.goods_details_sku));
+
         pagerSlidingTabStrip.setUnderlineHeight(1);
         fragmentArrayList = new ArrayList<>();
         HomeFragment homeFragment=new HomeFragment();
@@ -101,7 +106,12 @@ public class HomeVpFragment extends BaseFragment implements View.OnClickListener
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.topLeftBtn://扫描二维码
-                IntentUtil.startActivity(this.getActivity(), SimpleScannerActivity.class, false);
+//                IntentUtil.startActivity(this.getActivity(), SimpleScannerActivity.class, false);
+//                Intent intent2 = new Intent(getActivity(), ScannerActivity.class);
+//                startActivityForResult(intent2, 400);
+
+                startActivityForResult(new Intent(getActivity(), CaptureActivity.class), CaptureActivity.REQ_CODE);
+//                Router.getInstance().toUrlForResult(getActivity(),"page/scan",RESULT_REQUEST_CODE);
                 break;
             case R.id.topRightBtn://消息
                 if (!isToken()) {
@@ -113,7 +123,7 @@ public class HomeVpFragment extends BaseFragment implements View.OnClickListener
                 break;}
     }
 
-    class PagerHomeAdapter extends FragmentPagerAdapter{
+    class PagerHomeAdapter extends FragmentPagerAdapter {
 
         private final ArrayList<android.support.v4.app.Fragment> mList;
 

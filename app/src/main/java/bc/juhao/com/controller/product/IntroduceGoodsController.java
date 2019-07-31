@@ -3,7 +3,6 @@ package bc.juhao.com.controller.product;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
 import android.graphics.Paint;
 import android.os.Build;
 import android.os.Bundle;
@@ -23,11 +22,9 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
-import com.baiiu.filter.util.UIUtil;
+import com.aliyun.iot.ilop.demo.DemoApplication;
 import com.bigkoo.convenientbanner.CBPageAdapter;
 import com.bigkoo.convenientbanner.CBViewHolderCreator;
 import com.bigkoo.convenientbanner.ConvenientBanner;
@@ -36,7 +33,6 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 import com.zhy.http.okhttp.callback.FileCallBack;
 
 import org.greenrobot.eventbus.EventBus;
-import org.w3c.dom.Text;
 
 import java.io.File;
 import java.text.DecimalFormat;
@@ -45,7 +41,6 @@ import java.util.List;
 import java.util.Random;
 
 import bc.juhao.com.R;
-import bc.juhao.com.bean.Author;
 import bc.juhao.com.bean.CommentBean;
 import bc.juhao.com.bean.DaoMaster;
 import bc.juhao.com.bean.DaoSession;
@@ -61,15 +56,12 @@ import bc.juhao.com.listener.IParamentChooseListener;
 import bc.juhao.com.net.ApiClient;
 import bc.juhao.com.ui.activity.CommentHomeActivity;
 import bc.juhao.com.ui.activity.DetailPhotoActivity;
-import bc.juhao.com.ui.activity.IssueApplication;
 import bc.juhao.com.ui.activity.product.PostedImageActivity;
 import bc.juhao.com.ui.activity.product.ProDetailActivity;
 import bc.juhao.com.ui.activity.user.SuccessVideoActivity;
 import bc.juhao.com.ui.adapter.ParamentAdapter;
-import bc.juhao.com.ui.adapter.SunImageAdapter;
 import bc.juhao.com.ui.adapter.SunImageAddAdapter;
 import bc.juhao.com.ui.adapter.SunImageAddMovieAdapter;
-import bc.juhao.com.ui.adapter.SunImageNoAddAdapter;
 import bc.juhao.com.ui.fragment.IntroduceGoodsFragment;
 import bc.juhao.com.ui.view.countdownview.CountdownView;
 import bc.juhao.com.ui.view.popwindow.SelectParamentPopWindow;
@@ -78,7 +70,6 @@ import bc.juhao.com.utils.ImageLoadProxy;
 import bc.juhao.com.utils.MyShare;
 import bc.juhao.com.utils.UIUtils;
 import bocang.json.JSONObject;
-import bocang.json.JSONParser;
 import bocang.utils.AppDialog;
 import bocang.utils.AppUtils;
 import bocang.utils.MyToast;
@@ -240,7 +231,7 @@ public class IntroduceGoodsController extends BaseController implements INetwork
         int category=productObject.getInteger(Constance.category);
         mCurrentPrice = productObject.getString(Constance.current_price);
         int is_jh=productObject.getInteger(Constance.is_jh);
-        com.alibaba.fastjson.JSONArray attachArray = productObject.getJSONArray(Constance.attachments);
+        JSONArray attachArray = productObject.getJSONArray(Constance.attachments);
         ParamentAdapter mAdapter = new ParamentAdapter(attachArray, mView.getActivity());
         lv_paramter.setAdapter(mAdapter);
 
@@ -289,7 +280,7 @@ public class IntroduceGoodsController extends BaseController implements INetwork
                 }, paths);
         mConvenientBanner.setPageIndicator(new int[]{R.drawable.dot_unfocuse, R.drawable.dot_focuse});
         proNameTv.setText(productName);
-
+        DecimalFormat df=new DecimalFormat("###.00");
         selectCollect();
         DaoMaster.DevOpenHelper devOpenHelper = new DaoMaster.DevOpenHelper(mView.getContext(), "my-db", null);
         DaoMaster daoMaster = new DaoMaster(devOpenHelper.getWritableDatabase());
@@ -299,36 +290,36 @@ public class IntroduceGoodsController extends BaseController implements INetwork
         dbGoodsBean.setId(productObject.getInteger(Constance.id));
         dbGoodsBean.setG_id(Long.valueOf(productObject.getInteger(Constance.id)));
         dbGoodsBean.setName(productObject.getString(Constance.name));
-        dbGoodsBean.setPrice(productObject.getString(Constance.price));
+        dbGoodsBean.setPrice(df.format(Double.parseDouble(productObject.getString(Constance.current_price))*1.6));
         dbGoodsBean.setCurrent_price(productObject.getString(Constance.current_price));
         dbGoodsBean.setCreate_time(DateUtils.getStrTime(System.currentTimeMillis()+""));
         dbGoodsBean.setOriginal_img(productObject.getJSONArray(Constance.photos).getJSONObject(0).getString(Constance.large));
-        DecimalFormat df=new DecimalFormat("###.00");
 
-        JSONArray propertieArray = productObject.getJSONArray(Constance.properties);
-        if (propertieArray.size() > 0) {
-            JSONArray attrsArray = propertieArray.getJSONObject(0).getJSONArray(Constance.attrs);
-            final String name = propertieArray.getJSONObject(0).getString(Constance.name);
-            if (!AppUtils.isEmpty(attrsArray)) {
-                int price = attrsArray.getJSONObject(0).getInteger(Constance.attr_price);
-                String parament = attrsArray.getJSONObject(0).getString(Constance.attr_name);
 
-                double oldPrice = Double.parseDouble(mOldPrice);
-                double currentPrice = price;
-                mCurrentPrice=""+currentPrice;
-                mOldPrice=df.format(Double.parseDouble(mCurrentPrice)*1.6);
-                if(oldPrice>Double.parseDouble(mOldPrice)){
-                unPriceTv.setText("￥" + oldPrice);
-                unPriceTv.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG);
-                }
-                dbGoodsBean.setPrice(oldPrice+"");
-                dbGoodsBean.setCurrent_price(""+currentPrice);
-                proPriceTv.setText("￥" + currentPrice);
-                mParamentTv.setText("已选 " + name + ":" + parament);
-                dbGoodsBeanDao.insertOrReplace(dbGoodsBean);
-                return;
-            }
-        }
+//        if (propertieArray.size() > 0) {
+//            JSONArray attrsArray = propertieArray.getJSONObject(0).getJSONArray(Constance.attrs);
+//            final String name = propertieArray.getJSONObject(0).getString(Constance.name);
+//            if (!AppUtils.isEmpty(attrsArray)) {
+//                int price = attrsArray.getJSONObject(0).getInteger(Constance.attr_price);
+//                String parament = attrsArray.getJSONObject(0).getString(Constance.attr_name);
+//
+//                double oldPrice = Double.parseDouble(mOldPrice);
+//                double currentPrice = price;
+//                if(currentPrice!=0){
+//                mCurrentPrice=""+currentPrice;}
+//                mOldPrice=df.format(Double.parseDouble(mCurrentPrice)*1.6);
+//                if(oldPrice>Double.parseDouble(mOldPrice)){
+//                unPriceTv.setText("￥" + oldPrice);
+//                unPriceTv.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG);
+//                }
+//                dbGoodsBean.setPrice(oldPrice+"");
+//                dbGoodsBean.setCurrent_price(""+mCurrentPrice);
+//                proPriceTv.setText("￥" + mCurrentPrice);
+//                mParamentTv.setText("已选 " + name + ":" + parament);
+//                dbGoodsBeanDao.insertOrReplace(dbGoodsBean);
+//                return;
+//            }
+//        }
         proPriceTv.setText("￥" + mCurrentPrice);
 //        proPriceTv.setText("￥" + 00000);
 //
@@ -376,6 +367,9 @@ public class IntroduceGoodsController extends BaseController implements INetwork
                 dbGoodsBean.setPrice(mOldPrice+"");
                 tv_time_oldprice.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG);
                 remaining_num_tv.setVisibility(View.VISIBLE);
+                ((RelativeLayout.LayoutParams)proNameTv.getLayoutParams()).setMargins(UIUtils.dip2PX(15),UIUtils.dip2PX(20),0,0);
+                proNameTv.setTextSize(15);
+
             }else{
                 remaining_num_tv.setVisibility(View.GONE);
             }
@@ -507,10 +501,10 @@ public class IntroduceGoodsController extends BaseController implements INetwork
                 break;
             case NetWorkConst.GETCART:
                 if (ans.getJSONArray(Constance.goods_groups).length() > 0) {
-                    IssueApplication.mCartCount = ans.getJSONArray(Constance.goods_groups)
+                    DemoApplication.mCartCount = ans.getJSONArray(Constance.goods_groups)
                             .getJSONObject(0).getJSONArray(Constance.goods).length();
                 } else {
-                    IssueApplication.mCartCount = 0;
+                    DemoApplication.mCartCount = 0;
                 }
                 EventBus.getDefault().post(Constance.CARTCOUNT);
 
@@ -527,13 +521,13 @@ public class IntroduceGoodsController extends BaseController implements INetwork
                     ll_comment.setVisibility(View.GONE);
                     return;
                     }else {
-                        JSONObject mUserObject=IssueApplication.mUserObject;
+                        JSONObject mUserObject= DemoApplication.mUserObject;
                         if(mUserObject!=null){
                             int level=mUserObject.getInt(Constance.level);
                             if(level==0){
                                 ll_comment.setVisibility(View.VISIBLE);
                                 rl_comment_cotent.removeAllViews();
-                                View view=View.inflate(mView.getContext(),R.layout.view_sunimage,null);
+                                View view=View.inflate(mView.getContext(), R.layout.view_sunimage,null);
                                 LinearLayout.LayoutParams layoutParams=new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
                                 view.setLayoutParams(layoutParams);
                                 ImageView iv_head=view.findViewById(R.id.iv_avard);
@@ -596,7 +590,7 @@ public class IntroduceGoodsController extends BaseController implements INetwork
 //                                    @Override
 //                                    public void onClick(View view) {
 //                                        Intent intent=new Intent(mView.getContext(), CommentHomeActivity.class);
-//                                        IssueApplication.setCommentList(commentBeans);
+//                                        DemoApplication.setCommentList(commentBeans);
 //                                        mView.startActivity(intent);
 //                                    }
 //                                });
@@ -673,7 +667,7 @@ public class IntroduceGoodsController extends BaseController implements INetwork
 //                    TextView tv_name=view.findViewById(R.id.tv_name);
 //                    TextView tv_c_price=view.findViewById(R.id.tv_c_price);
 //                    TextView tv_o_price=view.findViewById(R.id.tv_o_price);
-                    View view=View.inflate(mView.getContext(),R.layout.view_sunimage,null);
+                    View view=View.inflate(mView.getContext(), R.layout.view_sunimage,null);
                     LinearLayout.LayoutParams layoutParams=new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
                     view.setLayoutParams(layoutParams);
                     ImageView iv_head=view.findViewById(R.id.iv_avard);
@@ -728,7 +722,7 @@ public class IntroduceGoodsController extends BaseController implements INetwork
                         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                             String Token= MyShare.get(mView.getContext()).getString(Constance.TOKEN);
                             if(!TextUtils.isEmpty(Token)) {
-                                JSONObject mUserObject= IssueApplication.mUserObject;
+                                JSONObject mUserObject= DemoApplication.mUserObject;
                                 if(mUserObject!=null){
                                     int leve=mUserObject.getInt(Constance.level);
                                     if(leve==0){
@@ -798,7 +792,7 @@ public class IntroduceGoodsController extends BaseController implements INetwork
                                                 @Override
                                                 public void onClick(View view) {
                                                     Intent intent=new Intent(mView.getContext(), CommentHomeActivity.class);
-                                                    IssueApplication.setCommentList(commentBeans);
+                                                    DemoApplication.setCommentList(commentBeans);
                                                     mView.startActivity(intent);
                                                 }
                                             });
@@ -806,7 +800,7 @@ public class IntroduceGoodsController extends BaseController implements INetwork
                         @Override
                         public void onClick(View view) {
                             Intent intent=new Intent(mView.getContext(), CommentHomeActivity.class);
-                            IssueApplication.setCommentList(commentBeans);
+                            DemoApplication.setCommentList(commentBeans);
                             mView.startActivity(intent);
                         }
                     });
@@ -859,7 +853,7 @@ public class IntroduceGoodsController extends BaseController implements INetwork
                 final bocang.json.JSONArray goodsList = ans.getJSONArray(Constance.goodsList);
                 ll_tuijian.removeAllViews();
                 for(int i=0;i<goodsList.length();i++){
-                View view=View.inflate(mView.getContext(),R.layout.view_goods_tuijian,null);
+                View view=View.inflate(mView.getContext(), R.layout.view_goods_tuijian,null);
                     ImageView iv_img=view.findViewById(R.id.iv_img);
                     TextView tv_name=view.findViewById(R.id.tv_name);
                     TextView tv_c_price=view.findViewById(R.id.tv_c_price);

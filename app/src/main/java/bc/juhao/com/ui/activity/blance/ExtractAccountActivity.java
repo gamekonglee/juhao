@@ -26,8 +26,8 @@ public class ExtractAccountActivity extends BaseActivity {
 
     @Override
     protected void InitDataView() {
-        mAlipay=MyShare.get(ExtractAccountActivity.this).getString(Constance.ALIPAY);
-        mAlipayName=MyShare.get(ExtractAccountActivity.this).getString(Constance.ALIPAYNAME);
+        mAlipay= MyShare.get(ExtractAccountActivity.this).getString(Constance.ALIPAY);
+        mAlipayName= MyShare.get(ExtractAccountActivity.this).getString(Constance.ALIPAYNAME);
         alipay_et.setText(mAlipay);
         alipay_name_tv.setText(mAlipayName);
     }

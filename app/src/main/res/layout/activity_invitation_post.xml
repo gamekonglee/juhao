@@ -1,134 +1,102 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<RelativeLayout
     android:id="@+id/main_ll"
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:gaga="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <RelativeLayout
-        android:id="@+id/toolbar"
-        android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
-        android:background="#ffffff"
-        android:minHeight="?attr/actionBarSize">
-
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-            <LinearLayout
-                android:layout_width="80dp"
-                android:layout_height="match_parent"
-                android:gravity="center_vertical"
-                android:onClick="goBack"
-                android:paddingLeft="10dp">
-
-                <ImageView
-                    android:id="@+id/topLeftBtn"
-                    android:layout_width="10dp"
-                    android:layout_height="20dp"
-                    android:layout_centerVertical="true"
-                    android:layout_marginRight="5dp"
-                    android:background="@mipmap/nav_left"
-
-                    android:textColor="#FFFFFF"/>
-            </LinearLayout>
-
-            <TextView
-                android:id="@+id/et_search"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerInParent="true"
-                android:text="我的邀请码"
-                android:textColor="#666666"
-                android:textSize="18sp"
-                />
-        </RelativeLayout>
-
-
-    </RelativeLayout>
     <View
-        android:background="#dddddd"
         android:layout_width="match_parent"
         android:layout_height="1dp"/>
     <ScrollView
         android:id="@+id/sv"
-        android:background="#ffffff"
+        android:background="@mipmap/bg_invite_red"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content">
         <LinearLayout
             android:gravity="center_horizontal"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:paddingBottom="50dp"
+            android:layout_height="wrap_content"
             android:orientation="vertical">
+            <LinearLayout
+                android:gravity="center_horizontal"
+                android:orientation="vertical"
+                android:layout_marginTop="250dp"
+                android:layout_marginRight="25dp"
+                android:layout_marginLeft="25dp"
+                android:background="@mipmap/icon_bg_invite_whtie"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    android:layout_gravity="center_horizontal"
+                    android:textColor="@color/green"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+                <TextView
+                    android:text="1.长按识别二维码安装钜豪商城APP"
+                    android:textColor="#444444"
+                    android:layout_marginTop="30dp"
+                    android:textSize="12sp"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+                <ImageView
+                    android:id="@+id/iv_code"
+                    android:src="@mipmap/my_yqm_ewm"
+                    android:layout_marginTop="5dp"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp" />
+                <TextView
+                    android:text="2.输入邀请码，成为合伙人，开始赚钱"
+                    android:textSize="12sp"
+                    android:textColor="#666666"
+                    android:layout_marginTop="5dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+                <TextView
+                    android:id="@+id/invitation_code_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="20dp"
+                    android:layout_marginTop="5dp"
+                    android:background="@drawable/shape_invitation"
+                    android:gravity="center"
+                    android:textColor="@color/green"
+                    android:textSize="15sp"/>
+                <TextView
+                    android:id="@+id/tv_tips"
+                    android:text="3.每邀请1名好友注册并成功钜豪商城，产生交易后即可享受到他的交易分成"
+                    android:textSize="12sp"
+                    android:textColor="#666666"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginRight="50dp"
+                    android:layout_marginLeft="50dp"
+                    android:lineSpacingExtra="3dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+            </LinearLayout>
+
             <TextView
-                android:text="推广赚钱 多多益善"
-                android:textSize="20sp"
-                android:textStyle="bold"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginTop="50dp"
-                android:textColor="@color/green"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
-            <TextView
-                android:text="1.长按识别二维码安装钜豪商城APP"
-                android:textColor="#666666"
-                android:textSize="12sp"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginTop="20dp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
-        <ImageView
-            android:id="@+id/iv_code"
-            android:src="@mipmap/my_yqm_ewm"
-            android:layout_marginTop="20dp"
-            android:layout_width="115dp"
-            android:layout_height="115dp" />
-            <TextView
-                android:text="2.输入邀请码，成为合伙人，开始赚钱"
-                android:textSize="12sp"
-                android:textColor="#666666"
-                android:layout_marginTop="30dp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
-            <TextView
-                android:id="@+id/invitation_code_tv"
-                android:layout_width="wrap_content"
-                android:layout_height="35dp"
-                android:layout_marginTop="10dp"
-                android:background="@drawable/shape_invitation"
-                android:gravity="center"
-                android:paddingLeft="15dp"
-                android:paddingRight="15dp"
-                android:textColor="@color/green"
-                android:textSize="16sp"/>
-            <TextView
-                android:id="@+id/tv_tips"
-                android:text="每邀请1名好友注册并成功钜豪商城，产生交易后即可享受到他的交易分成"
-                android:textColor="#333333"
-                android:textSize="12sp"
-                android:layout_marginTop="5dp"
-                android:layout_marginRight="80dp"
-                android:layout_marginLeft="80dp"
-                android:lineSpacingExtra="10dp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
-            <TextView
-                android:background="@drawable/bg_corner_full_orange_10"
-                android:layout_margin="15dp"
+                android:background="@drawable/bg_corner_full_yellow_10"
                 android:text="分享赚钱"
                 android:textSize="15sp"
                 android:textColor="#ffffff"
                 android:gravity="center"
                 android:id="@+id/share_v"
                 android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:layout_alignParentBottom="true"/>
-
+                android:layout_height="35dp"
+                android:layout_marginTop="25dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                />
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="20dp"/>
         </LinearLayout>
-
     </ScrollView>
     <!--<RelativeLayout-->
         <!--android:layout_width="match_parent"-->
@@ -160,4 +128,45 @@
 
 
     <!--</RelativeLayout>-->
-</LinearLayout>
+    <RelativeLayout
+        android:id="@+id/toolbar"
+        android:layout_marginTop="20dp"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:minHeight="?attr/actionBarSize">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <LinearLayout
+                android:layout_width="80dp"
+                android:layout_height="match_parent"
+                android:gravity="center_vertical"
+                android:onClick="goBack"
+                android:paddingLeft="10dp">
+
+                <ImageView
+                    android:id="@+id/topLeftBtn"
+                    android:layout_width="10dp"
+                    android:layout_height="20dp"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="5dp"
+                    android:background="@mipmap/fh"
+                    android:textColor="#FFFFFF"/>
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/et_search"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:text="我的邀请码"
+                android:textColor="#ffffff"
+                android:textSize="18sp"
+                />
+        </RelativeLayout>
+
+
+    </RelativeLayout>
+</RelativeLayout>

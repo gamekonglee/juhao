@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    android:orientation="horizontal"
+    android:gravity="center_vertical"
+    android:paddingLeft="20dp"
+    android:paddingRight="10dp"
+    android:paddingBottom="20dp"
+    android:paddingTop="20dp"
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ImageView
+        android:id="@+id/iv_img"
+        android:src="@mipmap/home_cz"
+        android:layout_width="40dp"
+        android:layout_height="40dp" />
+    <RelativeLayout
+        android:layout_marginLeft="15dp"
+        android:layout_width="0dp"
+        android:layout_weight="1"
+        android:layout_height="wrap_content">
+        <TextView
+            android:text="开关"
+            android:id="@+id/tv_name"
+            android:textSize="14sp"
+            android:textColor="#444444"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+       <LinearLayout
+           android:layout_below="@+id/tv_name"
+           android:layout_marginTop="15dp"
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
+           android:orientation="horizontal">
+
+       <TextView
+           android:id="@+id/tv_scene"
+            android:text="客厅"
+            android:textColor="#999999"
+            android:textSize="12sp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <View
+            android:layout_width="1dp"
+            android:background="#999999"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:layout_height="match_parent"/>
+           <TextView
+               android:id="@+id/tv_status"
+               android:text="状态"
+               android:textSize="12sp"
+               android:textColor="#999999"
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content" />
+       </LinearLayout>
+    </RelativeLayout>
+    <ImageView
+        android:id="@+id/iv_turn"
+        android:layout_width="30dp"
+        android:layout_height="30dp" />
+</LinearLayout>

@@ -25,7 +25,7 @@ public class ProgrammeDropMenuAdapter implements MenuAdapter {
     private List<Programme> mProgrammeList;
     private List<Integer> itemPosList;
 
-    public ProgrammeDropMenuAdapter(Context context,List<Programme> programmeList, List<Integer> itemPosList, OnFilterDoneListener onFilterDoneListener) {
+    public ProgrammeDropMenuAdapter(Context context, List<Programme> programmeList, List<Integer> itemPosList, OnFilterDoneListener onFilterDoneListener) {
         this.mContext = context;
         this.mProgrammeList = programmeList;
         this.onFilterDoneListener = onFilterDoneListener;

@@ -4,7 +4,6 @@ import android.Manifest;
 import android.app.Dialog;
 import android.content.pm.PackageManager;
 import android.os.Build;
-import android.os.Bundle;
 import android.os.Message;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
@@ -19,11 +18,11 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.alibaba.fastjson.JSON;
+import com.aliyun.iot.ilop.demo.DemoApplication;
 import com.baidu.location.BDAbstractLocationListener;
 import com.baidu.location.BDLocation;
 import com.baidu.location.LocationClient;
 import com.baidu.location.LocationClientOption;
-import com.google.android.gms.common.GooglePlayServicesClient;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -127,8 +126,6 @@ public class UserAddrAddController extends BaseController implements INetworkCal
                         startLocation();
                     }
 
-
-
             }
         });
     }
@@ -178,7 +175,7 @@ public class UserAddrAddController extends BaseController implements INetworkCal
         option.setOpenGps(true); // 打开gps
         option.setScanSpan(1000);
 
-        mLocationClient = new LocationClient(IssueApplication.getcontext());
+        mLocationClient = new LocationClient(DemoApplication.getInstance());
         //声明LocationClient类
         mLocationClient.registerLocationListener(new BDAbstractLocationListener() {
             @Override
@@ -232,10 +229,10 @@ public class UserAddrAddController extends BaseController implements INetworkCal
 
     private void getContact() {
         contacts = ContactUtils.getContactsInfos(mView);
-        final Dialog dialog=new Dialog(mView,R.style.customDialog);
+        final Dialog dialog=new Dialog(mView, R.style.customDialog);
         dialog.setContentView(R.layout.dialog_contact);
         ListView lv_contact=dialog.findViewById(R.id.lv_contact);
-        QuickAdapter<ContactInfo > adapter=new QuickAdapter<ContactInfo>(mView,R.layout.item_contact) {
+        QuickAdapter<ContactInfo > adapter=new QuickAdapter<ContactInfo>(mView, R.layout.item_contact) {
             @Override
             protected void convert(BaseAdapterHelper helper, ContactInfo item) {
                   helper.setText(R.id.tv_name,item.name);

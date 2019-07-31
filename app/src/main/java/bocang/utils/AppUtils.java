@@ -7,6 +7,8 @@ import android.net.NetworkInfo;
 import android.util.AndroidRuntimeException;
 import android.view.View;
 
+import com.aliyun.iot.ilop.demo.DemoApplication;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -423,7 +425,7 @@ public class AppUtils {
      * @return
      */
     public static Boolean checkNetwork() {
-        ConnectivityManager connectivityManager = (ConnectivityManager) BaseApplication.getInstance()
+        ConnectivityManager connectivityManager = (ConnectivityManager) DemoApplication.getInstance()
                 .getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo info = connectivityManager.getActiveNetworkInfo();
         if (info == null || !info.isAvailable()) {

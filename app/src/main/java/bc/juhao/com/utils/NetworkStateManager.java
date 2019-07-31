@@ -5,6 +5,8 @@ import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 
+import com.aliyun.iot.ilop.demo.DemoApplication;
+
 import bc.juhao.com.ui.activity.IssueApplication;
 
 
@@ -36,7 +38,7 @@ public class NetworkStateManager {
      */
     public boolean isNetworkConnected() {
         if (context == null) {
-            context= IssueApplication.getInstance();
+            context= DemoApplication.getInstance();
         }
         ConnectivityManager connectivity = (ConnectivityManager) context
                 .getSystemService(Context.CONNECTIVITY_SERVICE);

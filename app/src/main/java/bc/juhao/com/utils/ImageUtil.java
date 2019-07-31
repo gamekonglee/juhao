@@ -25,14 +25,13 @@ import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.ScrollView;
 
+import com.aliyun.iot.ilop.demo.DemoApplication;
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.EncodeHintType;
 import com.google.zxing.WriterException;
 import com.google.zxing.common.BitMatrix;
 import com.google.zxing.qrcode.QRCodeWriter;
 
-import java.io.BufferedInputStream;
-import java.io.BufferedOutputStream;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -105,8 +104,10 @@ public class ImageUtil {
      * @return bitmap
      */
     public static Bitmap createQRImage(String text, final int width, final int height) {
+        // 判断text合法性
         try {
-            // 判断text合法性
+
+
             if (text == null || "".equals(text) || text.length() < 1) {
                 return null;
             }
@@ -132,10 +133,10 @@ public class ImageUtil {
                     Bitmap.Config.ARGB_8888);
             bitmap.setPixels(pixels, 0, width, 0, 0, width, height);
             return bitmap;
-        } catch (WriterException e) {
-            e.printStackTrace();
+        }catch (Exception e){
+            return null;
         }
-        return null;
+
     }
 
 
@@ -198,50 +199,50 @@ public class ImageUtil {
     }
 
 
-    /**
-     * 在二维码中间添加Logo图案
-     */
-    private static Bitmap addLogo(Bitmap src, Bitmap logo) {
-        if (src == null) {
-            return null;
-        }
-
-        if (logo == null) {
-            return src;
-        }
-
-        //获取图片的宽高
-        int srcWidth = src.getWidth();
-        int srcHeight = src.getHeight();
-        int logoWidth = logo.getWidth();
-        int logoHeight = logo.getHeight();
-
-        if (srcWidth == 0 || srcHeight == 0) {
-            return null;
-        }
-
-        if (logoWidth == 0 || logoHeight == 0) {
-            return src;
-        }
-
-        //logo大小为二维码整体大小的1/5
-        float scaleFactor = srcWidth * 1.0f / 5 / logoWidth;
-        Bitmap bitmap = Bitmap.createBitmap(srcWidth, srcHeight, Bitmap.Config.ARGB_8888);
-        try {
-            Canvas canvas = new Canvas(bitmap);
-            canvas.drawBitmap(src, 0, 0, null);
-            canvas.scale(scaleFactor, scaleFactor, srcWidth / 2, srcHeight / 2);
-            canvas.drawBitmap(logo, (srcWidth - logoWidth) / 2, (srcHeight - logoHeight) / 2, null);
-
-            canvas.save(Canvas.ALL_SAVE_FLAG);
-            canvas.restore();
-        } catch (Exception e) {
-            bitmap = null;
-            e.getStackTrace();
-        }
-
-        return bitmap;
-    }
+//    /**
+//     * 在二维码中间添加Logo图案
+//     */
+//    private static Bitmap addLogo(Bitmap src, Bitmap logo) {
+//        if (src == null) {
+//            return null;
+//        }
+//
+//        if (logo == null) {
+//            return src;
+//        }
+//
+//        //获取图片的宽高
+//        int srcWidth = src.getWidth();
+//        int srcHeight = src.getHeight();
+//        int logoWidth = logo.getWidth();
+//        int logoHeight = logo.getHeight();
+//
+//        if (srcWidth == 0 || srcHeight == 0) {
+//            return null;
+//        }
+//
+//        if (logoWidth == 0 || logoHeight == 0) {
+//            return src;
+//        }
+//
+//        //logo大小为二维码整体大小的1/5
+//        float scaleFactor = srcWidth * 1.0f / 5 / logoWidth;
+//        Bitmap bitmap = Bitmap.createBitmap(srcWidth, srcHeight, Bitmap.Config.ARGB_8888);
+//        try {
+//            Canvas canvas = new Canvas(bitmap);
+//            canvas.drawBitmap(src, 0, 0, null);
+//            canvas.scale(scaleFactor, scaleFactor, srcWidth / 2, srcHeight / 2);
+//            canvas.drawBitmap(logo, (srcWidth - logoWidth) / 2, (srcHeight - logoHeight) / 2, null);
+//
+//            canvas.save(Canvas.ALL_SAVE_FLAG);
+//            canvas.restore();
+//        } catch (Exception e) {
+//            bitmap = null;
+//            e.getStackTrace();
+//        }
+//
+//        return bitmap;
+//    }
 
     public static Bitmap textAsBitmap(String text) {
 
@@ -254,15 +255,15 @@ public class ImageUtil {
         //         textPaint.setARGB(238, 118, 0, 1);
         textPaint.setColor(Color.WHITE);
 
-        textPaint.setTextSize(45);
+        textPaint.setTextSize(40);
 
-        StaticLayout layout = new StaticLayout(text, textPaint, 450,
+        StaticLayout layout = new StaticLayout(text, textPaint, 550,
                 Layout.Alignment.ALIGN_NORMAL, 1.3f, 0.0f, true);
         Bitmap bitmap = Bitmap.createBitmap(layout.getWidth() + 20,
                 layout.getHeight() + 20, Bitmap.Config.ARGB_8888);
         Canvas canvas = new Canvas(bitmap);
         canvas.translate(10, 10);
-        canvas.drawColor(IssueApplication.getcontext().getResources().getColor(R.color.trantracent_wode));
+        canvas.drawColor(DemoApplication.getInstance().getResources().getColor(R.color.trantracent_wode));
 
         layout.draw(canvas);
         Log.d("textAsBitmap",
@@ -363,11 +364,14 @@ public class ImageUtil {
         Bitmap newBitmap;
         TextPaint textPaint = new TextPaint();
         float linePadding = 5;
-        float textSize = 14;
+        float textSize = 11;
         int textColor = Color.BLACK;
         float padding = 5;
         Paint bitmapPaint = new Paint();
-
+        if(text.length()>=17){
+            text=text.substring(0,17);
+            text=text+"..";
+        }
         //一行可以显示文字的个数
         int lineTextCount = 20;
         //        int lineTextCount = (int) ((source.getWidth() - 0) / textSize);
@@ -411,7 +415,8 @@ public class ImageUtil {
             canvas.drawText(s, source.getWidth() / 2 - bounds.width() / 2,
                     source.getHeight() + padding + i * textSize + i * linePadding + bounds.height() / 2, textPaint);
         }
-        canvas.save(Canvas.ALL_SAVE_FLAG);
+//        canvas.save(Canvas.ALL_SAVE_FLAG);
+        canvas.save();
         canvas.restore();
         return newBitmap;
     }
@@ -530,6 +535,9 @@ public class ImageUtil {
         int height = activity.getWindowManager().getDefaultDisplay()
                 .getHeight();
         // 去掉标题栏
+        if(height>b1.getHeight()){
+            height=b1.getHeight();
+        }
         Bitmap b = Bitmap.createBitmap(b1, 0, statusBarHeight, width, height
                 - statusBarHeight);
         view.destroyDrawingCache();
@@ -600,12 +608,12 @@ public class ImageUtil {
 
         for (int i = 0; i < scrollView.getChildCount(); i++) {
             h += scrollView.getChildAt(i).getHeight();
-            scrollView.getChildAt(i).setBackgroundColor(
-                    Color.parseColor("#ffffff"));
+//            scrollView.getChildAt(i).setBackgroundColor(
+//                    Color.parseColor("#ffffff"));
         }
 
         bitmap = Bitmap.createBitmap(scrollView.getWidth(), h,
-                Bitmap.Config.RGB_565);
+                Bitmap.Config.ARGB_8888);
         final Canvas canvas = new Canvas(bitmap);
         scrollView.draw(canvas);
         return bitmap;

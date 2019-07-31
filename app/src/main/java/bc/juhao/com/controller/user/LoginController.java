@@ -1,10 +1,7 @@
 package bc.juhao.com.controller.user;
 
 import android.content.Context;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.os.Message;
-import android.text.InputType;
 import android.text.method.HideReturnsTransformationMethod;
 import android.text.method.PasswordTransformationMethod;
 import android.util.Log;
@@ -22,10 +19,6 @@ import com.hyphenate.exceptions.HyphenateException;
 
 import org.greenrobot.eventbus.EventBus;
 
-import java.io.UnsupportedEncodingException;
-import java.net.URLEncoder;
-import java.util.HashMap;
-
 import bc.juhao.com.R;
 import bc.juhao.com.bean.LoginResult;
 import bc.juhao.com.cons.Constance;
@@ -33,6 +26,7 @@ import bc.juhao.com.cons.NetWorkConst;
 import bc.juhao.com.controller.BaseController;
 import bc.juhao.com.listener.INetworkCallBack;
 import bc.juhao.com.ui.activity.MainActivity;
+import bc.juhao.com.ui.activity.user.ForgetPasswordActivity;
 import bc.juhao.com.ui.activity.user.LoginActivity;
 import bc.juhao.com.ui.activity.user.Regiest01Activity;
 import bc.juhao.com.ui.activity.user.UpdatePasswordActivity;
@@ -187,7 +181,7 @@ public class LoginController extends BaseController implements INetworkCallBack 
      * 找回密码
      */
     public void sendFindPwd() {
-        IntentUtil.startActivity(mView, UpdatePasswordActivity.class, false);
+        IntentUtil.startActivity(mView, ForgetPasswordActivity.class, false);
     }
 
     @Override
@@ -200,6 +194,8 @@ public class LoginController extends BaseController implements INetworkCallBack 
                     MyShare.get(mView).putString(Constance.USERID, ans.getJSONObject(Constance.user).getString(Constance.id));
 
                 }
+                MyShare.get(mView).putString(Constance.username,phone_et.getText().toString().trim());
+                MyShare.get(mView).putString(Constance.pwd,pwd_et.getText().toString().trim());
 
                 String token = ans.getString(Constance.TOKEN);
                 MyShare.get(mView).putString(Constance.TOKEN, token);
@@ -240,7 +236,7 @@ public class LoginController extends BaseController implements INetworkCallBack 
      * 环信注册
      */
     private void sendRegiestSuccess() {
-        final String uid=MyShare.get(mView).getString(Constance.USERID);
+        final String uid= MyShare.get(mView).getString(Constance.USERID);
         if(AppUtils.isEmpty(uid)){
             return;
         }
@@ -276,7 +272,7 @@ public class LoginController extends BaseController implements INetworkCallBack 
      * 登录成功处理事件
      */
     private void getSuccessLogin() {
-        final String uid=MyShare.get(mView).getString(Constance.USERID);
+        final String uid= MyShare.get(mView).getString(Constance.USERID);
         if(AppUtils.isEmpty(uid)){
             return;
         }
@@ -312,7 +308,7 @@ public class LoginController extends BaseController implements INetworkCallBack 
                     Log.e("520it", "Login直接登录");
                     EMClient.getInstance().groupManager().loadAllGroups();
                     EMClient.getInstance().chatManager().loadAllConversations();
-
+//                    DemoHelper.getInstance().init(mView);
                 }
 
                 @Override

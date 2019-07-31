@@ -2,28 +2,26 @@ package bc.juhao.com.ui.activity;
 
 import android.content.Intent;
 import android.graphics.Color;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.text.TextUtils;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.aliyun.iot.ilop.demo.DemoApplication;
+
 import java.util.ArrayList;
 import java.util.List;
 
 import bc.juhao.com.R;
-import bc.juhao.com.common.BaseActivity;
 import bc.juhao.com.cons.Constance;
 import bc.juhao.com.controller.SearchController;
-import bc.juhao.com.ui.activity.product.ClassifyGoodsActivity;
 import bc.juhao.com.ui.activity.product.SelectGoodsActivity;
 import bc.juhao.com.ui.view.LineBreakLayout;
 import bocang.json.JSONArray;
-import bocang.json.JSONObject;
 import bocang.utils.MyToast;
+import bocang.view.BaseActivity;
 
 public class SearchActivity extends BaseActivity {
 
@@ -101,8 +99,8 @@ public class SearchActivity extends BaseActivity {
                         mIntent.putExtra(Constance.categories, categoriesId);
                         mIntent.putExtra(Constance.name,lable);
                         startActivity(mIntent);
-                        if(IssueApplication.isClassify==true){
-                            IssueApplication.isClassify=false;
+                        if(DemoApplication.isClassify==true){
+                            DemoApplication.isClassify=false;
                         }
                         finish();
                         break;
@@ -131,6 +129,11 @@ public class SearchActivity extends BaseActivity {
 
     @Override
     protected void initData() {
+
+    }
+
+    @Override
+    protected void onViewClick(View v) {
 
     }
 }

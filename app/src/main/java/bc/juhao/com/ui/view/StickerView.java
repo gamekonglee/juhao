@@ -15,9 +15,10 @@ import android.util.Log;
 import android.view.MotionEvent;
 import android.widget.ImageView;
 
+import com.aliyun.iot.ilop.demo.DemoApplication;
+
 import bc.juhao.com.R;
 import bc.juhao.com.bean.StickerPropertyModel;
-import bc.juhao.com.ui.activity.IssueApplication;
 
 
 /**
@@ -134,8 +135,6 @@ public class StickerView extends ImageView {
     @Override
     protected void onDraw(Canvas canvas) {
         if (mBitmap != null) {
-
-
             float[] arrayOfFloat = new float[9];
             matrix.getValues(arrayOfFloat);
             float f1 = 0.0F * arrayOfFloat[0] + 0.0F * arrayOfFloat[1] + arrayOfFloat[2];
@@ -302,7 +301,7 @@ public class StickerView extends ImageView {
                 } else {
                     handled = false;
                 }
-                IssueApplication.mLightIndex=mLightCount;
+                DemoApplication.mLightIndex=mLightCount;
                 break;
             case MotionEvent.ACTION_POINTER_DOWN:
                 if (spacing(event) > pointerLimitDis) {
@@ -340,9 +339,7 @@ public class StickerView extends ImageView {
 
                     matrix.postRotate((rotationToStartPoint(event) - lastRotateDegree) * 2, mid.x, mid.y);
                     lastRotateDegree = rotationToStartPoint(event);
-
                     float scale = diagonalLength(event) / lastLength;
-
                     if (((diagonalLength(event) / halfDiagonalLength <= MIN_SCALE)) && scale < 1 ||
                             (diagonalLength(event) / halfDiagonalLength >= MAX_SCALE) && scale > 1) {
                         scale = 1;

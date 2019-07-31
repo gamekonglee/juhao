@@ -32,6 +32,16 @@ public class NetWorkConst {
     public static final String TOKEN_ADD = API_HOST+"/v2/ecapi.user.hd.add";
     public static final String ALIPAY_SEND = API_HOST + "/v2/ecapi.alipay.send";
     public static final String DEALER_ADD = API_HOST+"/v2/ecapi.dealer.add";
+    public static final String BANNER_INDEX = API_HOST + "/v2/ecapi.banner.index";
+    public static final String ARTICLE_ZHUANTI = API_HOST+"/v2/ecapi.article.list";
+    public static final String AUTH_CODE = API_HOST+"/v2/ecapi.authcode.get";
+    public static final String IOT_TIMER_CREATE = "http://smart.juhao.com/iot-timer-create";
+    public static final String IOT_TIMER_LIST = "http://smart.juhao.com/iot-timer-list";
+    public static final String IOT_TIMER_UPDATE = "http://smart.juhao.com/iot-timer-update";
+    public static final String IOT_TIMER_DELETE = "http://smart.juhao.com/iot-timer-del";
+    public static final String CATEGORY_SCENE = API_HOST + "/v2/ecapi.scene.category.list";
+    public static final String CHECK_SYSTEM = API_HOST + "/v2/ecapi.system.check";
+
 
     public static String APK_NAME="jhsc_v";
 
@@ -41,7 +51,8 @@ public class NetWorkConst {
     public final static  String SHAREIMAGE_LOGO=SCENE_HOST+"logo.png";
 
     //产品卡
-    public final static  String WEB_PRODUCT_CARD="http://browser.edsmall.cn/webimg?url="+SCENE_HOST+"phone_goods_show.php?id=";
+//    public final static  String WEB_PRODUCT_CARD="http://browser.edsmall.cn/webimg?url="+SCENE_HOST+"phone_goods_show.php?id=";
+    public final static  String WEB_PRODUCT_CARD="http://www.juhao.com/phone_goods_show.php?id=";
 
     //分享方案
     public final static String SHAREFANAN=SCENE_HOST+"fangan.php?id=";
@@ -49,7 +60,7 @@ public class NetWorkConst {
 
     //分享产品
 //    public final static String SHAREPRODUCT=SCENE_HOST+"goods.php?id=";
-    public final static String SHAREPRODUCT=API_HOST+"/mobile/index.php?m=default&c=goods&a=index&id=";
+    public final static String SHAREPRODUCT=SCENE_HOST+"/mobile/index.php?m=default&c=goods&a=index&id=";
 
     //获取app最新版本号接口
     public static final String VERSION_URL ="http://app.08138.com/version/versioninfo.php?bc_ver_name2=jhsca";
@@ -77,6 +88,9 @@ public class NetWorkConst {
 
     //重置密码
     public static final String RESET = API_HOST + "/v2/ecapi.auth.mobile.reset";
+
+    //修改密码
+    public static final String UPDATE=API_HOST+"/v2/ecapi.user.password.update";
 
     //验证码
     public static final String VERIFICATIONCOE = API_HOST + "/v2/ecapi.auth.mobile.send";

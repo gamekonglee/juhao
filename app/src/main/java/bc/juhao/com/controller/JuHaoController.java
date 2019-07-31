@@ -22,7 +22,6 @@ import bc.juhao.com.cons.Constance;
 import bc.juhao.com.listener.INetworkCallBack;
 import bc.juhao.com.ui.activity.product.ProDetailActivity;
 import bc.juhao.com.ui.fragment.home.JuHaoMkFragment;
-import bc.juhao.com.ui.fragment.home.NewsHomeFragment;
 import bc.juhao.com.ui.view.EndOfGridView;
 import bc.juhao.com.ui.view.EndOfListView;
 import bc.juhao.com.ui.view.PMSwipeRefreshLayout;
@@ -136,7 +135,7 @@ public class JuHaoController extends BaseController implements EndOfListView.OnE
         });
     }
 
-    private void getDataSuccess(JSONArray array,int page) {
+    private void getDataSuccess(JSONArray array, int page) {
         if (1 == page)
             goodses = array;
         else if (null != goodses) {

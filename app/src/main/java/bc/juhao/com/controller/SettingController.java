@@ -3,12 +3,14 @@ package bc.juhao.com.controller;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.os.Message;
+import android.view.View;
 import android.widget.TextView;
 
 import bc.juhao.com.R;
 import bc.juhao.com.ui.activity.SettingActivity;
 import bocang.utils.AppDialog;
 import bocang.utils.DataCleanUtil;
+import bocang.utils.UIUtils;
 
 /**
  * @author: Jun
@@ -48,31 +50,53 @@ public class SettingController extends BaseController{
      * 清理缓存
      */
     public void clearCache() {
-        new AlertDialog.Builder(mView).setTitle("清除缓存?").setMessage("确认清除您所有的缓存？")
-                .setPositiveButton("清除", new DialogInterface.OnClickListener() {
+        UIUtils.showSingleWordDialog(mView, "确认清除您所有的缓存？", new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(mTotalCacheSize.equals("0K")){
+                    AppDialog.messageBox("没有缓存可以清除!");
+                    return;
+                }
+                new Thread(new Runnable() {
                     @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        if(mTotalCacheSize.equals("0K")){
-                            AppDialog.messageBox("没有缓存可以清除!");
-                            return;
-                        }
-                        new Thread(new Runnable() {
+                    public void run() {
+                        DataCleanUtil.clearAllCache(mView);
+                        mView.runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
-                                DataCleanUtil.clearAllCache(mView);
-                                mView.runOnUiThread(new Runnable() {
-                                    @Override
-                                    public void run() {
-                                        AppDialog.messageBox("清除缓存成功!");
-                                        getTotalCacheSize();
-                                    }
-                                });
+                                AppDialog.messageBox("清除缓存成功!");
+                                getTotalCacheSize();
                             }
-                        }).start();
-
+                        });
                     }
-                })
-                .setNegativeButton("取消", null).show();
+                }).start();
+            }
+        });
+//        new AlertDialog.Builder(mView).setTitle("清除缓存?").setMessage("确认清除您所有的缓存？")
+//                .setPositiveButton("清除", new DialogInterface.OnClickListener() {
+//                    @Override
+//                    public void onClick(DialogInterface dialog, int which) {
+//                        if(mTotalCacheSize.equals("0K")){
+//                            AppDialog.messageBox("没有缓存可以清除!");
+//                            return;
+//                        }
+//                        new Thread(new Runnable() {
+//                            @Override
+//                            public void run() {
+//                                DataCleanUtil.clearAllCache(mView);
+//                                mView.runOnUiThread(new Runnable() {
+//                                    @Override
+//                                    public void run() {
+//                                        AppDialog.messageBox("清除缓存成功!");
+//                                        getTotalCacheSize();
+//                                    }
+//                                });
+//                            }
+//                        }).start();
+//
+//                    }
+//                })
+//                .setNegativeButton("取消", null).show();
     }
 
     /**

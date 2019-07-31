@@ -9,10 +9,10 @@
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
-        android:background="@drawable/icon_top"
         android:minHeight="?attr/actionBarSize">
 
         <RelativeLayout
+            android:background="#ffffff"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
@@ -21,25 +21,25 @@
                 android:layout_height="match_parent"
                 android:gravity="center_vertical"
                 android:onClick="goBack"
-                android:paddingLeft="10dp">
+                android:paddingLeft="10dp"
+                >
                 <ImageView
                     android:id="@+id/topLeftBtn"
-                    android:layout_width="24dp"
-                    android:layout_height="24dp"
+                    android:layout_width="10dp"
+                    android:layout_height="20dp"
                     android:layout_centerVertical="true"
                     android:layout_marginRight="5dp"
-                    android:background="@drawable/goback"
-
+                    android:background="@mipmap/nav_left"
                     android:textColor="#FFFFFF"/>
             </LinearLayout>
             <TextView
                 android:id="@+id/title_tv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textColor="@color/white"
+                android:textColor="#666666"
                 android:textSize="18dp"
                 android:layout_centerInParent="true"
-                android:text="我的消息"
+                android:text="聊天列表"
                 />
 
             <RelativeLayout
@@ -61,7 +61,12 @@
 
 
     </RelativeLayout>
+    <View
+        android:background="@color/line"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"/>
     <LinearLayout
+        android:background="#ffffff"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
@@ -77,7 +82,7 @@
 
         <include
             android:id="@+id/null_view"
-            layout="@layout/empty_page_no_recoder"
+            layout="@layout/empty_page_no_msg"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:visibility="gone"

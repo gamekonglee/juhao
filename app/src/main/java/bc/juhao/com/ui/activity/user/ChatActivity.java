@@ -1,9 +1,7 @@
 package bc.juhao.com.ui.activity.user;
 
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
-import android.view.View;
 
 import com.hyphenate.easeui.EaseConstant;
 
@@ -11,7 +9,6 @@ import bc.juhao.com.R;
 import bc.juhao.com.cons.Constance;
 import bc.juhao.com.ui.fragment.ChatLFragment;
 import bocang.utils.AppUtils;
-import bocang.view.BaseActivity;
 
 public class ChatActivity extends bc.juhao.com.common.BaseActivity {
     public static ChatActivity activityInstance;

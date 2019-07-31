@@ -230,7 +230,7 @@ public abstract class BcEaseChatFragment extends EaseBaseFragment implements EMM
         registerExtendMenuItem();
         // init input menu
         inputMenu.init(null);
-        inputMenu.setChatInputMenuListener(new EaseChatInputMenu.ChatInputMenuListener() {
+        inputMenu.setChatInputMenuListener(new ChatInputMenuListener() {
 
             @Override
             public void onSendMessage(String content) {
@@ -239,7 +239,7 @@ public abstract class BcEaseChatFragment extends EaseBaseFragment implements EMM
 
             @Override
             public boolean onPressToSpeakBtnTouch(View v, MotionEvent event) {
-                return voiceRecorderView.onPressToSpeakBtnTouch(v, event, new EaseVoiceRecorderView.EaseVoiceRecorderCallback() {
+                return voiceRecorderView.onPressToSpeakBtnTouch(v, event, new EaseVoiceRecorderCallback() {
 
                     @Override
                     public void onVoiceRecordComplete(String voiceFilePath, int voiceTimeLength) {
@@ -298,14 +298,14 @@ public abstract class BcEaseChatFragment extends EaseBaseFragment implements EMM
             onMessageListInit();
         }
 
-        titleBar.setLeftLayoutClickListener(new View.OnClickListener() {
+        titleBar.setLeftLayoutClickListener(new OnClickListener() {
 
             @Override
             public void onClick(View v) {
                 onBackPressed();
             }
         });
-        titleBar.setRightLayoutClickListener(new View.OnClickListener() {
+        titleBar.setRightLayoutClickListener(new OnClickListener() {
 
             @Override
             public void onClick(View v) {
@@ -358,7 +358,7 @@ public abstract class BcEaseChatFragment extends EaseBaseFragment implements EMM
                 chatFragmentHelper.onSetCustomChatRowProvider() : null);
         setListItemClickListener();
 
-        messageList.getListView().setOnTouchListener(new View.OnTouchListener() {
+        messageList.getListView().setOnTouchListener(new OnTouchListener() {
 
             @Override
             public boolean onTouch(View v, MotionEvent event) {
@@ -390,7 +390,7 @@ public abstract class BcEaseChatFragment extends EaseBaseFragment implements EMM
 
             @Override
             public void onResendClick(final EMMessage message) {
-                new EaseAlertDialog(getActivity(), R.string.resend, R.string.confirm_resend, null, new EaseAlertDialog.AlertDialogUser() {
+                new EaseAlertDialog(getActivity(), R.string.resend, R.string.confirm_resend, null, new AlertDialogUser() {
                     @Override
                     public void onResult(boolean confirmed, Bundle bundle) {
                         if (!confirmed) {
@@ -421,7 +421,7 @@ public abstract class BcEaseChatFragment extends EaseBaseFragment implements EMM
     }
 
     protected void setRefreshLayoutListener() {
-        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+        swipeRefreshLayout.setOnRefreshListener(new OnRefreshListener() {
 
             @Override
             public void onRefresh() {
@@ -651,7 +651,7 @@ public abstract class BcEaseChatFragment extends EaseBaseFragment implements EMM
         for (EMMessage message : messages) {
             String username = null;
             // group message
-            if (message.getChatType() == EMMessage.ChatType.GroupChat || message.getChatType() == EMMessage.ChatType.ChatRoom) {
+            if (message.getChatType() == ChatType.GroupChat || message.getChatType() == ChatType.ChatRoom) {
                 username = message.getTo();
             } else {
                 // single chat message
@@ -838,9 +838,9 @@ public abstract class BcEaseChatFragment extends EaseBaseFragment implements EMM
             chatFragmentHelper.onSetMessageAttributes(message);
         }
         if (chatType == EaseConstant.CHATTYPE_GROUP) {
-            message.setChatType(EMMessage.ChatType.GroupChat);
+            message.setChatType(ChatType.GroupChat);
         } else if (chatType == EaseConstant.CHATTYPE_CHATROOM) {
-            message.setChatType(EMMessage.ChatType.ChatRoom);
+            message.setChatType(ChatType.ChatRoom);
         }
         //send message
         EMClient.getInstance().chatManager().sendMessage(message);
@@ -967,7 +967,7 @@ public abstract class BcEaseChatFragment extends EaseBaseFragment implements EMM
             intent.setType("image/*");
 
         } else {
-            intent = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+            intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
         }
         startActivityForResult(intent, REQUEST_CODE_LOCAL);
     }
@@ -978,7 +978,7 @@ public abstract class BcEaseChatFragment extends EaseBaseFragment implements EMM
      */
     protected void emptyHistory() {
         String msg = getResources().getString(R.string.Whether_to_empty_all_chats);
-        new EaseAlertDialog(getActivity(), null, msg, null, new EaseAlertDialog.AlertDialogUser() {
+        new EaseAlertDialog(getActivity(), null, msg, null, new AlertDialogUser() {
 
             @Override
             public void onResult(boolean confirmed, Bundle bundle) {
@@ -1056,7 +1056,7 @@ public abstract class BcEaseChatFragment extends EaseBaseFragment implements EMM
                 break;
         }
 
-        if (forward_msg.getChatType() == EMMessage.ChatType.ChatRoom) {
+        if (forward_msg.getChatType() == ChatType.ChatRoom) {
             EMClient.getInstance().chatroomManager().leaveChatRoom(forward_msg.getTo());
         }
     }

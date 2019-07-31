@@ -6,6 +6,7 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.widget.EditText;
 
+import com.baiiu.filter.util.UIUtil;
 import com.hyphenate.EMCallBack;
 import com.hyphenate.chat.EMClient;
 import com.hyphenate.exceptions.HyphenateException;
@@ -190,11 +191,11 @@ public class RegiestController extends BaseController implements INetworkCallBac
         AppDialog.messageBox(ans.getString(Constance.error_desc));
     }
 
-
     /**
      * 环信注册成功
      */
     private void sendRegiestSuccess() {
+//        UIUtils.showSingleWordDialog();
         final String uid = MyShare.get(mView).getString(Constance.USERID);
         if (AppUtils.isEmpty(uid)) {
             return;

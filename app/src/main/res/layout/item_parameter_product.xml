@@ -25,8 +25,10 @@
             android:layout_height="37dp"
             android:gravity="center_vertical"
             android:text="奥科特"
+            android:lines="1"
+            android:ellipsize="end"
             android:textSize="14dp"
-            android:layout_weight="1"/>
+            android:layout_weight="3"/>
     </LinearLayout>
     <View
         android:background="#dddddd"

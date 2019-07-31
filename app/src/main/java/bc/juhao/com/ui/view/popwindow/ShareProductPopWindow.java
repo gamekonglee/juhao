@@ -14,7 +14,6 @@ import android.widget.Toast;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.assist.FailReason;
 import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
-import com.tencent.connect.share.QQShare;
 import com.tencent.mm.opensdk.modelmsg.SendMessageToWX;
 
 import bc.juhao.com.R;
@@ -83,6 +82,7 @@ public class ShareProductPopWindow extends BasePopwindown implements View.OnClic
         mPopupWindow.setOutsideTouchable(true);
         //只有加载背景图还有效果
         mPopupWindow.setBackgroundDrawable(new ColorDrawable());
+//        mPopupWindow.setBackgroundDrawable(mActivity.getResources().getDrawable(R.mipmap.bg_invite));
         // 3.如果不马上显示PopupWindow 一般建议刷新界面
         mPopupWindow.update();
         mPopupWindow.setAnimationStyle(R.style.AnimBottom);

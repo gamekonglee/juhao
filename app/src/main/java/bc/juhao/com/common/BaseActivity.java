@@ -7,7 +7,6 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.annotation.RequiresApi;
 import android.support.v4.app.FragmentActivity;
-import android.support.v4.view.ViewCompat;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,11 +15,14 @@ import android.view.WindowManager;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
+import com.aliyun.iot.ilop.demo.DemoApplication;
+
+import java.lang.reflect.Field;
+
 import bc.juhao.com.cons.Constance;
-import bc.juhao.com.ui.activity.IssueApplication;
 import bc.juhao.com.utils.MyShare;
-import bc.juhao.com.utils.UIUtils;
 import bocang.utils.AppUtils;
+import bocang.utils.UIUtils;
 
 /**
  * @author Jun
@@ -28,7 +30,7 @@ import bocang.utils.AppUtils;
  * @desc ${TODD}
  */
 public abstract class BaseActivity  extends FragmentActivity {
-    private IssueApplication app;
+    private DemoApplication app;
     public ViewGroup rootView;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -37,7 +39,7 @@ public abstract class BaseActivity  extends FragmentActivity {
         initView();
         initController();
         InitDataView();
-        app = (IssueApplication) getApplication();
+        app = (DemoApplication) getApplication();
 
     }
 
@@ -55,7 +57,7 @@ public abstract class BaseActivity  extends FragmentActivity {
         Toast.makeText(this,msg, Toast.LENGTH_SHORT).show();
     }
 
-    public IssueApplication getApp() {
+    public DemoApplication getApp() {
         return app;
     }
 
@@ -92,29 +94,44 @@ public abstract class BaseActivity  extends FragmentActivity {
 //            rootView.setClipToPadding(true);
 //        }
 
-        if(Build.VERSION.SDK_INT>=Build.VERSION_CODES.LOLLIPOP) {
             Window window = activity.getWindow();
-            //取消状态栏透明
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) { // 5.0 以上全透明状态栏
+            //取消设置透明状态栏,使 ContentView 内容不再覆盖状态栏 加下面几句可以去除透明状态栏的灰色阴影,实现纯透明
             window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
-            //添加Flag把状态栏设为可绘制模式
+            //需要设置这个 flag 才能调用 setStatusBarColor 来设置状态栏颜色
             window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
-            //设置状态栏颜色
-            window.setStatusBarColor(color);
-            //设置系统状态栏处于可见状态
-            window.getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_VISIBLE);
-            if(Build.VERSION.SDK_INT>=Build.VERSION_CODES.M) {
-                //设置状态栏文字颜色及图标为深色
-                window.getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN | View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
-            }
-            //让view不根据系统窗口来调整自己的布局
-            ViewGroup mContentView = (ViewGroup) window.findViewById(Window.ID_ANDROID_CONTENT);
-            View mChildView = mContentView.getChildAt(0);
-            if (mChildView != null) {
-                ViewCompat.setFitsSystemWindows(mChildView, true);
-                ViewCompat.requestApplyInsets(mChildView);
+            window.getDecorView().setSystemUiVisibility(
+                    View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN);
+            //6.0 以上可以设置状态栏的字体为黑色.使用下面注释的这行打开亮色状态栏模式,实现黑色字体,白底的需求用这句setStatusBarColor(Color.WHITE);
+            window.getDecorView().setSystemUiVisibility(
+                    View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN | View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
+            window.setStatusBarColor(Color.TRANSPARENT);
 
-            }
+        }else if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT){//4.4 全透明状态栏
+            window.addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
         }
+
+//        if(Build.VERSION.SDK_INT>=Build.VERSION_CODES.LOLLIPOP) {
+//            //取消状态栏透明
+//            window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+//            //添加Flag把状态栏设为可绘制模式
+//            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+//            //设置状态栏颜色
+//            window.setStatusBarColor(color);
+//            //设置系统状态栏处于可见状态
+//            window.getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_VISIBLE);
+////            if(Build.VERSION.SDK_INT>=Build.VERSION_CODES.M) {
+//                //设置状态栏文字颜色及图标为深色
+//                window.getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN | View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
+////            }
+//            //让view不根据系统窗口来调整自己的布局
+//            ViewGroup mContentView = (ViewGroup) window.findViewById(Window.ID_ANDROID_CONTENT);
+//            View mChildView = mContentView.getChildAt(0);
+//            if (mChildView != null) {
+//                ViewCompat.setFitsSystemWindows(mChildView, true);
+//                ViewCompat.requestApplyInsets(mChildView);
+//            }
+//        }
     }
     public static void setFullScreenColor(int color,Activity activity){
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
@@ -129,6 +146,14 @@ public abstract class BaseActivity  extends FragmentActivity {
             ViewGroup rootView = (ViewGroup) ((ViewGroup) activity.findViewById(android.R.id.content)).getChildAt(0);
 //            rootView.setFitsSystemWindows(true);
 //            rootView.setClipToPadding(true);
+            if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.N){
+                try {
+                    Class decorViewClazz = Class.forName("com.android.internal.policy.DecorView");
+                    Field field = decorViewClazz.getDeclaredField("mSemiTransparentStatusBarColor");
+                    field.setAccessible(true);
+                    field.setInt(activity.getWindow().getDecorView(), Color.TRANSPARENT);  //改为透明
+                } catch (Exception e) {}
+            }
         }
     }
     /** * 生成一个和状态栏大小相同的矩形条 * * @param activity 需要设置的activity * @param color 状态栏颜色值 * @return 状态栏矩形条 */
@@ -196,13 +221,6 @@ public abstract class BaseActivity  extends FragmentActivity {
                 //设置状态栏文字颜色及图标为深色
                 window.getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN | View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
             }
-            //让view不根据系统窗口来调整自己的布局
-//            ViewGroup mContentView = (ViewGroup) window.findViewById(Window.ID_ANDROID_CONTENT);
-//            View mChildView = mContentView.getChildAt(0);
-//            if (mChildView != null) {
-//                ViewCompat.setFitsSystemWindows(mChildView, true);
-//                ViewCompat.requestApplyInsets(mChildView);
-//            }
         }
     }
 
@@ -216,5 +234,30 @@ public abstract class BaseActivity  extends FragmentActivity {
             return true;
         }
         return false;
+    }
+    public static boolean setStatusBarDarkIcon(Window window, boolean dark) {
+        boolean result = false;
+        if (window != null) {
+            try {
+                WindowManager.LayoutParams lp = window.getAttributes();
+                Field darkFlag = WindowManager.LayoutParams.class.getDeclaredField("MEIZU_FLAG_DARK_STATUS_BAR_ICON");
+                Field meizuFlags = WindowManager.LayoutParams.class.getDeclaredField("meizuFlags");
+                darkFlag.setAccessible(true);
+                meizuFlags.setAccessible(true);
+                int bit = darkFlag.getInt(null);
+                int value = meizuFlags.getInt(lp);
+                if (dark) {
+                    value |= bit;
+                } else {
+                    value &= ~bit;
+                }
+                meizuFlags.setInt(lp, value);
+                window.setAttributes(lp);
+                result = true;
+            } catch (Exception e) {
+                Log.e("MeiZu", "setStatusBarDarkIcon: failed");
+            }
+        }
+        return result;
     }
 }

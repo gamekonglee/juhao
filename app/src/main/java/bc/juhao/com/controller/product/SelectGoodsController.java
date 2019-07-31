@@ -5,20 +5,17 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.os.Message;
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.view.KeyEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.lib.common.hxp.view.GridViewForScrollView;
+import com.aliyun.iot.ilop.demo.DemoApplication;
 import com.lib.common.hxp.view.PullToRefreshLayout;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
@@ -29,7 +26,6 @@ import bc.juhao.com.cons.Constance;
 import bc.juhao.com.cons.NetWorkConst;
 import bc.juhao.com.controller.BaseController;
 import bc.juhao.com.listener.INetworkCallBack;
-import bc.juhao.com.ui.activity.IssueApplication;
 import bc.juhao.com.ui.activity.SearchActivity;
 import bc.juhao.com.ui.activity.product.ClassifyGoodsActivity;
 import bc.juhao.com.ui.activity.product.ProDetailActivity;
@@ -39,14 +35,11 @@ import bc.juhao.com.ui.view.EndOfListView;
 import bc.juhao.com.ui.view.PMSwipeRefreshLayout;
 import bc.juhao.com.utils.ConvertUtil;
 import bc.juhao.com.utils.MyShare;
-import bc.juhao.com.utils.UIUtils;
 import bocang.json.JSONArray;
 import bocang.json.JSONObject;
 import bocang.utils.AppUtils;
 import bocang.utils.LogUtils;
 import bocang.utils.MyToast;
-
-import static android.content.Context.INPUT_METHOD_SERVICE;
 
 /**
  * @author: Jun
@@ -384,19 +377,19 @@ public class SelectGoodsController extends BaseController implements INetworkCal
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         if (mView.isSelectGoods == true) {
-            for (int i = 0; i < IssueApplication.mSelectProducts.length(); i++) {
-                String selectName = IssueApplication.mSelectProducts.getJSONObject(i).getString(Constance.name);
+            for (int i = 0; i < DemoApplication.mSelectProducts.length(); i++) {
+                String selectName = DemoApplication.mSelectProducts.getJSONObject(i).getString(Constance.name);
                 String name = goodses.getJSONObject(position).getString(Constance.name);
                 if (selectName.equals(name)) {
-                    IssueApplication.mSelectProducts.delete(i);
+                    DemoApplication.mSelectProducts.delete(i);
                     mProAdapter.notifyDataSetChanged();
-                    mView.select_num_tv.setText(IssueApplication.mSelectProducts.length() + "");
+                    mView.select_num_tv.setText(DemoApplication.mSelectProducts.length() + "");
                     return;
                 }
             }
-            IssueApplication.mSelectProducts.add(goodses.getJSONObject(position));
+            DemoApplication.mSelectProducts.add(goodses.getJSONObject(position));
             mProAdapter.notifyDataSetChanged();
-            mView.select_num_tv.setText(IssueApplication.mSelectProducts.length() + "");
+            mView.select_num_tv.setText(DemoApplication.mSelectProducts.length() + "");
         } else {
             mIntent = new Intent(mView, ProDetailActivity.class);
             int productId = goodses.getJSONObject(position).getInt(Constance.id);
@@ -411,7 +404,7 @@ public class SelectGoodsController extends BaseController implements INetworkCal
      */
     public void openClassify() {
         //        onRefresh();
-        //        IssueApplication.isClassify=true;
+        //        DemoApplication.isClassify=true;
         //        IntentUtil.startActivity(mView, ClassifyGoodsActivity.class,false);
         mIntent = new Intent(mView, ClassifyGoodsActivity.class);
         mView.startActivityForResult(mIntent, 103);
@@ -492,24 +485,16 @@ public class SelectGoodsController extends BaseController implements INetworkCal
                 holder.groupbuy_tv.setVisibility(isFinished==0? View.VISIBLE : View.GONE);
                 double old_Price=0;
                 JSONArray propertieArray = goodses.getJSONObject(position).getJSONArray(Constance.properties);
-                if (!AppUtils.isEmpty(propertieArray)&&propertieArray.length()>0) {
-                    JSONArray attrsArray = propertieArray.getJSONObject(0).getJSONArray(Constance.attrs);
-                    int price = attrsArray.getJSONObject(0).getInt(Constance.attr_price);
-                    double currentPrice = price;
-                    old_Price=currentPrice;
-                    holder.price_tv.setText("￥" + currentPrice);
-                } else {
-                    old_Price= Double.parseDouble(goodses.getJSONObject(position).getString(Constance.current_price));
-                    holder.price_tv.setText("￥" + goodses.getJSONObject(position).getString(Constance.current_price));
-                }
+                old_Price= Double.parseDouble(goodses.getJSONObject(position).getString(Constance.current_price));
+                holder.price_tv.setText("￥" + goodses.getJSONObject(position).getString(Constance.current_price));
                 old_Price=old_Price*1.6;
                 DecimalFormat df=new DecimalFormat("###.00");
                 holder.old_price_tv.setText("￥" + df.format(old_Price));
                 holder.old_price_tv.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG);
                 holder.check_iv.setVisibility(View.GONE);
                 if (mView.isSelectGoods == true) {
-                    for (int i = 0; i < IssueApplication.mSelectProducts.length(); i++) {
-                        String goodName = IssueApplication.mSelectProducts.getJSONObject(i).getString(Constance.name);
+                    for (int i = 0; i < DemoApplication.mSelectProducts.length(); i++) {
+                        String goodName = DemoApplication.mSelectProducts.getJSONObject(i).getString(Constance.name);
                         if (name.equals(goodName)) {
                             holder.check_iv.setVisibility(View.VISIBLE);
                             break;

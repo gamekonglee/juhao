@@ -1,12 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="300dp"
+    android:layout_height="400dp"
+    android:id="@+id/ll_no_order"
     android:background="@color/background_color"
     android:orientation="vertical">
 
-    <RelativeLayout
+    <LinearLayout
+        android:orientation="vertical"
         android:id="@+id/null_rl"
+        android:gravity="center"
         android:layout_gravity="center"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -41,6 +44,6 @@
             android:layout_height="35dp"
             android:padding="8dp"
             android:visibility="gone"/>
-    </RelativeLayout>
+    </LinearLayout>
 
 </LinearLayout>

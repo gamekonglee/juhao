@@ -4,6 +4,7 @@ import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
+import com.aliyun.iot.ilop.demo.DemoApplication;
 import com.hyphenate.easeui.domain.EaseUser;
 
 import java.util.ArrayList;
@@ -19,7 +20,7 @@ public class DemoDBManager {
     private DbOpenHelper dbHelper;
     
     private DemoDBManager(){
-        dbHelper = DbOpenHelper.getInstance(IssueApplication.getInstance().getApplicationContext());
+        dbHelper = DbOpenHelper.getInstance(DemoApplication.getInstance().getApplicationContext());
     }
     
     public static synchronized DemoDBManager getInstance(){

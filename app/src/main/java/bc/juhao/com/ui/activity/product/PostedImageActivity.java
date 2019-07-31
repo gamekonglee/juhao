@@ -6,7 +6,6 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
-import android.graphics.drawable.BitmapDrawable;
 import android.media.MediaMetadataRetriever;
 import android.os.Build;
 import android.os.Environment;
@@ -19,10 +18,9 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.aliyun.iot.ilop.demo.DemoApplication;
 import com.donkingliang.imageselector.utils.ImageSelectorUtils;
 import com.lib.common.hxp.view.GridViewForScrollView;
-import com.nostra13.universalimageloader.core.ImageLoader;
-import com.wq.photo.widget.PickConfig;
 import com.yalantis.ucrop.UCrop;
 
 import java.io.File;
@@ -47,7 +45,6 @@ import bocang.utils.MyToast;
 import bocang.view.BaseActivity;
 
 import static bc.juhao.com.cons.Constance.PHOTO_WITH_CAMERA;
-import static bc.juhao.com.ui.activity.user.SimpleScannerActivity.REQUEST_CODE;
 
 /**
  * @author Jun
@@ -202,7 +199,7 @@ public class PostedImageActivity extends BaseActivity implements AdapterView.OnI
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if (requestCode == REQUEST_CODE && data != null) {
+        if (requestCode == Constance.REQUEST_CODE && data != null) {
             ArrayList<String> temps=data.getStringArrayListExtra(
                     ImageSelectorUtils.SELECT_RESULT);
             if(lists!=null&&temps.size()+lists.size()>3){
@@ -222,7 +219,7 @@ public class PostedImageActivity extends BaseActivity implements AdapterView.OnI
         }else if(requestCode==PHOTO_WITH_CAMERA){
             String status = Environment.getExternalStorageState();
             if (status.equals(Environment.MEDIA_MOUNTED)) { // 是否有SD卡
-                File imageFile = new File(IssueApplication.cameraPath, IssueApplication.imagePath + ".jpg");
+                File imageFile = new File(DemoApplication.cameraPath, DemoApplication.imagePath + ".jpg");
                 if (imageFile.exists()) {
 //                    String imageURL = "file://" + imageFile.toString();
                     String imageURL =  imageFile.toString();
@@ -236,8 +233,8 @@ public class PostedImageActivity extends BaseActivity implements AdapterView.OnI
                     postImageVideoBean.bitmap=BitmapFactory.decodeFile(imageURL);
                     lists.add(postImageVideoBean);
                     gvAdapter.setList(lists);
-                    IssueApplication.imagePath = null;
-                    IssueApplication.cameraPath = null;
+                    DemoApplication.imagePath = null;
+                    DemoApplication.cameraPath = null;
                 } else {
                     AppDialog.messageBox("读取图片失败！");
                 }
@@ -263,8 +260,8 @@ public class PostedImageActivity extends BaseActivity implements AdapterView.OnI
             postImageVideoBean.bitmap=media.getFrameAtTime();
             postImageVideoBean.path=path;
             lists.add(postImageVideoBean);
-            IssueApplication.imagePath = null;
-            IssueApplication.cameraPath = null;
+            DemoApplication.imagePath = null;
+            DemoApplication.cameraPath = null;
             gvAdapter.setList(lists);
         }else if(requestCode==300&&resultCode==100){
             startActivityForResult(new Intent(this, VideoShotActivity.class),300);

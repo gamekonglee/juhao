@@ -1,6 +1,5 @@
 package bc.juhao.com.ui.fragment;
 
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
@@ -9,12 +8,12 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
+import com.aliyun.iot.ilop.demo.DemoApplication;
+
 import bc.juhao.com.R;
 import bc.juhao.com.common.BaseFragment;
 import bc.juhao.com.cons.Constance;
 import bc.juhao.com.controller.user.MineController;
-import bc.juhao.com.ui.activity.IssueApplication;
-import bc.juhao.com.ui.activity.MainActivity;
 import bc.juhao.com.ui.activity.blance.UserFinanceActivity;
 import bc.juhao.com.ui.activity.buy.ShoppingCartActivity;
 import bc.juhao.com.ui.activity.user.ZujiActivity;
@@ -45,7 +44,6 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 //        ((MainActivity)getActivity()).setFullScreenColor(Color.TRANSPARENT,getActivity());
-
         return inflater.inflate(R.layout.fm_mine_new, null);
     }
 
@@ -68,8 +66,8 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
 
     public void onRefresh() {
         isToken();
-        if(AppUtils.isEmpty( IssueApplication.mUserObject)) return;
-        int level=IssueApplication.mUserObject.getInt(Constance.level);
+        if(AppUtils.isEmpty( DemoApplication.mUserObject)) return;
+        int level= DemoApplication.mUserObject.getInt(Constance.level);
         if(level>2){
             mine03_lv.setVisibility(View.GONE);
             distributor_ll.setVisibility(View.GONE);

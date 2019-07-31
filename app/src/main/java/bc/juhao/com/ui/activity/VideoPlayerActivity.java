@@ -1,6 +1,5 @@
 package bc.juhao.com.ui.activity;
 
-import android.app.ActionBar;
 import android.app.Activity;
 import android.content.Context;
 import android.content.pm.ActivityInfo;
@@ -28,9 +27,10 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
+import android.widget.RelativeLayout.LayoutParams;
 import android.widget.SeekBar;
 import android.widget.TextView;
-import android.widget.RelativeLayout.LayoutParams;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -209,15 +209,15 @@ public class VideoPlayerActivity extends Activity implements View.OnClickListene
         setViewDrawableStyle();
 
         mediaPlayerLayout = new RelativeLayout(this);
-        mediaLayoutParams = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.MATCH_PARENT);
+        mediaLayoutParams = new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT);
         mediaLayoutParams.addRule(RelativeLayout.CENTER_IN_PARENT);
         mediaPlayerLayout.setLayoutParams(mediaLayoutParams);
         mediaPlayerLayout.addView(surfaceView);
         mediaPlayerLayout.addView(controlLayout);
         mediaPlayerLayout.addView(loadPrgLayout);
         RelativeLayout layout = new RelativeLayout(this);
-        layout.setLayoutParams(new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT,
-                RelativeLayout.LayoutParams.MATCH_PARENT));
+        layout.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT,
+                LayoutParams.MATCH_PARENT));
         layout.addView(mediaPlayerLayout);
         setContentView(layout);
     }
@@ -229,7 +229,7 @@ public class VideoPlayerActivity extends Activity implements View.OnClickListene
         playBtn = new Button(this);
         playBtn.setId(playBtnID);
         playBtn.setOnClickListener(this);
-        RelativeLayout.LayoutParams playParams = new RelativeLayout.LayoutParams(btnWidth, btnHeight);
+        LayoutParams playParams = new LayoutParams(btnWidth, btnHeight);
         playBtn.setLayoutParams(playParams);
         playBtn.setEnabled(false);
 
@@ -237,7 +237,7 @@ public class VideoPlayerActivity extends Activity implements View.OnClickListene
         pauseBtn = new Button(this);
         pauseBtn.setId(pauseBtnID);
         pauseBtn.setOnClickListener(this);
-        RelativeLayout.LayoutParams pauseParams = new RelativeLayout.LayoutParams(btnWidth, btnHeight);
+        LayoutParams pauseParams = new LayoutParams(btnWidth, btnHeight);
         pauseBtn.setLayoutParams(pauseParams);
         pauseBtn.setVisibility(View.GONE);
     }
@@ -262,7 +262,7 @@ public class VideoPlayerActivity extends Activity implements View.OnClickListene
         seekBar = new SeekBar(this);
         seekBar.setOnSeekBarChangeListener(this);
         LayoutParams params = new LayoutParams(LayoutParams.MATCH_PARENT,
-                RelativeLayout.LayoutParams.WRAP_CONTENT);
+                LayoutParams.WRAP_CONTENT);
         params.addRule(RelativeLayout.RIGHT_OF, btnLayoutID);
         params.addRule(RelativeLayout.LEFT_OF, clockLayoutID);
         params.addRule(RelativeLayout.CENTER_VERTICAL);
@@ -405,7 +405,7 @@ public class VideoPlayerActivity extends Activity implements View.OnClickListene
     }
 
     private class SurfaceViewCallback implements
-            android.view.SurfaceHolder.Callback {
+            SurfaceHolder.Callback {
 
         @Override
         public void surfaceCreated(SurfaceHolder holder) {

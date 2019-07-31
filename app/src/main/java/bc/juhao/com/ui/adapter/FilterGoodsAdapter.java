@@ -43,7 +43,7 @@ public class FilterGoodsAdapter extends BaseAdapter {
     }
 
 
-    public void setAttrList(AttrList attr,int poistion){
+    public void setAttrList(AttrList attr, int poistion){
         mAttrList.set(poistion,attr);
         notifyDataSetChanged();
     }

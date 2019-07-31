@@ -1,6 +1,5 @@
 package bc.juhao.com.common;
 
-import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -13,11 +12,10 @@ import android.widget.TextView;
 
 import bc.juhao.com.R;
 import bc.juhao.com.cons.Constance;
-import bc.juhao.com.ui.activity.user.LoginActivity;
 import bc.juhao.com.ui.view.dialog.SpotsDialog;
 import bc.juhao.com.utils.MyShare;
-import bc.juhao.com.utils.UIUtils;
 import bocang.utils.AppUtils;
+import bocang.utils.UIUtils;
 
 /**
  * @author Jun
@@ -247,10 +245,10 @@ public abstract class BaseFragment extends Fragment {
     }
 
     private void errorinit() {
-        errorView = getView().findViewById(R.id.errorView);
-        error_iv = (ImageView) getView().findViewById(R.id.error_iv);
-        error_tv = (TextView) getView().findViewById(R.id.error_tv);
-        contentView = getView().findViewById(R.id.contentView);
+//        errorView = getView().findViewById(R.id.errorView);
+//        error_iv = (ImageView) getView().findViewById(R.id.error_iv);
+//        error_tv = (TextView) getView().findViewById(R.id.error_tv);
+//        contentView = getView().findViewById(R.id.contentView);
     }
 
 

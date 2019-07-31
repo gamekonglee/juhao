@@ -11,7 +11,7 @@ import bocang.view.BaseActivity;
  * @date : 2017/7/6 16:34
  * @description :
  */
-public class ExtractDetailActivity  extends BaseActivity{
+public class ExtractDetailActivity  extends BaseActivity {
     private ExtractDetailController mController;
 
     @Override

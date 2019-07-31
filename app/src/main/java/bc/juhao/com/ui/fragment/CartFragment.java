@@ -1,6 +1,5 @@
 package bc.juhao.com.ui.fragment;
 
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
@@ -17,7 +16,6 @@ import bc.juhao.com.R;
 import bc.juhao.com.common.BaseFragment;
 import bc.juhao.com.cons.Constance;
 import bc.juhao.com.controller.buy.CartController;
-import bc.juhao.com.ui.activity.MainActivity;
 
 /**
  * @author Jun
@@ -65,6 +63,8 @@ public class CartFragment extends BaseFragment implements View.OnClickListener {
         back_ll = (LinearLayout) getActivity().findViewById(R.id.back_ll);
         if(mIsBack==false){
             back_ll.setVisibility(View.GONE);
+        }else {
+            back_ll.setVisibility(View.VISIBLE);
         }
 //        //取得设置好的drawable对象
 //        Drawable drawable = this.getResources().getDrawable(R.drawable.selector_checkbox03);

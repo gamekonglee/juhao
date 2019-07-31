@@ -8,6 +8,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
+import com.aliyun.iot.ilop.demo.DemoApplication;
+
 import bc.juhao.com.R;
 import bc.juhao.com.common.BaseFragment;
 import bc.juhao.com.cons.Constance;
@@ -45,7 +47,7 @@ public class SunImageFragment extends BaseFragment implements View.OnClickListen
     protected void initViewData() {
         int id = ((ProDetailActivity) this.getActivity()).mOrderId;
         try{
-            int level = IssueApplication.mUserObject.getInt(Constance.level);
+            int level = DemoApplication.mUserObject.getInt(Constance.level);
             if (level == 0) {
                 go_sun_iv.setVisibility(View.VISIBLE);
                 ((ProDetailActivity) this.getActivity()).mOrderid = "1";

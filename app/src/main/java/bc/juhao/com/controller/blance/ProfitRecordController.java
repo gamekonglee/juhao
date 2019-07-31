@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
+import com.aliyun.iot.ilop.demo.DemoApplication;
 import com.lib.common.hxp.view.ListViewForScrollView;
 import com.lib.common.hxp.view.PullToRefreshLayout;
 
@@ -233,7 +234,7 @@ public class ProfitRecordController extends BaseController implements AdapterVie
             int level = jsonObject.getInteger(Constance.level);
             String time = DateUtils.getStrTime(add_time);
             String customerUserId=jsonObject.getString(Constance.user_id);
-            String userId= IssueApplication.mUserObject.getString(Constance.id);
+            String userId= DemoApplication.mUserObject.getString(Constance.id);
             if(customerUserId.equals(userId)){
                 holder.num_tv.setText("+"+amount);
                 holder.exchange_tv.setText(customer_user_name +getLevel(level)+ "购买了产品");
