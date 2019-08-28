@@ -229,7 +229,7 @@ public class ItHomeMainFragment extends BaseFragment implements View.OnClickList
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.frag_it_main_home,null);
+        return inflater.inflate(R.layout.frag_it_main_home_new,null);
     }
 
     @Override

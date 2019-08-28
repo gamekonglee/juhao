@@ -83,7 +83,6 @@ import cn.jpush.android.api.JPushInterface;
 import cn.jpush.android.api.TagAliasCallback;
 import me.leolin.shortcutbadger.ShortcutBadger;
 
-import static bc.juhao.com.R.id.old_price_tv;
 
 /**
  * @author Jun
@@ -2136,7 +2135,7 @@ public class HomeController extends BaseController implements INetworkCallBack, 
                 holder = new ViewHolder();
                 holder.imageView = (ImageView) convertView.findViewById(R.id.imageView);
                 holder.price_tv = (TextView) convertView.findViewById(R.id.price_tv);
-                holder.old_price_tv = (TextView) convertView.findViewById(old_price_tv);
+                holder.old_price_tv = (TextView) convertView.findViewById(R.id.old_price_tv);
                 RelativeLayout.LayoutParams lLp = (RelativeLayout.LayoutParams) holder.imageView.getLayoutParams();
                 float h = (mScreenWidth - ConvertUtil.dp2px(mView.getActivity(), 45.8f)) / 3;
                 lLp.height = (int) h;

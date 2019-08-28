@@ -67,9 +67,10 @@ public class ChannelActivity extends AActivity implements View.OnClickListener {
 
     private IMobileDownstreamListener listener = new IMobileDownstreamListener() {
 
+
         @Override
-        public void onCommand(String s, String s1) {
-            msgET.setText("topic:" + s + "\n" + "pushmsg:" + s1);
+        public void onCommand(String s, byte[] bytes) {
+            msgET.setText("topic:" + s + "\n" + "pushmsg:" );
         }
 
         @Override

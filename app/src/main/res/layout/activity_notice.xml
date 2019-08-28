@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:background="#f8f8f8"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="#ffffff">
+        <RelativeLayout
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:onClick="goBack">
+            <ImageView
+                android:layout_centerInParent="true"
+                android:background="@mipmap/nav_left"
+                android:layout_width="10dp"
+                android:layout_height="20dp" />
+        </RelativeLayout>
+        <TextView
+            android:text="消息中心"
+            android:textSize="15sp"
+            android:textColor="#252525"
+            android:layout_centerInParent="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </RelativeLayout>
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="75dp"
+        android:gravity="center"
+        android:background="#ffffff">
+        <TextView
+            android:id="@+id/tv_device"
+            android:text="设备"
+            android:textColor="#ffffff"
+            android:gravity="center"
+            android:background="@drawable/bg_corner_full_orange_15_left"
+            android:layout_width="112dp"
+            android:layout_height="38dp" />
+        <TextView
+            android:id="@+id/tv_share"
+            android:text="共享"
+            android:textColor="@color/theme"
+            android:gravity="center"
+            android:background="@drawable/bg_theme_empty"
+            android:layout_width="112dp"
+            android:layout_height="38dp" />
+
+        <TextView
+            android:id="@+id/tv_notice"
+            android:text="通知"
+            android:textColor="@color/theme"
+            android:gravity="center"
+            android:background="@drawable/bg_corner_empty_orange_15_right"
+            android:layout_width="112dp"
+            android:layout_height="38dp" />
+
+    </LinearLayout>
+
+    <bc.juhao.com.ui.view.TextViewPlus
+        android:id="@+id/tv_no_notice"
+        android:drawableTop="@mipmap/icon_wxx"
+        android:text="暂无设备消息"
+        android:gravity="center_horizontal"
+        android:paddingTop="200dp"
+        android:textColor="#999999"
+        android:textSize="14sp"
+        app:top_width="70dp"
+        app:top_height="76dp"
+        android:layout_width="match_parent"
+        android:drawablePadding="10dp"
+        android:layout_height="400dp" />
+</LinearLayout>

@@ -29,12 +29,16 @@ import com.alibaba.sdk.android.openaccount.OpenAccountService;
 import com.alibaba.sdk.android.openaccount.callback.LoginCallback;
 import com.alibaba.sdk.android.openaccount.callback.LogoutCallback;
 import com.alibaba.sdk.android.openaccount.model.OpenAccountSession;
+import com.aliyun.alink.business.devicecenter.extbone.BoneAddDeviceBiz;
+import com.aliyun.alink.business.devicecenter.extbone.BoneHotspotHelper;
+import com.aliyun.alink.business.devicecenter.extbone.BoneLocalDeviceMgr;
 import com.aliyun.alink.linksdk.channel.core.base.AError;
 import com.aliyun.alink.linksdk.channel.mobile.api.IMobileConnectListener;
 import com.aliyun.alink.linksdk.channel.mobile.api.IMobileRequestListener;
 import com.aliyun.alink.linksdk.channel.mobile.api.MobileChannel;
 import com.aliyun.alink.linksdk.channel.mobile.api.MobileConnectConfig;
 import com.aliyun.alink.linksdk.channel.mobile.api.MobileConnectState;
+import com.aliyun.alink.sdk.jsbridge.BonePluginRegistry;
 import com.aliyun.iot.aep.component.router.Router;
 import com.aliyun.iot.aep.component.scan.ScanManager;
 import com.aliyun.iot.aep.sdk.credential.IotCredentialManager.IoTCredentialListener;
@@ -51,6 +55,7 @@ import com.aliyun.iot.aep.sdk.login.LoginBusiness;
 import com.pgyersdk.crash.PgyCrashManager;
 
 import java.lang.reflect.Field;
+import java.util.ArrayList;
 import java.util.Arrays;
 
 import bc.juhao.com.R;
@@ -82,6 +87,8 @@ public class MainActivity extends FragmentActivity {
         setContentView(R.layout.activity_main);
         setStatuTextColor(this, Color.WHITE);
         setFullScreenColor(Color.TRANSPARENT,this);
+        DemoApplication.activityList=new ArrayList<>();
+        DemoApplication.activityList.add(this);
         ll_home = findViewById(R.id.ll_home);
         fragmentTabHost = (MyFragmentTabLayout) findViewById(R.id.tab_layout);
         fragmentTabHost.init(getSupportFragmentManager())
@@ -105,6 +112,10 @@ public class MainActivity extends FragmentActivity {
         initMobileConnection();
 //        refreshLogin();
         initLoginStatus();
+        BonePluginRegistry.register("BoneAddDeviceBiz", BoneAddDeviceBiz.class);
+        BonePluginRegistry.register("BoneLocalDeviceMgr", BoneLocalDeviceMgr.class);
+        BonePluginRegistry.register("BoneHotspotHelper", BoneHotspotHelper.class);
+
 //        MobileChannel.getInstance().unBindAccount(new IMobileRequestListener() {
 //            @Override
 //            public void onSuccess(String s) {

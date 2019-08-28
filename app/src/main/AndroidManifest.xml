@@ -495,8 +495,8 @@
         <service
             android:name=".service.UpdateApkService"
             android:enabled="true" />
-        Required SDK 核心功能
-        可配置android:process参数将PushService放在其他进程中
+        <!--Required SDK 核心功能-->
+        <!--可配置android:process参数将PushService放在其他进程中-->
         <service
             android:name="cn.jpush.android.service.PushService"
             android:process=":multiprocess"
@@ -716,7 +716,7 @@
         <activity android:name=".ui.activity.SearchActivity" />
         <activity android:name=".ui.activity.user.TixianGzActivity" />
         <activity android:name=".ui.activity.blance.UserExtractProfitActivity" />
-        //图片选择Activity
+        <!--//图片选择Activity-->
         <!-- //去掉Activity的ActionBar。 -->
         <!-- //使用者可以根据自己的项目去配置，不一定要这样写，只要不Activity的ActionBar去掉就可以了。 -->
         <!-- //横竖屏切换处理。 -->
@@ -725,12 +725,12 @@
             android:name="com.donkingliang.imageselector.ImageSelectorActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
-        //图片预览Activity
+        <!--//图片预览Activity-->
         <activity
             android:name="com.donkingliang.imageselector.PreviewActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
-        //图片剪切Activity
+        <!--//图片剪切Activity-->
         <activity
             android:name="com.donkingliang.imageselector.ClipImageActivity"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
@@ -1002,6 +1002,12 @@
             android:theme="@android:style/Theme.NoTitleBar"
             android:windowSoftInputMode="stateAlwaysHidden" />
         <activity android:name=".ui.activity.user.ForgetPasswordActivity"/>
+        <activity android:name=".ui.activity.intelligence.AboutActivity"/>
+        <activity android:name=".ui.activity.intelligence.SettingActivity"/>
+        <activity android:name=".ui.activity.intelligence.NoticeActivity"/>
+        <activity android:name=".ui.activity.intelligence.DeviceShareActivity"/>
+        <activity android:name=".ui.activity.intelligence.DeviceShareAddActivity"/>
+        <activity android:name=".ui.activity.intelligence.DeviceShareAddUserActivity"/>
     </application>
 
 </manifest>

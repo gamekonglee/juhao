@@ -13,9 +13,21 @@ import android.os.Handler;
 import android.support.annotation.RequiresApi;
 import android.support.multidex.MultiDex;
 
+import com.aliyun.alink.alirn.RNGlobalConfig;
+import com.aliyun.alink.linksdk.channel.mobile.api.IMobileConnectListener;
+import com.aliyun.alink.linksdk.channel.mobile.api.MobileChannel;
+import com.aliyun.alink.linksdk.channel.mobile.api.MobileConnectConfig;
+import com.aliyun.alink.linksdk.channel.mobile.api.MobileConnectState;
 import com.aliyun.alink.linksdk.tools.ThreadTools;
+import com.aliyun.alink.page.rn.InitializationHelper;
 import com.aliyun.iot.aep.component.router.IUrlHandler;
 import com.aliyun.iot.aep.component.scan.ScanManager;
+import com.aliyun.iot.aep.sdk.connectchannel.log.ALog;
+import com.aliyun.iot.ble.util.Log;
+import com.aliyun.iot.breeze.api.Config;
+import com.aliyun.iot.breeze.api.Factory;
+import com.aliyun.iot.breeze.api.IBreeze;
+import com.aliyun.iot.breeze.biz.BuildConfig;
 import com.aliyun.iot.ilop.demo.page.scan.BoneMobileScanPlugin;
 import com.aliyun.iot.ilop.demo.base.OpenAccountSDKDelegate;
 import com.aliyun.iot.aep.routerexternal.RouterExternal;
@@ -31,6 +43,7 @@ import com.aliyun.iot.aep.sdk.framework.bundle.PageConfigure;
 import com.aliyun.iot.ilop.ApplicationHelper;
 import com.aliyun.iot.ilop.page.scan.ScanPageInitHelper;
 import com.baidu.mapapi.SDKInitializer;
+import com.facebook.react.FrescoPackage;
 import com.nostra13.universalimageloader.cache.disc.naming.HashCodeFileNameGenerator;
 import com.nostra13.universalimageloader.cache.disc.naming.Md5FileNameGenerator;
 import com.nostra13.universalimageloader.cache.memory.impl.LruMemoryCache;
@@ -45,8 +58,11 @@ import com.pgyersdk.crash.PgyCrashManager;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.LinkedList;
+import java.util.List;
 
 import bc.juhao.com.R;
+import bc.juhao.com.adapter.BaseAdapterHelper;
 import bc.juhao.com.bean.CommentBean;
 import bc.juhao.com.chat.DemoHelper;
 import bc.juhao.com.chat.cache.ACache;
@@ -64,6 +80,8 @@ import cn.jpush.android.api.JPushInterface;
 
 public class DemoApplication extends BaseApplication {
     public static String app_key="24940076";
+    public static List<Activity> activityList = new LinkedList();
+
     private static Application instance;
     public static boolean isShowLogin;
 
@@ -163,13 +181,57 @@ public class DemoApplication extends BaseApplication {
                 }
             }
         });
-
+        initMobileConnect();
+//        initBone();
+//        IBreeze breeze = Factory.createBreeze(this);
+//        Config config = new Config.Builder()
+//                .debug(BuildConfig.DEBUG)
+//                .log(BuildConfig.DEBUG)
+//                .logLevel(BuildConfig.DEBUG ? Log.VERBOSE :Log.WARN)
+//                .build();
+//        breeze.configure(config);
         // 支持扫码调试
         ScanManager.getInstance().registerPlugin("boneMobile", new BoneMobileScanPlugin());
         //初始化pagescan页面的router配置
         ScanPageInitHelper.initPageScanRouterConfig();
     }
+    private void initBone() {
+        String serverEnv = "production";//仅支持"production",即生产环境
+        String pluginEnv = "release";//仅支持“release”
+        String language = "zh-CN";//语言环境，目前支持中文“zh-CN”, 英文"en-US"，法文"fr-FR",德文"de-DE",日文"ja-JP",韩文"ko-KR",西班牙文"es-ES",俄文"ru-RU"，八种语言
 
+        // 初始化 BoneMobile RN 容器
+        InitializationHelper.initialize(this, pluginEnv, serverEnv,language);
+        // 添加基于 Fresco 的图片组件支持
+        RNGlobalConfig.addBizPackage(new FrescoPackage());
+    }
+
+    private void initMobileConnect() {
+        //打开Log 输出
+        ALog.setLevel(ALog.LEVEL_DEBUG);
+
+        MobileConnectConfig config = new MobileConnectConfig();
+        // 设置 appKey 和 authCode(必填)
+        config.appkey = "{"+app_key+"}";
+        config.securityGuardAuthcode = "114d";
+
+
+        // 设置验证服务器（默认不填，SDK会自动使用“API通道SDK“的Host设定）
+//        config.authServer = "";
+
+        // 指定长连接服务器地址。 （默认不填，SDK会使用默认的地址及端口。默认为国内华东节点。）
+//        config.channelHost = "{长连接服务器域名}";
+
+        // 开启动态选择Host功能。 (默认false，海外环境建议设置为true。此功能前提为ChannelHost 不特殊指定。）
+        config.autoSelectChannelHost = false;
+
+        MobileChannel.getInstance().startConnect(this, config, new IMobileConnectListener() {
+            @Override
+            public void onConnectStateChange(MobileConnectState state) {
+                ALog.d("mobileC","onConnectStateChange(), state = "+state.toString());
+            }
+        });
+    }
     /* methods: AApplication */
 //
 //    @Override

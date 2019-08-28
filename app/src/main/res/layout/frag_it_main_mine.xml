@@ -1,6 +1,121 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:orientation="vertical"
+        android:background="#2a1f45"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="180dp"
+            >
+            <ImageView
+                android:id="@+id/iv_scale"
+                android:background="@mipmap/nav_icon_sys"
+                android:layout_alignParentRight="true"
+                android:layout_marginTop="40dp"
+                android:layout_marginRight="20dp"
+                android:layout_width="20dp"
+                android:layout_height="20dp" />
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:layout_alignParentBottom="true"
+                android:layout_marginBottom="25dp">
+                <ImageView
+                    android:id="@+id/iv_head"
+                    android:background="@mipmap/img_tx"
+                    android:layout_marginLeft="25dp"
+                    android:layout_width="60dp"
+                    android:layout_height="60dp" />
+                <TextView
+                    android:text="点击设置昵称"
+                    android:textSize="14sp"
+                    android:textColor="#ffffff"
+                    android:layout_toRightOf="@+id/iv_head"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginLeft="15dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+                <TextView
+                    android:text="86-139****3545"
+                    android:textColor="#ffffff"
+                    android:textSize="12sp"
+                    android:layout_toRightOf="@+id/iv_head"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginBottom="5dp"
+                    android:layout_alignParentBottom="true"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+                <ImageView
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="20dp"
+                    android:background="@mipmap/my_icon_right"
+                    android:layout_width="10dp"
+                    android:layout_height="20dp" />
+            </RelativeLayout>
+        </RelativeLayout>
 
-</android.support.constraint.ConstraintLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:background="@drawable/bg_corner_white_8_top">
+            <bc.juhao.com.ui.view.TextViewPlus
+                android:id="@+id/tv_component"
+                android:text="小组件"
+                android:drawableLeft="@mipmap/icon_xzj"
+                style="@style/tv_mine"/>
+
+            <View
+                android:background="#f8f8f8"
+                android:layout_width="match_parent"
+                android:layout_height="20dp"/>
+            <bc.juhao.com.ui.view.TextViewPlus
+                android:id="@+id/tv_notice"
+                android:text="消息中心"
+                android:drawableLeft="@mipmap/icon_xx"
+                style="@style/tv_mine"/>
+            <bc.juhao.com.ui.view.TextViewPlus
+                android:id="@+id/tv_share"
+                android:text="共享"
+                android:drawableLeft="@mipmap/icon_share"
+                style="@style/tv_mine"/>
+            <bc.juhao.com.ui.view.TextViewPlus
+                android:id="@+id/tv_3th"
+                android:text="第三方服务"
+                android:drawableLeft="@mipmap/icon_service"
+                style="@style/tv_mine"/>
+            <bc.juhao.com.ui.view.TextViewPlus
+                android:id="@+id/tv_suggestion"
+                android:text="意见反馈"
+                android:drawableLeft="@mipmap/icon_yjfk"
+                style="@style/tv_mine"/>
+            <View
+                android:background="#f8f8f8"
+                android:layout_width="match_parent"
+                android:layout_height="20dp"/>
+            <bc.juhao.com.ui.view.TextViewPlus
+                android:id="@+id/tv_setting"
+                android:text="设置"
+                android:drawableLeft="@mipmap/icon_sz"
+                style="@style/tv_mine"/>
+            <bc.juhao.com.ui.view.TextViewPlus
+                android:id="@+id/tv_about"
+                android:text="关于"
+                android:drawableLeft="@mipmap/icon_about"
+                style="@style/tv_mine"/>
+            <View
+                android:background="#f8f8f8"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"/>
+        </LinearLayout>
+
+    </LinearLayout>
+</ScrollView>

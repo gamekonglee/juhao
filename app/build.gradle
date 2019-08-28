@@ -3,15 +3,15 @@ apply plugin: 'project-report'
 apply plugin: 'org.greenrobot.greendao'
 //def projectName = "DemoApp"
 android {
-    compileSdkVersion 28
-    buildToolsVersion '28.0.2'
+    compileSdkVersion 29
+    buildToolsVersion '29.0.0'
     defaultConfig {
 //        useLibrary 'org.apache.http.legacy'
         applicationId 'bc.juhao.com'
         minSdkVersion 19
-        targetSdkVersion 28
-        versionCode 39
-        versionName "1.47"
+        targetSdkVersion 29
+        versionCode 41
+        versionName "1.49"
         //兼容Gradle3.X
         ndk {
 //            abiFilters "armeabi", "x86","arm64-v8a","armeabi-v7a","x86_64"
@@ -100,7 +100,7 @@ android {
     }
     dexOptions{
 //使用增量模式构建
-        incremental true
+//        incremental true
 //最大堆内存
         javaMaxHeapSize "8g"
 //是否支持大工程模式
@@ -112,18 +112,18 @@ android {
     }
 }
 
-buildscript {
-    repositories {
-        jcenter()
-        google()
-    }
-
-    dependencies {
-        classpath 'com.android.tools.build:gradle:3.0.1'
-        classpath 'com.novoda:bintray-release:0.5.0'
-        classpath "de.undercouch:gradle-download-task:3.4.3"
-    }
-}
+//buildscript {
+//    repositories {
+//        jcenter()
+//        google()
+//    }
+//
+//    dependencies {
+//        classpath 'com.android.tools.build:gradle:3.4.1'
+//        classpath 'com.novoda:bintray-release:0.5.0'
+//        classpath "de.undercouch:gradle-download-task:3.4.3"
+//    }
+//}
 repositories {
     jcenter()
     google()
@@ -167,7 +167,19 @@ dependencies {
     implementation 'com.android.support:appcompat-v7:26.1.0'
 
 
-    implementation 'com.aliyun.iot.ilop.page:scan:0.0.1'
+    implementation ('com.aliyun.iot.ilop.page:scan:0.0.1'){
+        exclude group: 'org.jetbrains:annotations:13.0'
+        exclude module:'org.jetbrains:annotations'
+        exclude group: 'annotations-13.0.jar'
+        exclude module: 'annotations-13.0.jar'
+        exclude group: 'org.jetbrains'
+        exclude module: 'org.jetbrains'
+        exclude group: 'org.jetbrains.annotations'
+        exclude module: 'org.jetbrains.annotations'
+        exclude group: 'org.intellij.lang'
+        exclude module: 'org.intellij.lang'
+    }
+//    org.jetbrains:annotations
     /* 其他.begin */
     implementation 'com.google.android:flexbox:0.3.1'
     implementation 'com.android.support:design:26.1.0'
@@ -175,56 +187,119 @@ dependencies {
 //    implementation 'com.android.support.constraint:constraint-layout:1.0.2'
 //    implementation fileTree(include: ['*.jar'], dir: 'libs')
 
+
+
+
+
+//    /* AEP自有SDK.begin */
+//    implementation 'com.aliyun.iot.aep.sdk:sdk-framework:0.0.3@aar'
+//    implementation 'com.aliyun.iot.aep.sdk:threadpool:0.0.3@aar'
+//    /* AEP自有SDK.end */
+//    /* API 通道.begin */
+//    implementation 'com.aliyun.iot.aep.sdk:apiclient:0.0.5'
+////    implementation('com.aliyun.iot.aep.sdk:apiclient:0.0.3')
+//    /* API 通道.end*/
+//    /* 长连接.begin*/
+//    implementation('com.aliyun.iot.aep.sdk:connectchannel:0.0.2')
+//    /* 长连接.end*/
+//
+//    // OA
+//    implementation('com.alibaba.sdk.android.openaccount:openaccount-ui-default:3.5.1.5')
+//    implementation('com.alibaba.sdk.android.openaccount:openaccount-core:3.5.1.5')
+//    implementation 'com.aliyun.alink.linksdk:lpbs-plugin-breeze:1.0.5'
+//    implementation 'com.aliyun.alink.linksdk:breeze:1.2.5'
+//    implementation 'com.aliyun.alink.linksdk:breeze-biz:1.1.2'
+//    implementation 'com.aliyun.alink.linksdk:ble-library:1.2.3'
+//    implementation 'com.aliyun.iot.sdk:svg:0.0.1'
+//    implementation 'com.aliyun.alink.linksdk:breeze-ota:1.2.2'
+//    implementation 'com.aliyun.alink.linksdk:public-channel-gateway:1.6.1'
+//    // 身份认证
+////    implementation 'com.aliyun.iot.aep.sdk:iot-credential:0.0.1.7'
+//    implementation 'com.aliyun.iot.aep.sdk:iot-credential:0.0.2'
+//    implementation 'com.aliyun.iot.aep.sdk:account-oa:0.0.3.9'
+//    /* Bone Mobile 容器.begin */
+//    implementation ('com.aliyun.iot.aep.page:rn:0.1.2.12'){
+//        exclude module: 'okhttp-ws'
+//    }
+//    implementation 'com.aliyun.iot.aep.sdk:account:0.0.2.3'
+//    implementation 'com.aliyun.iot.aep.sdk:rn-external-fresco:0.41.2.20180331'
+//    /* Bone Mobile 容器.end */
+//    /* 配网 SDK.begin */
+////    implementation 'com.aliyun.alink.linksdk:ilop-devicecenter-ext-boneplugin:1.2.0'
+//    implementation 'com.aliyun.alink.linksdk:ilop-devicecenter-ext-boneplugin:1.5.1'
+//
+//    implementation ('com.aliyun.alink.linksdk:ilop-devicecenter:1.6.1'){
+//        transitive = true
+//    }
+////    implementation 'com.aliyun.alink.linksdk:ilop-devicecenter:1.2.0'
+//    /* 配网 SDK.end */
+//
+//    // 设备模型 SDK
+////    implementation 'com.aliyun.alink.linksdk:public-tmp-ext-boneplugin:1.2.0'
+//    implementation 'com.aliyun.alink.linksdk:public-tmp-ext-boneplugin:1.4.0.2'
+//
+//    /* 日志.begin */
+////    implementation 'com.aliyun.iot.aep.sdk:alog:0.0.3'
+//    /* 日志.end */
+//
+//    /* 移动应用推送.begin */
+//    implementation 'com.aliyun.ams:alicloud-android-push-iot:1.0.4'
+////    implementation 'com.aliyun.ams:alicloud-android-utdid:1.1.5.4'
+//    implementation 'com.aliyun.ams:alicloud-android-ut:5.1.0'
+//    implementation 'com.aliyun.ams:alicloud-android-third-push:3.0.5@aar'
+//    /* 移动应用推送.end */
+//
+//    /* EventBus*/
+//    implementation 'com.taobao.external:eventbus:1.0.2'
+//    implementation 'com.aliyun.iot.aep.sdk:abus:0.0.1'
+
+
+
+    implementation 'com.aliyun.iot.aep.sdk:account-oa:0.0.3.9'
+    implementation 'com.aliyun.ams:alicloud-android-utdid:1.1.5.4'
+    implementation 'com.aliyun.ams:alicloud-android-ut:5.1.0'
+    implementation 'com.aliyun.iot.aep.sdk:apiclient:0.0.5'
+    implementation 'com.aliyun.iot.aep.sdk:account:0.0.2.3'
+    //    implementation 'com.aliyun.iot.aep.sdk:account:0.0.1.4'
+    implementation 'com.aliyun.iot.aep.sdk:iot-credential:0.0.2'
+    //    implementation 'com.aliyun.iot.aep.sdk:iot-credential:0.0.1.7'
+    implementation 'com.aliyun.alink.linksdk:lpbs-plugin-breeze:1.0.5'
+    implementation 'com.aliyun.alink.linksdk:breeze:1.2.5'
+    implementation 'com.aliyun.alink.linksdk:breeze-biz:1.1.2'
+    implementation 'com.aliyun.alink.linksdk:ble-library:1.2.3'
+    /* Bone Mobile 容器.begin */
+    implementation('com.aliyun.iot.aep.page:rn:0.1.2.12') {
+        exclude module: 'okhttp-ws'
+    }
+    implementation 'com.aliyun.iot.aep.sdk:rn-external-fresco:0.41.2.20180331'
+    implementation 'com.aliyun.iot.sdk:svg:0.0.1'
+    implementation 'com.aliyun.alink.linksdk:breeze-ota:1.2.2'
+    implementation 'com.aliyun.alink.linksdk:public-channel-gateway:1.6.1'
+    implementation 'com.aliyun.alink.linksdk:ilop-devicecenter-ext-boneplugin:1.5.1'
+    implementation ('com.aliyun.alink.linksdk:ilop-devicecenter:1.6.1'){
+        transitive = true
+    }
+    implementation 'com.aliyun.alink.linksdk:public-tmp-ext-boneplugin:1.4.0.2'
+    implementation 'com.aliyun.ams:alicloud-android-push-iot:1.0.3'
+    implementation 'com.aliyun.ams:alicloud-android-third-push:3.0.5'
+    implementation 'com.aliyun.iot.aep.sdk:connectchannel:0.0.2'
     /* AEP自有SDK.begin */
     implementation 'com.aliyun.iot.aep.sdk:sdk-framework:0.0.3@aar'
     implementation 'com.aliyun.iot.aep.sdk:threadpool:0.0.3@aar'
-    /* AEP自有SDK.end */
-
-    /* API 通道.begin */
-//    implementation('com.aliyun.iot.aep.sdk:apiclient:0.0.3')
-    /* API 通道.end*/
-
-    /* 长连接.begin*/
-    implementation('com.aliyun.iot.aep.sdk:connectchannel:0.0.2')
-    /* 长连接.end*/
-
-    // OA
-    implementation('com.alibaba.sdk.android.openaccount:openaccount-ui-default:3.5.1.5')
-    implementation('com.alibaba.sdk.android.openaccount:openaccount-core:3.5.1.5')
-
-    // 身份认证
-    implementation 'com.aliyun.iot.aep.sdk:iot-credential:0.0.1.7'
-
-    /* Bone Mobile 容器.begin */
-    implementation ('com.aliyun.iot.aep.page:rn:0.0.7'){
-        exclude module: 'okhttp-ws'
+    implementation 'androidx.multidex:multidex:2.0.0'
+    implementation('com.aliyun.iot.ilop.page:scan:0.0.1') {
+        exclude module: 'annotations-java5'
     }
-    implementation 'com.aliyun.iot.aep.sdk:account:0.0.1.4'
-    implementation 'com.aliyun.iot.aep.sdk:rn-external-fresco:0.41.2.20180331'
-    /* Bone Mobile 容器.end */
-
-    /* 配网 SDK.begin */
-    implementation 'com.aliyun.alink.linksdk:ilop-devicecenter-ext-boneplugin:1.2.0'
-    implementation 'com.aliyun.alink.linksdk:ilop-devicecenter:1.2.0'
-    /* 配网 SDK.end */
-
-    // 设备模型 SDK
-    implementation 'com.aliyun.alink.linksdk:public-tmp-ext-boneplugin:1.2.0'
-
-    /* 日志.begin */
-//    implementation 'com.aliyun.iot.aep.sdk:alog:0.0.3'
-    /* 日志.end */
-
-    /* 移动应用推送.begin */
-    implementation 'com.aliyun.ams:alicloud-android-push-iot:1.0.4'
-//    implementation 'com.aliyun.ams:alicloud-android-utdid:1.1.5.4'
-    implementation 'com.aliyun.ams:alicloud-android-ut:5.1.0'
-    implementation 'com.aliyun.ams:alicloud-android-third-push:3.0.5@aar'
-    /* 移动应用推送.end */
-
-    /* EventBus*/
+    /* 其他.begin */
+    implementation 'com.google.android:flexbox:0.3.1'
     implementation 'com.taobao.external:eventbus:1.0.2'
     implementation 'com.aliyun.iot.aep.sdk:abus:0.0.1'
+
+
+
+
+
+
 
     implementation 'com.bigkoo:alertview:1.0.3'
     implementation 'com.github.donkingliang:ImageSelector:1.6.0'

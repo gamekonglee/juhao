@@ -519,6 +519,7 @@ public class Constance {
     public static String success="success";
     public static String count_down_json="count_down_json";
     public static String LightSwitch="LightSwitch";
+    public static String actions="actions";
 /*
             {
     {

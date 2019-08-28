@@ -41,6 +41,8 @@ public class NetWorkConst {
     public static final String IOT_TIMER_DELETE = "http://smart.juhao.com/iot-timer-del";
     public static final String CATEGORY_SCENE = API_HOST + "/v2/ecapi.scene.category.list";
     public static final String CHECK_SYSTEM = API_HOST + "/v2/ecapi.system.check";
+    public static final String IOT_DEVICES_LIST = "http://smart.bocang.cc/api/cate/list?";
+    public static final String IOT_DEVICES_DATAS = "http://smart.bocang.cc/api/iot/list";
 
 
     public static String APK_NAME="jhsc_v";

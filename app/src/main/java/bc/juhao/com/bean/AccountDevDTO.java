@@ -1,10 +1,12 @@
 package bc.juhao.com.bean;
 
+import java.io.Serializable;
+
 /**
  * Created by gamekonglee on 2018/7/30.
  */
 
-public class AccountDevDTO {
+public class AccountDevDTO implements Serializable {
     String iotId;
     String productKey;
     String name;
@@ -16,10 +18,91 @@ public class AccountDevDTO {
     String type;
     String thingType;
     String nodeType;
-    String  status;
+    String status;
     Byte owned;
     String identityAlias;
     String gmtModified;
+    String productName;
+
+    public String getProductName() {
+        return productName;
+    }
+
+    public void setProductName(String productName) {
+        this.productName = productName;
+    }
+
+    public String getProductImage() {
+        return productImage;
+    }
+
+    public void setProductImage(String productImage) {
+        this.productImage = productImage;
+    }
+
+    public String getProductModel() {
+        return productModel;
+    }
+
+    public void setProductModel(String productModel) {
+        this.productModel = productModel;
+    }
+
+    public String getCategoryImage() {
+        return categoryImage;
+    }
+
+    public void setCategoryImage(String categoryImage) {
+        this.categoryImage = categoryImage;
+    }
+
+    public String getNickName() {
+        return nickName;
+    }
+
+    public void setNickName(String nickName) {
+        this.nickName = nickName;
+    }
+
+    public String getThingType() {
+        return thingType;
+    }
+
+    public void setThingType(String thingType) {
+        this.thingType = thingType;
+    }
+
+    public String getNodeType() {
+        return nodeType;
+    }
+
+    public void setNodeType(String nodeType) {
+        this.nodeType = nodeType;
+    }
+
+    public Byte getOwned() {
+        return owned;
+    }
+
+    public void setOwned(Byte owned) {
+        this.owned = owned;
+    }
+
+    public String getIdentityAlias() {
+        return identityAlias;
+    }
+
+    public void setIdentityAlias(String identityAlias) {
+        this.identityAlias = identityAlias;
+    }
+
+    public String getGmtModified() {
+        return gmtModified;
+    }
+
+    public void setGmtModified(String gmtModified) {
+        this.gmtModified = gmtModified;
+    }
 
     public String getIotId() {
         return iotId;

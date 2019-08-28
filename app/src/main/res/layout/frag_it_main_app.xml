@@ -1,6 +1,124 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:background="#ffffff"
     android:layout_height="match_parent">
 
-</android.support.constraint.ConstraintLayout>
+    <RelativeLayout
+        android:layout_marginTop="20dp"
+        android:layout_width="match_parent"
+        android:layout_height="50dp">
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <LinearLayout
+            android:gravity="center"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:orientation="vertical">
+                <TextView
+                    android:id="@+id/tv_scene"
+                    android:text="场景"
+                    android:textSize="17sp"
+                    android:textColor="#252525"
+                    android:layout_width="wrap_content"
+                    android:layout_height="0dp"
+                    android:gravity="center"
+                    android:layout_weight="1"/>
+                <View
+                    android:id="@+id/view_scene"
+                    android:background="@color/theme"
+                    android:layout_width="15dp"
+                    android:layout_height="2dp"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_marginLeft="15dp"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:orientation="vertical">
+                <TextView
+                    android:id="@+id/tv_auto"
+                    android:text="自动化"
+                    android:textSize="17sp"
+                    android:textColor="#252525"
+                    android:layout_width="wrap_content"
+                    android:layout_height="0dp"
+                    android:gravity="center"
+                    android:layout_weight="1"/>
+                <View
+                    android:id="@+id/view_auto"
+                    android:visibility="invisible"
+                    android:background="@color/theme"
+                    android:layout_width="15dp"
+                    android:layout_height="2dp"/>
+            </LinearLayout>
+
+        </LinearLayout>
+        <RelativeLayout
+            android:id="@+id/rl_add"
+            android:layout_centerVertical="true"
+            android:layout_alignParentRight="true"
+            android:layout_width="50dp"
+            android:layout_height="match_parent">
+            <ImageView
+                android:id="@+id/iv_add"
+                android:src="@mipmap/homg_tj"
+                android:layout_centerInParent="true"
+                android:layout_width="18dp"
+                android:layout_height="18dp" />
+        </RelativeLayout>
+
+    </RelativeLayout>
+    <View
+        android:background="#dddddd"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"/>
+    <bc.juhao.com.ui.view.PMSwipeRefreshLayout
+        android:id="@+id/pullToRefresh"
+        android:layout_margin="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <bc.juhao.com.ui.view.EndOfListView
+            android:id="@+id/lv_scenes"
+            android:dividerHeight="7.5dp"
+            android:scrollbars="none"
+            android:divider="#ffffff"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+    </bc.juhao.com.ui.view.PMSwipeRefreshLayout>
+    <LinearLayout
+        android:layout_marginTop="100dp"
+        android:id="@+id/ll_none_device"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="vertical">
+        <ImageView
+            android:background="@mipmap/img_kb"
+            android:layout_width="113dp"
+            android:layout_height="107dp" />
+        <TextView
+            android:text="一键控制多设备，或通过智能音响语音控制"
+            android:textColor="#999999"
+            android:textSize="14sp"
+            android:layout_marginTop="15dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <Button
+            android:id="@+id/btn_add_device"
+            android:text="添加场景"
+            android:textSize="13sp"
+            android:textColor="#666666"
+            android:layout_marginTop="30dp"
+            android:background="@drawable/bg_corner_empty_666666_15"
+            android:layout_width="125dp"
+            android:layout_height="40dp" />
+    </LinearLayout>
+</LinearLayout>

@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="200dp">
+    <ImageView
+        android:src="@mipmap/img_bg_scene"
+        android:layout_width="match_parent"
+        android:layout_height="200dp" />
+    <TextView
+        android:id="@+id/tv_name"
+        android:text="钜豪智能"
+        android:textSize="20sp"
+        android:textColor="#ffffff"
+        android:layout_marginTop="40dp"
+        android:layout_marginLeft="30dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <ImageView
+        android:id="@+id/tv_doit"
+        android:background="@mipmap/icon_opon"
+        android:layout_marginLeft="30dp"
+        android:layout_marginBottom="40dp"
+        android:layout_alignParentBottom="true"
+        android:layout_width="41dp"
+        android:layout_height="25dp" />
+
+    <ImageView
+        android:id="@+id/iv_setting"
+        android:background="@mipmap/icon_gd"
+        android:layout_alignParentRight="true"
+        android:layout_margin="35dp"
+        android:layout_width="16dp"
+        android:layout_height="5dp" />
+
+</RelativeLayout>

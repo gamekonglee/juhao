@@ -474,6 +474,53 @@ public class ApiClient {
                 .build().execute(callback);
 
     }
+
+    public static void getDevicesDatas( final Callback<String> callback) {
+        if(!hashkNewwork())return;
+        OkHttpClient okHttpClient=new OkHttpClient();
+        FormBody formBody=new FormBody.Builder()
+                .build();
+        String url=NetWorkConst.IOT_DEVICES_DATAS;
+        Request request=new Request.Builder()
+                .url(url)
+                .get()
+                .build();
+        okHttpClient.newCall(request).enqueue(new okhttp3.Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                callback.onResponse(response.body().string(),0);
+            }
+        });
+    }
+
+    public static void getDevicesList(int pid, final Callback<String> callback) {
+        if(!hashkNewwork())return;
+        OkHttpClient okHttpClient=new OkHttpClient();
+        FormBody formBody=new FormBody.Builder()
+                .add("pid",pid+"")
+                .build();
+        String url=NetWorkConst.IOT_DEVICES_LIST+"pid="+pid;
+        Request request=new Request.Builder()
+                .url(url)
+                .get()
+                .build();
+        okHttpClient.newCall(request).enqueue(new okhttp3.Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                callback.onResponse(response.body().string(),0);
+            }
+        });
+    }
 //    public static void SendRequest(String url, final Callback callback){
 //        if(!hashkNewwork()){
 //            return;
