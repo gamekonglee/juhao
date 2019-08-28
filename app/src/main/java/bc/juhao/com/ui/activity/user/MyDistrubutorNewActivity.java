@@ -219,7 +219,9 @@ public class MyDistrubutorNewActivity extends BaseActivity implements OnItemClic
             levelValue = "二级";
         } else if (level == 2) {
             levelValue = "三级";
-        } else {
+        } else if(level==5){
+            levelValue = "一级";
+        }else {
             levelValue = "消费者";
         }
         return levelValue;
