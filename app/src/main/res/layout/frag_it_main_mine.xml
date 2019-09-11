@@ -68,6 +68,7 @@
             android:background="@drawable/bg_corner_white_8_top">
             <bc.juhao.com.ui.view.TextViewPlus
                 android:id="@+id/tv_component"
+                android:visibility="gone"
                 android:text="小组件"
                 android:drawableLeft="@mipmap/icon_xzj"
                 style="@style/tv_mine"/>
@@ -89,6 +90,7 @@
             <bc.juhao.com.ui.view.TextViewPlus
                 android:id="@+id/tv_3th"
                 android:text="第三方服务"
+                android:visibility="gone"
                 android:drawableLeft="@mipmap/icon_service"
                 style="@style/tv_mine"/>
             <bc.juhao.com.ui.view.TextViewPlus

@@ -47,6 +47,7 @@
         android:textColor="#252525"
         android:textSize="15sp"
         android:gravity="center_vertical"
+        android:visibility="gone"
         android:paddingLeft="15dp"
         android:drawableRight="@mipmap/my_icon_right"
         android:paddingRight="15dp"
@@ -57,6 +58,7 @@
         android:text="隐私权政策"
         android:textColor="#252525"
         android:textSize="15sp"
+        android:visibility="gone"
         android:gravity="center_vertical"
         android:paddingLeft="15dp"
         android:drawableRight="@mipmap/my_icon_right"
@@ -67,6 +69,7 @@
     <TextView
         android:text="服务协议"
         android:textColor="#252525"
+        android:visibility="gone"
         android:textSize="15sp"
         android:gravity="center_vertical"
         android:paddingLeft="15dp"

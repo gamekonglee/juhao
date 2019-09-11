@@ -1,5 +1,9 @@
 package bc.juhao.com.ui.activity.user;
 
+import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.net.Uri;
+import android.support.v4.app.ActivityCompat;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
@@ -23,9 +27,12 @@ import bc.juhao.com.bean.DistribuBean;
 import bc.juhao.com.cons.Constance;
 import bc.juhao.com.listener.INetworkCallBack;
 import bc.juhao.com.ui.view.EndOfListView;
+import bc.juhao.com.ui.view.ShowDialog;
 import bc.juhao.com.utils.DateUtils;
 import bc.juhao.com.utils.Network;
 import bocang.json.JSONObject;
+import bocang.utils.AppUtils;
+import bocang.utils.CommonUtil;
 import bocang.utils.LogUtils;
 import bocang.utils.MyToast;
 import bocang.view.BaseActivity;
@@ -92,7 +99,7 @@ public class MyDistrubutorNewActivity extends BaseActivity implements OnItemClic
                 helper.setText(R.id.tv_name,name);
                 helper.setText(R.id.tv_level,getLevel(Integer.parseInt(item.getLevel()))+"");
                 helper.setText(R.id.tv_date, DateUtils.getStrTime02(item.getJoined_at()));
-                if (mUserLevel < 2) {
+                if (mUserLevel < 2||mUserLevel==5) {
 //                    String joinedAt1 = "修改";
 //                    tv.setText(joinedAt1);
                     helper.getView(R.id.tv_edit).setOnClickListener(new View.OnClickListener() {
@@ -104,6 +111,17 @@ public class MyDistrubutorNewActivity extends BaseActivity implements OnItemClic
                         }
                     });
                 }
+                final String tel=item.getMobile();
+                helper.setOnClickListener(R.id.tv_name, new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        if (!AppUtils.isEmpty(tel) && CommonUtil.isMobileNO(tel)) {
+                            setPhone(tel);
+                        } else {
+                            MyToast.show(MyDistrubutorNewActivity.this, "该用户没有电话");
+                        }
+                    }
+                });
                 ListView lv_distru_02=helper.getView(R.id.lv_distributor_02);
                 List<DistribuBean> distribuBeans02=item.getParent();
                 if(distribuBeans02!=null&&distribuBeans02.size()>0){
@@ -117,7 +135,7 @@ public class MyDistrubutorNewActivity extends BaseActivity implements OnItemClic
                             helper.setText(R.id.tv_name,"  ├"+name);
                             helper.setText(R.id.tv_level,getLevel(Integer.parseInt(item.getLevel()))+"");
                             helper.setText(R.id.tv_date, DateUtils.getStrTime02(item.getJoined_at()));
-                            if (mUserLevel < 2) {
+                            if (mUserLevel < 2||mUserLevel==5) {
 //                    String joinedAt1 = "修改";
 //                    tv.setText(joinedAt1);
                                 helper.getView(R.id.tv_edit).setOnClickListener(new View.OnClickListener() {
@@ -129,7 +147,16 @@ public class MyDistrubutorNewActivity extends BaseActivity implements OnItemClic
                                     }
                                 });
                             }
-
+                            helper.setOnClickListener(R.id.tv_name, new View.OnClickListener() {
+                                @Override
+                                public void onClick(View view) {
+                                    if (!AppUtils.isEmpty(tel) && CommonUtil.isMobileNO(tel)) {
+                                        setPhone(tel);
+                                    } else {
+                                        MyToast.show(MyDistrubutorNewActivity.this, "该用户没有电话");
+                                    }
+                                }
+                            });
                             ListView lv_distru_03=helper.getView(R.id.lv_distributor_02);
                             List<DistribuBean> distribuBeans03=item.getParent();
                             if(distribuBeans03!=null&&distribuBeans03.size()>0){
@@ -143,7 +170,7 @@ public class MyDistrubutorNewActivity extends BaseActivity implements OnItemClic
                                         helper.setText(R.id.tv_name,"     ├"+name);
                                         helper.setText(R.id.tv_level,getLevel(Integer.parseInt(item.getLevel()))+"");
                                         helper.setText(R.id.tv_date, DateUtils.getStrTime02(item.getJoined_at()));
-                                        if (mUserLevel < 2) {
+                                        if (mUserLevel < 2||mUserLevel==5) {
 //                    String joinedAt1 = "修改";
 //                    tv.setText(joinedAt1);
                                             helper.getView(R.id.tv_edit).setOnClickListener(new View.OnClickListener() {
@@ -155,6 +182,16 @@ public class MyDistrubutorNewActivity extends BaseActivity implements OnItemClic
                                                 }
                                             });
                                         }
+                                        helper.setOnClickListener(R.id.tv_name, new View.OnClickListener() {
+                                            @Override
+                                            public void onClick(View view) {
+                                                if (!AppUtils.isEmpty(tel) && CommonUtil.isMobileNO(tel)) {
+                                                    setPhone(tel);
+                                                } else {
+                                                    MyToast.show(MyDistrubutorNewActivity.this, "该用户没有电话");
+                                                }
+                                            }
+                                        });
                                     }
                                 };
                                 lv_distru_03.setAdapter(adapter03);
@@ -179,6 +216,7 @@ public class MyDistrubutorNewActivity extends BaseActivity implements OnItemClic
                 hideLoading();
                 List<DistribuBean>temp=new Gson().fromJson(ans.getJSONArray(Constance.data).toString(),new TypeToken<List<DistribuBean>>(){}.getType());
                 if(temp!=null&&temp.size()>0){
+                    LogUtils.logE("page",page+"");
                     if(page==1){
                         distribuBeans=temp;
                     }else {
@@ -199,10 +237,38 @@ public class MyDistrubutorNewActivity extends BaseActivity implements OnItemClic
         });
     }
 
+    private void setPhone(final String phoneNumber) {
+        ActivityCompat.requestPermissions(this,
+                new String[]{"android.permission.CALL_PHONE"},
+                1);
+        ShowDialog mDialog = new ShowDialog();
+        mDialog.show(this, "提示", "是否打电话给" + phoneNumber + "?", new ShowDialog.OnBottomClickListener() {
+            @Override
+            public void positive() {
+                PackageManager packageManager = getPackageManager();
+                int permission = packageManager.checkPermission("android.permission.CALL_PHONE", "bc.juhao.com");
+                if (PackageManager.PERMISSION_GRANTED != permission) {
+                    return;
+                } else {
+                    Intent intent = new Intent();
+                    intent.setAction(Intent.ACTION_CALL);
+                    intent.setData(Uri.parse("tel:" + phoneNumber));
+                    startActivity(intent);
+                }
+            }
+
+            @Override
+            public void negtive() {
+
+            }
+        });
+
+    }
     private void getLevel() {
 
         switch (mUserLevel) {
             case 0:
+            case 5:
                 mLevels = new String[]{"二级", "三级", "消费者"};
                 break;
             case 1:

@@ -240,7 +240,7 @@ public class MineController extends BaseController implements INetworkCallBack {
                 mView.user_money_ll.setVisibility(View.VISIBLE);
                 mView.distributor_ll.setVisibility(View.VISIBLE);
                 mView.view_empty.setVisibility(View.GONE);
-                if (level == 0) {
+                if (level == 0||level==5) {
                     levelValue = "一级";
                 } else if (level == 1) {
                     levelValue = "二级";

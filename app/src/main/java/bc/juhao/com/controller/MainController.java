@@ -128,6 +128,7 @@ public class MainController extends BaseController implements INetworkCallBack {
                             public void run() {
                                 final Dialog dialog = new Dialog(mView, R.style.customDialog);
                                 dialog.setContentView(R.layout.dialog_update);
+                                dialog.setCancelable(false);
                                 TextView tv_info= (TextView) dialog.findViewById(R.id.tv_update_info);
                                 Button btn_upgrate= (Button) dialog.findViewById(R.id.btn_upgrate);
                                 ImageView iv_close= (ImageView) dialog.findViewById(R.id.iv_close);
@@ -159,7 +160,7 @@ public class MainController extends BaseController implements INetworkCallBack {
                                 iv_close.setOnClickListener(new View.OnClickListener() {
                                     @Override
                                     public void onClick(View v) {
-                                        dialog.dismiss();
+//                                        dialog.dismiss();
                                     }
                                 });
 

@@ -68,7 +68,7 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
         isToken();
         if(AppUtils.isEmpty( DemoApplication.mUserObject)) return;
         int level= DemoApplication.mUserObject.getInt(Constance.level);
-        if(level>2){
+        if(level>2&&level!=5){
             mine03_lv.setVisibility(View.GONE);
             distributor_ll.setVisibility(View.GONE);
             view_empty.setVisibility(View.VISIBLE);

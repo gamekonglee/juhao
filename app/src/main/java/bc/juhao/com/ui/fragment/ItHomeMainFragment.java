@@ -126,7 +126,11 @@ public class ItHomeMainFragment extends BaseFragment implements View.OnClickList
     protected void initViewData() {
 
     }
-
+    @Nullable
+    @Override
+    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        return inflater.inflate(R.layout.frag_it_main_home_new,null);
+    }
     @Override
     protected void initView() {
         tabs = getView().findViewById(R.id.tabs);
@@ -226,11 +230,7 @@ public class ItHomeMainFragment extends BaseFragment implements View.OnClickList
         titles = new String[]{"所有设备","客厅"};
     }
     private Bundle mBundle = new Bundle();
-    @Nullable
-    @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.frag_it_main_home_new,null);
-    }
+
 
     @Override
     public void onClick(View v) {
