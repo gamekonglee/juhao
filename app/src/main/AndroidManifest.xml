@@ -4,20 +4,20 @@
     package="bc.juhao.com">
 
     <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
-    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
-    <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
-    <uses-permission android:name="android.permission.READ_SETTINGS"/>
-    <uses-permission android:name="android.permission.WRITE_SETTINGS"/>
-    <uses-permission android:name="android.permission.INTERNET"/>
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
-    <uses-permission android:name="android.permission.GET_TASKS"/>
-    <uses-permission android:name="android.permission.BLUETOOTH"/>
-    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN"/>
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
-    <uses-permission android:name="android.permission.CHANGE_WIFI_MULTICAST_STATE"/>
-    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.READ_SETTINGS" />
+    <uses-permission android:name="android.permission.WRITE_SETTINGS" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.GET_TASKS" />
+    <uses-permission android:name="android.permission.BLUETOOTH" />
+    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.CHANGE_WIFI_MULTICAST_STATE" />
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
     <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE" />
     <uses-permission android:name="android.permission.RECEIVE_USER_PRESENT" />
     <uses-permission android:name="android.permission.INTERNET" />
@@ -59,28 +59,17 @@
     <uses-permission android:name="android.permission.READ_LOGS" />
     <uses-permission android:name="android.permission.VIBRATE" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
-    <uses-permission android:name="android.permission.WRITE_SETTINGS" />
-
-    <!-- 百度地图的服务 -->
+    <uses-permission android:name="android.permission.WRITE_SETTINGS" /> <!-- 百度地图的服务 -->
     <!-- 这个权限用于进行网络定位 -->
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
-    <!-- 这个权限用于访问GPS定位 -->
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-    <!-- 用于访问wifi网络信息，wifi信息会用于进行网络定位 -->
-    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
-    <!-- 获取运营商信息，用于支持提供运营商信息相关的接口 -->
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    <!-- 这个权限用于获取wifi的获取权限，wifi信息会用来进行网络定位 -->
-    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
-    <!-- 用于读取手机当前的状态 -->
-    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
-    <!-- 写入扩展存储，向扩展卡写入数据，用于写入离线定位数据 -->
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-    <!-- 访问网络，网络定位需要上网 -->
-    <uses-permission android:name="android.permission.INTERNET" />
-    <!-- SD卡读取权限，用户写入离线定位数据 -->
-    <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS" />
-    <!-- 必选 -->
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" /> <!-- 这个权限用于访问GPS定位 -->
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" /> <!-- 用于访问wifi网络信息，wifi信息会用于进行网络定位 -->
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" /> <!-- 获取运营商信息，用于支持提供运营商信息相关的接口 -->
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" /> <!-- 这个权限用于获取wifi的获取权限，wifi信息会用来进行网络定位 -->
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" /> <!-- 用于读取手机当前的状态 -->
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" /> <!-- 写入扩展存储，向扩展卡写入数据，用于写入离线定位数据 -->
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" /> <!-- 访问网络，网络定位需要上网 -->
+    <uses-permission android:name="android.permission.INTERNET" /> <!-- SD卡读取权限，用户写入离线定位数据 -->
+    <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS" /> <!-- 必选 -->
     <!-- 短信 -->
     <uses-permission android:name="android.permission.READ_CONTACTS" />
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
@@ -92,8 +81,7 @@
     <uses-permission android:name="android.permission.READ_SMS" />
     <uses-permission android:name="android.permission.GET_TASKS" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-    <uses-permission android:name="android.permission.CHANGE_CONFIGURATION"/>
-    <!-- huanxin -->
+    <uses-permission android:name="android.permission.CHANGE_CONFIGURATION" /> <!-- huanxin -->
     <uses-permission android:name="android.permission.VIBRATE" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.RECORD_AUDIO" />
@@ -115,11 +103,10 @@
     <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />
     <uses-permission android:name="com.hyphenate.chatuidemo.permission.C2D_MESSAGE" />
     <uses-permission android:name="com.hyphenate.chatuidemo.permission.MIPUSH_RECEIVE" />
+
     <permission
         android:name="bc.juhao.com.permission.JPUSH_MESSAGE"
-        android:protectionLevel="signature" />
-
-    <!-- Required  一些系统要求的权限，如访问网络等 -->
+        android:protectionLevel="signature" /> <!-- Required  一些系统要求的权限，如访问网络等 -->
     <uses-permission android:name="bc.juhao.com.permission.JPUSH_MESSAGE" />
 
     <application
@@ -127,62 +114,68 @@
         android:allowBackup="false"
         android:icon="@mipmap/app_icon"
         android:label="@string/app_name_jh"
+        android:networkSecurityConfig="@xml/network_security_config"
         android:roundIcon="@mipmap/app_icon"
         android:theme="@style/MyTransAppTheme"
-        android:networkSecurityConfig="@xml/network_security_config"
         tools:replace="android:allowBackup,android:label,android:icon,android:roundIcon,android:theme">
-        <uses-library android:name="org.apache.http.legacy" android:required="false"/>
-        <!-- 启动页.begin -->
+        <activity android:name=".ui.activity.WebViewTestActivity">
+            <!--<intent-filter>-->
+                <!--<action android:name="android.intent.action.MAIN" />-->
+
+                <!--<category android:name="android.intent.category.LAUNCHER" />-->
+            <!--</intent-filter>-->
+        </activity>
+
+        <uses-library
+            android:name="org.apache.http.legacy"
+            android:required="false" /> <!-- 启动页.begin -->
         <activity
             android:name="com.aliyun.iot.ilop.demo.page.main.StartActivity"
             android:theme="@style/AppStartTheme">
-            <!--<intent-filter>-->
-            <!--<action android:name="android.intent.action.MAIN" />-->
-            <!--<category android:name="android.intent.category.LAUNCHER" />-->
-            <!--</intent-filter>-->
-        </activity>
-        <!-- 启动页.end -->
+
+        </activity> <!-- 启动页.end -->
         <meta-data
             android:name="Mob-AppKey"
-            tools:replace="android:value"
-            android:value="24f403caea1a8" />
+            android:value="24f403caea1a8"
+            tools:replace="android:value" />
         <meta-data
             android:name="Mob-AppSecret"
-            tools:replace="android:value"
-            android:value="ef6e0fecf383f5ea7d896da2b8501321" />
+            android:value="ef6e0fecf383f5ea7d896da2b8501321"
+            tools:replace="android:value" />
 
         <activity
-            android:name="bc.juhao.com.ui.activity.SplashActivity"
+            android:name=".ui.activity.SplashActivity"
             android:icon="@mipmap/app_icon">
             <intent-filter>
-        <action android:name="android.intent.action.MAIN" />
-        <category android:name="android.intent.category.LAUNCHER" />
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-
         </activity>
-    <activity android:name=".ui.activity.TestActivty">
-        <!--<intent-filter>-->
-            <!--<category android:name="android.intent.category.LAUNCHER" />-->
-            <!--<action android:name="android.intent.action.MAIN" />-->
-        <!--</intent-filter>-->
-    </activity>
-<meta-data
-    android:name="com.baidu.lbsapi.API_KEY"
-    tools:replace="android:value"
-    android:value="7w64NP6qKjoY1pSDpEgoUfFgfdmiHGl6" />
+        <activity android:name=".ui.activity.TestActivty">
 
-<service
-    android:name="com.baidu.location.f"
-    android:enabled="true"
-    android:process=":remote" />
+            <!-- <intent-filter> -->
+            <!-- <category android:name="android.intent.category.LAUNCHER" /> -->
+            <!-- <action android:name="android.intent.action.MAIN" /> -->
+            <!-- </intent-filter> -->
+        </activity>
 
-<activity
-    android:name=".ui.activity.MainActivity"
-    android:launchMode="singleTask"
-    android:screenOrientation="portrait"
-    android:theme="@style/TranslucentTheme" />
-        <activity android:name="com.aliyun.iot.ilop.demo.page.main.IndexActivity"/>
-<!-- <activity -->
+        <meta-data
+            android:name="com.baidu.lbsapi.API_KEY"
+            android:value="7w64NP6qKjoY1pSDpEgoUfFgfdmiHGl6"
+            tools:replace="android:value" />
+
+        <service
+            android:name="com.baidu.location.f"
+            android:enabled="true"
+            android:process=":remote" />
+
+        <activity
+            android:name=".ui.activity.MainActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"
+            android:theme="@style/TranslucentTheme" />
+        <activity android:name="com.aliyun.iot.ilop.demo.page.main.IndexActivity" /> <!-- <activity -->
         <!-- android:name=".ui.activity.TestDiyActivity" -->
         <!-- android:screenOrientation="portrait" -->
         <!-- android:theme="@style/NoTitleTheme"/> -->
@@ -307,8 +300,8 @@
             android:theme="@style/NoTitleTheme" />
         <activity
             android:name=".ui.activity.user.Regiest01Activity"
-            android:screenOrientation="portrait"
             android:launchMode="singleTop"
+            android:screenOrientation="portrait"
             android:theme="@style/NoTitleTheme" />
         <activity
             android:name=".ui.activity.user.UserDataActivity"
@@ -330,8 +323,7 @@
             android:name=".ui.activity.product.SelectGoodsActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
-            android:theme="@style/NoTitleTheme" />
-        <!-- <activity -->
+            android:theme="@style/NoTitleTheme" /> <!-- <activity -->
         <!-- android:name=".ui.activity.LeadPageActivity" -->
         <!-- android:screenOrientation="portrait" -->
         <!-- android:theme="@style/NoTitleTheme"/> -->
@@ -440,16 +432,12 @@
 
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
-        </activity>
-
-        <!-- &lt;!&ndash; 微信分享回调 &ndash;&gt; -->
+        </activity> <!-- &lt;!&ndash; 微信分享回调 &ndash;&gt; -->
         <!-- <activity -->
         <!-- android:name="cn.sharesdk.demo.wxapi.WXEntryActivity" -->
         <!-- android:configChanges="keyboardHidden|orientation|screenSize" -->
         <!-- android:exported="true" -->
         <!-- android:theme="@android:style/Theme.Translucent.NoTitleBar" /> -->
-
-
         <!-- 极光推送 -->
         <activity
             android:name="com.tencent.tauth.AuthActivity"
@@ -467,14 +455,11 @@
         <activity
             android:name="com.tencent.connect.common.AssistActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
-            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
-        <!-- Rich push 核心功能 since 2.0.6 -->
+            android:theme="@android:style/Theme.Translucent.NoTitleBar" /> <!-- Rich push 核心功能 since 2.0.6 -->
         <activity
             android:name="cn.jpush.android.ui.PopWinActivity"
             android:exported="false"
-            android:theme="@style/MyDialogStyle" />
-
-        <!-- Required SDK核心功能 -->
+            android:theme="@style/MyDialogStyle" /> <!-- Required SDK核心功能 -->
         <activity
             android:name="cn.jpush.android.ui.PushActivity"
             android:configChanges="orientation|keyboardHidden"
@@ -486,17 +471,15 @@
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="bc.juhao.com" />
             </intent-filter>
-        </activity>
-        <!-- Required  SDK核心功能 -->
+        </activity> <!-- Required  SDK核心功能 -->
         <service
             android:name="cn.jpush.android.service.DownloadService"
             android:enabled="true"
             android:exported="false" />
         <service
             android:name=".service.UpdateApkService"
-            android:enabled="true" />
-        <!--Required SDK 核心功能-->
-        <!--可配置android:process参数将PushService放在其他进程中-->
+            android:enabled="true" /> <!-- Required SDK 核心功能 -->
+        <!-- 可配置android:process参数将PushService放在其他进程中 -->
         <service
             android:name="cn.jpush.android.service.PushService"
             android:process=":multiprocess"
@@ -507,16 +490,10 @@
                 <action android:name="cn.jpush.android.intent.PushService" />
                 <action android:name="cn.jpush.android.intent.PUSH_TIME" />
             </intent-filter>
-        </service>
-
-        <!-- <service android:name="cn.jpush.android.service.PushService" -->
+        </service> <!-- <service android:name="cn.jpush.android.service.PushService" -->
         <!-- android:process=":multiprocess" -->
         <!-- tools:node="replace" > -->
-
-
         <!-- </service> -->
-
-
         <!-- since 1.8.0 option 可选项。用于同一设备中不同应用的JPush服务相互拉起的功能。 -->
         <!-- 若不启用该功能可删除该组件，将不拉起其他应用也不能被其他应用拉起 -->
         <service
@@ -528,9 +505,7 @@
 
                 <category android:name="bc.juhao.com" />
             </intent-filter>
-        </service>
-
-        <!-- Required SDK核心功能 -->
+        </service> <!-- Required SDK核心功能 -->
         <receiver
             android:name="cn.jpush.android.service.PushReceiver"
             android:enabled="true">
@@ -549,14 +524,10 @@
 
                 <data android:scheme="package" />
             </intent-filter>
-        </receiver>
-
-        <!-- Required SDK核心功能 -->
+        </receiver> <!-- Required SDK核心功能 -->
         <receiver
             android:name="cn.jpush.android.service.AlarmReceiver"
-            android:exported="false" />
-
-        <!-- User defined.  For test only  用户自定义的广播接收器 -->
+            android:exported="false" /> <!-- User defined.  For test only  用户自定义的广播接收器 -->
         <receiver
             android:name=".service.MyReceiver"
             android:enabled="true"
@@ -569,19 +540,15 @@
                 <action android:name="cn.jpush.android.intent.CONNECTION" /> <!-- 接收网络变化 连接/断开 since 1.6.3 -->
                 <category android:name="bc.juhao.com" />
             </intent-filter>
-        </receiver>
-
-        <!-- Required  . Enable it you can get statistics data with channel -->
+        </receiver> <!-- Required  . Enable it you can get statistics data with channel -->
         <meta-data
             android:name="JPUSH_CHANNEL"
-            tools:replace="android:value"
-            android:value="developer-default" />
+            android:value="developer-default"
+            tools:replace="android:value" />
         <meta-data
             android:name="JPUSH_APPKEY"
-            tools:replace="android:value"
-            android:value="877c020ca79dc012cbc5c400" /> <!-- </>值来自开发者平台取得的AppKey -->
-
-
+            android:value="877c020ca79dc012cbc5c400"
+            tools:replace="android:value" /> <!-- </>值来自开发者平台取得的AppKey -->
         <!-- ////////////////////////////////////////////////////////////////// -->
         <!-- 设置环信应用的AppKey -->
         <!-- <meta-data android:name="EASEMOB_APPKEY"  android:value="Your AppKey" /> -->
@@ -608,17 +575,15 @@
         <!-- 设置环信应用的AppKey -->
         <meta-data
             android:name="EASEMOB_APPKEY"
-            tools:replace="android:value"
-            android:value="1138161205115609#jhsc" />
-        <!-- 声明SDK所需的service SDK核心功能 -->
+            android:value="1138161205115609#jhsc"
+            tools:replace="android:value" /> <!-- 声明SDK所需的service SDK核心功能 -->
         <service
             android:name="com.hyphenate.chat.EMChatService"
             android:exported="true" />
         <service
             android:name="com.hyphenate.chat.EMJobService"
             android:exported="true"
-            android:permission="android.permission.BIND_JOB_SERVICE" />
-        <!-- 声明SDK所需的receiver -->
+            android:permission="android.permission.BIND_JOB_SERVICE" /> <!-- 声明SDK所需的receiver -->
         <receiver android:name="com.hyphenate.chat.EMMonitorReceiver">
             <intent-filter>
                 <action android:name="android.intent.action.PACKAGE_REMOVED" />
@@ -630,21 +595,16 @@
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
                 <action android:name="android.intent.action.USER_PRESENT" />
             </intent-filter>
-        </receiver>
-
-        <!-- &lt;!&ndash; 地图 &ndash;&gt; -->
+        </receiver> <!-- &lt;!&ndash; 地图 &ndash;&gt; -->
         <!-- <activity -->
         <!-- android:name="com.hyphenate.easeui.ui.EaseBaiduMapActivity" -->
         <!-- android:screenOrientation="portrait" -->
         <!-- android:theme="@style/horizontal_slide"></activity> -->
-
-
         <!-- 显示下载大图页面 -->
         <activity
             android:name="com.hyphenate.easeui.ui.EaseShowBigImageActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/horizontal_slide" />
-        <!-- 下载文件 -->
+            android:theme="@style/horizontal_slide" /> <!-- 下载文件 -->
         <activity
             android:name="com.hyphenate.easeui.ui.EaseShowNormalFileActivity"
             android:screenOrientation="portrait"
@@ -653,8 +613,7 @@
             android:name="com.hyphenate.easeui.ui.EaseShowVideoActivity"
             android:screenOrientation="portrait"
             android:theme="@style/horizontal_slide"
-            android:windowSoftInputMode="stateAlwaysHidden" />
-        <!-- gcm start -->
+            android:windowSoftInputMode="stateAlwaysHidden" /> <!-- gcm start -->
         <receiver
             android:name="com.hyphenate.chat.EMGCMBroadcastReceiver"
             android:exported="true"
@@ -701,22 +660,21 @@
 
             <!-- 元数据 -->
             <meta-data
-                tools:replace="android:value"
-                android:value=""
                 android:name="android.support.FILE_PROVIDER_PATHS"
-                android:resource="@xml/file_paths" />
+                android:resource="@xml/file_paths"
+                android:value=""
+                tools:replace="android:value" />
         </provider>
 
         <meta-data
             android:name="PGYER_APPID"
-            tools:replace="android:value"
-            android:value="b7a97eee2a6ed63dc83f361efb1f829d" />
+            android:value="b7a97eee2a6ed63dc83f361efb1f829d"
+            tools:replace="android:value" />
 
         <activity android:name=".ui.activity.CallSelectActivity" />
         <activity android:name=".ui.activity.SearchActivity" />
         <activity android:name=".ui.activity.user.TixianGzActivity" />
-        <activity android:name=".ui.activity.blance.UserExtractProfitActivity" />
-        <!--//图片选择Activity-->
+        <activity android:name=".ui.activity.blance.UserExtractProfitActivity" /> <!-- //图片选择Activity -->
         <!-- //去掉Activity的ActionBar。 -->
         <!-- //使用者可以根据自己的项目去配置，不一定要这样写，只要不Activity的ActionBar去掉就可以了。 -->
         <!-- //横竖屏切换处理。 -->
@@ -724,13 +682,11 @@
         <activity
             android:name="com.donkingliang.imageselector.ImageSelectorActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
-        <!--//图片预览Activity-->
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar" /> <!-- //图片预览Activity -->
         <activity
             android:name="com.donkingliang.imageselector.PreviewActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
-        <!--//图片剪切Activity-->
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar" /> <!-- //图片剪切Activity -->
         <activity
             android:name="com.donkingliang.imageselector.ClipImageActivity"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
@@ -754,37 +710,36 @@
                 <action android:name="com.tencent.mm.plugin.openapi.Intent.ACTION_REFRESH_WXAPP" />
             </intent-filter>
         </receiver>
+
         <activity android:name=".ui.activity.NewsDetailActivity" />
         <activity android:name=".ui.activity.user.ZujiActivity" />
         <activity
             android:name=".ui.activity.BrandPlayActivity"
             android:screenOrientation="landscape"
             android:theme="@style/NoTitleTheme" />
-        <activity android:name=".ui.activity.BussinessApplyActivity"></activity>
-        <activity android:name=".ui.activity.user.VideoShotActivity"/>
-        <activity android:name=".ui.activity.user.SuccessVideoActivity"/>
-        <activity android:name=".ui.activity.VideoPlayerActivity"/>
-        <activity android:name=".ui.activity.TaoCanHomeListActivity"/>
-        <activity android:name=".ui.activity.WebViewActivity"
-            android:screenOrientation="portrait"
-            >
-        </activity>
+        <activity android:name=".ui.activity.BussinessApplyActivity" />
+        <activity android:name=".ui.activity.user.VideoShotActivity" />
+        <activity android:name=".ui.activity.user.SuccessVideoActivity" />
+        <activity android:name=".ui.activity.VideoPlayerActivity" />
+        <activity android:name=".ui.activity.TaoCanHomeListActivity" />
+        <activity
+            android:name=".ui.activity.WebViewActivity"
+            android:screenOrientation="portrait"></activity>
         <activity android:name=".ui.activity.intelligence.MainIntelligenceActivity">
-            <!--<intent-filter>-->
-            <!--<action android:name="android.intent.action.MAIN" />-->
 
-            <!--<category android:name="android.intent.category.LAUNCHER" />-->
-            <!--</intent-filter>-->
+            <!-- <intent-filter> -->
+            <!-- <action android:name="android.intent.action.MAIN" /> -->
+
+
+            <!-- <category android:name="android.intent.category.LAUNCHER" /> -->
+            <!-- </intent-filter> -->
         </activity>
-        <activity android:name=".ui.activity.intelligence.ItDeviceAddActivity"/>
-
-        <!-- 首页.begin -->
+        <activity android:name=".ui.activity.intelligence.ItDeviceAddActivity" /> <!-- 首页.begin -->
         <activity
             android:name="com.aliyun.iot.ilop.demo.page.main.MainActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait">
             <intent-filter>
-
                 <action android:name="com.aliyun.iot.aep.demo.action.navigation" />
 
                 <category android:name="android.intent.category.DEFAULT" />
@@ -795,30 +750,27 @@
                     android:host="aliyun.iot.aep.demo"
                     android:path="/page/main" />
             </intent-filter>
-        </activity>
-        <!-- 首页.end -->
-
-
+        </activity> <!-- 首页.end -->
         <!-- Ilop首页.begin -->
         <activity
             android:name="com.aliyun.iot.ilop.demo.page.ilopmain.MainActivity"
             android:launchMode="singleTop"
             android:screenOrientation="portrait">
             <intent-filter>
-                <!--<action android:name="android.intent.action.MAIN" />-->
-                <!--<category android:name="android.intent.category.LAUNCHER" />-->
+
+                <!-- <action android:name="android.intent.action.MAIN" /> -->
+                <!-- <category android:name="android.intent.category.LAUNCHER" /> -->
                 <action android:name="com.aliyun.iot.aep.demo.action.navigation" />
+
                 <category android:name="android.intent.category.DEFAULT" />
+
                 <data android:scheme="http" />
                 <data android:scheme="https" />
                 <data
                     android:host="aliyun.iot.aep.demo"
                     android:path="/page/ilopmain" />
             </intent-filter>
-        </activity>
-        <!-- Ilop首页.end -->
-
-
+        </activity> <!-- Ilop首页.end -->
         <!-- Ilop添加设备.begin -->
         <activity
             android:name="com.aliyun.iot.ilop.demo.page.ilopmain.AddDeviceActivity"
@@ -834,9 +786,7 @@
                     android:host="aliyun.iot.aep.demo"
                     android:path="/page/ilopadddevice" />
             </intent-filter>
-        </activity>
-        <!-- Ilop添加设备.end -->
-
+        </activity> <!-- Ilop添加设备.end -->
         <!-- Ilop绑定设备.begin -->
         <activity
             android:name="com.aliyun.iot.ilop.demo.page.ilopmain.BindAndUseActivity"
@@ -853,9 +803,7 @@
                     android:host="aliyun.iot.aep.demo"
                     android:path="/page/ilopbinddevice" />
             </intent-filter>
-        </activity>
-        <!-- Ilop绑定设备.end -->
-
+        </activity> <!-- Ilop绑定设备.end -->
         <!-- 关于.begin -->
         <activity
             android:name="com.aliyun.iot.ilop.demo.page.about.AboutActivity"
@@ -876,9 +824,7 @@
         <activity
             android:name="com.aliyun.iot.ilop.demo.page.about.CopyrightActivity"
             android:exported="false"
-            android:screenOrientation="portrait" />
-        <!-- 关于.end -->
-
+            android:screenOrientation="portrait" /> <!-- 关于.end -->
         <!-- 登录.begin -->
         <activity
             android:name="com.aliyun.iot.ilop.demo.page.account.AccountActivity"
@@ -895,9 +841,7 @@
                     android:host="aliyun.iot.aep.demo"
                     android:path="/page/login" />
             </intent-filter>
-        </activity>
-        <!-- 登录.end -->
-
+        </activity> <!-- 登录.end -->
         <!-- API client.begin -->
         <activity
             android:name="com.aliyun.iot.ilop.demo.page.apiclient.APIClientDemoActivity"
@@ -921,10 +865,7 @@
             android:name="com.aliyun.iot.ilop.demo.page.apiclient.APIClientDemoResultActivity"
             android:exported="false"
             android:label="@string/api_client_demo_result_title"
-            android:screenOrientation="portrait" />
-        <!-- API client.end -->
-
-
+            android:screenOrientation="portrait" /> <!-- API client.end -->
         <!-- connect channel.begin -->
         <activity
             android:name="com.aliyun.iot.ilop.demo.page.channel.ChannelActivity"
@@ -941,9 +882,7 @@
                     android:host="aliyun.iot.aep.demo"
                     android:path="/page/channel" />
             </intent-filter>
-        </activity>
-        <!-- connect channel.end -->
-
+        </activity> <!-- connect channel.end -->
         <activity
             android:name="com.aliyun.iot.ilop.demo.page.alog.ALogActivity"
             android:exported="false"
@@ -961,14 +900,11 @@
                     android:host="aliyun.iot.aep.demo"
                     android:path="/page/alog" />
             </intent-filter>
-        </activity>
-
-        <!-- 自定义OA登录页面 -->
-        <!--<activity-->
-            <!--android:name="com.aliyun.iot.ilop.demo.base.delegate.OALoginActivity"-->
-            <!--android:configChanges="orientation|screenSize|keyboardHidden"-->
-            <!--android:theme="@style/Login" />-->
-
+        </activity> <!-- 自定义OA登录页面 -->
+        <!-- <activity -->
+        <!-- android:name="com.aliyun.iot.ilop.demo.base.delegate.OALoginActivity" -->
+        <!-- android:configChanges="orientation|screenSize|keyboardHidden" -->
+        <!-- android:theme="@style/Login" /> -->
         <activity android:name="com.aliyun.iot.ilop.demo.page.login3rd.Login3rdActivity" />
 
         <receiver
@@ -985,29 +921,26 @@
             </intent-filter>
         </receiver>
 
-
-
-        <activity android:name=".ui.activity.MatchWifiActivity">
-
-        </activity>
-        <activity android:name=".ui.activity.intelligence.DevicesControlActivity"/>
-        <activity android:name=".ui.activity.intelligence.CountDownAddActivity"/>
-        <activity android:name=".ui.activity.intelligence.RepeatSettingActivity"/>
-        <activity android:name=".ui.activity.intelligence.CountDownListActivity"/>
-        <activity android:name="com.example.qrcode.ScannerActivity"/>
-        <activity android:name="com.example.qrcode.ShowResultActivity"/>
-
+        <activity android:name=".ui.activity.MatchWifiActivity"></activity>
+        <activity android:name=".ui.activity.intelligence.DevicesControlActivity" />
+        <activity android:name=".ui.activity.intelligence.CountDownAddActivity" />
+        <activity android:name=".ui.activity.intelligence.RepeatSettingActivity" />
+        <activity android:name=".ui.activity.intelligence.CountDownListActivity" />
+        <activity android:name="com.example.qrcode.ScannerActivity" />
+        <activity android:name="com.example.qrcode.ShowResultActivity" />
         <activity
             android:name="com.acker.simplezxing.activity.CaptureActivity"
             android:theme="@android:style/Theme.NoTitleBar"
             android:windowSoftInputMode="stateAlwaysHidden" />
-        <activity android:name=".ui.activity.user.ForgetPasswordActivity"/>
-        <activity android:name=".ui.activity.intelligence.AboutActivity"/>
-        <activity android:name=".ui.activity.intelligence.SettingActivity"/>
-        <activity android:name=".ui.activity.intelligence.NoticeActivity"/>
-        <activity android:name=".ui.activity.intelligence.DeviceShareActivity"/>
-        <activity android:name=".ui.activity.intelligence.DeviceShareAddActivity"/>
-        <activity android:name=".ui.activity.intelligence.DeviceShareAddUserActivity"/>
+        <activity android:name=".ui.activity.user.ForgetPasswordActivity" />
+        <activity android:name=".ui.activity.intelligence.AboutActivity" />
+        <activity android:name=".ui.activity.intelligence.SettingActivity" />
+        <activity android:name=".ui.activity.intelligence.NoticeActivity" />
+        <activity android:name=".ui.activity.intelligence.DeviceShareActivity" />
+        <activity android:name=".ui.activity.intelligence.DeviceShareAddActivity" />
+        <activity android:name=".ui.activity.intelligence.DeviceShareAddUserActivity" />
+        <activity android:name=".ui.activity.FindHomeActivity" />
+        <activity android:name=".ui.activity.FindHomeListActivity" />
     </application>
 
 </manifest>

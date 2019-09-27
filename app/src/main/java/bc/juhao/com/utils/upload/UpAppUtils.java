@@ -105,7 +105,7 @@ public class UpAppUtils {
         //创建builder
         final AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
         builder.setTitle(updateMsg + newVersionName)             //标题
-                .setIcon(R.mipmap.ic_launcher)     //icon
+                .setIcon(R.mipmap.ic_launcher_juhao)     //icon
                 .setCancelable(false)           //不响应back按钮
                 .setMessage(newVersion.getDes())    //对话框显示内容
                 .setPositiveButton(R.string.UMUpdateNow, new DialogInterface.OnClickListener() { //设置按钮

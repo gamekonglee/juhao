@@ -61,7 +61,7 @@ public class ApiClient {
         map.put("order",order);
         String url= NetWorkConst.APK_URL;
         String token= MyShare.get(UIUtils.getContext()).getString(Constance.TOKEN);
-
+        if(TextUtils.isEmpty(token)){token="";}
         OkHttpUtils.post()
                 .url(url)
                 .addHeader("X-bocang-Authorization",token)
@@ -100,7 +100,7 @@ public class ApiClient {
         map.put("order",order);
         String url= NetWorkConst.ALIPAY_URL;
         String token= MyShare.get(UIUtils.getContext()).getString(Constance.TOKEN);
-
+        if(TextUtils.isEmpty(token)){token="";}
         OkHttpUtils.post()
                 .url(url)
                 .addHeader("X-bocang-Authorization",token)
@@ -141,6 +141,7 @@ public class ApiClient {
 //        Map<String ,String> map=new HashMap<>();
         String url= profile;
         String token= MyShare.get(UIUtils.getContext()).getString(Constance.TOKEN);
+        if(TextUtils.isEmpty(token)){token="";}
         OkHttpUtils.post()
                 .url(url)
                 .addHeader("X-bocang-Authorization",token)
@@ -521,6 +522,172 @@ public class ApiClient {
             }
         });
     }
+
+    public static void get3dScendList(int page, String s, String attr_id, final Callback<String> callback) {
+        String url= NetWorkConst.SCENELIST_3D_URL;
+        String token= MyShare.get(UIUtils.getContext()).getString(Constance.TOKEN);
+        if(TextUtils.isEmpty(token)){token="";}
+        OkHttpUtils.post()
+                .url(url)
+                .addHeader("X-bocang-Authorization",token)
+//                .addParams("order", order)
+                .addParams("page",page+"")
+//                .addParams("public",publicType)
+                .addParams("attr_id",attr_id)
+                .build()
+                .execute(new Callback() {
+                    @Override
+                    public Object parseNetworkResponse(Response response, int i1) throws Exception {
+                        String jsonRes=response.body().string();
+//                        LogUtils.logE("okhttp3:",jsonRes);
+
+//                        callback.onResponse(advertBeanList,i1);
+                        return jsonRes;
+                    }
+
+                    @Override
+                    public void onError(Call call, Exception e, int i) {
+                        callback.onError(call,e,i);
+                    }
+
+                    @Override
+                    public String onResponse(Object o, int i) {
+                        callback.onResponse((String) o,i);
+
+                        return null;
+                    }
+                });
+    }
+
+    public static void get3dSceneAttr(final Callback<String> callback) {
+        String url= NetWorkConst.SCENEATTR_3D_URL;
+        String token= MyShare.get(UIUtils.getContext()).getString(Constance.TOKEN);
+        if(TextUtils.isEmpty(token)){token="";}
+        OkHttpUtils.get()
+                .url(url)
+                .addHeader("X-bocang-Authorization",token)
+                .build()
+                .execute(new Callback() {
+                    @Override
+                    public Object parseNetworkResponse(Response response, int i1) throws Exception {
+                        String jsonRes=response.body().string();
+//                        LogUtils.logE("okhttp3:",jsonRes);
+
+//                        callback.onResponse(advertBeanList,i1);
+                        return jsonRes;
+                    }
+
+                    @Override
+                    public void onError(Call call, Exception e, int i) {
+                        callback.onError(call,e,i);
+                    }
+
+                    @Override
+                    public String onResponse(Object o, int i) {
+                        callback.onResponse((String) o,i);
+
+                        return null;
+                    }
+                });
+
+    }
+    public static Response getRegionSync(String s)  {
+
+        OkHttpClient okHttpClient=new OkHttpClient();
+        String url=NetWorkConst.GET_REGION+"?pid="+s;
+        Request request=new Request.Builder().get().url(url).build();
+        Call call=okHttpClient.newCall(request);
+        try {
+            return call.execute();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public static void getEstate(String mCity, String mZone, String estate, final EasyCallBack callback) {
+        String url= NetWorkConst.GET_ESTATE;
+        String token= MyShare.get(UIUtils.getContext()).getString(Constance.TOKEN);
+        if(TextUtils.isEmpty(token)){token="";}
+        OkHttpUtils.get()
+                .url(url)
+                .addHeader("X-bocang-Authorization",token)
+                .addParams("city",mCity)
+                .addParams("district",mZone)
+                .addParams("q",estate)
+                .build()
+                .execute(new Callback() {
+                    @Override
+                    public Object parseNetworkResponse(Response response, int i1) throws Exception {
+                        String jsonRes=response.body().string();
+//                        LogUtils.logE("okhttp3:",jsonRes);
+//                        callback.onResponse(advertBeanList,i1);
+                        return jsonRes;
+                    }
+
+                    @Override
+                    public void onError(Call call, Exception e, int i) {
+                        callback.onError(call,e,i);
+                    }
+
+                    @Override
+                    public String onResponse(Object o, int i) {
+                        callback.onResponse((String) o,i);
+
+                        return null;
+                    }
+                });
+    }
+
+    public static String getEstateType(String city, String area, String q, int page) {
+        OkHttpClient okHttpClient=new OkHttpClient();
+        String url=NetWorkConst.GET_ESTATE_TYPE+"?city="+city+"&district="+area+"&q="+q+"&page="+page;
+        Request request=new Request.Builder().get().url(url).build();
+        Call call=okHttpClient.newCall(request);
+        try {
+            return call.execute().body().string();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public static void submitLouPan(String mProvince, String mCityId, String mZoneId, String xiaoqu, String phone, final EasyCallBack callback) {
+        String url= NetWorkConst.SUBMIT_LOUPAN;
+        String token= MyShare.get(UIUtils.getContext()).getString(Constance.TOKEN);
+        if(TextUtils.isEmpty(token)){token="";}
+        OkHttpUtils.post()
+                .url(url)
+                .addHeader("X-bocang-Authorization",token)
+                .addParams("province",mProvince)
+                .addParams("city",mCityId)
+                .addParams("district",mZoneId)
+                .addParams("address",xiaoqu)
+                .addParams("phone",phone)
+                .build()
+                .execute(new Callback() {
+                    @Override
+                    public Object parseNetworkResponse(Response response, int i1) throws Exception {
+                        String jsonRes=response.body().string();
+//                        LogUtils.logE("okhttp3:",jsonRes);
+//                        callback.onResponse(advertBeanList,i1);
+                        return jsonRes;
+                    }
+
+                    @Override
+                    public void onError(Call call, Exception e, int i) {
+                        callback.onError(call,e,i);
+                    }
+
+                    @Override
+                    public String onResponse(Object o, int i) {
+                        callback.onResponse((String) o,i);
+
+                        return null;
+                    }
+                });
+    }
+
 //    public static void SendRequest(String url, final Callback callback){
 //        if(!hashkNewwork()){
 //            return;

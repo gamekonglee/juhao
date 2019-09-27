@@ -38,6 +38,7 @@ import bc.juhao.com.cons.Constance;
 import bc.juhao.com.controller.HomeController;
 import bc.juhao.com.listener.IScrollViewListener;
 import bc.juhao.com.ui.activity.ChartListActivity;
+import bc.juhao.com.ui.activity.FindHomeActivity;
 import bc.juhao.com.ui.activity.MainActivity;
 import bc.juhao.com.ui.activity.WebViewHomeActivity;
 import bc.juhao.com.ui.activity.product.SelectGoodsActivity;
@@ -104,6 +105,8 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener {
     public ImageView iv_chanpin;
     public ImageView iv_zhuanti;
     private boolean startMissionD;
+    private View iv_zwj;
+    private ImageView iv_ar;
 
     @Nullable
     @Override
@@ -335,6 +338,8 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener {
         iv_diangong = getView().findViewById(R.id.iv_diangong);
         iv_chanpin = getView().findViewById(R.id.iv_chanpin);
         iv_zhuanti=getView().findViewById(R.id.iv_zhuanti);
+        iv_zwj = getView().findViewById(R.id.iv_zwj);
+        iv_ar = getView().findViewById(R.id.iv_ar);
 
         iv_diaodeng.setOnClickListener(this);
         iv_xidingdeng.setOnClickListener(this);
@@ -342,6 +347,8 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener {
         iv_taideng.setOnClickListener(this);
         iv_luodideng.setOnClickListener(this);
         iv_diangong.setOnClickListener(this);
+        iv_zwj.setOnClickListener(this);
+        iv_ar.setOnClickListener(this);
         ll_jingxuan.removeAllViews();
         for(int i=0;i<3;i++){
             View view=View.inflate(getActivity(), R.layout.item_jingxuan,null);
@@ -601,7 +608,15 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener {
                 mIntent.putExtra(Constance.categories, "196");
                 startActivity(mIntent);
                 break;
-
+            case R.id.iv_zwj:
+                startActivity(new Intent(getActivity(), FindHomeActivity.class));
+                break;
+            case R.id.iv_ar:
+                DemoApplication.SCENE_TYPE=3;
+                mIntent=new Intent(getActivity(),DiyActivity.class);
+                mIntent.putExtra(Constance.is_find_home,true);
+                startActivity(mIntent);
+                break;
 
         }
         if (AppUtils.isEmpty(translateAnimation))

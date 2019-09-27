@@ -34,7 +34,7 @@
         android:drawablePadding="10dp"
         android:textSize="13sp"
         android:textColor="#999999"
-        android:drawableTop="@mipmap/ic_launcher"
+        android:drawableTop="@mipmap/ic_launcher_juhao"
         android:layout_gravity="center_horizontal"
         android:layout_margin="60dp"
         app:top_width="90dp"

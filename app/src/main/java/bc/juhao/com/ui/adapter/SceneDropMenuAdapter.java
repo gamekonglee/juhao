@@ -5,6 +5,7 @@ import android.view.Gravity;
 import android.view.View;
 import android.widget.FrameLayout;
 
+import com.aliyun.iot.ilop.demo.DemoApplication;
 import com.baiiu.filter.adapter.MenuAdapter;
 import com.baiiu.filter.adapter.SimpleTextAdapter;
 import com.baiiu.filter.interfaces.OnFilterDoneListener;
@@ -27,6 +28,7 @@ public class SceneDropMenuAdapter implements MenuAdapter {
     private OnFilterDoneListener onFilterDoneListener;
     private JSONArray sceneAllAttrs;
     private List<Integer> itemPosList;
+    private String name;
 
     public SceneDropMenuAdapter(Context context, JSONArray sceneAllAttrs, List<Integer> itemPosList, OnFilterDoneListener onFilterDoneListener) {
         this.mContext = context;
@@ -45,15 +47,19 @@ public class SceneDropMenuAdapter implements MenuAdapter {
         if (position < itemPosList.size()) {
             int itemPos = itemPosList.get(position);
             if (itemPos != 0) {
-                if(itemPos<itemPosList.size()){
-
-                return sceneAllAttrs.getJSONObject(position).getJSONArray(Constance.attrVal).getString(itemPos)
-                        ;
+                if(DemoApplication.SCENE_TYPE==3){
+                    return sceneAllAttrs.getJSONObject(position).getJSONArray(Constance.attr_list).getJSONObject(itemPos).getString(Constance.name);
+                }else {
+                    return sceneAllAttrs.getJSONObject(position).getJSONArray(Constance.attrVal).getString(itemPos);
                 }
-
             }
         }
-        String name=sceneAllAttrs.getJSONObject(position).getString(Constance.attr_name);
+        if(DemoApplication.SCENE_TYPE==3){
+            name=sceneAllAttrs.getJSONObject(position).getString(Constance.filter_attr_name);
+        }else {
+            name = sceneAllAttrs.getJSONObject(position).getString(Constance.attr_name);
+
+        }
         return name;
     }
 
@@ -97,10 +103,20 @@ public class SceneDropMenuAdapter implements MenuAdapter {
         List<String> list = new ArrayList<>();
 
         JSONObject goodsAllAttr = sceneAllAttrs.getJSONObject(position);
-        JSONArray attr_list = goodsAllAttr.getJSONArray(Constance.attrVal);
-        for (int i = 0; i < attr_list.length(); ++i) {
-            list.add(attr_list.getString(i));
+        JSONArray attr_list;
+        if(DemoApplication.SCENE_TYPE==3){
+            attr_list=goodsAllAttr.getJSONArray(Constance.attr_list);
+            for (int i = 0; i < attr_list.length(); ++i) {
+                list.add(attr_list.getJSONObject(i).getString(Constance.name));
+            }
+        }else {
+            attr_list = goodsAllAttr.getJSONArray(Constance.attrVal);
+            for (int i = 0; i < attr_list.length(); ++i) {
+                list.add(attr_list.getString(i));
+            }
         }
+
+
         int itemPos = 0;
         if (position < itemPosList.size())
             itemPos = itemPosList.get(position);

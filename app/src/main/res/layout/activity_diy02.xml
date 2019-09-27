@@ -17,7 +17,11 @@
             android:scaleType="fitXY"
             android:src="@drawable/diy_default"
             android:visibility="visible"/>
-
+        <com.tencent.smtt.sdk.WebView
+            android:id="@+id/web_diy"
+            android:visibility="gone"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
         <!--<bc.juhao.com.ui.view.designview.PicsGestureLayout-->
         <!--android:id="@+id/picsGestureLayout"-->
         <!--android:layout_width="fill_parent"-->

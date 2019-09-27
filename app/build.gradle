@@ -33,13 +33,13 @@ android {
             storeFile file('/Users/gamekonglee/Downloads/juhao_git/ilopjuhaoapp/juhao.jks')
             storePassword '123456'
         }
-        release{
+        release {
             keyAlias 'juhao'
             keyPassword '123456'
             storeFile file('/Users/gamekonglee/Downloads/juhao_git/ilopjuhaoapp/juhao.jks')
             storePassword '123456'
         }
-        debug{
+        debug {
             keyAlias 'juhao'
             keyPassword '123456'
             storeFile file('/Users/gamekonglee/Downloads/juhao_git/ilopjuhaoapp/juhao.jks')
@@ -95,20 +95,20 @@ android {
     sourceSets {
         main {
             jniLibs.srcDirs = ['libs']
-            jni.srcDirs=[]
+            jni.srcDirs = []
         }
     }
-    dexOptions{
+    dexOptions {
 //使用增量模式构建
 //        incremental true
 //最大堆内存
         javaMaxHeapSize "8g"
 //是否支持大工程模式
-        jumboMode=true
+        jumboMode = true
 //预编译
-        preDexLibraries=true
+        preDexLibraries = true
 //线程数
-        threadCount=8
+        threadCount = 8
     }
 }
 
@@ -167,9 +167,9 @@ dependencies {
     implementation 'com.android.support:appcompat-v7:26.1.0'
 
 
-    implementation ('com.aliyun.iot.ilop.page:scan:0.0.1'){
+    implementation('com.aliyun.iot.ilop.page:scan:0.0.1') {
         exclude group: 'org.jetbrains:annotations:13.0'
-        exclude module:'org.jetbrains:annotations'
+        exclude module: 'org.jetbrains:annotations'
         exclude group: 'annotations-13.0.jar'
         exclude module: 'annotations-13.0.jar'
         exclude group: 'org.jetbrains'
@@ -186,9 +186,6 @@ dependencies {
     implementation 'com.android.support:multidex:1.0.1'
 //    implementation 'com.android.support.constraint:constraint-layout:1.0.2'
 //    implementation fileTree(include: ['*.jar'], dir: 'libs')
-
-
-
 
 
 //    /* AEP自有SDK.begin */
@@ -254,7 +251,6 @@ dependencies {
 //    implementation 'com.aliyun.iot.aep.sdk:abus:0.0.1'
 
 
-
     implementation 'com.aliyun.iot.aep.sdk:account-oa:0.0.3.9'
     implementation 'com.aliyun.ams:alicloud-android-utdid:1.1.5.4'
     implementation 'com.aliyun.ams:alicloud-android-ut:5.1.0'
@@ -276,7 +272,7 @@ dependencies {
     implementation 'com.aliyun.alink.linksdk:breeze-ota:1.2.2'
     implementation 'com.aliyun.alink.linksdk:public-channel-gateway:1.6.1'
     implementation 'com.aliyun.alink.linksdk:ilop-devicecenter-ext-boneplugin:1.5.1'
-    implementation ('com.aliyun.alink.linksdk:ilop-devicecenter:1.6.1'){
+    implementation('com.aliyun.alink.linksdk:ilop-devicecenter:1.6.1') {
         transitive = true
     }
     implementation 'com.aliyun.alink.linksdk:public-tmp-ext-boneplugin:1.4.0.2'
@@ -294,11 +290,6 @@ dependencies {
     implementation 'com.google.android:flexbox:0.3.1'
     implementation 'com.taobao.external:eventbus:1.0.2'
     implementation 'com.aliyun.iot.aep.sdk:abus:0.0.1'
-
-
-
-
-
 
 
     implementation 'com.bigkoo:alertview:1.0.3'
@@ -341,7 +332,7 @@ dependencies {
     implementation files('libs/BaiduLBS_Android.jar')
     implementation 'com.tencent.mm.opensdk:wechat-sdk-android-with-mta:+'
     implementation files('libs/open_sdk_r5990_lite.jar')
-    implementation ('com.shuyu:GSYVideoPlayer:1.6.5')
+    implementation('com.shuyu:GSYVideoPlayer:1.6.5')
 //    implementation ('com.shuyu:GSYVideoPlayer:6.0.0-beta')
     implementation files('libs/google-play-services.jar')
     implementation files('libs/alipaySdk-20180601.jar')
@@ -349,6 +340,7 @@ dependencies {
 /*ijkPlayer*/
     // required, enough for most devices.
     implementation 'cn.jzvd:jiaozivideoplayer:6.0.0'
+    compile 'com.github.gamekonglee:regionSelector:1.0'
 
 //    implementation 'tv.danmaku.ijk.media:ijkplayer-java:0.7.8.1'
 //    implementation 'tv.danmaku.ijk.media:ijkplayer-armv7a:0.7.8.1'
@@ -363,3 +355,7 @@ dependencies {
 //    implementation 'tv.danmaku.ijk.media:ijkplayer-exo:0.7.8.1'
 
 }
+
+//dependencies {
+//    implementation 'com.android.support.constraint:constraint-layout:+'
+//}

@@ -241,6 +241,7 @@
     <orderEntry type="library" name="Gradle: com.aliyun.iot.link:uicomponent:0.0.1@aar" level="project" />
     <orderEntry type="library" name="Gradle: com.aliyun.iot.aep.sdk:scan:0.0.1.2@aar" level="project" />
     <orderEntry type="library" name="Gradle: com.shuyu:GSYVideoPlayer:1.6.5@aar" level="project" />
+    <orderEntry type="library" name="Gradle: com.github.gamekonglee:regionSelector:1.0@aar" level="project" />
     <orderEntry type="library" name="Gradle: android.arch.core:common:1.0.0@jar" level="project" />
     <orderEntry type="library" name="Gradle: com.aliyun.iot.aep.sdk:rn-external:0.41.2.20180331@aar" level="project" />
     <orderEntry type="library" name="Gradle: com.aliyun.ams:alicloud-android-utdid:1.1.5.4@jar" level="project" />
@@ -264,6 +265,15 @@
     <orderEntry type="library" name="Gradle: com.aliyun.alink.linksdk:ble-library:1.2.3@aar" level="project" />
     <orderEntry type="library" name="Gradle: com.facebook.fresco:fresco:0.11.0@aar" level="project" />
     <orderEntry type="library" name="Gradle: com.github.bumptech.glide:disklrucache:4.5.0@jar" level="project" />
+    <orderEntry type="module" module-name="filter-lib" />
+    <orderEntry type="module" module-name="common" />
+    <orderEntry type="module" module-name="swipelistviewlibrary" />
+    <orderEntry type="module" module-name="filter-lib" />
+    <orderEntry type="module" module-name="common" />
+    <orderEntry type="module" module-name="swipelistviewlibrary" />
+    <orderEntry type="module" module-name="filter-lib" />
+    <orderEntry type="module" module-name="common" />
+    <orderEntry type="module" module-name="swipelistviewlibrary" />
     <orderEntry type="module" module-name="filter-lib" />
     <orderEntry type="module" module-name="common" />
     <orderEntry type="module" module-name="swipelistviewlibrary" />

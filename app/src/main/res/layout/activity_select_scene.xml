@@ -127,6 +127,28 @@
                 android:paddingLeft="100dp"
                 android:visibility="visible"/>
         </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/select_rl_2"
+            android:layout_width="150dp"
+            android:layout_height="80dp"
+            android:orientation="horizontal"
+            android:background="@drawable/bg_corner_orange_full_oval"
+            android:layout_gravity="bottom|right"
+            android:layout_marginRight="30dp"
+            android:layout_marginBottom="30dp"
+            android:visibility="gone">
+            <TextView
+                android:id="@+id/select_num_tv_2"
+                android:layout_width="150dp"
+                android:layout_height="80dp"
+                android:text="装进我家"
+                android:textColor="@color/white"
+                android:layout_alignParentRight="true"
+                android:gravity="center"
+                android:textSize="20dp"
+                android:visibility="visible"/>
+        </RelativeLayout>
     </FrameLayout>
 
 </LinearLayout>

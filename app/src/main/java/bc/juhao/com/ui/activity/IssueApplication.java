@@ -70,6 +70,7 @@ import cn.jpush.android.api.JPushInterface;
  * @desc 全局
  */
 public class IssueApplication extends Application {
+    public static boolean hasBitmap;
 //    protected static Context mContext = null;
 //    public static String app_key="24940076";
 //    ACache mACache = null;

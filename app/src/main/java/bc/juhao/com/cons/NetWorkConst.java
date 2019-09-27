@@ -43,12 +43,17 @@ public class NetWorkConst {
     public static final String CHECK_SYSTEM = API_HOST + "/v2/ecapi.system.check";
     public static final String IOT_DEVICES_LIST = "http://smart.bocang.cc/api/cate/list?";
     public static final String IOT_DEVICES_DATAS = "http://smart.bocang.cc/api/iot/list";
-
+    public static final String SCENELIST_3D_URL =  "http://3d.08138.com/api/scene/list";
+    public static final String SCENEATTR_3D_URL = "http://3d.08138.com/api/scene/attr";
+    public static final String GET_REGION = "http://3d.08138.com/api/scene/region";
+    public static final String GET_ESTATE = "http://3d.08138.com/api/scene/estate";
+    public static final String GET_ESTATE_TYPE = "http://3d.08138.com/api/scene/home";
+    public static final String SUBMIT_LOUPAN = "http://3d.08138.com/api/scene/find/home";
 
     public static String APK_NAME="jhsc_v";
 
     //分享APP图片
-    public final static  String SHAREIMAGE=SCENE_HOST+"ic_launcher.png";
+    public final static  String SHAREIMAGE=SCENE_HOST+"ic_launcher_juhao.png";
 
     public final static  String SHAREIMAGE_LOGO=SCENE_HOST+"logo.png";
 

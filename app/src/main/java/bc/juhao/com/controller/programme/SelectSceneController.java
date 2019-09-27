@@ -1,6 +1,7 @@
 package bc.juhao.com.controller.programme;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.Environment;
 import android.os.Message;
 import android.view.View;
@@ -17,6 +18,10 @@ import com.baiiu.filter.interfaces.OnFilterDoneListener;
 import com.lib.common.hxp.view.PullToRefreshLayout;
 import com.lib.common.hxp.view.PullableGridView;
 import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.assist.FailReason;
+import com.nostra13.universalimageloader.core.assist.ImageSize;
+import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
+import com.zhy.http.okhttp.callback.Callback;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -27,15 +32,19 @@ import bc.juhao.com.cons.Constance;
 import bc.juhao.com.cons.NetWorkConst;
 import bc.juhao.com.controller.BaseController;
 import bc.juhao.com.listener.INetworkCallBack;
+import bc.juhao.com.net.ApiClient;
 import bc.juhao.com.ui.activity.programme.SelectSceneActivity;
 import bc.juhao.com.ui.adapter.SceneDropMenuAdapter;
 import bc.juhao.com.utils.FileUtil;
+import bc.juhao.com.utils.ImageUtil;
 import bc.juhao.com.utils.UIUtils;
 import bocang.json.JSONArray;
 import bocang.json.JSONObject;
 import bocang.utils.AppDialog;
 import bocang.utils.AppUtils;
 import bocang.utils.MyToast;
+import okhttp3.Call;
+import okhttp3.Response;
 
 /**
  * @author: Jun
@@ -56,7 +65,8 @@ public class SelectSceneController extends BaseController implements INetworkCal
     private Intent mIntent;
     private String keyword;
     private ProgressBar pd;
-
+    private String filterStr="[0,13,0,0]";
+    
 
     public SelectSceneController(SelectSceneActivity v) {
         mView = v;
@@ -110,12 +120,40 @@ public class SelectSceneController extends BaseController implements INetworkCal
      * 场景列表
      */
     public void sendSceneList(int page) {
-        mNetWork.sendSceneList(page, "20", keyword, this);
+        if(DemoApplication.SCENE_TYPE==3){
+            mNetWork.get3dSceneList(page,"2",filterStr,this);
+        }else {
+            mNetWork.sendSceneList(page, "20", keyword, this);
+        }
     }
 
 
     public void sendSceneType() {
-        mNetWork.sendSceneType(this);
+        if(DemoApplication.SCENE_TYPE==3){
+            ApiClient.get3dSceneAttr(new Callback<String>() {
+                @Override
+                public String parseNetworkResponse(Response response, int id) throws Exception {
+                    return null;
+                }
+
+                @Override
+                public void onError(Call call, Exception e, int id) {
+
+                }
+
+                @Override
+                public String onResponse(String response, int id) {
+                    JSONObject ans=new JSONObject("{\"categories\":"+response+"}");
+                    sceneAllAttrs = ans.getJSONArray(Constance.categories);
+                    if (initFilterDropDownView)//重复setMenuAdapter会报错
+                        initFilterDropDownView(sceneAllAttrs);
+
+                    return null;
+                }
+            });
+        }else {
+            mNetWork.sendSceneType(this);
+        }
     }
 
     @Override
@@ -124,6 +162,7 @@ public class SelectSceneController extends BaseController implements INetworkCal
         pd.setVisibility(View.GONE);
         switch (requestCode) {
             case NetWorkConst.SCENELIST:
+            case NetWorkConst.SCENELIST_3D_URL:
                 if (null == mView || mView.isFinishing())
                     return;
 
@@ -131,6 +170,9 @@ public class SelectSceneController extends BaseController implements INetworkCal
                     dismissRefesh();
                 }
                 JSONArray goodsList = ans.getJSONArray(Constance.scene);
+                if(DemoApplication.SCENE_TYPE==3){
+                    goodsList=ans.getJSONArray(Constance.data);
+                }
                 if (AppUtils.isEmpty(goodsList)) {
                     if (page == 1) {
 
@@ -144,6 +186,7 @@ public class SelectSceneController extends BaseController implements INetworkCal
 
                 break;
             case NetWorkConst.SCENECATEGORY:
+            case NetWorkConst.SCENEATTR_3D_URL:
                 sceneAllAttrs = ans.getJSONArray(Constance.categories);
                 if (initFilterDropDownView)//重复setMenuAdapter会报错
                     initFilterDropDownView(sceneAllAttrs);
@@ -219,12 +262,26 @@ public class SelectSceneController extends BaseController implements INetworkCal
             mView.finish();//一定要调用该方法 关闭新的AC 此时 老是AC才能获取到Itent里面的值
         }
     }
-
+    private String[] SceensNames = new String[]{"", ""};
+    int[] itemId= {0,13,0,0};
     @Override
     public void onFilterDone(int titlePos, int itemPos, String itemStr) {
         dropDownMenu.close();
-        if (0 == itemPos&&titlePos<sceneAllAttrs.length())
-            itemStr = sceneAllAttrs.getJSONObject(titlePos).getString(Constance.attr_name);
+        if(DemoApplication.SCENE_TYPE==3){
+            itemStr =  sceneAllAttrs.getJSONObject(titlePos).getJSONArray(Constance.attr_list).getJSONObject(itemPos).getString(Constance.name);
+            if(titlePos<4)
+                itemId[titlePos]=sceneAllAttrs.getJSONObject(titlePos).getJSONArray(Constance.attr_list).getJSONObject(itemPos).getInt(Constance.id);
+            filterStr = "[";
+            for(int i=0;i<itemId.length;i++){
+                filterStr +=itemId[i];
+                if(i!=itemId.length-1) filterStr +=",";
+            }
+            filterStr +="]";
+        }else {
+            if (0 == itemPos&&titlePos<sceneAllAttrs.length())
+                itemStr = sceneAllAttrs.getJSONObject(titlePos).getString(Constance.attr_name); 
+        }
+      
         if(titlePos==sceneAllAttrs.length()){
             itemStr="全部";
         }
@@ -233,9 +290,11 @@ public class SelectSceneController extends BaseController implements INetworkCal
         if (titlePos < itemPosList.size())
             itemPosList.remove(titlePos);
         itemPosList.add(titlePos, itemPos);
+        if(DemoApplication.SCENE_TYPE!=3) {
         keyword = "[\"" + sceneAllAttrs.getJSONObject(titlePos).getJSONArray(Constance.attrVal).getString(itemPos) + "\"]";
         if (AppUtils.isEmpty(keyword))
             return;
+        }
         pd.setVisibility(View.VISIBLE);
         sendSceneList(1);
 
@@ -267,8 +326,15 @@ public class SelectSceneController extends BaseController implements INetworkCal
         //        mView.setResult(Constance.FROMDIY02, mIntent);//告诉原来的Activity 将数据传递给它
         //        mView.finish();//一定要调用该方法 关闭新的AC 此时 老是AC才能获取到Itent里面的值
         for (int i = 0; i < DemoApplication.mSelectScreens.length(); i++) {
-            String selectName = DemoApplication.mSelectScreens.getJSONObject(i).getJSONObject(Constance.scene).getString(Constance.original_img);
-            String name = goodses.getJSONObject(position).getJSONObject(Constance.scene).getString(Constance.original_img);
+            String selectName="";
+            String name="";
+            if(DemoApplication.SCENE_TYPE==3){
+                selectName = DemoApplication.mSelectScreens.getJSONObject(i).getString(Constance.image_thumb);
+                name = goodses.getJSONObject(position).getString(Constance.image_thumb);
+            }else {
+                 selectName = DemoApplication.mSelectScreens.getJSONObject(i).getJSONObject(Constance.scene).getString(Constance.original_img);
+                    name = goodses.getJSONObject(position).getJSONObject(Constance.scene).getString(Constance.original_img);
+            }
             if (selectName.equals(name)) {
                 DemoApplication.mSelectScreens.delete(i);
                 mProAdapter.notifyDataSetChanged();
@@ -286,6 +352,9 @@ public class SelectSceneController extends BaseController implements INetworkCal
     }
 
     private class ProAdapter extends BaseAdapter {
+
+        private String name;
+
         public ProAdapter() {
         }
 
@@ -310,7 +379,7 @@ public class SelectSceneController extends BaseController implements INetworkCal
 
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
-            ViewHolder holder;
+            final ViewHolder holder;
             if (convertView == null) {
                 convertView = View.inflate(mView, R.layout.item_gridview_fm_scene02, null);
 
@@ -324,25 +393,61 @@ public class SelectSceneController extends BaseController implements INetworkCal
             }
             String path="";
             JSONObject object = goodses.getJSONObject(position);
-            if (object.getJSONObject(Constance.scene) != null) {
-                String name = object.getJSONObject(Constance.scene).getString(Constance.name);
-                holder.textView.setText(name);
-                path=object.getJSONObject(Constance.scene).getString(Constance.original_img);
-                ImageLoader.getInstance().displayImage(NetWorkConst.SCENE_HOST + path
-                        + "!400X400.png", holder.imageView);
-            }
+            if(DemoApplication.SCENE_TYPE==3){
+                if(object!=null){
+                    name = object.getString(Constance.name);
+                    path=object.getString(Constance.image_thumb);
+                    ImageSize imageSize=new ImageSize(200,200);
+                    ImageLoader.getInstance().loadImage(path,imageSize, new ImageLoadingListener() {
+                        @Override
+                        public void onLoadingStarted(String s, View view) {
 
-            holder.check_iv.setVisibility(View.GONE);
-            for (int i = 0; i < DemoApplication.mSelectScreens.length(); i++) {
-                String screenPath = DemoApplication.mSelectScreens.getJSONObject(i).getJSONObject(Constance.scene).getString(Constance.original_img);
-                if (path.equals(screenPath)) {
-                    holder.check_iv.setVisibility(View.VISIBLE);
-                    break;
+                        }
+
+                        @Override
+                        public void onLoadingFailed(String s, View view, FailReason failReason) {
+
+                        }
+
+                        @Override
+                        public void onLoadingComplete(String s, View view, Bitmap bitmap) {
+                            holder.imageView.setImageBitmap(ImageUtil.compressImage02(bitmap,50));
+                        }
+
+                        @Override
+                        public void onLoadingCancelled(String s, View view) {
+
+                        }
+                    });
+                }
+                for (int i = 0; i < DemoApplication.mSelectScreens.length(); i++) {
+                    String screenPath = DemoApplication.mSelectScreens.getJSONObject(i).
+                            getString(Constance.image_thumb);
+                    if (path.equals(screenPath)) {
+                        holder.check_iv.setVisibility(View.VISIBLE);
+                        break;
+                    }
+
+                }
+            }else {
+                if (object.getJSONObject(Constance.scene) != null) {
+                    name = object.getJSONObject(Constance.scene).getString(Constance.name);
+                    path = object.getJSONObject(Constance.scene).getString(Constance.original_img);
+                    ImageLoader.getInstance().displayImage(NetWorkConst.SCENE_HOST + path
+                            + "!400X400.png", holder.imageView);
                 }
 
+                holder.check_iv.setVisibility(View.GONE);
+                for (int i = 0; i < DemoApplication.mSelectScreens.length(); i++) {
+                    String screenPath = DemoApplication.mSelectScreens.getJSONObject(i).getJSONObject(Constance.scene).getString(Constance.original_img);
+                    if (path.equals(screenPath)) {
+                        holder.check_iv.setVisibility(View.VISIBLE);
+                        break;
+                    }
+
+                }
             }
-
-
+            holder.textView.setText(name);
             return convertView;
         }
 

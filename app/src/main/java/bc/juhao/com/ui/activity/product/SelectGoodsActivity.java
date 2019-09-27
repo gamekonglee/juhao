@@ -27,7 +27,7 @@ import bocang.view.BaseActivity;
 public class SelectGoodsActivity extends BaseActivity {
     private SelectGoodsController mController;
     private TextView topRightBtn;
-    private TextView popularityTv, newTv, saleTv;
+    public TextView popularityTv, newTv, saleTv;
     private LinearLayout stylell;
     public String mCategoriesId="";
     public boolean isSelectGoods = false;

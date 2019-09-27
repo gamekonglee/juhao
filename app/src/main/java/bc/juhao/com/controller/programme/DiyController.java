@@ -1,10 +1,25 @@
 package bc.juhao.com.controller.programme;
 
+import android.annotation.TargetApi;
+import android.app.Dialog;
+import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Matrix;
+import android.hardware.display.DisplayManager;
+import android.hardware.display.VirtualDisplay;
+import android.media.Image;
+import android.media.ImageReader;
+import android.media.projection.MediaProjection;
+import android.media.projection.MediaProjectionManager;
+import android.os.Build;
 import android.os.Environment;
+import android.os.Handler;
+import android.os.HandlerThread;
 import android.os.Message;
+import android.support.annotation.RequiresApi;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
@@ -24,6 +39,9 @@ import com.nostra13.universalimageloader.core.assist.FailReason;
 import com.nostra13.universalimageloader.core.assist.ImageScaleType;
 import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
 import com.nostra13.universalimageloader.core.listener.SimpleImageLoadingListener;
+import com.tencent.smtt.sdk.WebSettings;
+import com.tencent.smtt.sdk.WebView;
+import com.zhy.http.okhttp.callback.Callback;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -34,6 +52,8 @@ import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.nio.ByteBuffer;
+import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -50,7 +70,10 @@ import bc.juhao.com.controller.BaseController;
 import bc.juhao.com.listener.IDiyProductInfoListener;
 import bc.juhao.com.listener.INetworkCallBack;
 import bc.juhao.com.listener.ISelectScreenListener;
+import bc.juhao.com.net.ApiClient;
+import bc.juhao.com.ui.activity.IssueApplication;
 import bc.juhao.com.ui.activity.WebViewActivity;
+import bc.juhao.com.ui.activity.WebViewTestActivity;
 import bc.juhao.com.ui.activity.product.SelectGoodsActivity;
 import bc.juhao.com.ui.activity.programme.DiyActivity;
 import bc.juhao.com.ui.activity.programme.SelectSceneActivity;
@@ -71,7 +94,10 @@ import bocang.json.JSONArray;
 import bocang.json.JSONObject;
 import bocang.utils.AppDialog;
 import bocang.utils.AppUtils;
+import bocang.utils.LogUtils;
 import bocang.utils.MyToast;
+import okhttp3.Call;
+import okhttp3.Response;
 
 /**
  * @author: Jun
@@ -108,6 +134,12 @@ public class DiyController extends BaseController implements INetworkCallBack {
     private StickerView mCurrentView;
     //存储贴纸列表
     private ArrayList<View> mViews;
+    public WebView web_diy;
+    private long currentTime;
+    private String currentUlr;
+    private String currentGoodsId;
+    private String currentGoodsImg;
+    private Bitmap imageData;
 
 
     public DiyController(DiyActivity v) {
@@ -150,6 +182,42 @@ public class DiyController extends BaseController implements INetworkCallBack {
         mFrameLayout = (FrameLayout) mView.findViewById(R.id.sceneFrameLayout);
         seekbar_ll = (LinearLayout) mView.findViewById(R.id.seekbar_ll);
         seekbar = (SeekBar) mView.findViewById(R.id.seekbar);
+        web_diy = mView.findViewById(R.id.web_diy);
+        web_diy.setOnTouchListener(new View.OnTouchListener() {
+
+            @Override
+            public boolean onTouch(View view, MotionEvent motionEvent) {
+
+                switch (motionEvent.getAction()){
+                    case MotionEvent.ACTION_DOWN:
+                        currentTime = System.currentTimeMillis();
+//                        LogUtils.logE("currentTime",""+currentTime);
+                        break;
+                    case MotionEvent.ACTION_UP:
+//                        LogUtils.logE("currentTime",""+System.currentTimeMillis());
+                        if(System.currentTimeMillis()- currentTime <300){
+                            selectIsFullScreen();
+                        }
+                        break;
+                }
+                return false;
+            }
+        });
+        WebSettings webSettings= web_diy.getSettings();
+//        webSettings.setDomStorageEnabled(true);
+        webSettings.setGeolocationEnabled(true);
+        webSettings.setUseWideViewPort(true);
+        webSettings.setJavaScriptCanOpenWindowsAutomatically(true);
+        webSettings.setJavaScriptEnabled(true);
+        webSettings.setAllowFileAccessFromFileURLs(true);
+        webSettings.setAllowUniversalAccessFromFileURLs(true);
+
+        webSettings.setLoadsImagesAutomatically(true);
+        webSettings.setBlockNetworkImage(false);
+        webSettings.setBlockNetworkLoads(false);
+        webSettings.setSupportZoom(true);
+        webSettings.setDisplayZoomControls(true);
+
         seekbar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
@@ -214,10 +282,15 @@ public class DiyController extends BaseController implements INetworkCallBack {
 
         if (!AppUtils.isEmpty(mCurrentView))
             mCurrentView.setInEdit(false);
-
+//        if(DemoApplication.SCENE_TYPE==3){
+////            web_diy.setLayerType(View.LAYER_TYPE_SOFTWARE,null);
+//        web_diy.setDrawingCacheEnabled(true);
+//         imageData=ImageUtil.captureScreen(mView);
+//        }else {
+        if(DemoApplication.SCENE_TYPE!=3) imageData = ImageUtil.takeScreenShot(mView);
+//        }
         //截图
 //        final Bitmap imageData = ImageUtil.compressImage(ImageUtil.takeScreenShot(mView));
-        final Bitmap imageData = ImageUtil.takeScreenShot(mView);
         final String imgUri=ScannerUtils.saveImageToGallery(mView, imageData, ScannerUtils.ScannerType.RECEIVER);
         mView.select_ll.setVisibility(View.VISIBLE);
         diyContainerRl.setVisibility(View.VISIBLE);
@@ -257,7 +330,12 @@ public class DiyController extends BaseController implements INetworkCallBack {
                             return;
                         }
                         String title = "来自 " + mTitle + " 方案的分享";
-                        final String path = NetWorkConst.SHAREFANAN + object.getJSONObject(Constance.fangan).getString(Constance.id);
+                        String path="";
+                        if(DemoApplication.SCENE_TYPE==3){
+                            path=currentUlr+"?title="+mTitle+"&phone="+DemoApplication.mUserObject.getString(Constance.username)+"&gdata=http://nvc.bocang.cc/Interface/get_goods_info?id="+currentGoodsId+"|"+currentGoodsImg;
+                        }else {
+                            path = NetWorkConst.SHAREFANAN + object.getJSONObject(Constance.fangan).getString(Constance.id);
+                        }
 //                        final String imgPath = NetWorkConst.SCENE_HOST + object.getJSONObject(Constance.fangan).getString(Constance.path);
                         final String imgPath = imgUri;
                         Intent intent = new Intent(mView, ShareProgrammeActivity.class);
@@ -266,6 +344,7 @@ public class DiyController extends BaseController implements INetworkCallBack {
                         intent.putExtra(Constance.TITLE, title);
                         intent.putExtra(Constance.id,object.getJSONObject(Constance.fangan).getString(Constance.id));
                         mView.startActivity(intent);
+
                     }
                 });
 
@@ -501,7 +580,9 @@ public class DiyController extends BaseController implements INetworkCallBack {
     }
 
 
-    public void ActivityResult(int requestCode, int resultCode, Intent data) {
+    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
+    public void ActivityResult(int requestCode, final int resultCode, final Intent data) {
         if (resultCode == mView.RESULT_OK) { // 返回成功
             switch (requestCode) {
                 case Constance.PHOTO_WITH_CAMERA: {// 拍照获取图片
@@ -597,6 +678,18 @@ public class DiyController extends BaseController implements INetworkCallBack {
             mSpace = data.getStringExtra(Constance.space);
             mContent = data.getStringExtra(Constance.content);
             mTitle = data.getStringExtra(Constance.title);
+            if(DemoApplication.SCENE_TYPE==3){
+                handler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        mView.hideLoading();
+                        mMediaProjectionManager = (MediaProjectionManager)DemoApplication.getContext().getSystemService(Context.MEDIA_PROJECTION_SERVICE);
+                        mView.startActivityForResult(mMediaProjectionManager.createScreenCaptureIntent(), 2000);
+                    }
+                },1000);
+
+                return;
+            }
             new Thread(new Runnable() {
                 @Override
                 public void run() {
@@ -615,7 +708,108 @@ public class DiyController extends BaseController implements INetworkCallBack {
             }).start();
         }if(requestCode==300){
             displayCheckedGoods03("file://"+data.getStringExtra("path"));
+        }else if(requestCode==2000){
+            seekbar_ll.setVisibility(View.GONE);
+            diyContainerRl.setVisibility(View.INVISIBLE);
+            mView.select_ll.setVisibility(View.GONE);
+            isFullScreen = true;
+            if (!AppUtils.isEmpty(mCurrentView)) mCurrentView.setInEdit(false);
+//            ProgressDialog progressDialog=ProgressDialog.show(mView,"","保存中");
+            mView.showLoading();
+            handler.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    getScreenShot(resultCode,data);
+                }
+            },0);
+
         }
+    }
+    Handler handler=new Handler(){
+        @Override
+        public void handleMessage( Message msg) {
+            super.handleMessage(msg);
+
+        }
+    };
+    private MediaProjectionManager mMediaProjectionManager;
+    private ImageReader mImageReader;
+    private VirtualDisplay mVirtualDisplay;
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
+    private void getScreenShot(int resultCode, Intent data) {
+        MediaProjection mMediaProjection = mMediaProjectionManager.getMediaProjection(resultCode, data);
+
+
+        //ImageFormat.RGB_565
+        mImageReader = ImageReader.newInstance(UIUtils.getScreenWidth(mView),UIUtils.getScreenHeight(mView), 0x1, 2);
+        mVirtualDisplay = mMediaProjection.createVirtualDisplay("screen-mirror",
+                UIUtils.getScreenWidth(mView), UIUtils.getScreenHeight(mView), (int) mView.getResources().getDisplayMetrics().density, DisplayManager.VIRTUAL_DISPLAY_FLAG_AUTO_MIRROR,
+                mImageReader.getSurface(), new VirtualDisplay.Callback() {
+                    @Override
+                    public void onPaused() {
+                        super.onPaused();
+                    }
+
+                    @Override
+                    public void onResumed() {
+                        super.onResumed();
+                    }
+
+                    @Override
+                    public void onStopped() {
+                        super.onStopped();
+                    }
+                }, null);
+
+        DateFormat dateFormat=new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+        String strDate = dateFormat.format(new java.util.Date());
+        String nameImage = strDate+".png";
+        mImageReader.setOnImageAvailableListener(new ImageReader.OnImageAvailableListener() {
+            @Override
+            public void onImageAvailable(ImageReader imageReader) {
+                if(IssueApplication.hasBitmap)return;
+                mView.hideLoading();
+                Image image = mImageReader.acquireLatestImage();
+                int width = image.getWidth();
+                int height = image.getHeight();
+                final Image.Plane[] planes = image.getPlanes();
+                final ByteBuffer buffer = planes[0].getBuffer();
+                int pixelStride = planes[0].getPixelStride();
+                int rowStride = planes[0].getRowStride();
+                int rowPadding = rowStride - pixelStride * width;
+                Bitmap bitmap = Bitmap.createBitmap(width+rowPadding/pixelStride, height, Bitmap.Config.ARGB_8888);
+                bitmap.copyPixelsFromBuffer(buffer);
+                imageData = Bitmap.createBitmap(bitmap, 0, 0,width-UIUtils.getDaoHangHeight(mView), height);
+                IssueApplication.hasBitmap=true;
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        try {
+                            Thread.sleep(300);
+                            mView.runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    saveData();
+                                }
+                            });
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }).start();
+//                Dialog dialog=new Dialog(WebViewTestActivity.this);
+//                dialog.setContentView(R.layout.dialog_image_test);
+//                ImageView iv_img=dialog.findViewById(R.id.iv_img);
+//                iv_img.setImageBitmap(bitmap);
+//                dialog.show();
+                image.close();
+                if (mVirtualDisplay == null) {
+                    return;
+                }
+                mVirtualDisplay.release();
+                mVirtualDisplay = null;
+            }
+        }, getBackgroundHandler());
     }
 
     private void initImageLoader() {
@@ -1136,6 +1330,52 @@ public class DiyController extends BaseController implements INetworkCallBack {
 
     }
 
+
+    public void send3DsceneList() {
+        web_diy.setVisibility(View.VISIBLE);
+//        ll_webview.setVisibility(View.VISIBLE);
+        sceneBgIv.setVisibility(View.GONE);
+        JSONArray array=DemoApplication.mSelectScreens;
+        if(mView.getIntent()!=null&&mView.getIntent().getBooleanExtra(Constance.is_find_home,false)&&array!=null&&array.length()>0){
+                currentUlr = array.getJSONObject(0).getString(Constance.html);
+                web_diy.loadUrl(currentUlr);
+        }else {
+
+            ApiClient.get3dScendList(1, "2", "[0,13,0,0]", new Callback<String>() {
+                @Override
+                public String parseNetworkResponse(Response response, int id) throws Exception {
+                    return null;
+                }
+
+                @Override
+                public void onError(Call call, Exception e, int id) {
+
+                }
+
+                @Override
+                public String onResponse(String response, int id) {
+                    LogUtils.logE("3dscenelist", response);
+                    JSONObject jsonObject = new JSONObject(response);
+                    if (jsonObject != null) {
+                        final JSONArray data = jsonObject.getJSONArray(Constance.data);
+                        if (data != null && data.length() > 0) {
+                            mView.runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    currentUlr = data.getJSONObject(0).getString(Constance.html);
+//                                ll_webview.addView(web_diy);
+                                    web_diy.loadUrl(currentUlr);
+                                }
+                            });
+                        }
+                    }
+
+                    return null;
+                }
+            });
+        }
+    }
+
     private class ProAdapter extends BaseAdapter {
         public ProAdapter() {
         }
@@ -1182,14 +1422,21 @@ public class DiyController extends BaseController implements INetworkCallBack {
                     ImageLoader.getInstance().displayImage(goodses.getJSONObject(position).getJSONObject(Constance.app_img).getString(Constance.img)
                             , holder.imageView);
                     holder.imageView.setScaleType(ImageView.ScaleType.FIT_CENTER);
+                    currentGoodsId = goodses.getJSONObject(position).getString(Constance.id);
+                    currentGoodsImg = goodses.getJSONObject(position).getJSONObject(Constance.app_img).getString(Constance.img);
                 } else {
+                    if(DemoApplication.SCENE_TYPE==3) {
+                        ImageLoader.getInstance().displayImage(
+                                goodses.getJSONObject(position).getString(Constance.image_thumb), holder.imageView);
+                    }else {
+
                     holder.imageView.setImageResource(R.drawable.bg_default);
                     String url= goodses.getJSONObject(position).getJSONObject(Constance.scene).getString(Constance.original_img);
                     if(!url.contains("file://")&&!url.contains("content")){
                         url=NetWorkConst.SCENE_HOST+url+ "!400X400.png";
                     }
                     ImageLoader.getInstance().displayImage(url
-                           , holder.imageView);
+                           , holder.imageView);}
                     holder.imageView.setScaleType(ImageView.ScaleType.FIT_XY);
                 }
             } catch (Exception e) {
@@ -1208,17 +1455,23 @@ public class DiyController extends BaseController implements INetworkCallBack {
                     } else {
                         if (AppUtils.isEmpty(goodses.getJSONObject(position)))
                             return;
-                        mView.mPath= goodses.getJSONObject(position).getJSONObject(Constance.scene).getString(Constance.original_img);
-                        if(!mView.mPath.contains("file://")&&!mView.mPath.contains("content")){
-                            mView.mPath=NetWorkConst.SCENE_HOST+mView.mPath+ "!400X400.png";
-                        }
+                        if (DemoApplication.SCENE_TYPE == 3) {
+                            mView.mPath = goodses.getJSONObject(position).getString(Constance.image_thumb);
+                            currentUlr = goodses.getJSONObject(position).getString(Constance.html);
+                            web_diy.loadUrl(currentUlr);
+//                            ll_webview.addView(web_diy);
+                        } else {
+                            mView.mPath = goodses.getJSONObject(position).getJSONObject(Constance.scene).getString(Constance.original_img);
+                            if (!mView.mPath.contains("file://") && !mView.mPath.contains("content")) {
+                                mView.mPath = NetWorkConst.SCENE_HOST + mView.mPath;
+                            }
 
 //                        mView.mPath = NetWorkConst.SCENE_HOST + goodses.getJSONObject(position).getJSONObject(Constance.scene).getString(Constance.original_img);
-                        if (!AppUtils.isEmpty(mView.mPath)) {
-                            displaySceneBg(mView.mPath, 0);
+                            if (!AppUtils.isEmpty(mView.mPath)) {
+                                displaySceneBg(mView.mPath, 0);
+                            }
                         }
                     }
-
                     try {
                         ((SingleTouchView) (mFrameLayout.findViewWithTag(DemoApplication.mLightIndex))).isScale = false;
                     } catch (Exception e) {
@@ -1250,6 +1503,18 @@ public class DiyController extends BaseController implements INetworkCallBack {
             ImageView delete_iv;
         }
     }
+    //在后台线程里保存文件
+    Handler backgroundHandler;
 
+    private Handler getBackgroundHandler() {
+        if (backgroundHandler == null) {
+            HandlerThread backgroundThread =
+                    new HandlerThread("catwindow", android.os.Process
+                            .THREAD_PRIORITY_BACKGROUND);
+            backgroundThread.start();
+            backgroundHandler = new Handler(backgroundThread.getLooper());
+        }
+        return backgroundHandler;
+    }
 
 }

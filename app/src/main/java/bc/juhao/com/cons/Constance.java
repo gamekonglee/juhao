@@ -520,6 +520,13 @@ public class Constance {
     public static String count_down_json="count_down_json";
     public static String LightSwitch="LightSwitch";
     public static String actions="actions";
+    public static String is_find_home="isfindhome";
+    public static String html="html";
+    public static String image_thumb="image_thumb";
+    public static String city="city";
+    public static String area="area";
+    public static String xiaoqu="xiaoqu";
+    public static String isFindHome="isFindHome";
 /*
             {
     {

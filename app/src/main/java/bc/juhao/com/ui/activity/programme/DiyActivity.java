@@ -1,12 +1,16 @@
 package bc.juhao.com.ui.activity.programme;
 
 
+import android.app.Dialog;
 import android.content.Intent;
+import android.os.Build;
+import android.support.annotation.RequiresApi;
 import android.util.SparseArray;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.webkit.WebView;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -30,6 +34,8 @@ import bocang.json.JSONArray;
 import bocang.json.JSONObject;
 import bocang.utils.AppUtils;
 import bocang.view.BaseActivity;
+
+import static android.webkit.WebView.enableSlowWholeDocumentDraw;
 
 /**
  * @author: Jun
@@ -75,8 +81,15 @@ public class DiyActivity extends BaseActivity implements IPicsGestureListener {
     @Override
     protected void initController() {
         mController = new DiyController(this);
+        if(getIntent()!=null&&getIntent().getBooleanExtra(Constance.is_find_home,false)){
+            mController.send3DsceneList();
+        }else {
+            show23dSelectDialog();
+        }
+
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
     protected void initView() {
         //去除title
@@ -84,7 +97,10 @@ public class DiyActivity extends BaseActivity implements IPicsGestureListener {
         //去掉Activity上面的状态栏
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            WebView.enableSlowWholeDocumentDraw();
 
+        }
         setContentView(R.layout.activity_diy02);
         //沉浸式状态栏
         goSaveIv = getViewAndClick(R.id.goSaveIv);
@@ -248,6 +264,29 @@ public class DiyActivity extends BaseActivity implements IPicsGestureListener {
         return super.onKeyDown(keyCode, event);
     }
 
+    private void show23dSelectDialog() {
+        final Dialog dialog=new Dialog(this,R.style.customDialog);
+        dialog.setContentView(R.layout.dialog_23dselect);
+        View ll_2d=dialog.findViewById(R.id.ll_2d);
+        View ll_3d=dialog.findViewById(R.id.ll_3d);
+        ll_2d.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                DemoApplication.SCENE_TYPE=2;
+                dialog.dismiss();
+            }
+        });
+        ll_3d.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                DemoApplication.SCENE_TYPE=3;
+                mController.send3DsceneList();
+                dialog.dismiss();
+            }
+        });
+
+        dialog.show();
+    }
     /**
      * 退出
      */
@@ -337,7 +376,13 @@ public class DiyActivity extends BaseActivity implements IPicsGestureListener {
         mController.setRestart()
         ;
     }
-
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        mController.web_diy.loadUrl("about:blank");
+        mController.web_diy.removeAllViews();
+        mController.web_diy.destroy();
+    }
     @Override
     public void onPicsGestureScreenChanged(Boolean isShow) {
         if(!isShow){

@@ -13,6 +13,7 @@ import com.tencent.mm.opensdk.modelmsg.SendMessageToWX;
 import bc.juhao.com.R;
 import bc.juhao.com.cons.Constance;
 import bc.juhao.com.controller.programme.ShareProgrammeController;
+import bc.juhao.com.ui.activity.IssueApplication;
 import bocang.view.BaseActivity;
 
 /**
@@ -69,6 +70,7 @@ public class ShareProgrammeActivity extends BaseActivity {
         mShareImgPath=intent.getStringExtra(Constance.SHARE_IMG_PATH);
         mShareTitle=intent.getStringExtra(Constance.TITLE);
         id = intent.getStringExtra(Constance.id);
+        IssueApplication.hasBitmap=false;
 
     }
 

@@ -85,13 +85,18 @@ public class SelectGoodsController extends BaseController implements INetworkCal
                 selectSortType(R.id.newTv);
             } else if (mView.mSort == 2) {
                 selectSortType(R.id.popularityTv);
+            }else {
+                selectSortType(R.id.newTv);
             }
+        }else {
+            selectSortType(R.id.newTv);
         }
         if (mView.mIsYiJI) {
             selectYijiProduct(1, per_pag, null, null, null);
         } else {
             selectProduct(1, per_pag, null, null, null);
         }
+
 
     }
 

@@ -11,6 +11,7 @@ import android.graphics.ColorMatrix;
 import android.graphics.ColorMatrixColorFilter;
 import android.graphics.Matrix;
 import android.graphics.Paint;
+import android.graphics.Picture;
 import android.graphics.PixelFormat;
 import android.graphics.Rect;
 import android.graphics.Typeface;
@@ -31,6 +32,7 @@ import com.google.zxing.EncodeHintType;
 import com.google.zxing.WriterException;
 import com.google.zxing.common.BitMatrix;
 import com.google.zxing.qrcode.QRCodeWriter;
+import com.tencent.smtt.sdk.WebView;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -139,7 +141,14 @@ public class ImageUtil {
 
     }
 
+    public static Bitmap compressImage02(Bitmap image,int quality) {
 
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        image.compress(Bitmap.CompressFormat.JPEG, quality, baos);//质量压缩方法，这里100表示不压缩，把压缩后的数据存放到baos中
+        ByteArrayInputStream isBm = new ByteArrayInputStream(baos.toByteArray());//把压缩后的数据baos存放到ByteArrayInputStream中
+        Bitmap bitmap = BitmapFactory.decodeStream(isBm, null, null);//把ByteArrayInputStream数据生成图片
+        return bitmap;
+    }
     public static Bitmap appendTextToPicture(Bitmap bmp, final String msg) {
         final int TXT_SIZE = 24;
         final int y_offset = 5;
@@ -560,7 +569,113 @@ public class ImageUtil {
         return bitmap;
     }
 
+    public static Bitmap getWebViewBitmap(WebView webView) {
+        webView.setDrawingCacheEnabled(true);
+        webView.buildDrawingCache();
+        Picture snapShot = webView.capturePicture();
+        Bitmap bmp = Bitmap.createBitmap(snapShot.getWidth(),snapShot.getHeight(), Bitmap.Config.ARGB_8888);
+        Canvas canvas = new Canvas(bmp);
+        snapShot.draw(canvas);
+        canvas.save();
+        canvas.restore();
+        //      webView.dispatchDraw(canvas);
+        webView.destroyDrawingCache();
+        return bmp;
 
+    }
+    public  static  Bitmap getViewBitmap(WebView webView){
+        int height = (int) (webView.getContentHeight() * webView.getScale());
+        int width = webView.getWidth();
+        int pH = webView.getHeight();
+        Bitmap bm = Bitmap.createBitmap(width, height, Bitmap.Config.RGB_565);
+        Canvas canvas = new Canvas(bm);
+        int top = height;
+        while (top > 0) {
+            if (top < pH) {
+                top = 0;
+            } else {
+                top -= pH;
+            }
+            canvas.save();
+            canvas.clipRect(0, top, width, top + pH);
+            webView.scrollTo(0, top);
+            webView.draw(canvas);
+            canvas.restore();
+        }
+        return bm;
+    }
+    public static Bitmap captureWebView(WebView webView){
+
+//        Picture picture = webView.capturePicture();
+//
+//        int width = picture.getWidth();
+//
+//        int height = picture.getHeight();
+//
+//        if (width > 0 && height > 0) {
+//
+//            Bitmap bitmap = Bitmap.createBitmap(width, height, Bitmap.Config.RGB_565);
+//
+//            Canvas canvas = new Canvas(bitmap);
+//
+//            picture.draw(canvas);
+//
+//            return bitmap;
+//
+//        }
+        float scale = webView.getScale();
+
+        int width = webView.getWidth();
+
+        int height = (int) (webView.getHeight() * scale);
+
+        Bitmap bitmap = Bitmap.createBitmap(width, height, Bitmap.Config.RGB_565);
+
+        Canvas canvas = new Canvas(bitmap);
+
+        webView.draw(canvas);
+
+        return bitmap;
+//        return null;
+
+    }
+
+    /**
+     * 截取webView可视区域的截图
+     * @param webView 前提：WebView要设置webView.setDrawingCacheEnabled(true);
+     * @return
+     */
+    public static Bitmap captureWebViewVisibleSize(WebView webView){
+        Bitmap bmp = webView.getDrawingCache();
+        return bmp;
+    }
+
+    /**
+     * 截取webView快照(webView加载的整个内容的大小)
+     * @param webView
+     * @return
+     */
+    public static Bitmap captureWebView2(WebView webView){
+        Picture snapShot = webView.capturePicture();
+
+        Bitmap bmp = Bitmap.createBitmap(snapShot.getWidth(),snapShot.getHeight(), Bitmap.Config.ARGB_8888);
+        Canvas canvas = new Canvas(bmp);
+        snapShot.draw(canvas);
+        return bmp;
+    }
+
+    /**
+     * 截屏
+     * @param context
+     * @return
+     */
+    public static Bitmap captureScreen(Activity context){
+        View cv = context.getWindow().getDecorView();
+        Bitmap bmp = Bitmap.createBitmap(cv.getWidth(), cv.getHeight(), Bitmap.Config.ARGB_8888);
+        Canvas canvas = new Canvas(bmp);
+        cv.draw(canvas);
+        return bmp;
+    }
     /**
      * 将彩色图转换为灰度图
      *

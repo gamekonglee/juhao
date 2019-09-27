@@ -81,6 +81,7 @@ import cn.jpush.android.api.JPushInterface;
 public class DemoApplication extends BaseApplication {
     public static String app_key="24940076";
     public static List<Activity> activityList = new LinkedList();
+    public static int SCENE_TYPE=3;
 
     private static Application instance;
     public static boolean isShowLogin;

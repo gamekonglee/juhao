@@ -7,6 +7,7 @@ import java.util.Map;
 
 import bc.juhao.com.cons.Constance;
 import bc.juhao.com.cons.NetWorkConst;
+import bc.juhao.com.controller.programme.SelectSceneController;
 import bc.juhao.com.listener.INetworkCallBack;
 import bc.juhao.com.listener.INetworkCallBack02;
 import bocang.json.JSONObject;
@@ -1004,6 +1005,14 @@ public class Network {
         JSONObject jsonObject=new JSONObject();
         jsonObject.add("is_hd",0);
         sendRequest(jsonObject,NetWorkConst.CHECK_SYSTEM,1,0,iNetworkCallBack);
+    }
+
+    public void get3dSceneList(int page, String s, String filter_attr, INetworkCallBack iNetworkCallBack) {
+        JSONObject jsonObject=new JSONObject();
+        jsonObject.add("page",page+"");
+//        jsonObject.add("public",s);
+        jsonObject.add("attr_id",filter_attr);
+        sendRequest(jsonObject,NetWorkConst.SCENELIST_3D_URL,1,0,iNetworkCallBack);
     }
 }
 

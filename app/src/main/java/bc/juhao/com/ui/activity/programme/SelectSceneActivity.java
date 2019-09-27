@@ -1,6 +1,7 @@
 package bc.juhao.com.ui.activity.programme;
 
 import android.content.Intent;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -24,10 +25,26 @@ public class SelectSceneActivity extends BaseActivity {
     public TextView select_num_tv;
     private Intent mIntent;
     private RelativeLayout select_rl;
-
+    private TextView et_search;
+    private String title;
+    private boolean isFindHome;
+    private View select_rl_2;
     @Override
     protected void InitDataView() {
         select_num_tv.setText(DemoApplication.mSelectScreens.length()+"");
+        if(!TextUtils.isEmpty(title)){
+            et_search.setText(title);
+        }
+        if(isFindHome){
+            select_rl_2.setVisibility(View.VISIBLE);
+            select_rl.setVisibility(View.GONE);
+            tv_album.setVisibility(View.INVISIBLE);
+        }else {
+            select_rl_2.setVisibility(View.GONE);
+            select_rl.setVisibility(View.VISIBLE);
+            tv_album.setVisibility(View.VISIBLE);
+        }
+
     }
 
     @Override
@@ -41,11 +58,16 @@ public class SelectSceneActivity extends BaseActivity {
         tv_album = getViewAndClick(R.id.tv_album);
         select_num_tv = (TextView)findViewById(R.id.select_num_tv);
         select_rl = getViewAndClick(R.id.select_rl);
+        select_rl_2 = getViewAndClick(R.id.select_rl_2);
+        et_search = findViewById(R.id.et_search);
     }
 
     @Override
     protected void initData() {
-
+        if(getIntent()!=null){
+            title = getIntent().getStringExtra(Constance.title);
+            isFindHome = getIntent().getBooleanExtra(Constance.isFindHome,false);
+        }
     }
 
     @Override
@@ -64,6 +86,14 @@ public class SelectSceneActivity extends BaseActivity {
                 setResult(Constance.FROMDIY02, mIntent);//告诉原来的Activity 将数据传递给它
                 finish();//一定要调用该方法 关闭新的AC 此时 老是AC才能获取到Itent里面的值
                 break;
+            case R.id.select_rl_2:
+                DemoApplication.SCENE_TYPE=3;
+                mIntent = new Intent(this,DiyActivity.class);
+                mIntent.putExtra(Constance.is_find_home,true);
+                startActivity(mIntent);
+                finish();//一定要调用该方法 关闭新的AC 此时 老是AC才能获取到Itent里面的值
+                break;
+
 
         }
     }
