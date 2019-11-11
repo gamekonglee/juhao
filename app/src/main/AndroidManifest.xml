@@ -118,12 +118,17 @@
         android:roundIcon="@mipmap/app_icon"
         android:theme="@style/MyTransAppTheme"
         tools:replace="android:allowBackup,android:label,android:icon,android:roundIcon,android:theme">
+        <activity
+            android:name=".ui.activity.programme.ThreeDimensionalSceneActivity"
+            android:theme="@style/TranslucentTheme"/>
         <activity android:name=".ui.activity.WebViewTestActivity">
-            <!--<intent-filter>-->
-                <!--<action android:name="android.intent.action.MAIN" />-->
 
-                <!--<category android:name="android.intent.category.LAUNCHER" />-->
-            <!--</intent-filter>-->
+            <!-- <intent-filter> -->
+            <!-- <action android:name="android.intent.action.MAIN" /> -->
+
+
+            <!-- <category android:name="android.intent.category.LAUNCHER" /> -->
+            <!-- </intent-filter> -->
         </activity>
 
         <uses-library
@@ -131,9 +136,7 @@
             android:required="false" /> <!-- 启动页.begin -->
         <activity
             android:name="com.aliyun.iot.ilop.demo.page.main.StartActivity"
-            android:theme="@style/AppStartTheme">
-
-        </activity> <!-- 启动页.end -->
+            android:theme="@style/AppStartTheme"/> <!-- 启动页.end -->
         <meta-data
             android:name="Mob-AppKey"
             android:value="24f403caea1a8"
@@ -724,7 +727,7 @@
         <activity android:name=".ui.activity.TaoCanHomeListActivity" />
         <activity
             android:name=".ui.activity.WebViewActivity"
-            android:screenOrientation="portrait"></activity>
+            android:screenOrientation="portrait" />
         <activity android:name=".ui.activity.intelligence.MainIntelligenceActivity">
 
             <!-- <intent-filter> -->
@@ -921,7 +924,7 @@
             </intent-filter>
         </receiver>
 
-        <activity android:name=".ui.activity.MatchWifiActivity"></activity>
+        <activity android:name=".ui.activity.MatchWifiActivity" />
         <activity android:name=".ui.activity.intelligence.DevicesControlActivity" />
         <activity android:name=".ui.activity.intelligence.CountDownAddActivity" />
         <activity android:name=".ui.activity.intelligence.RepeatSettingActivity" />

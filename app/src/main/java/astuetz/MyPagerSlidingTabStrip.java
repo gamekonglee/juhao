@@ -42,8 +42,12 @@ import android.widget.TextView;
 import java.util.Locale;
 
 import bc.juhao.com.R;
+import bc.juhao.com.listener.OnTabClickListener;
 import bocang.utils.UIUtils;
 
+/**
+ * https://github.com/astuetz/PagerSlidingTabStrip
+ */
 public class MyPagerSlidingTabStrip extends HorizontalScrollView {
 
 	public float linePadding=100;
@@ -64,7 +68,7 @@ public class MyPagerSlidingTabStrip extends HorizontalScrollView {
 
 	private final PageListener pageListener = new PageListener();
 	public OnPageChangeListener delegatePageListener;
-
+	public OnTabClickListener tabClickListener;
 	private LinearLayout tabsContainer;
 	private ViewPager pager;
 
@@ -209,7 +213,9 @@ public class MyPagerSlidingTabStrip extends HorizontalScrollView {
 	public void setOnPageChangeListener(OnPageChangeListener listener) {
 		this.delegatePageListener = listener;
 	}
-
+	public void setOnTabClickLisener(OnTabClickListener onTabClickLisener){
+		this.tabClickListener=onTabClickLisener;
+	}
 	public void notifyDataSetChanged() {
 
 		tabsContainer.removeAllViews();
@@ -273,6 +279,9 @@ public class MyPagerSlidingTabStrip extends HorizontalScrollView {
 			@Override
 			public void onClick(View v) {
 				pager.setCurrentItem(position);
+				if(tabClickListener!=null){
+					tabClickListener.onTabClick(position);
+				}
 			}
 		});
 

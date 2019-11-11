@@ -7,7 +7,9 @@ import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.RequiresApi;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.text.TextUtils;
@@ -75,21 +77,15 @@ import cn.jiguang.analytics.android.api.JAnalyticsInterface;
 import cn.jpush.android.api.JPushInterface;
 
 public class MainActivity extends BaseActivity implements View.OnClickListener {
+
+    private MainController mController;
+
     public HomeVpFragment mHomeFragment;
     private ClassifyFragment mProductFragment;
     private CartFragment mCartFragment;
     private ProgrammeFragment mMatchFragment;
     private MineFragment mMineFragment;
-    //    public BottomBar mBottomBar;
-    private Fragment currentFragmen;
-    private int pager = 2;
-    private long exitTime;
-    public static JSONArray mCategories;
-    public static boolean toFilter;
-    private MainController mController;
-    public String download = DOWNLOAD_SERVICE;
-    public int unreadMsgCount = 0;
-
+    private Fragment currentFragmen;//当前所在的fragment
 
     private TextView frag_top_tv;
     private TextView frag_product_tv;
@@ -102,6 +98,14 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     private ImageView frag_cart_iv;
     private ImageView frag_mine_iv;
 
+    private int mCurrenTabId;//当前选中的底部导航id
+    private int pager = 2;
+    private long exitTime;
+    public static JSONArray mCategories;
+    public static boolean toFilter;
+    public String download = DOWNLOAD_SERVICE;
+    public int unreadMsgCount = 0;
+
     public static boolean isForeground = false;
     public static int mFragmentPosition;
     private int navigationBarHegiht;
@@ -113,7 +117,6 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         init();
-//        fullScreen(this);
         EventBus.getDefault().register(this);
 //        ActivityCompat.requestPermissions(this,
 //                new String[]{Manifest.permission.RECORD_AUDIO, Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.CALL_PHONE},
@@ -131,81 +134,19 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
 //        Log.e("520it", JPushInterface.getRegistrationID(this));
     }
 
-    @Override
-    protected void InitDataView() {
-        selectItem(R.id.frag_top_ll);
-    }
-
-    @Override
-    protected void onStart() {
-        super.onStart();
-        if (DemoApplication.isGoProgramme) {
-            DemoApplication.isGoProgramme = false;
-//            selectItem(R.id.frag_match_ll);
-//            clickTab3Layout();
-        }
-        checkUI();
-
-
-    }
-
-
-    private void checkUI() {
-        switch (mFragmentPosition){
-            case 0:
-                selectItem(R.id.frag_top_ll);
-                break;
-            case 1:
-                selectItem(R.id.frag_product_ll);
-                break;
-            case 2:
-                break;
-            case 3:
-                if(isToken()){
-                    return;
-                }
-                selectItem(R.id.frag_cart_ll);
-                break;
-            case 4:
-                if(isToken()){
-                    return;
-                }
-                selectItem(R.id.frag_mine_ll);
-                break;
-        }
-    }
-
-    public void onRefresh(){
-        onStart();
-    }
-    @Override
-    protected void initController() {
-        mController = new MainController(this);
-    }
-
-    @Override
-    public void onBackPressed() {
-
-        if(isError){
-            finish();
-        }else {
-            super.onBackPressed();
-        }
-    }
-
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
     protected void initView() {
         setContentView(R.layout.activity_main_jh);
         //沉浸式状态栏
-        setStatuTextColor(this, Color.WHITE);
-        setFullScreenColor(Color.TRANSPARENT,this);
-        navigationBarHegiht = getNavigationBarHeight2();
-//        View ll_main=findViewById(R.id.ll_main);
-        RelativeLayout.LayoutParams layoutParams=new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.MATCH_PARENT);
-        layoutParams.setMargins(0,0,0,navigationBarHegiht);
-//        ll_main.setLayoutParams(layoutParams);
-//            getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
-//        getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
+//        setStatuTextColor(this, Color.WHITE);
+        setColor(this, Color.WHITE);
+//        setFullScreenColor(Color.TRANSPARENT,this);
+//        navigationBarHegiht = getNavigationBarHeight2();
+////        View ll_main=findViewById(R.id.ll_main);
+//        RelativeLayout.LayoutParams layoutParams=new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.MATCH_PARENT);
+//        layoutParams.setMargins(0,0,0,navigationBarHegiht);
+
         frag_top_tv = (TextView) findViewById(R.id.frag_top_tv);
         frag_product_tv = (TextView) findViewById(R.id.frag_product_tv);
         frag_match_tv = (TextView) findViewById(R.id.frag_match_tv);
@@ -228,100 +169,80 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         findViewById(R.id.frag_cart_ll).setOnClickListener(this);
         findViewById(R.id.frag_mine_ll).setOnClickListener(this);
 
+        //初始化底部标签
         initTab();
         registerMessageListener();
         mFragmentPosition = 0;
         isError = false;
 
-//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-//            WindowManager.LayoutParams localLayoutParams = getWindow().getAttributes();
-//
-//            local LayoutParams.flags = (WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS | localLayoutParams.flags);
-//            if(Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP){
-//                //将侧边栏顶部延伸至status bar
-//                mDrawerLayout.setFitsSystemWindows(true);
-//                //将主页面顶部延伸至status bar;虽默认为false,但经测试,DrawerLayout需显示设置
-//                mDrawerLayout.setClipToPadding(false);
-//            }
-//        }
-//
-//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-//            getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
-//            getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
-//        }
-
-
-
-//        if (Build.VERSION.SDK_INT >= 21) {
-//            View decorView = getWindow().getDecorView();
-//            int option = View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
-//                    | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
-//                    | View.SYSTEM_UI_FLAG_LAYOUT_STABLE;
-//            decorView.setSystemUiVisibility(option);
-//            getWindow().setNavigationBarColor(Color.TRANSPARENT);
-//            getWindow().setStatusBarColor(Color.TRANSPARENT);
-//        }
-        Log.e("520it", "initView: " + getHasVirtualKey() + ":" + getNoHasVirtualKey() );
+        Log.e("520it", "initView: " + getHasVirtualKey() + ":" + getNoHasVirtualKey());
 
     }
-    private int getNavigationBarHeight() {
-        Resources resources = getResources();
-        int resourceId = resources.getIdentifier("navigation_bar_height","dimen", "android");
-        int height = resources.getDimensionPixelSize(resourceId);
-        Log.v("dbw", "Navi height:" + height);
-        return height;
+
+    @Override
+    protected void InitDataView() {
+        selectItem(R.id.frag_top_ll);
     }
-    private int gethdHeight(Context context){
-        int rid=context.getResources().getIdentifier("config_showNavigationBar","bool","android");
-        if(rid!=0){
-            int resourceId=context.getResources().getIdentifier("navigation_bar_height","dimen","android");
-            return context.getResources().getDimensionPixelSize(resourceId);
-        }else {
-            return 0;
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        if (DemoApplication.isGoProgramme) {
+            DemoApplication.isGoProgramme = false;
+//            selectItem(R.id.frag_match_ll);
+//            clickTab3Layout();
+        }
+        checkUi();
+
+
+    }
+
+
+    private void checkUi() {
+        switch (mFragmentPosition) {
+            case 0:
+                selectItem(R.id.frag_top_ll);
+                break;
+            case 1:
+                selectItem(R.id.frag_product_ll);
+                break;
+            case 2:
+                break;
+            case 3:
+                if (isToken()) {
+                    return;
+                }
+                selectItem(R.id.frag_cart_ll);
+                break;
+            case 4:
+                if (isToken()) {
+                    return;
+                }
+                selectItem(R.id.frag_mine_ll);
+                break;
+            default:
+                break;
         }
     }
-    public int getNavigationBarHeight2() {
 
-        Resources resources = getResources();
-
-        int resourceId=resources.getIdentifier("navigation_bar_height","dimen","android");
-
-        int height = resources.getDimensionPixelSize(resourceId);
-
-        Log.v("navigation bar>>>", "height:" + height);
-
-        return height;
-
+    public void onRefresh() {
+        onStart();
     }
-//    private int getDaoHangHeight(Context context) {
-//         int result = 0; 
-//        int rid = context.getResources().getIdentifier("config_showNavigationBar", "bool", "android"); 
-//        if (rid != 0) { 
-//            int resourceId = context.getResources().getIdentifier("navigation_bar_height", "dimen", "android"); 
-//            return context.getResources().getDimensionPixelSize(resourceId); 
-//        } else {
-//            return 0;
-//        } 
-//    }
 
-    // 通过反射机制获取手机状态栏高度
-    public int getStatusBarHeight() {
-        Class<?> c = null;
-        Object obj = null;
-        Field field = null;
-        int x = 0, statusBarHeight = 0;
-        try {
-            c = Class.forName("com.android.internal.R$dimen");
-            obj = c.newInstance();
-            field = c.getField("status_bar_height");
-            x = Integer.parseInt(field.get(obj).toString());
-            statusBarHeight = getResources().getDimensionPixelSize(x);
-        } catch (Exception e1) {
-            e1.printStackTrace();
+    @Override
+    protected void initController() {
+        mController = new MainController(this);
+    }
+
+    @Override
+    public void onBackPressed() {
+
+        if (isError) {
+            finish();
+        } else {
+            super.onBackPressed();
         }
-        return statusBarHeight;
     }
-
 
     /**
      * 获取屏幕尺寸，但是不包括虚拟功能高度
@@ -355,7 +276,6 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         }
         return dpi;
     }
-
 
 
     @Override
@@ -396,7 +316,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         MyShare.get(MainActivity.this).putString(Constance.USERNAME, "");
         MyShare.get(MainActivity.this).putString(Constance.USERCODE, "");
         MyShare.get(MainActivity.this).putString(Constance.USERCODEID, "");
-        MyShare.get(MainActivity.this).putString(Constance.invite_code,"");
+        MyShare.get(MainActivity.this).putString(Constance.invite_code, "");
         ShowDialog mDialog = new ShowDialog();
         mDialog.show(this, "提示", UIUtils.getString(R.string.connect_conflict), new ShowDialog.OnBottomClickListener() {
             @Override
@@ -528,53 +448,192 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     }
 
 
-    private BottomBar.IBottomBarItemClickListener mBottomBarClickListener = new BottomBar.IBottomBarItemClickListener() {
-        @Override
-        public void OnItemClickListener(int resId) {
-            switch (resId) {
-                case R.id.frag_top_ll:
-                    //                    full(true);
-                    //                    MainActivity.this.textView.setBackgroundColor(Color.parseColor("#FF0000"));
-                    //                    rootView.setBackgroundColor(Color.parseColor("#FF0000"));
-                    mFragmentPosition=0;
-                    clickTab1Layout();
-                    break;
-                case R.id.frag_product_ll:
-                    //                    MainActivity.this.textView.setBackgroundColor(Color.parseColor("#00000000"));
-                    //                    rootView.setBackgroundColor(Color.parseColor("#00000000"));
-                    mFragmentPosition=1;
-                    clickTab2Layout();
+    /**
+     * 添加或者显示碎片
+     *
+     * @param transaction
+     * @param fragment
+     */
+    private void addOrShowFragment(FragmentTransaction transaction,
+                                   Fragment fragment) {
+        if (currentFragmen == fragment) {
+            return;
+        }
+        if (!fragment.isAdded()) { // 如果当前fragment未被添加，则添加到Fragment管理器中
+            transaction.hide(currentFragmen)
+                    .add(R.id.top_bar, fragment).commit();
+        } else {
+            transaction.hide(currentFragmen).show(fragment).commit();
+        }
 
+        currentFragmen = fragment;
+    }
 
-                    break;
-                case R.id.frag_match_ll:
-                    clickTab3Layout();
-                    break;
-                case R.id.frag_cart_ll:
-                    if(isToken()){
-                        checkUI();
-                        return;
-                    }
-                    mFragmentPosition=3;
-                    clickTab4Layout();
-                    break;
-                case R.id.frag_mine_ll:
-                    if(isToken()){
-                        checkUI();
-                        return;
-                    }
-                    mFragmentPosition=4;
-                    clickTab5Layout();
-                    break;
-                case R.id.frag_top_tv:
-                    //
-                    //    full(true);
-                    mFragmentPosition=0;
-                    clickTab1Layout();
-                    break;
+    /**
+     * 双击退出系统
+     *
+     * @param keyCode
+     * @param event
+     * @return
+     */
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (pager == 2) {
+            if (keyCode == KeyEvent.KEYCODE_BACK && event.getAction() == KeyEvent.ACTION_DOWN) {
+                if ((System.currentTimeMillis() - exitTime) > 2000) {
+                    exitTime = System.currentTimeMillis();
+
+                    MyToast.show(this, R.string.back_desktop);
+                } else {
+                    finish();
+                }
+                return true;
             }
         }
-    };
+        return super.onKeyDown(keyCode, event);
+    }
+
+    @Override
+    protected void onResume() {
+        isForeground = true;
+        super.onResume();
+//        boolean confict=getIntent().getBooleanExtra(Constance.ACCOUNT_CONFLICT,false);
+//        if (getIntent()!=null&&getIntent().getBooleanExtra(Constance.ACCOUNT_CONFLICT, false)) {
+//            showConflictDialog();
+//        }
+    }
+
+
+    @Override
+    protected void onPause() {
+        isForeground = false;
+        super.onPause();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        EventBus.getDefault().unregister(this);
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+
+    @Override
+    public void onClick(View v) {
+        //	设置 如果电机的是当前的的按钮 再次点击无效
+        if (mCurrenTabId != 0 && mCurrenTabId == v.getId()) {
+            return;
+        }
+
+        selectItem(v.getId());
+    }
+
+    /**
+     * 默认全部不被选中
+     */
+    private void defaultTabStyle() {
+        frag_top_tv.setSelected(false);
+        frag_top_iv.setSelected(false);
+        frag_product_tv.setSelected(false);
+        frag_product_iv.setSelected(false);
+        frag_match_tv.setSelected(false);
+        frag_match_iv.setSelected(false);
+        frag_cart_tv.setSelected(false);
+        frag_cart_iv.setSelected(false);
+        frag_mine_tv.setSelected(false);
+        frag_mine_iv.setSelected(false);
+    }
+
+    /**
+     * 选择指定的item
+     *
+     * @param currenTabId
+     */
+    public void selectItem(int currenTabId) {
+        //	设置 如果电机的是当前的的按钮 再次点击无效
+        if (mCurrenTabId != 0 && mCurrenTabId == currenTabId) {
+            return;
+        }
+        //点击前先默认全部不被选中
+        defaultTabStyle();
+
+        mCurrenTabId = currenTabId;
+        switch (currenTabId) {
+            case R.id.frag_top_ll:
+                frag_top_tv.setSelected(true);
+                frag_top_iv.setSelected(true);
+                mFragmentPosition = 0;
+                clickTab1Layout();
+                break;
+            case R.id.frag_product_ll:
+                frag_product_tv.setSelected(true);
+                frag_product_iv.setSelected(true);
+                mFragmentPosition = 1;
+                clickTab2Layout();
+                break;
+            case R.id.frag_match_ll:
+                if (isToken()) {
+                    checkUi();
+                    return;
+                }
+                mFragmentPosition = 0;
+//                frag_match_tv.setSelected(true);
+//                frag_match_iv.setSelected(true);
+                clickTab3Layout();
+                break;
+            case R.id.frag_cart_ll:
+            case R.id.frag_cart_tv:
+                if (isToken()) {
+                    checkUi();
+                    return;
+                }
+                mFragmentPosition = 3;
+                frag_cart_tv.setSelected(true);
+                frag_cart_iv.setSelected(true);
+                clickTab4Layout();
+                break;
+            case R.id.frag_mine_ll:
+            case R.id.frag_mine_tv:
+                if (isToken()) {
+                    checkUi();
+                    return;
+                }
+                mFragmentPosition = 4;
+                frag_mine_tv.setSelected(true);
+                frag_mine_iv.setSelected(true);
+                clickTab5Layout();
+                break;
+            case R.id.frag_top_tv:
+                mFragmentPosition = 0;
+                frag_top_tv.setSelected(true);
+                frag_top_iv.setSelected(true);
+                clickTab1Layout();
+                break;
+            case R.id.frag_product_tv:
+                mFragmentPosition = 1;
+                frag_product_tv.setSelected(true);
+                frag_product_iv.setSelected(true);
+                clickTab2Layout();
+                break;
+            case R.id.frag_match_tv:
+                frag_match_tv.setSelected(true);
+                frag_match_iv.setSelected(true);
+                clickTab3Layout();
+                break;
+
+//                mFragmentPosition=3;
+//                frag_cart_tv.setSelected(true);
+//                frag_cart_iv.setSelected(true);
+//                clickTab4Layout();
+//                break;
+
+//                mFragmentPosition=4;
+//                frag_mine_tv.setSelected(true);
+//                frag_mine_iv.setSelected(true);
+//                clickTab5Layout();
+//                break;
+        }
+    }
 
     /**
      * 初始化底部标签
@@ -624,7 +683,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
 //            mMatchFragment = new ProgrammeFragment();
 //        }
 //        addOrShowFragment(getSupportFragmentManager().beginTransaction(), mMatchFragment);
-        if(isToken()){
+        if (isToken()) {
             return;
         }
         startActivity(new Intent(this, com.aliyun.iot.ilop.demo.page.ilopmain.MainActivity.class));
@@ -652,89 +711,144 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
 
     }
 
-    /**
-     * 添加或者显示碎片
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (resultCode == RESULT_OK) {
+            if (data == null) return;
+//            Log.e("data",data.getStringExtra(Constant.EXTRA_RESULT_CONTENT));
+            final String content = data.getStringExtra(CaptureActivity.EXTRA_SCAN_RESULT);
+            if (content != null && content.contains("scale")) {
+                dialog = new Dialog(this, R.style.customDialog);
+                dialog.setContentView(R.layout.dialog_login);
+                dialog.setCancelable(true);
+                dialog.setCanceledOnTouchOutside(true);
+                dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                dialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
+                Button btn_login = dialog.findViewById(R.id.btn_login);
+                Button btn_cancel = dialog.findViewById(R.id.btn_cancel);
+//            MyToast.show(this,result.getText());
+                btn_cancel.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        dialog.dismiss();
+                    }
+                });
+                btn_login.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+//                        showLoading();
+                        dialog.dismiss();
+                        mController.login(content);
+                    }
+                });
+                dialog.show();
+            } else {
+                try {
+                    Intent mIntent = new Intent(this, ProDetailActivity.class);
+                    int productId = Integer.parseInt(content);
+                    mIntent.putExtra(Constance.product, productId);
+                    this.startActivity(mIntent);
+                    this.finish();
+                } catch (Exception e) {
+
+                }
+            }
+            switch (requestCode) {
+                case 400:
+//                    String type = data.getStringExtra(Constant.EXTRA_RESULT_CODE_TYPE);
+//                    String content = data.getStringExtra(Constant.EXTRA_RESULT_CONTENT);
+//                    Toast.makeText(MainActivity.this,"codeType:" + type
+//                            + "-----content:" + content, Toast.LENGTH_SHORT).show();
+                    break;
+                default:
+                    break;
+
+            }
+        }
+        super.onActivityResult(requestCode, resultCode, data);
+    }
+
+    /***************************************
      *
-     * @param transaction
-     * @param fragment
+     *  以下not use
+     *
+     * *************************************
      */
-    private void addOrShowFragment(FragmentTransaction transaction,
-                                   Fragment fragment) {
-        if (currentFragmen == fragment)
-            return;
-        if (!fragment.isAdded()) { // 如果当前fragment未被添加，则添加到Fragment管理器中
-            transaction.hide(currentFragmen)
-                    .add(R.id.top_bar, fragment).commit();
-        } else {
-            transaction.hide(currentFragmen).show(fragment).commit();
-        }
+    private BottomBar.IBottomBarItemClickListener mBottomBarClickListener = new BottomBar.IBottomBarItemClickListener() {
+        @Override
+        public void OnItemClickListener(int resId) {
+            switch (resId) {
+                case R.id.frag_top_ll:
+                    //                    full(true);
+                    //                    MainActivity.this.textView.setBackgroundColor(Color.parseColor("#FF0000"));
+                    //                    rootView.setBackgroundColor(Color.parseColor("#FF0000"));
+                    mFragmentPosition = 0;
+                    clickTab1Layout();
+                    break;
+                case R.id.frag_product_ll:
+                    //                    MainActivity.this.textView.setBackgroundColor(Color.parseColor("#00000000"));
+                    //                    rootView.setBackgroundColor(Color.parseColor("#00000000"));
+                    mFragmentPosition = 1;
+                    clickTab2Layout();
 
-        currentFragmen = fragment;
-    }
 
-    @Override
-    public boolean onKeyDown(int keyCode, KeyEvent event){
-        if (pager == 2) {
-            if (keyCode == KeyEvent.KEYCODE_BACK && event.getAction() == KeyEvent.ACTION_DOWN) {
-                if ((System.currentTimeMillis() - exitTime) > 2000) {
-                    exitTime = System.currentTimeMillis();
-
-                    MyToast.show(this, R.string.back_desktop);
-                } else {
-                    finish();
-                }
-                return true;
+                    break;
+                case R.id.frag_match_ll:
+                    clickTab3Layout();
+                    break;
+                case R.id.frag_cart_ll:
+                    if (isToken()) {
+                        checkUi();
+                        return;
+                    }
+                    mFragmentPosition = 3;
+                    clickTab4Layout();
+                    break;
+                case R.id.frag_mine_ll:
+                    if (isToken()) {
+                        checkUi();
+                        return;
+                    }
+                    mFragmentPosition = 4;
+                    clickTab5Layout();
+                    break;
+                case R.id.frag_top_tv:
+                    //
+                    //    full(true);
+                    mFragmentPosition = 0;
+                    clickTab1Layout();
+                    break;
             }
         }
-        return super.onKeyDown(keyCode, event);
+    };
+
+
+    // 通过反射机制获取手机状态栏高度
+    public int getStatusBarHeight() {
+        Class<?> c = null;
+        Object obj = null;
+        Field field = null;
+        int x = 0, statusBarHeight = 0;
+        try {
+            c = Class.forName("com.android.internal.R$dimen");
+            obj = c.newInstance();
+            field = c.getField("status_bar_height");
+            x = Integer.parseInt(field.get(obj).toString());
+            statusBarHeight = getResources().getDimensionPixelSize(x);
+        } catch (Exception e1) {
+            e1.printStackTrace();
+        }
+        return statusBarHeight;
     }
 
-    /**
-     * show 激活 dialog
-     */
-    public void showActivateDialog() {
-        WarnDialog activateDialog = new WarnDialog(this, "请激活该设备", "确定", true, false, false);
-        activateDialog.setListener(new bc.juhao.com.ui.view.BaseDialog.IConfirmListener() {
-            @Override
-            public void onDlgConfirm(bc.juhao.com.ui.view.BaseDialog dlg, int flag) {
-                if (flag == 0) {
-                    MyToast.show(MainActivity.this, "激活成功!!");
-                }
-            }
-        });
-        activateDialog.show();
-    }
-
-
-    @Override
-    protected void onResume() {
-        isForeground = true;
-        super.onResume();
-//        boolean confict=getIntent().getBooleanExtra(Constance.ACCOUNT_CONFLICT,false);
-//        if (getIntent()!=null&&getIntent().getBooleanExtra(Constance.ACCOUNT_CONFLICT, false)) {
-//            showConflictDialog();
-//        }
-    }
-
-
-    @Override
-    protected void onPause() {
-        isForeground = false;
-        super.onPause();
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        EventBus.getDefault().unregister(this);
-    }
     @Subscribe(threadMode = ThreadMode.MAIN)
-    public void onUserLogin(UserLogin action){
+    public void onUserLogin(UserLogin action) {
 //        int confict=getIntent().getIntExtra(Constance.ACCOUNT_CONFLICT,-1);
-        if (action!=null&&action.getValue().equals("1")) {
+        if (action != null && action.getValue().equals("1")) {
             showConflictDialog();
         }
     }
+
     //在主线程执行
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onUserEvent(Integer action) {
@@ -753,216 +867,60 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
 //            }
 //        }
     }
-    @Subscribe(threadMode = ThreadMode.MAIN)
-    public void onLoginResult(LoginResult result){
-        if(result.result==1){
-            if(!TextUtils.isEmpty(MyShare.get(this).getString(Constance.TOKEN))){
+
+    public void onLoginResult(LoginResult result) {
+        if (result.result == 1) {
+            if (!TextUtils.isEmpty(MyShare.get(this).getString(Constance.TOKEN))) {
                 mController.sendUser();
             }
         }
     }
-    @Override
-    public void onClick(View v) {
-        //	设置 如果电机的是当前的的按钮 再次点击无效
-        if (mCurrenTabId != 0 && mCurrenTabId == v.getId()) {
-            return;
-        }
-
-        selectItem(v.getId());
-    }
 
     /**
-     * 默认全部不被选中
+     * show 激活 dialog
      */
-    private void defaultTabStyle() {
-        frag_top_tv.setSelected(false);
-        frag_top_iv.setSelected(false);
-        frag_product_tv.setSelected(false);
-        frag_product_iv.setSelected(false);
-        frag_match_tv.setSelected(false);
-        frag_match_iv.setSelected(false);
-        frag_cart_tv.setSelected(false);
-        frag_cart_iv.setSelected(false);
-        frag_mine_tv.setSelected(false);
-        frag_mine_iv.setSelected(false);
-    }
-
-    private int mCurrenTabId;
-
-    /**
-     * 选择指定的item
-     *
-     * @param currenTabId
-     */
-    public void selectItem(int currenTabId) {
-        //	设置 如果电机的是当前的的按钮 再次点击无效
-        if (mCurrenTabId != 0 && mCurrenTabId == currenTabId) {
-            return;
-        }
-        //点击前先默认全部不被选中
-        defaultTabStyle();
-
-        mCurrenTabId = currenTabId;
-        switch (currenTabId) {
-            case R.id.frag_top_ll:
-                frag_top_tv.setSelected(true);
-                frag_top_iv.setSelected(true);
-                mFragmentPosition=0;
-                clickTab1Layout();
-                break;
-            case R.id.frag_product_ll:
-                frag_product_tv.setSelected(true);
-                frag_product_iv.setSelected(true);
-                mFragmentPosition=1;
-                clickTab2Layout();
-                break;
-            case R.id.frag_match_ll:
-                if(isToken()){
-                    checkUI();
-                    return;
-                }
-                mFragmentPosition=0;
-//                frag_match_tv.setSelected(true);
-//                frag_match_iv.setSelected(true);
-                clickTab3Layout();
-                break;
-            case R.id.frag_cart_ll:
-            case R.id.frag_cart_tv:
-                if(isToken()){
-                    checkUI();
-                    return;
-                }
-                mFragmentPosition=3;
-                frag_cart_tv.setSelected(true);
-                frag_cart_iv.setSelected(true);
-                clickTab4Layout();
-                break;
-            case R.id.frag_mine_ll:
-            case R.id.frag_mine_tv:
-                if(isToken()){
-                    checkUI();
-                    return;
-                }
-                mFragmentPosition=4;
-                frag_mine_tv.setSelected(true);
-                frag_mine_iv.setSelected(true);
-                clickTab5Layout();
-                break;
-            case R.id.frag_top_tv:
-                mFragmentPosition=0;
-                frag_top_tv.setSelected(true);
-                frag_top_iv.setSelected(true);
-                clickTab1Layout();
-                break;
-            case R.id.frag_product_tv:
-                mFragmentPosition=1;
-                frag_product_tv.setSelected(true);
-                frag_product_iv.setSelected(true);
-                clickTab2Layout();
-                break;
-            case R.id.frag_match_tv:
-                frag_match_tv.setSelected(true);
-                frag_match_iv.setSelected(true);
-                clickTab3Layout();
-                break;
-
-//                mFragmentPosition=3;
-//                frag_cart_tv.setSelected(true);
-//                frag_cart_iv.setSelected(true);
-//                clickTab4Layout();
-//                break;
-
-//                mFragmentPosition=4;
-//                frag_mine_tv.setSelected(true);
-//                frag_mine_iv.setSelected(true);
-//                clickTab5Layout();
-//                break;
-        }
-    }
-//    /**
-//     * 通过设置全屏，设置状态栏透明
-//     *
-//     * @param activity
-//     */
-//    private void fullScreen(Activity activity) {
-//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-//            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-//                //5.x开始需要把颜色设置透明，否则导航栏会呈现系统默认的浅灰色
-//                Window window = activity.getWindow();
-//                View decorView = window.getDecorView();
-//                //两个 flag 要结合使用，表示让应用的主体内容占用系统状态栏的空间
-//                int option = View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
-//                        | View.SYSTEM_UI_FLAG_LAYOUT_STABLE;
-//                decorView.setSystemUiVisibility(option);
-//                window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
-//                window.setStatusBarColor(Color.TRANSPARENT);
-//                //导航栏颜色也可以正常设置
-////                window.setNavigationBarColor(Color.TRANSPARENT);
-//            } else {
-//                Window window = activity.getWindow();
-//                WindowManager.LayoutParams attributes = window.getAttributes();
-//                int flagTranslucentStatus = WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS;
-//                int flagTranslucentNavigation = WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION;
-//                attributes.flags |= flagTranslucentStatus;
-////                attributes.flags |= flagTranslucentNavigation;
-//                window.setAttributes(attributes);
-//            }
-//        }
-//    }
-
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (resultCode == RESULT_OK) {
-            if (data == null) return;
-//            Log.e("data",data.getStringExtra(Constant.EXTRA_RESULT_CONTENT));
-            final String content=data.getStringExtra(CaptureActivity.EXTRA_SCAN_RESULT);
-            if(content!=null&&content.contains("scale")){
-                dialog = new Dialog(this, R.style.customDialog);
-                dialog.setContentView(R.layout.dialog_login);
-                dialog.setCancelable(true);
-                dialog.setCanceledOnTouchOutside(true);
-                dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-                dialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
-                Button btn_login= dialog.findViewById(R.id.btn_login);
-                Button btn_cancel= dialog.findViewById(R.id.btn_cancel);
-//            MyToast.show(this,result.getText());
-                btn_cancel.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        dialog.dismiss();
-                    }
-                });
-                btn_login.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-//                        showLoading();
-                        dialog.dismiss();
-                        mController.login(content) ;
-                    }
-                });
-                dialog.show();
-            }else {
-                try{Intent mIntent = new Intent(this, ProDetailActivity.class);
-                int productId = Integer.parseInt(content);
-                mIntent.putExtra(Constance.product, productId);
-                this.startActivity(mIntent);
-                this.finish();}catch (Exception e){
-
+    public void showActivateDialog() {
+        WarnDialog activateDialog = new WarnDialog(this, "请激活该设备", "确定", true, false, false);
+        activateDialog.setListener(new bc.juhao.com.ui.view.BaseDialog.IConfirmListener() {
+            @Override
+            public void onDlgConfirm(bc.juhao.com.ui.view.BaseDialog dlg, int flag) {
+                if (flag == 0) {
+                    MyToast.show(MainActivity.this, "激活成功!!");
                 }
             }
-            switch (requestCode) {
-                case 400:
-//                    String type = data.getStringExtra(Constant.EXTRA_RESULT_CODE_TYPE);
-//                    String content = data.getStringExtra(Constant.EXTRA_RESULT_CONTENT);
-//                    Toast.makeText(MainActivity.this,"codeType:" + type
-//                            + "-----content:" + content, Toast.LENGTH_SHORT).show();
-                    break;
-                default:
-                    break;
+        });
+        activateDialog.show();
+    }
 
-            }
+    private int getNavigationBarHeight() {
+        Resources resources = getResources();
+        int resourceId = resources.getIdentifier("navigation_bar_height", "dimen", "android");
+        int height = resources.getDimensionPixelSize(resourceId);
+        Log.v("dbw", "Navi height:" + height);
+        return height;
+    }
+
+    private int gethdHeight(Context context) {
+        int rid = context.getResources().getIdentifier("config_showNavigationBar", "bool", "android");
+        if (rid != 0) {
+            int resourceId = context.getResources().getIdentifier("navigation_bar_height", "dimen", "android");
+            return context.getResources().getDimensionPixelSize(resourceId);
+        } else {
+            return 0;
         }
-        super.onActivityResult(requestCode, resultCode, data);
+    }
+
+    public int getNavigationBarHeight2() {
+
+        Resources resources = getResources();
+
+        int resourceId = resources.getIdentifier("navigation_bar_height", "dimen", "android");
+
+        int height = resources.getDimensionPixelSize(resourceId);
+
+        Log.v("navigation bar>>>", "height:" + height);
+
+        return height;
+
     }
 }

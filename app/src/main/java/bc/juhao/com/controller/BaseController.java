@@ -16,6 +16,7 @@ import bc.juhao.com.utils.MyShare;
 import bc.juhao.com.utils.Network;
 import bocang.json.JSONObject;
 import bocang.utils.AppUtils;
+import bocang.utils.LogUtils;
 
 
 /**
@@ -29,10 +30,14 @@ import bocang.utils.AppUtils;
  * modify :
  */
 public abstract class BaseController{
+
+    public static final String TAG = "BaseController";
+
     protected Network mNetWork;
 
     public BaseController(){
         mNetWork = new Network();
+        LogUtils.logE(TAG, getClass().getSimpleName());
     }
     /**
      * 发送异步数据，由子类来实现

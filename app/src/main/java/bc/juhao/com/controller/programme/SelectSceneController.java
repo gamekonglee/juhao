@@ -52,19 +52,24 @@ import okhttp3.Response;
  * @description :
  */
 public class SelectSceneController extends BaseController implements INetworkCallBack, OnFilterDoneListener, PullToRefreshLayout.OnRefreshListener, AdapterView.OnItemClickListener {
+
     private SelectSceneActivity mView;
+    private Intent mIntent;
+
     private DropDownMenu dropDownMenu;
-    private JSONArray sceneAllAttrs;
     private PullToRefreshLayout mPullToRefreshLayout;
-    private ProAdapter mProAdapter;
     private PullableGridView order_sv;
-    private int page = 1;
+    private ProgressBar pd;
+
+    private JSONArray sceneAllAttrs;
+    private ProAdapter mProAdapter;
+
     private JSONArray goodses;
+    private int page = 1;
     private boolean initFilterDropDownView;
     private String imageURL = "";
-    private Intent mIntent;
     private String keyword;
-    private ProgressBar pd;
+
     private String filterStr="[0,13,0,0]";
     
 
@@ -73,7 +78,6 @@ public class SelectSceneController extends BaseController implements INetworkCal
         initView();
         initViewData();
     }
-
 
     private void initViewData() {
         page = 1;

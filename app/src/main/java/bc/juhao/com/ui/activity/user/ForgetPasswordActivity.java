@@ -65,6 +65,7 @@ public class ForgetPasswordActivity extends BaseActivity implements View.OnClick
     }
 
 
+    @Override
     public void goBack(View v){
         ShowDialog mDialog=new ShowDialog();
         mDialog.show(this, "提示", "你是否放弃修改密码?", new ShowDialog.OnBottomClickListener() {

@@ -312,7 +312,8 @@ UIUtils {
         if(adapter==null){
             return 0;
         }
-        int count=adapter.getCount();
+        int count=6;
+//        int count=adapter.getCount();
         int total=0;
         for(int i=0;i<count;i++){
             View view=adapter.getView(i,null,listView);

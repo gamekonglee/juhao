@@ -31,6 +31,7 @@
     <string-array name="home_titles" >
         <item>全部</item>
         <item>新品</item>
+        <item>筛选</item>
         <item>视频</item>
         <item>限时购</item>
         <item>钜豪超市</item>

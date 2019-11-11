@@ -41,20 +41,12 @@ public class NewsHomeController extends BaseController implements EndOfListView.
     private final NewsHomeFragment mView;
     private PMSwipeRefreshLayout pullToRefresh;
     private EndOfGridView priductGridView;
-    private int page;
-    private JSONArray goodses;
-    private int mScreenWidth;
+
     private ProAdapter mProAdapter;
+    private JSONArray goodses;
+    private int page;
+    private int mScreenWidth;
 
-    @Override
-    protected void handleMessage(int action, Object[] values) {
-
-    }
-
-    @Override
-    protected void myHandleMessage(Message msg) {
-
-    }
     public NewsHomeController(NewsHomeFragment newsHomeFragment){
         mView =   newsHomeFragment;
         page = 0;
@@ -68,13 +60,14 @@ public class NewsHomeController extends BaseController implements EndOfListView.
     }
 
     private void initView() {
+
         pullToRefresh = mView.getView().findViewById(R.id.pullToRefresh);
         pullToRefresh.setColorSchemeColors(Color.RED,Color.YELLOW,Color.GREEN,Color.BLUE);
         pullToRefresh.setRefreshing(false);
+        pullToRefresh.setOnRefreshListener(this);
+
         priductGridView = mView.getView().findViewById(R.id.priductGridView);
         priductGridView.setOnEndOfListListener(this);
-        pullToRefresh.setOnRefreshListener(this);
-        mScreenWidth = UIUtils.getScreenWidth(mView.getActivity());
         mProAdapter = new ProAdapter();
         priductGridView.setAdapter(mProAdapter);
         priductGridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -86,6 +79,8 @@ public class NewsHomeController extends BaseController implements EndOfListView.
                 mView.startActivity(mIntent);
             }
         });
+
+        mScreenWidth = UIUtils.getScreenWidth(mView.getActivity());
     }
 
     @Override
@@ -95,18 +90,19 @@ public class NewsHomeController extends BaseController implements EndOfListView.
         findProduct();
     }
 
-
     private void findProduct() {
         mNetWork.sendGoodsList(page, "20", "", "", "", "", "", "5", "2", new INetworkCallBack() {
             @Override
             public void onSuccessListener(String requestCode, JSONObject ans) {
-                if (null == mView || mView.getActivity()==null||mView.getActivity().isFinishing())
+                if (null == mView || mView.getActivity()==null||mView.getActivity().isFinishing()) {
                     return;
+                }
                 if (null != pullToRefresh) {
                     dismissRefesh();
                 }
 
                 JSONArray goodsList = ans.getJSONArray(Constance.goodsList);
+                //当前页码
                 JSONObject paged=ans.getJSONObject(Constance.paged);
                 int pageTemp=page;
                 if(paged!=null){
@@ -136,15 +132,16 @@ public class NewsHomeController extends BaseController implements EndOfListView.
     }
 
     private void getDataSuccess(JSONArray array, int page) {
-        if (1 == page)
+        if (1 == page) {
             goodses = array;
-        else if (null != goodses) {
+        } else if (null != goodses) {
             for (int i = 0; i < array.length(); i++) {
                 goodses.add(array.getJSONObject(i));
             }
 
-            if (AppUtils.isEmpty(array))
+            if (AppUtils.isEmpty(array)) {
                 MyToast.show(mView.getContext(), "没有更多内容了");
+            }
         }
         mProAdapter.notifyDataSetChanged();
     }
@@ -170,15 +167,17 @@ public class NewsHomeController extends BaseController implements EndOfListView.
 
         @Override
         public int getCount() {
-            if (null == goodses)
+            if (null == goodses) {
                 return 0;
+            }
             return goodses.length();
         }
 
         @Override
         public JSONObject getItem(int position) {
-            if (null == goodses)
+            if (null == goodses) {
                 return null;
+            }
             return goodses.getJSONObject(position);
         }
 
@@ -265,5 +264,15 @@ public class NewsHomeController extends BaseController implements EndOfListView.
             TextView price_tv;
 
         }
+    }
+
+    @Override
+    protected void handleMessage(int action, Object[] values) {
+
+    }
+
+    @Override
+    protected void myHandleMessage(Message msg) {
+
     }
 }

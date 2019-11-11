@@ -15,6 +15,7 @@ import bc.juhao.com.cons.Constance;
 import bc.juhao.com.ui.view.dialog.SpotsDialog;
 import bc.juhao.com.utils.MyShare;
 import bocang.utils.AppUtils;
+import bocang.utils.LogUtils;
 import bocang.utils.UIUtils;
 
 /**
@@ -23,6 +24,9 @@ import bocang.utils.UIUtils;
  * @desc ${TODD}
  */
 public abstract class BaseFragment extends Fragment {
+
+    private final static String TAG = "BaseFragment";
+
     public SpotsDialog mDialog;
     private boolean isDestroy;
 
@@ -63,6 +67,7 @@ public abstract class BaseFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
+        LogUtils.logE(TAG, getClass().getSimpleName());
     }
 
     @Override

@@ -47,7 +47,7 @@ public class Network {
 
     }
 
-    public void sendGrouplist(int page, String per_page, String brand, String category, String filter_attr, String shop, String keyword,  INetworkCallBack iNetworkCallBack) {
+    public void sendGrouplist(int page, String per_page, String brand, String category, String filter_attr, String shop, String keyword, INetworkCallBack iNetworkCallBack) {
         JSONObject params = new JSONObject();
         params.add("page", page);
         params.add("per_page", per_page);
@@ -61,9 +61,10 @@ public class Network {
 
     /**
      * 抢购广告
+     *
      * @param iNetworkCallBack
      */
-    public void sendTimeBuyBanner( INetworkCallBack iNetworkCallBack) {
+    public void sendTimeBuyBanner(INetworkCallBack iNetworkCallBack) {
         JSONObject params = new JSONObject();
         sendRequest(params, NetWorkConst.GROUPBANNER, 2, 0, iNetworkCallBack);
     }
@@ -78,7 +79,7 @@ public class Network {
     /**
      * 获取产品列表
      */
-    public void selectYijiProduct(int page, String per_page, String brand, String category, String filter_attr, String shop, String keyword, String sort_key, String sort_value,String invite_code, INetworkCallBack iNetworkCallBack) {
+    public void selectYijiProduct(int page, String per_page, String brand, String category, String filter_attr, String shop, String keyword, String sort_key, String sort_value, String invite_code, INetworkCallBack iNetworkCallBack) {
         JSONObject params = new JSONObject();
         params.add("page", page);
         params.add("per_page", per_page);
@@ -148,7 +149,7 @@ public class Network {
     /**
      * 注册
      */
-    public void sendRegiest(String device_id, String mobile, String password, String code, String yaoqing_code,String nickName, INetworkCallBack iNetworkCallBack) {
+    public void sendRegiest(String device_id, String mobile, String password, String code, String yaoqing_code, String nickName, INetworkCallBack iNetworkCallBack) {
         JSONObject params = new JSONObject();
         params.add("device_id", device_id);
         params.add("mobile", mobile);
@@ -169,6 +170,7 @@ public class Network {
         params.add("code", code);
         sendRequest(params, NetWorkConst.RESET, 2, 0, iNetworkCallBack);
     }
+
     /**
      * 重置密码
      */
@@ -179,6 +181,7 @@ public class Network {
         params.add("old_password", oldPwd);
         sendRequest(params, NetWorkConst.UPDATE, 2, 0, iNetworkCallBack);
     }
+
     /**
      * 获取验证码
      *
@@ -518,6 +521,7 @@ public class Network {
         sendRequest(params, NetWorkConst.ARTICLELIST, 2, 0, iNetworkCallBack);
 
     }
+
     /**
      * 消息中心
      */
@@ -650,17 +654,18 @@ public class Network {
     /**
      * 修改订单价格
      */
-    public void updatePrice(String orderId, double money,String discount, INetworkCallBack02 iNetworkCallBack) {
+    public void updatePrice(String orderId, double money, String discount, INetworkCallBack02 iNetworkCallBack) {
         JSONObject params = new JSONObject();
         params.add("order_sn", orderId);
         params.add("order_amount", money);
         params.add("discount", discount);
         sendRequest02(params, NetWorkConst.ORDERUPDATE, 2, iNetworkCallBack);
     }
+
     /**
      * 修改订单产品价格
      */
-    public void updateProductPrice(String orderId, String  goods_id,String goods_amount, INetworkCallBack02 iNetworkCallBack) {
+    public void updateProductPrice(String orderId, String goods_id, String goods_amount, INetworkCallBack02 iNetworkCallBack) {
         JSONObject params = new JSONObject();
         params.add("order_id", orderId);
         params.add("goods_id", goods_id);
@@ -742,25 +747,26 @@ public class Network {
      */
     public void getAgentAll(INetworkCallBack iNetworkCallBack) {
         JSONObject params = new JSONObject();
-        params.add("page","1");
-        params.add("per_page","20");
+        params.add("page", "1");
+        params.add("per_page", "20");
         sendRequest(params, NetWorkConst.AGENT_ALL_URL, 1, 0, iNetworkCallBack);
     }
 
     /**
      * 获取我的分销商
      */
-    public void getAgentAll(String page,String per_page,INetworkCallBack iNetworkCallBack) {
+    public void getAgentAll(String page, String per_page, INetworkCallBack iNetworkCallBack) {
         JSONObject params = new JSONObject();
-        params.add("page",page);
-        params.add("per_page",per_page);
+        params.add("page", page);
+        params.add("per_page", per_page);
         sendRequest(params, NetWorkConst.AGENT_ALL_URL, 1, 0, iNetworkCallBack);
     }
 
     /**
      * 设置方案的公布状态
-     * @param id 方案ID
-     * @param type 类型 1公开0私有
+     *
+     * @param id               方案ID
+     * @param type             类型 1公开0私有
      * @param iNetworkCallBack
      */
     public void setPrivateProgramme(String id, int type, INetworkCallBack iNetworkCallBack) {
@@ -772,11 +778,12 @@ public class Network {
 
     /**
      * 修改级别
-     * @param level 级别
-     * @param uid 用户ID
+     *
+     * @param level            级别
+     * @param uid              用户ID
      * @param iNetworkCallBack
      */
-    public void editLevel(int level,String uid, INetworkCallBack iNetworkCallBack) {
+    public void editLevel(int level, String uid, INetworkCallBack iNetworkCallBack) {
         JSONObject params = new JSONObject();
         params.add("level", level);
         params.add("uid", uid);
@@ -785,7 +792,7 @@ public class Network {
         sendRequest(params, NetWorkConst.LEVEL_EDIT_URL, 1, 0, iNetworkCallBack);
     }
 
-    public void editInviteCode(String uid,String code,INetworkCallBack iNetworkCallBack) {
+    public void editInviteCode(String uid, String code, INetworkCallBack iNetworkCallBack) {
         JSONObject params = new JSONObject();
         params.add("code", code);
 //        params.add("uid", uid);
@@ -793,7 +800,7 @@ public class Network {
     }
 
 
-    public void reviceProductList(String product,int p,INetworkCallBack iNetworkCallBack) {
+    public void reviceProductList(String product, int p, INetworkCallBack iNetworkCallBack) {
         JSONObject params = new JSONObject();
         params.add("product", product);
         params.add("page", p);
@@ -802,52 +809,56 @@ public class Network {
     }
 
 
-    public void sendOrderClick(String id,int state,INetworkCallBack iNetworkCallBack) {
+    public void sendOrderClick(String id, int state, INetworkCallBack iNetworkCallBack) {
         JSONObject params = new JSONObject();
         params.add("id", id);
-        params.add("state",state);
+        params.add("state", state);
         sendRequest(params, NetWorkConst.ORDER_CLICK_URL, 1, 0, iNetworkCallBack);
     }
 
 
     public void sendproductLink(String productId, INetworkCallBack iNetworkCallBack) {
-        JSONObject jsonObject=new JSONObject();
-        jsonObject.add("product",productId);
-        sendRequest(jsonObject, NetWorkConst.PRODUCT_DETAIL_LINK,1,0,iNetworkCallBack);
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.add("product", productId);
+        sendRequest(jsonObject, NetWorkConst.PRODUCT_DETAIL_LINK, 1, 0, iNetworkCallBack);
     }
+
     public void sendAddAccount(String company, String bank, String account, String name, String tel, INetworkCallBack iNetworkCallBack) {
-        JSONObject jsonObject=new JSONObject();
-        jsonObject.add("company",company);
-        jsonObject.add("bank",bank);
-        jsonObject.add("account",account);
-        jsonObject.add("name",name);
-        jsonObject.add("phone",tel);
-        sendRequest(jsonObject, NetWorkConst.ADD_ACCOUNT,1,0,iNetworkCallBack);
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.add("company", company);
+        jsonObject.add("bank", bank);
+        jsonObject.add("account", account);
+        jsonObject.add("name", name);
+        jsonObject.add("phone", tel);
+        sendRequest(jsonObject, NetWorkConst.ADD_ACCOUNT, 1, 0, iNetworkCallBack);
     }
 
     public void sendAccountList(INetworkCallBack iNetworkCallBack) {
-        JSONObject jsonObject=new JSONObject();
-        sendRequest(jsonObject, NetWorkConst.LIST_ACCOUNT,1,0,iNetworkCallBack);
+        JSONObject jsonObject = new JSONObject();
+        sendRequest(jsonObject, NetWorkConst.LIST_ACCOUNT, 1, 0, iNetworkCallBack);
     }
 
-    public void sendPaySuccess(String orderid,String mTotal, INetworkCallBack iNetworkCallBack) {
-        JSONObject jsonObject=new JSONObject();
-        jsonObject.add("amount",mTotal);
-        jsonObject.add("order",orderid);
-        sendRequest(jsonObject, NetWorkConst.ALIPAY_SEND,1,0,iNetworkCallBack);
+    public void sendPaySuccess(String orderid, String mTotal, INetworkCallBack iNetworkCallBack) {
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.add("amount", mTotal);
+        jsonObject.add("order", orderid);
+        sendRequest(jsonObject, NetWorkConst.ALIPAY_SEND, 1, 0, iNetworkCallBack);
     }
+
     public void sendDealer(String name, String phone, String region, String address, String remark, INetworkCallBack iNetworkCallBack) {
-        JSONObject jsonObject=new JSONObject();
-        jsonObject.add("name",name);
-        jsonObject.add("phone",phone);
-        jsonObject.add("region",region);
-        jsonObject.add("address",address);
-        sendRequest(jsonObject, NetWorkConst.DEALER_ADD,1,0,iNetworkCallBack);
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.add("name", name);
+        jsonObject.add("phone", phone);
+        jsonObject.add("region", region);
+        jsonObject.add("address", address);
+        sendRequest(jsonObject, NetWorkConst.DEALER_ADD, 1, 0, iNetworkCallBack);
     }
+
     public void getShopMobile(INetworkCallBack iNetworkCallBack) {
-        JSONObject jsonObject=new JSONObject();
+        JSONObject jsonObject = new JSONObject();
 //        sendRequest(jsonObject,NetWorkConst.SHOP_MOBILE);
     }
+
     /**
      * 发送请求   bocang.json 的请求
      *
@@ -972,47 +983,72 @@ public class Network {
 
 
     public void sendTokenAdd(String android_id, INetworkCallBack02 iNetworkCallBack02) {
-        JSONObject jsonObject=new JSONObject();
-        jsonObject.add("sid",android_id);
-        sendRequest02(jsonObject, NetWorkConst.TOKEN_ADD,2,iNetworkCallBack02);
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.add("sid", android_id);
+        sendRequest02(jsonObject, NetWorkConst.TOKEN_ADD, 2, iNetworkCallBack02);
     }
 
 
     public void sendBannerIndex(INetworkCallBack iNetworkCallBack) {
-        JSONObject jsonObject=new JSONObject();
-        sendRequest(jsonObject, NetWorkConst.BANNER_INDEX,1,0,iNetworkCallBack);
+        JSONObject jsonObject = new JSONObject();
+        sendRequest(jsonObject, NetWorkConst.BANNER_INDEX, 1, 0, iNetworkCallBack);
     }
+
     public void sendHomeIndex(INetworkCallBack iNetworkCallBack) {
-        JSONObject jsonObject=new JSONObject();
-        jsonObject.add("id","275");
-        sendRequest(jsonObject, NetWorkConst.BANNER_INDEX,1,0,iNetworkCallBack);
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.add("id", "275");
+        sendRequest(jsonObject, NetWorkConst.BANNER_INDEX, 1, 0, iNetworkCallBack);
     }
 
     public void sendZhuanti(INetworkCallBack iNetworkCallBack) {
-        JSONObject jsonObject=new JSONObject();
-        jsonObject.add("id","11");
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.add("id", "11");
         jsonObject.add("page", "1");
         jsonObject.add("per_page", "10");
-        sendRequest(jsonObject, NetWorkConst.ARTICLE_ZHUANTI,1,0,iNetworkCallBack);
+        sendRequest(jsonObject, NetWorkConst.ARTICLE_ZHUANTI, 1, 0, iNetworkCallBack);
     }
 
     public void sendScene(INetworkCallBack iNetworkCallBack) {
-        JSONObject jsonObject=new JSONObject();
-        sendRequest(jsonObject, NetWorkConst.CATEGORY_SCENE,1,0,iNetworkCallBack);
+        JSONObject jsonObject = new JSONObject();
+        sendRequest(jsonObject, NetWorkConst.CATEGORY_SCENE, 1, 0, iNetworkCallBack);
     }
 
     public void checkSystem(INetworkCallBack iNetworkCallBack) {
-        JSONObject jsonObject=new JSONObject();
-        jsonObject.add("is_hd",0);
-        sendRequest(jsonObject,NetWorkConst.CHECK_SYSTEM,1,0,iNetworkCallBack);
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.add("is_hd", 0);
+        sendRequest(jsonObject, NetWorkConst.CHECK_SYSTEM, 1, 0, iNetworkCallBack);
     }
 
+    /**
+     * 3D场景列表
+     */
     public void get3dSceneList(int page, String s, String filter_attr, INetworkCallBack iNetworkCallBack) {
-        JSONObject jsonObject=new JSONObject();
-        jsonObject.add("page",page+"");
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.add("page", page + "");
 //        jsonObject.add("public",s);
-        jsonObject.add("attr_id",filter_attr);
-        sendRequest(jsonObject,NetWorkConst.SCENELIST_3D_URL,1,0,iNetworkCallBack);
+        jsonObject.add("attr_id", filter_attr);
+        sendRequest(jsonObject, NetWorkConst.SCENELIST_3D_URL, 1, 0, iNetworkCallBack);
+    }
+
+    /**
+     * 获取3维场景列表 POST
+     *
+     * @param page        页数
+     * @param s           public 2为楼盘三维场景，空为公共三维场景
+     * @param filter_attr 3维场景属性json字符串，0为当前属性对应的全部结果，不填返回所有场景 eg:[0, 13, 0, 0]
+     * @param is_hot      1为最火
+     * @param is_new      1为最新
+     */
+    public void getSceneList(int page, String s, String filter_attr, int is_hot, int is_new, INetworkCallBack iNetworkCallBack) {
+
+        JSONObject jsonObject = new JSONObject();
+
+        jsonObject.add("page", page+"");
+//        jsonObject.add("public", s);
+        jsonObject.add("attr_id", filter_attr);
+//        jsonObject.add("is_hot", is_hot+"");
+//        jsonObject.add("is_new", is_new+"");
+        sendRequest(jsonObject, NetWorkConst.SCENELIST_3D_URL, 1, 0, iNetworkCallBack);
     }
 }
 

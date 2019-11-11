@@ -16,7 +16,9 @@ import android.support.annotation.FloatRange;
 import android.support.annotation.IntRange;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.v7.appcompat.BuildConfig;
+import android.support.v4.BuildConfig;
+//import android.support.v7.appcompat.BuildConfig;
+
 
 /**
  * Created by Oleksii Shliama (https://github.com/shliama).

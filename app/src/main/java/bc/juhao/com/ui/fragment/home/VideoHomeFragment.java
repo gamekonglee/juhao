@@ -27,9 +27,10 @@ public class VideoHomeFragment extends BaseFragment implements View.OnClickListe
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.frag_home_video,null);
+        return inflater.inflate(R.layout.frag_home_video, null);
 
     }
+
     @Override
     protected void initController() {
         mController = new VideoController(this);
@@ -57,35 +58,37 @@ public class VideoHomeFragment extends BaseFragment implements View.OnClickListe
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()){
+        switch (v.getId()) {
             case R.id.tv_xuanchuan:
                 swichType(0);
                 break;
             case R.id.tv_jiaoxue:
                 swichType(1);
                 break;
+            default:
+                break;
 
         }
     }
 
     private void swichType(int type) {
-        if(currentType==type){
+        if (currentType == type) {
             return;
         }
-        currentType=type;
-        if(currentType==0){
+        currentType = type;
+        if (currentType == 0) {
             tv_xuanchuan.setTextColor(getActivity().getResources().getColor(R.color.green));
             tv_jiaoxue.setTextColor(getActivity().getResources().getColor(R.color.txt_black));
             tv_jiaoxue.setBackground(null);
             tv_xuanchuan.setBackground(getActivity().getResources().getDrawable(R.drawable.bg_bottom_line));
-            mController.articlesBeans=new ArrayList<>();
+            mController.articlesBeans = new ArrayList<>();
             mController.sendVideoA();
-        }else {
+        } else {
             tv_xuanchuan.setTextColor(getActivity().getResources().getColor(R.color.txt_black));
             tv_xuanchuan.setBackground(null);
             tv_jiaoxue.setBackground(getActivity().getResources().getDrawable(R.drawable.bg_bottom_line));
             tv_jiaoxue.setTextColor(getActivity().getResources().getColor(R.color.green));
-            mController.articlesBeans=new ArrayList<>();
+            mController.articlesBeans = new ArrayList<>();
             mController.sendVideoB();
         }
 

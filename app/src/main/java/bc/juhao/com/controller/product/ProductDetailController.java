@@ -59,6 +59,7 @@ import bocang.json.JSONObject;
 import bocang.utils.AppDialog;
 import bocang.utils.AppUtils;
 import bocang.utils.IntentUtil;
+import bocang.utils.LogUtils;
 import bocang.utils.MyLog;
 import bocang.utils.MyToast;
 
@@ -67,20 +68,22 @@ import bocang.utils.MyToast;
  * @date : 2017/2/13 17:58
  * @description :
  */
-public class ProductDetailController extends BaseController implements INetworkCallBack, ViewPager.OnPageChangeListener {
+public class ProductDetailController extends BaseController implements INetworkCallBack {
+
     private ProDetailActivity mView;
-    private View product_view, detail_view, parament_view, sun_image_view;
-    private TextView product_tv, detail_tv, parament_tv, sun_image_tv;
-    private ProductContainerAdapter mContainerAdapter;
-    private ViewPager container_vp;
     private Intent mIntent;
+
+    private TextView product_tv, detail_tv, parament_tv, sun_image_tv;
+    private ViewPager container_vp;
     private LinearLayout title_ll, product_ll, detail_ll, main_ll, sun_image_ll;
     private ImageView collectIv;
     private RelativeLayout main_rl;
     private TextView unMessageReadTv;
     private TextView tuijian_tv;
-    private JSONObject mAddressObject;
 
+    private ProductContainerAdapter mContainerAdapter;
+    private JSONObject mAddressObject;
+    private ArrayList<BaseFragment> mFragments;
 
     public ProductDetailController(ProDetailActivity v) {
         mView = v;
@@ -88,20 +91,16 @@ public class ProductDetailController extends BaseController implements INetworkC
         initViewData();
     }
 
-
     public void initViewData() {
         sendProductDetail();
         sendCustom();
     }
 
     private void initView() {
-        product_view = mView.findViewById(R.id.product_view);
-        detail_view = mView.findViewById(R.id.detail_view);
-        parament_view = mView.findViewById(R.id.parament_view);
-        sun_image_view = mView.findViewById(R.id.sun_image_view);
+
         product_tv = (TextView) mView.findViewById(R.id.product_tv);
         detail_tv = (TextView) mView.findViewById(R.id.detail_tv);
-        parament_tv = (TextView) mView.findViewById(R.id.parament_tv);
+//        parament_tv = (TextView) mView.findViewById(R.id.parament_tv);
         sun_image_tv = (TextView) mView.findViewById(R.id.sun_image_tv);
         tuijian_tv = mView.findViewById(R.id.tuijian_tv);
         unMessageReadTv = (TextView) mView.findViewById(R.id.unMessageReadTv);
@@ -109,8 +108,9 @@ public class ProductDetailController extends BaseController implements INetworkC
 
         mContainerAdapter = new ProductContainerAdapter(mView.getSupportFragmentManager());
         container_vp.setAdapter(mContainerAdapter);
-        container_vp.setOnPageChangeListener(this);
+//        container_vp.setOnPageChangeListener(this);
         container_vp.setCurrentItem(0);
+
         title_ll = (LinearLayout) mView.findViewById(R.id.title_ll);
         product_ll = (LinearLayout) mView.findViewById(R.id.product_ll);
         main_ll = (LinearLayout) mView.findViewById(R.id.main_ll);
@@ -120,6 +120,7 @@ public class ProductDetailController extends BaseController implements INetworkC
 
         main_rl = (RelativeLayout) mView.findViewById(R.id.main_rl);
         collectIv = (ImageView) mView.findViewById(R.id.collectIv);
+
         container_vp.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
@@ -128,9 +129,23 @@ public class ProductDetailController extends BaseController implements INetworkC
 
             @Override
             public void onPageSelected(int position) {
-                if (position == 1) {
-                    mFragments.get(position).onStart();
+
+                switch (position) {
+                    case 0:
+                        selectProductType(R.id.product_ll);
+                        break;
+                    case 1:
+                        selectProductType(R.id.detail_ll);
+                        mFragments.get(position).onStart();
+                        break;
+                    case 2:
+                        selectProductType(R.id.tuijian_ll);
+                        break;
+                    case 3:
+                        selectProductType(R.id.sun_image_ll);
+                        break;
                 }
+
             }
 
             @Override
@@ -139,108 +154,91 @@ public class ProductDetailController extends BaseController implements INetworkC
             }
         });
 
-
     }
 
     /**
-     * 购物车数量显示
-     */
-    public void getCartMun() {
-        if (DemoApplication.mCartCount == 0) {
-            unMessageReadTv.setVisibility(View.GONE);
-        } else {
-            unMessageReadTv.setVisibility(View.VISIBLE);
-            unMessageReadTv.setText(DemoApplication.mCartCount + "");
-        }
-    }
-
-    /**
-     * 产品详情不同选择
-     *
-     * @param type
-     */
-    public void selectProductType(int type) {
-        sun_image_tv.setTextColor(mView.getResources().getColor(R.color.txt_black));
-        tuijian_tv.setTextColor(mView.getResources().getColor(R.color.txt_black));
-        detail_tv.setTextColor(mView.getResources().getColor(R.color.txt_black));
-        product_tv.setTextColor(mView.getResources().getColor(R.color.txt_black));
-        detail_tv.setBackgroundResource((R.drawable.bg_goods_detail_intro_corner_normal));
-        product_tv.setBackgroundResource((R.drawable.bg_goods_detail_intro_corner_left_normal));
-        tuijian_tv.setBackgroundResource(R.drawable.bg_goods_detail_intro_corner_normal);
-        sun_image_tv.setBackgroundResource(R.drawable.bg_goods_detail_intro_corner_right_normal);
-        switch (type) {
-            case R.id.product_ll:
-//                product_view.setVisibility(View.VISIBLE);
-                product_tv.setBackgroundResource((R.drawable.bg_goods_detail_intro_corner_left));
-                product_tv.setTextColor(Color.WHITE);
-                container_vp.setCurrentItem(0, true);
-                break;
-            case R.id.detail_ll:
-//                detail_view.setVisibility(View.VISIBLE);
-                detail_tv.setBackgroundResource((R.drawable.bg_goods_detail_intro_corner));
-                detail_tv.setTextColor(Color.WHITE);
-                container_vp.setCurrentItem(1, true);
-                break;
-            case R.id.tuijian_ll:
-                tuijian_tv.setTextColor(Color.WHITE);
-                tuijian_tv.setBackgroundResource(R.drawable.bg_goods_detail_intro_corner);
-                container_vp.setCurrentItem(2, true);
-                break;
-            case R.id.sun_image_ll:
-//                sun_image_view.setVisibility(View.VISIBLE);
-                sun_image_tv.setTextColor(Color.WHITE);
-                sun_image_tv.setBackgroundResource(R.drawable.bg_goods_detail_intro_corner_right);
-                container_vp.setCurrentItem(3, true);
-                break;
-
-        }
-
-    }
-
-    @Override
-    protected void handleMessage(int action, Object[] values) {
-
-    }
-
-    @Override
-    protected void myHandleMessage(Message msg) {
-
-    }
-
-    /**
-     * 产品详情
+     * 获取产品详情
      */
     public void sendProductDetail() {
+        LogUtils.logE(TAG, "产品id:" + mView.mProductId);
         mNetWork.sendProductDetail(mView.mProductId, this);
+    }
+
+    /**
+     * 客服QQ
+     */
+    private void sendCustom() {
+        mNetWork.sendCustom(this);
+    }
+
+
+    /**
+     * 购物车列表
+     */
+    public void sendShoppingCart() {
+        mNetWork.sendShoppingCart(this);
+    }
+
+    /*
+     * 选择参数
+     */
+    public void selectParament() {
+        if (AppUtils.isEmpty(mView.mProductObject))
+            return;
+        mPopWindow = new SelectParamentPopWindow(mView, mView.mProductObject);
+        mPopWindow.onShow(main_ll);
+        mPopWindow.setListener(new IParamentChooseListener() {
+            @Override
+            public void onParamentChanged(String text, Boolean isGoCart, String property, int mount, int price) {
+                if (!AppUtils.isEmpty(text)) {
+                    mView.mProperty = property;
+                    mView.mPrice = price;
+                    mView.mPropertyValue = text;
+                }
+                if (isGoCart == true) {
+                    mView.setShowDialog(true);
+                    mView.setShowDialog("正在加入购物车中...");
+                    mView.showLoading();
+                    sendGoShoppingCart(mView.mProductId + "", property, mount);
+                }
+
+                EventBus.getDefault().post(Constance.PROPERTY);
+            }
+        });
+
+    }
+
+    private void sendGoShoppingCart(String product, String property, int mount) {
+        mNetWork.sendShoppingCart(product, property, mount, this);
     }
 
     @Override
     public void onSuccessListener(String requestCode, JSONObject ans) {
         mView.hideLoading();
         switch (requestCode) {
-            case NetWorkConst.PRODUCTDETAIL:
+            case NetWorkConst.PRODUCTDETAIL://产品详情
                 mView.goodses = ans.getJSONObject(Constance.product);
-                try{
+                try {
                     int level = DemoApplication.mUserObject.getInt(Constance.level);
                     if (level > 0) {
                         mView.mOrderId = mView.goodses.getInt(Constance.order_id);
                     } else {
                         mView.mOrderId = 1;
                     }
-                }catch (Exception e){
+                } catch (Exception e) {
                     e.printStackTrace();
                 }
 
                 break;
-            case NetWorkConst.CUSTOM:
+            case NetWorkConst.CUSTOM://客服qq
                 NetWorkConst.QQ = ans.getString(Constance.custom);
                 break;
-            case NetWorkConst.ADDCART:
+            case NetWorkConst.ADDCART://立即购买/加入购物车
                 //                MyToast.show(mView, UIUtils.getString(R.string.go_cart_ok));
                 sendShoppingCart();
 
                 break;
-            case NetWorkConst.GETCART:
+            case NetWorkConst.GETCART://购物车列表
                 //                int level = DemoApplication.mUserObject.getInt(Constance.level);
                 //                if (level == 0) {
                 //                    if (!mView.isToken()) {
@@ -254,6 +252,17 @@ public class ProductDetailController extends BaseController implements INetworkC
                 EventBus.getDefault().post(Constance.CARTCOUNT);
                 break;
         }
+    }
+
+    @Override
+    public void onFailureListener(String requestCode, JSONObject ans) {
+        if (null == mView || mView.isFinishing())
+            return;
+        if (AppUtils.isEmpty(ans)) {
+            AppDialog.messageBox(UIUtils.getString(R.string.server_error));
+            return;
+        }
+        AppDialog.messageBox(ans.getString(Constance.error_desc));
     }
 
     /**
@@ -282,80 +291,6 @@ public class ProductDetailController extends BaseController implements INetworkC
         Toast.makeText(mView, "加入购物车成功!", Toast.LENGTH_SHORT).show();
     }
 
-
-    public void sendShoppingCart() {
-        mNetWork.sendShoppingCart(this);
-    }
-
-    @Override
-    public void onFailureListener(String requestCode, JSONObject ans) {
-        if (null == mView || mView.isFinishing())
-            return;
-        if (AppUtils.isEmpty(ans)) {
-            AppDialog.messageBox(UIUtils.getString(R.string.server_error));
-            return;
-        }
-        AppDialog.messageBox(ans.getString(Constance.error_desc));
-    }
-
-    private void sendCustom() {
-        mNetWork.sendCustom(this);
-    }
-
-    /**
-     * 联系客服
-     */
-    public void sendCall(String msg) {
-        try {
-            if(DemoApplication.mUserObject==null){
-                return;
-            }
-            int level = DemoApplication.mUserObject.getInt(Constance.level);
-            if (level == 0) {
-                if (!mView.isToken()) {
-                    IntentUtil.startActivity(mView, ChartListActivity.class, false);
-                }
-                return;
-            }
-
-            String parent_name = DemoApplication.mUserObject.getString("parent_name");
-            String parent_id = DemoApplication.mUserObject.getString("parent_id");
-            if(ProDetailActivity.isJuHao)
-            {
-                parent_id="37";
-                parent_name="钜豪超市";
-            }
-            String userIcon = NetWorkConst.SCENE_HOST + DemoApplication.mUserObject.getString("parent_avatar");
-            EaseUser user = new EaseUser(parent_id);
-            user.setNickname(parent_name);
-            user.setNick(parent_name);
-            user.setAvatar(userIcon);
-            DemoHelper.getInstance().saveContact(user);
-
-            if (!EMClient.getInstance().isLoggedInBefore()) {
-                ShowDialog mDialog = new ShowDialog();
-                mDialog.show(mView, "提示", msg, new ShowDialog.OnBottomClickListener() {
-                    @Override
-                    public void positive() {
-                        loginHX();
-                    }
-
-                    @Override
-                    public void negtive() {
-
-                    }
-                });
-            } else {
-                EMClient.getInstance().contactManager().acceptInvitation(parent_id);
-                mView.startActivity(new Intent(mView, ChatActivity.class).putExtra(EaseConstant.EXTRA_USER_ID, parent_id));
-            }
-
-
-        } catch (HyphenateException e) {
-            e.printStackTrace();
-        }
-    }
-
     //登录环信
     private void loginHX() {
         final Toast toast = Toast.makeText(mView, "服务器连接中...!", Toast.LENGTH_SHORT);
@@ -382,8 +317,8 @@ public class ProductDetailController extends BaseController implements INetworkC
                 MyLog.e("登录环信成功!");
                 toast.cancel();
                 String parent_id = DemoApplication.mUserObject.getString("parent_id");
-                if(ProDetailActivity.isJuHao){
-                    parent_id="37";
+                if (ProDetailActivity.isJuHao) {
+                    parent_id = "37";
                 }
 //                System.out.println("parentid:"+parent_id);
                 try {
@@ -436,208 +371,7 @@ public class ProductDetailController extends BaseController implements INetworkC
     }
 
 
-    /**
-     * 购物车
-     */
-    public void getShoopingCart() {
-        IntentUtil.startActivity(mView, ShoppingCartActivity.class, false);
-    }
-
-    /**
-     * 马上配配看
-     */
-    public void GoDiyProduct() {
-        if (AppUtils.isEmpty(mView.goodses)) {
-            MyToast.show(mView, "还没加载完毕，请稍后再试");
-            return;
-        }
-        mIntent = new Intent(mView, DiyActivity.class);
-        mIntent.putExtra(Constance.product, mView.goodses);
-        mIntent.putExtra(Constance.property, mView.mProperty);
-        DemoApplication.mSelectProducts.add(mView.goodses);
-        mView.startActivity(mIntent);
-    }
-
-    /**
-     * 加入购物车
-     */
-    public void GoShoppingCart() {
-
-        if (AppUtils.isEmpty(mView.mProductObject))
-            return;
-        if (mView.mProductObject.getJSONArray(Constance.properties).size() == 0) {
-            mView.setShowDialog(true);
-            mView.setShowDialog("正在加入购物车中...");
-            mView.showLoading();
-            sendGoShoppingCart(mView.mProductId + "", "", 1);
-        } else {
-            selectParament();
-        }
-    }
-
     private SelectParamentPopWindow mPopWindow;
-
-    /*
-         * 选择参数
-         */
-    public void selectParament() {
-        if (AppUtils.isEmpty(mView.mProductObject))
-            return;
-        mPopWindow = new SelectParamentPopWindow(mView, mView.mProductObject);
-        mPopWindow.onShow(main_ll);
-        mPopWindow.setListener(new IParamentChooseListener() {
-            @Override
-            public void onParamentChanged(String text, Boolean isGoCart, String property, int mount, int price) {
-                if (!AppUtils.isEmpty(text)) {
-                    mView.mProperty = property;
-                    mView.mPrice = price;
-                    mView.mPropertyValue = text;
-                }
-                if (isGoCart == true) {
-                    mView.setShowDialog(true);
-                    mView.setShowDialog("正在加入购物车中...");
-                    mView.showLoading();
-                    sendGoShoppingCart(mView.mProductId + "", property, mount);
-                }
-
-                EventBus.getDefault().post(Constance.PROPERTY);
-            }
-        });
-
-    }
-
-    private void sendGoShoppingCart(String product, String property, int mount) {
-        mNetWork.sendShoppingCart(product, property, mount, this);
-    }
-
-
-    /**
-     *
-     */
-    public void setShare() {
-
-        if (AppUtils.isEmpty(mView.goodses)) {
-            MyToast.show(mView, "还没加载完毕，请稍后再试");
-            return;
-        }
-        mIntent = new Intent(mView, ShareProductActivity.class);
-        mIntent.putExtra(Constance.product, mView.goodses);
-        mIntent.putExtra(Constance.property, mView.mProperty);
-        mView.startActivity(mIntent);
-
-    }
-
-    @Override
-    public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-
-    }
-
-    @Override
-    public void onPageSelected(int position) {
-        switch (position) {
-            case 0:
-                selectProductType(R.id.product_ll);
-                break;
-            case 1:
-                selectProductType(R.id.detail_ll);
-                break;
-            case 2:
-                selectProductType(R.id.tuijian_ll);
-                break;
-            case 3:
-                selectProductType(R.id.sun_image_ll);
-                break;
-        }
-    }
-
-    @Override
-    public void onPageScrollStateChanged(int state) {
-
-    }
-
-    private ArrayList<BaseFragment> mFragments;
-
-    /**
-     * 随心配
-     */
-    public void goPhoto() {
-        if (AppUtils.isEmpty(mView.goodses)) {
-            MyToast.show(mView, "还没加载完毕，请稍后再试");
-            return;
-        }
-        mIntent = new Intent(mView, TestCameraActivity.class);
-        mIntent.putExtra(Constance.product, mView.goodses);
-        mIntent.putExtra(Constance.property, mView.mProperty);
-        mView.startActivity(mIntent);
-    }
-
-    public void toBuy() {
-
-        if (AppUtils.isEmpty(mView.mProductObject))
-            return;
-        mView.showLoading();
-        mNetWork.sendShoppingCart(mView.mProductId + "", mView.mProperty, 1, new INetworkCallBack() {
-            @Override
-            public void onSuccessListener(String requestCode, JSONObject ans) {
-                mNetWork.sendAddressList(new INetworkCallBack() {
-                    @Override
-                    public void onSuccessListener(String requestCode, JSONObject ans) {
-                        JSONArray consigneeList = ans.getJSONArray(Constance.consignees);
-                        if (consigneeList.length() == 0)
-                        {
-                            MyToast.show(mView,"请先添加收货地址");
-                        mView.hideLoading();
-                            return;}
-                        mAddressObject = consigneeList.getJSONObject(0);
-                        mNetWork.sendShoppingCart(new INetworkCallBack() {
-                            @Override
-                            public void onSuccessListener(String requestCode, JSONObject ans) {
-                                JSONArray goodses = ans.getJSONArray(Constance.goods_groups).getJSONObject(0).getJSONArray(Constance.goods);
-                                final JSONArray goods=new JSONArray();
-                                goods.add(goodses.getJSONObject(0));
-                                mView.hideLoading();
-                                Intent intent=new Intent(mView,ConfirmOrderActivity.class);
-                                intent.putExtra(Constance.goods,goods);
-                                Float total=Float.parseFloat(goods.getJSONObject(0).getString(Constance.price))*goods.getJSONObject(0).getInt(Constance.amount);
-                                intent.putExtra(Constance.money,total);
-                                intent.putExtra(Constance.address,mAddressObject);
-                                mView.startActivity(intent);
-//                                    mNetWork.sendUpdateCart(goods.getJSONObject(0).getString(Constance.id), "1", new INetworkCallBack() {
-//                                        @Override
-//                                        public void onSuccessListener(String requestCode, JSONObject ans) {
-//
-//                                        }
-//
-//                                        @Override
-//                                        public void onFailureListener(String requestCode, JSONObject ans) {
-//                                            mView.hideLoading();
-//                                        }
-//                                    });
-
-                            }
-
-                            @Override
-                            public void onFailureListener(String requestCode, JSONObject ans) {
-                                mView.hideLoading();
-                            }
-                        });
-                    }
-
-                    @Override
-                    public void onFailureListener(String requestCode, JSONObject ans) {
-                        mView.hideLoading();
-                    }
-                });
-
-            }
-
-            @Override
-            public void onFailureListener(String requestCode, JSONObject ans) {
-                mView.hideLoading();
-            }
-        });
-
-    }
 
     public class ProductContainerAdapter extends FragmentPagerAdapter {
 
@@ -705,6 +439,271 @@ public class ProductDetailController extends BaseController implements INetworkC
         public int getCount() {
             return mFragments.size();
         }
+
+    }
+
+
+    /**********************************
+     * ProduceDetailActivity调用方法
+     * ********************************
+     */
+
+    /**
+     * 购物车数量显示
+     */
+    public void getCartMun() {
+        if (DemoApplication.mCartCount == 0) {
+            unMessageReadTv.setVisibility(View.GONE);
+        } else {
+            unMessageReadTv.setVisibility(View.VISIBLE);
+            unMessageReadTv.setText(DemoApplication.mCartCount + "");
+        }
+    }
+
+    /**
+     * 产品详情title不同选择
+     *
+     * @param type
+     */
+    public void selectProductType(int type) {
+
+        sun_image_tv.setTextColor(mView.getResources().getColor(R.color.txt_black));
+        tuijian_tv.setTextColor(mView.getResources().getColor(R.color.txt_black));
+        detail_tv.setTextColor(mView.getResources().getColor(R.color.txt_black));
+        product_tv.setTextColor(mView.getResources().getColor(R.color.txt_black));
+        detail_tv.setBackgroundResource((R.drawable.bg_goods_detail_intro_corner_normal));
+        product_tv.setBackgroundResource((R.drawable.bg_goods_detail_intro_corner_left_normal));
+        tuijian_tv.setBackgroundResource(R.drawable.bg_goods_detail_intro_corner_normal);
+        sun_image_tv.setBackgroundResource(R.drawable.bg_goods_detail_intro_corner_right_normal);
+        switch (type) {
+            case R.id.product_ll:
+//                product_view.setVisibility(View.VISIBLE);
+                product_tv.setBackgroundResource((R.drawable.bg_goods_detail_intro_corner_left));
+                product_tv.setTextColor(Color.WHITE);
+                container_vp.setCurrentItem(0, true);
+                break;
+            case R.id.detail_ll:
+//                detail_view.setVisibility(View.VISIBLE);
+                detail_tv.setBackgroundResource((R.drawable.bg_goods_detail_intro_corner));
+                detail_tv.setTextColor(Color.WHITE);
+                container_vp.setCurrentItem(1, true);
+                break;
+            case R.id.tuijian_ll:
+                tuijian_tv.setTextColor(Color.WHITE);
+                tuijian_tv.setBackgroundResource(R.drawable.bg_goods_detail_intro_corner);
+                container_vp.setCurrentItem(2, true);
+                break;
+            case R.id.sun_image_ll:
+//                sun_image_view.setVisibility(View.VISIBLE);
+                sun_image_tv.setTextColor(Color.WHITE);
+                sun_image_tv.setBackgroundResource(R.drawable.bg_goods_detail_intro_corner_right);
+                container_vp.setCurrentItem(3, true);
+                break;
+
+        }
+
+    }
+
+    /**
+     * 联系客服
+     */
+    public void sendCall(String msg) {
+        try {
+            if (DemoApplication.mUserObject == null) {
+                return;
+            }
+            int level = DemoApplication.mUserObject.getInt(Constance.level);
+            if (level == 0) {
+                if (!mView.isToken()) {
+                    IntentUtil.startActivity(mView, ChartListActivity.class, false);
+                }
+                return;
+            }
+
+            String parent_name = DemoApplication.mUserObject.getString("parent_name");
+            String parent_id = DemoApplication.mUserObject.getString("parent_id");
+            if (ProDetailActivity.isJuHao) {
+                parent_id = "37";
+                parent_name = "钜豪超市";
+            }
+            String userIcon = NetWorkConst.SCENE_HOST + DemoApplication.mUserObject.getString("parent_avatar");
+            EaseUser user = new EaseUser(parent_id);
+            user.setNickname(parent_name);
+            user.setNick(parent_name);
+            user.setAvatar(userIcon);
+            DemoHelper.getInstance().saveContact(user);
+
+            if (!EMClient.getInstance().isLoggedInBefore()) {
+                ShowDialog mDialog = new ShowDialog();
+                mDialog.show(mView, "提示", msg, new ShowDialog.OnBottomClickListener() {
+                    @Override
+                    public void positive() {
+                        loginHX();
+                    }
+
+                    @Override
+                    public void negtive() {
+
+                    }
+                });
+            } else {
+                EMClient.getInstance().contactManager().acceptInvitation(parent_id);
+                mView.startActivity(new Intent(mView, ChatActivity.class).putExtra(EaseConstant.EXTRA_USER_ID, parent_id));
+            }
+
+
+        } catch (HyphenateException e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * 进入购物车页面
+     */
+    public void getShoopingCart() {
+        IntentUtil.startActivity(mView, ShoppingCartActivity.class, false);
+    }
+
+    /**
+     * 加入购物车
+     */
+    public void GoShoppingCart() {
+
+        if (AppUtils.isEmpty(mView.mProductObject))
+            return;
+        if (mView.mProductObject.getJSONArray(Constance.properties).size() == 0) {
+            mView.setShowDialog(true);
+            mView.setShowDialog("正在加入购物车中...");
+            mView.showLoading();
+            sendGoShoppingCart(mView.mProductId + "", "", 1);
+        } else {
+            selectParament();
+        }
+    }
+
+    /**
+     * 分享
+     */
+    public void setShare() {
+
+        if (AppUtils.isEmpty(mView.goodses)) {
+            MyToast.show(mView, "还没加载完毕，请稍后再试");
+            return;
+        }
+        mIntent = new Intent(mView, ShareProductActivity.class);
+        mIntent.putExtra(Constance.product, mView.goodses);
+        mIntent.putExtra(Constance.property, mView.mProperty);
+        mView.startActivity(mIntent);
+
+    }
+
+    /**
+     * 随心配
+     */
+    public void GoDiyProduct() {
+        if (AppUtils.isEmpty(mView.goodses)) {
+            MyToast.show(mView, "还没加载完毕，请稍后再试");
+            return;
+        }
+        mIntent = new Intent(mView, DiyActivity.class);
+        mIntent.putExtra(Constance.product, mView.goodses);
+        mIntent.putExtra(Constance.property, mView.mProperty);
+        DemoApplication.mSelectProducts.add(mView.goodses);
+        mView.startActivity(mIntent);
+    }
+
+    /**
+     * 立即购买
+     */
+    public void toBuy() {
+
+        if (AppUtils.isEmpty(mView.mProductObject))
+            return;
+        mView.showLoading();
+        mNetWork.sendShoppingCart(mView.mProductId + "", mView.mProperty, 1, new INetworkCallBack() {
+            @Override
+            public void onSuccessListener(String requestCode, JSONObject ans) {
+                mNetWork.sendAddressList(new INetworkCallBack() {
+                    @Override
+                    public void onSuccessListener(String requestCode, JSONObject ans) {
+                        JSONArray consigneeList = ans.getJSONArray(Constance.consignees);
+                        if (consigneeList.length() == 0) {
+                            MyToast.show(mView, "请先添加收货地址");
+                            mView.hideLoading();
+                            return;
+                        }
+                        mAddressObject = consigneeList.getJSONObject(0);
+                        mNetWork.sendShoppingCart(new INetworkCallBack() {
+                            @Override
+                            public void onSuccessListener(String requestCode, JSONObject ans) {
+                                JSONArray goodses = ans.getJSONArray(Constance.goods_groups).getJSONObject(0).getJSONArray(Constance.goods);
+                                final JSONArray goods = new JSONArray();
+                                goods.add(goodses.getJSONObject(0));
+                                mView.hideLoading();
+                                Intent intent = new Intent(mView, ConfirmOrderActivity.class);
+                                intent.putExtra(Constance.goods, goods);
+                                Float total = Float.parseFloat(goods.getJSONObject(0).getString(Constance.price)) * goods.getJSONObject(0).getInt(Constance.amount);
+                                intent.putExtra(Constance.money, total);
+                                intent.putExtra(Constance.address, mAddressObject);
+                                mView.startActivity(intent);
+//                                    mNetWork.sendUpdateCart(goods.getJSONObject(0).getString(Constance.id), "1", new INetworkCallBack() {
+//                                        @Override
+//                                        public void onSuccessListener(String requestCode, JSONObject ans) {
+//
+//                                        }
+//
+//                                        @Override
+//                                        public void onFailureListener(String requestCode, JSONObject ans) {
+//                                            mView.hideLoading();
+//                                        }
+//                                    });
+
+                            }
+
+                            @Override
+                            public void onFailureListener(String requestCode, JSONObject ans) {
+                                mView.hideLoading();
+                            }
+                        });
+                    }
+
+                    @Override
+                    public void onFailureListener(String requestCode, JSONObject ans) {
+                        mView.hideLoading();
+                    }
+                });
+
+            }
+
+            @Override
+            public void onFailureListener(String requestCode, JSONObject ans) {
+                mView.hideLoading();
+            }
+        });
+
+    }
+
+    /**
+     * 随心配
+     */
+    public void goPhoto() {
+        if (AppUtils.isEmpty(mView.goodses)) {
+            MyToast.show(mView, "还没加载完毕，请稍后再试");
+            return;
+        }
+        mIntent = new Intent(mView, TestCameraActivity.class);
+        mIntent.putExtra(Constance.product, mView.goodses);
+        mIntent.putExtra(Constance.property, mView.mProperty);
+        mView.startActivity(mIntent);
+    }
+
+    @Override
+    protected void handleMessage(int action, Object[] values) {
+
+    }
+
+    @Override
+    protected void myHandleMessage(Message msg) {
 
     }
 }

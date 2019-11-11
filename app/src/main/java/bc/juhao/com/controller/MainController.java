@@ -35,6 +35,7 @@ import bc.juhao.com.utils.UIUtils;
 import bocang.json.JSONObject;
 import bocang.utils.AppUtils;
 import bocang.utils.CommonUtil;
+import bocang.utils.LogUtils;
 import bocang.utils.MyToast;
 import me.leolin.shortcutbadger.ShortcutBadger;
 
@@ -44,18 +45,27 @@ import me.leolin.shortcutbadger.ShortcutBadger;
  * @description :
  */
 public class MainController extends BaseController implements INetworkCallBack {
-    private TextView unMessageReadTv;
+
     private MainActivity mView;
-    private String mAppVersion;
     private final View rl_main;
+    private TextView unMessageReadTv;
+
+
+    private String mAppVersion;//App最新版本号
+    private UpdateApkBroadcastReceiver broadcastReceiver;//App更新广播接收器
+    private int isLoginCount = 0;
 
     public MainController(MainActivity v) {
         mView = v;
         rl_main = mView.findViewById(R.id.rl_main);
         initView();
         initViewData();
+        String token= MyShare.get(UIUtils.getContext()).getString(Constance.TOKEN);
+//        LogUtils.logE(TAG, token);
+    }
 
-
+    private void initView() {
+        unMessageReadTv = (TextView) mView.findViewById(R.id.unMessageReadTv);
     }
 
     private void initViewData() {
@@ -64,76 +74,45 @@ public class MainController extends BaseController implements INetworkCallBack {
         checkSystem();
     }
 
-    private void checkSystem() {
-        mNetWork.checkSystem(new INetworkCallBack() {
-            @Override
-            public void onSuccessListener(String requestCode, JSONObject ans) {
-                JSONObject data=ans.getJSONObject(Constance.data);
-//                data=new JSONObject();
-//                data.add("title","系统维护");
-//                data.add("text","钜豪商城定于今天（2018年8月27日，星期一）晚上 20:00—22:00 对购物系统进行停机维护。受此影响，届时APP将暂停服务。感谢您的支持和谅解！");
-                if(data!=null&&data.length()>0){
-                    mView.isError=true;
-                    UIUtils.showSystemStopDialog(mView,rl_main,data.getString(Constance.title),data.getString(Constance.text));
-                }else {
-                    mView.isError=false;
-                }
-            }
-
-            @Override
-            public void onFailureListener(String requestCode, JSONObject ans) {
-
-            }
-        });
-    }
-
-    public void sendShoppingCart() {
+    /**
+     * 获取购物车数据
+     */
+    private void sendShoppingCart() {
         mNetWork.sendShoppingCart(this);
-    }
-
-    private void initView() {
-        unMessageReadTv = (TextView) mView.findViewById(R.id.unMessageReadTv);
-    }
-
-    @Override
-    protected void handleMessage(int action, Object[] values) {
-
-    }
-
-    @Override
-    protected void myHandleMessage(Message msg) {
-
     }
 
     /**
      * 获取版本号
      */
-    private void sendVersion(){
+    private void sendVersion() {
 //        mNetWork.sendVersion(this);
         new Thread(new Runnable() {
             @Override
             public void run() {
+                //ans 钜豪商城更新提示
                 String ans = NetWorkUtils.doGet(NetWorkConst.VERSION_URL_CONTENT);
-                final JSONObject jsonObject=new JSONObject(ans);
-                mAppVersion= jsonObject.getString(Constance.version);
-                if(AppUtils.isEmpty(mAppVersion)) return;
+                final JSONObject jsonObject = new JSONObject(ans);
+                mAppVersion = jsonObject.getString(Constance.version);
+                if (AppUtils.isEmpty(mAppVersion)) {
+                    return;
+                }
                 String localVersion = CommonUtil.localVersionName(mView);
                 if ("-1".equals(mAppVersion)) {
 
                 } else {
                     boolean isNeedUpdate = CommonUtil.isNeedUpdate(localVersion, mAppVersion);
-                    if (isNeedUpdate){
+                    if (isNeedUpdate) {
                         mView.runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
                                 final Dialog dialog = new Dialog(mView, R.style.customDialog);
                                 dialog.setContentView(R.layout.dialog_update);
                                 dialog.setCancelable(false);
-                                TextView tv_info= (TextView) dialog.findViewById(R.id.tv_update_info);
-                                Button btn_upgrate= (Button) dialog.findViewById(R.id.btn_upgrate);
-                                ImageView iv_close= (ImageView) dialog.findViewById(R.id.iv_close);
-                                String updateInfo=jsonObject.getString(Constance.text);
-                                tv_info.setText(""+ Html.fromHtml(updateInfo).toString());
+                                TextView tv_info = (TextView) dialog.findViewById(R.id.tv_update_info);
+                                Button btn_upgrate = (Button) dialog.findViewById(R.id.btn_upgrate);
+                                ImageView iv_close = (ImageView) dialog.findViewById(R.id.iv_close);
+                                String updateInfo = jsonObject.getString(Constance.text);
+                                tv_info.setText("" + Html.fromHtml(updateInfo).toString());
                                 dialog.show();
                                 btn_upgrate.setOnClickListener(new View.OnClickListener() {
                                     @Override
@@ -200,23 +179,55 @@ public class MainController extends BaseController implements INetworkCallBack {
 
     }
 
+    private void checkSystem() {
+        mNetWork.checkSystem(new INetworkCallBack() {
+            @Override
+            public void onSuccessListener(String requestCode, JSONObject ans) {
+                JSONObject data = ans.getJSONObject(Constance.data);
+//                data=new JSONObject();
+//                data.add("title","系统维护");
+//                data.add("text","钜豪商城定于今天（2018年8月27日，星期一）晚上 20:00—22:00 对购物系统进行停机维护。受此影响，届时APP将暂停服务。感谢您的支持和谅解！");
+                if (data != null && data.length() > 0) {
+                    mView.isError = true;
+                    UIUtils.showSystemStopDialog(mView, rl_main, data.getString(Constance.title), data.getString(Constance.text));
+                } else {
+                    mView.isError = false;
+                }
+
+                LogUtils.logE(TAG, "" + data);
+            }
+
+            @Override
+            public void onFailureListener(String requestCode, JSONObject ans) {
+
+            }
+        });
+    }
+
     @Override
     public void onSuccessListener(String requestCode, JSONObject ans) {
         switch (requestCode) {
-            case NetWorkConst.GETCART:
+            case NetWorkConst.GETCART://购物车
                 if (ans.getJSONArray(Constance.goods_groups).length() > 0) {
                     DemoApplication.mCartCount = ans.getJSONArray(Constance.goods_groups)
                             .getJSONObject(0).getJSONArray(Constance.goods).length();
                     setIsShowCartCount();
                 }
+                LogUtils.logE(TAG, "cart data:"+ans);
                 break;
-            case NetWorkConst.VERSION_URL:
-               mAppVersion= ans.getString(Constance.JSON);
+            case NetWorkConst.VERSION_URL://版本号
+                mAppVersion = ans.getString(Constance.JSON);
 
+                break;
+            default:
                 break;
         }
     }
 
+    @Override
+    public void onFailureListener(String requestCode, JSONObject ans) {
+
+    }
 
     public void refreshUIWithMessage() {
         mView.runOnUiThread(new Runnable() {
@@ -224,7 +235,7 @@ public class MainController extends BaseController implements INetworkCallBack {
                 // refresh unread count
                 for (EMConversation conversation : EMClient.getInstance().chatManager().getAllConversations().values()) {
                     mView.unreadMsgCount = conversation.getUnreadMsgCount();
-                    mView.allMsgCount=conversation.getAllMsgCount();
+                    mView.allMsgCount = conversation.getAllMsgCount();
                 }
                 //获取此会话在本地的所有的消息数量
                 //如果只是获取当前在内存的消息数量，调用
@@ -232,13 +243,12 @@ public class MainController extends BaseController implements INetworkCallBack {
                 if (mView.unreadMsgCount == 0) {
 //                    ShortcutBadger.applyCount(this, badgeCount); //for 1.1.4+
                     mView.mHomeFragment.unMessageTv.setVisibility(View.GONE);
-                    ShortcutBadger.applyCount(mView,0);
+                    ShortcutBadger.applyCount(mView, 0);
                 } else {
                     ShortcutBadger.applyCount(mView, mView.unreadMsgCount); //for 1.1.4+
                     mView.mHomeFragment.unMessageTv.setVisibility(View.VISIBLE);
                     mView.mHomeFragment.unMessageTv.setText(mView.unreadMsgCount + "");
                 }
-
 
 //                if (mView.mMessageFragment != null) {
 //                    mView.mMessageFragment.refresh();
@@ -247,53 +257,16 @@ public class MainController extends BaseController implements INetworkCallBack {
         });
     }
 
-
-    /**
-     * 环信注册成功
-     */
-    private void sendRegiestSuccess() {
-        final String uid= MyShare.get(mView).getString(Constance.USERID);
-        if(AppUtils.isEmpty(uid)){
-            return;
-
-        }
-        new Thread(new Runnable() {
-            public void run() {
-                try {
-                    EMClient.getInstance().createAccount(uid,uid);//同步方法
-                    mView.runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            getSuccessLogin();
-                            MyToast.show(mView,"注册成功!");
-                        }
-                    });
-
-                } catch (final HyphenateException e) {
-                    mView.runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            getSuccessLogin();
-                        }
-                    });
-
-                }
-            }
-        }).start();
-    }
-
-    private int isLoginCount=0;
-
     /**
      * 登录成功处理事件
      */
     private void getSuccessLogin() {
-        if(isLoginCount==3){
-            ShowDialog mDialog=new ShowDialog();
+        if (isLoginCount == 3) {
+            ShowDialog mDialog = new ShowDialog();
             mDialog.show(mView, "提示", "聊天登录失败,是否重试?", new ShowDialog.OnBottomClickListener() {
                 @Override
                 public void positive() {
-                    isLoginCount=1;
+                    isLoginCount = 1;
                     getSuccessLogin();
                 }
 
@@ -304,9 +277,9 @@ public class MainController extends BaseController implements INetworkCallBack {
             });
         }
 
-        isLoginCount=isLoginCount+1;
-        final String uid= MyShare.get(mView).getString(Constance.USERID);
-        if(AppUtils.isEmpty(uid)){
+        isLoginCount = isLoginCount + 1;
+        final String uid = MyShare.get(mView).getString(Constance.USERID);
+        if (AppUtils.isEmpty(uid)) {
             return;
 
         }
@@ -356,8 +329,9 @@ public class MainController extends BaseController implements INetworkCallBack {
         });
     }
 
-    private UpdateApkBroadcastReceiver broadcastReceiver;
-
+    /**
+     * 获取用户信息
+     */
     public void sendUser() {
         mNetWork.sendUser(new INetworkCallBack() {
             @Override
@@ -454,16 +428,56 @@ public class MainController extends BaseController implements INetworkCallBack {
         }
     }
 
-
-
+    /**
+     * 首页显示购物车商品数量
+     */
     public void setIsShowCartCount() {
-        unMessageReadTv.setVisibility(DemoApplication.mCartCount==0?View.GONE:View.VISIBLE);
-        unMessageReadTv.setText(DemoApplication.mCartCount+"");
+        unMessageReadTv.setVisibility(DemoApplication.mCartCount == 0 ? View.GONE : View.VISIBLE);
+        unMessageReadTv.setText(DemoApplication.mCartCount + "");
     }
-
 
     @Override
-    public void onFailureListener(String requestCode, JSONObject ans) {
+    protected void handleMessage(int action, Object[] values) {
 
     }
+
+    @Override
+    protected void myHandleMessage(Message msg) {
+
+    }
+
+    /**
+     * 环信注册成功
+     */
+    private void sendRegiestSuccess() {
+        final String uid = MyShare.get(mView).getString(Constance.USERID);
+        if (AppUtils.isEmpty(uid)) {
+            return;
+
+        }
+        new Thread(new Runnable() {
+            public void run() {
+                try {
+                    EMClient.getInstance().createAccount(uid, uid);//同步方法
+                    mView.runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            getSuccessLogin();
+                            MyToast.show(mView, "注册成功!");
+                        }
+                    });
+
+                } catch (final HyphenateException e) {
+                    mView.runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            getSuccessLogin();
+                        }
+                    });
+
+                }
+            }
+        }).start();
+    }
+
 }

@@ -26,10 +26,13 @@ import bc.juhao.com.cons.Constance;
 import bc.juhao.com.utils.MyShare;
 import bc.juhao.com.ui.view.dialog.SpotsDialog;
 import bocang.utils.AppUtils;
+import bocang.utils.LogUtils;
 import bocang.utils.UIUtils;
 
 
 public abstract class BaseActivity extends FragmentActivity implements View.OnClickListener {
+
+    private final static String TAG = "BaseActivity";
 //    public LoadingDialog mDialog;
     public SpotsDialog mDialog;
 //    mDialog=new SpotsDialog(mView);
@@ -48,7 +51,7 @@ public abstract class BaseActivity extends FragmentActivity implements View.OnCl
         initController();
         InitDataView();
 
-
+        LogUtils.logE(TAG, getClass().getSimpleName());
 
 
     }

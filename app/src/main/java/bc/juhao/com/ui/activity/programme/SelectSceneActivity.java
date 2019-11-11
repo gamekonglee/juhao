@@ -1,6 +1,9 @@
 package bc.juhao.com.ui.activity.programme;
 
 import android.content.Intent;
+import android.graphics.Color;
+import android.os.Build;
+import android.support.annotation.RequiresApi;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.RelativeLayout;
@@ -20,7 +23,9 @@ import bocang.view.BaseActivity;
  * @description :
  */
 public class SelectSceneActivity extends BaseActivity {
+
     private SelectSceneController mController;
+
     private TextView tv_album;
     public TextView select_num_tv;
     private Intent mIntent;
@@ -52,6 +57,7 @@ public class SelectSceneActivity extends BaseActivity {
         mController = new SelectSceneController(this);
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
     protected void initView() {
         setContentView(R.layout.activity_select_scene);
@@ -60,6 +66,7 @@ public class SelectSceneActivity extends BaseActivity {
         select_rl = getViewAndClick(R.id.select_rl);
         select_rl_2 = getViewAndClick(R.id.select_rl_2);
         et_search = findViewById(R.id.et_search);
+        setColor(this, Color.WHITE);
     }
 
     @Override

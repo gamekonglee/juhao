@@ -25,6 +25,7 @@ import bc.juhao.com.ui.fragment.ClassifyGoodsFragment;
 import bocang.json.JSONArray;
 import bocang.json.JSONObject;
 import bocang.utils.AppUtils;
+import bocang.utils.LogUtils;
 import bocang.utils.MyToast;
 
 /**
@@ -33,20 +34,23 @@ import bocang.utils.MyToast;
  * @description :
  */
 public class ClassifyGoodsController extends BaseController implements INetworkCallBack {
+
     private ClassifyGoodsFragment mView;
-    private GridView itemGridView;
-    private ListView recyclerview_category;
-    private JSONArray mClassifyGoodsLists;
-    private ClassifyGoodsAdapter mAdapter;
-    private ArrayList<Boolean> colorList=new ArrayList<>();
-    private ItemClassifyAdapter mItemAdapter;
-//    private JSONArray categoriesArrays;
     private Intent mIntent;
-    private JSONObject goodsAllAttr;
 
+    private ListView recyclerview_category;
+    private GridView itemGridView;
 
-    public ClassifyGoodsController(ClassifyGoodsFragment v){
-        mView=v;
+    private ClassifyGoodsAdapter mAdapter;
+    private ItemClassifyAdapter mItemAdapter;
+
+    private ArrayList<Boolean> colorList = new ArrayList<>();
+    private JSONArray mClassifyGoodsLists;//产品类别(风格\类别\空间...)
+    private JSONObject goodsAllAttr;//产品类别(风格\类别\空间...)下的分类
+    //    private JSONArray categoriesArrays;
+
+    public ClassifyGoodsController(ClassifyGoodsFragment v) {
+        mView = v;
         initData();
         initView();
         initViewData();
@@ -64,7 +68,8 @@ public class ClassifyGoodsController extends BaseController implements INetworkC
     private void initView() {
         recyclerview_category = (ListView) mView.getActivity().findViewById(R.id.recyclerview_category);
         itemGridView = (GridView) mView.getActivity().findViewById(R.id.itemGridView02);
-        mAdapter=new ClassifyGoodsAdapter(colorList,mView.getActivity());
+
+        mAdapter = new ClassifyGoodsAdapter(colorList, mView.getActivity());
         recyclerview_category.setAdapter(mAdapter);
         recyclerview_category.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -83,12 +88,12 @@ public class ClassifyGoodsController extends BaseController implements INetworkC
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 JSONObject categoryObject = goodsAllAttr.getJSONArray(Constance.categories).getJSONObject(position);
                 mIntent = new Intent(mView.getActivity(), SelectGoodsActivity.class);
-                String categoriesId = categoryObject.getString(Constance.id);
-                Log.e("cateId",categoriesId);
+                String categoriesId = categoryObject.getString(Constance.id);//右侧商品分类id
+                Log.e("cateId", categoriesId);
                 mIntent.putExtra(Constance.categories, categoriesId);
                 mView.getActivity().startActivity(mIntent);
-                if(DemoApplication.isClassify==true){
-                    DemoApplication.isClassify=false;
+                if (DemoApplication.isClassify == true) {
+                    DemoApplication.isClassify = false;
                     ClassifyGoodsActivity.mActivity.finish();
                 }
             }
@@ -105,7 +110,7 @@ public class ClassifyGoodsController extends BaseController implements INetworkC
      * 产品类别
      */
     private void sendGoodsType() {
-        if(!AppUtils.isEmpty(mClassifyGoodsLists)) return;
+        if (!AppUtils.isEmpty(mClassifyGoodsLists)) return;
 //        mView.setShowDialog(true);
 //        mView.setShowDialog("正在搜索中!");
 //        mView.showLoading();
@@ -116,16 +121,17 @@ public class ClassifyGoodsController extends BaseController implements INetworkC
     public void onSuccessListener(String requestCode, JSONObject ans) {
         mView.hideLoading();
         mView.showContentView();
-        switch (requestCode){
-            case NetWorkConst.CATEGORY:
+        switch (requestCode) {
+            case NetWorkConst.CATEGORY://产品类别(分格\类别\空间...)
 //                LogUtils.logE("category:",ans.toString());
-                mClassifyGoodsLists= ans.getJSONArray(Constance.categories);
-                if (AppUtils.isEmpty(mClassifyGoodsLists))return;
+                mClassifyGoodsLists = ans.getJSONArray(Constance.categories);
+                LogUtils.logE("category:","mClassifyGoodsLists:"+ mClassifyGoodsLists.toString());
+                if (AppUtils.isEmpty(mClassifyGoodsLists)) return;
                 mAdapter.setData(mClassifyGoodsLists);
                 //模拟点击第一项
 //                LogUtils.logE("cate",mClassifyGoodsLists.toString());
                 recyclerview_category.performItemClick(null, 0, 0);
-            break;
+                break;
         }
     }
 
@@ -147,15 +153,15 @@ public class ClassifyGoodsController extends BaseController implements INetworkC
 
     public void getAllData() {
         mIntent = new Intent(mView.getActivity(), SelectGoodsActivity.class);
-        if(goodsAllAttr==null||goodsAllAttr.getString(Constance.id)==null){
-            MyToast.show(mView.getActivity(),"数据加载中，稍等");
+        if (goodsAllAttr == null || goodsAllAttr.getString(Constance.id) == null) {
+            MyToast.show(mView.getActivity(), "数据加载中，稍等");
             return;
         }
         String categoriesId = goodsAllAttr.getString(Constance.id);
         mIntent.putExtra(Constance.categories, categoriesId);
         mView.getActivity().startActivity(mIntent);
-        if(DemoApplication.isClassify==true){
-            DemoApplication.isClassify=false;
+        if (DemoApplication.isClassify) {
+            DemoApplication.isClassify = false;
             ClassifyGoodsActivity.mActivity.finish();
         }
     }

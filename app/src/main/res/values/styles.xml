@@ -56,7 +56,7 @@
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/white</item>
         <item name="colorPrimaryDark">@color/white</item>
-        <item name="colorAccent">@color/white</item>
+        <item name="colorAccent">@color/green</item>
     </style>
     <style name="AppTheme_jh" parent="android:Theme.Light">
         <item name="android:windowNoTitle">true</item>
@@ -940,5 +940,10 @@
         <item name="android:layout_width">match_parent</item>
     </style>
 
+    <!--筛选页面popupWindow弹出动画-->
+    <style name="popupWindowAnimRight">
+        <item name="android:windowEnterAnimation">@anim/popup_right_in</item>
+        <item name="android:windowExitAnimation">@anim/popup_right_out</item>
+    </style>
 
 </resources>

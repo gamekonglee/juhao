@@ -2,6 +2,8 @@ package bc.juhao.com.ui.activity.product;
 
 import android.content.Intent;
 import android.graphics.Color;
+import android.os.Build;
+import android.support.annotation.RequiresApi;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -21,24 +23,29 @@ import bocang.view.BaseActivity;
  * @description :
  */
 public class ProDetailActivity extends BaseActivity {
+
+    public ProductDetailController mController;
+
+    private LinearLayout product_ll, detail_ll, parament_ll, callLl, go_photo_Ll,sun_image_ll;
+    public LinearLayout tuijian_ll;
+    private Button toDiyBtn, toCartBtn;
+    private ImageView share_iv;
+    private RelativeLayout shopping_cart_Ll;
+    private ImageView iv_home;
+    private Button toBuyBtn;
+
     public static boolean isJuHao;
     public int mProductId=0;
     public int mOrderId=1;
     public String mOrderid="";
-    public ProductDetailController mController;
-    private LinearLayout product_ll, detail_ll, parament_ll, callLl, go_photo_Ll,sun_image_ll;
-    private Button toDiyBtn, toCartBtn;
-    private ImageView share_iv;
-    public static JSONObject goodses;
+
+    public static JSONObject goodses;//产品信息
     public String mProperty = "";
     public String mPropertyValue = "";
     public int mPrice = 0;
-    private RelativeLayout shopping_cart_Ll;
+
     public static  boolean isXianGou;
     public com.alibaba.fastjson.JSONObject mProductObject;
-    private ImageView iv_home;
-    public LinearLayout tuijian_ll;
-    private Button toBuyBtn;
 
 
     @Override
@@ -53,10 +60,13 @@ public class ProDetailActivity extends BaseActivity {
     }
 
 
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
     protected void initView() {
+
         setContentView(R.layout.activity_product_detail);
         setColor(this, Color.WHITE);
+
         product_ll = getViewAndClick(R.id.product_ll);
         detail_ll = getViewAndClick(R.id.detail_ll);
         parament_ll = getViewAndClick(R.id.parament_ll);

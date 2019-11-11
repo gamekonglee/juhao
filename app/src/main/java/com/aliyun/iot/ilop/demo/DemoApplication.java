@@ -397,13 +397,13 @@ public class DemoApplication extends BaseApplication {
 
     public static  boolean isClassify=false;
 
-    public static int mCartCount=0;
+    public static int mCartCount=0;//购物车商品总数(包括每件商品的数量)
 
     public static int mLightIndex = 0;//点出来的灯的序号
 
     public  static boolean isGoProgramme=false;
 
-    public static JSONArray mSelectProducts=new JSONArray();
+    public static JSONArray mSelectProducts=new JSONArray();//进入diy界面的所选产品
 
     public static JSONArray mSelectScreens=new JSONArray();
     public static final String ACTION_REMOVE_SHORTCUT = "com.android.launcher.action.UNINSTALL_SHORTCUT";

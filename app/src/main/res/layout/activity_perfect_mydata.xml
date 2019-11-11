@@ -1,21 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
     android:background="#ffffff"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent">
+    android:orientation="vertical">
+
     <RelativeLayout
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
         android:background="#ffffff"
-        android:minHeight="?attr/actionBarSize"
-        >
+        android:minHeight="?attr/actionBarSize">
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-           >
+            android:layout_height="match_parent">
 
             <LinearLayout
                 android:layout_width="80dp"
@@ -23,6 +22,7 @@
                 android:gravity="center_vertical"
                 android:onClick="goBack"
                 android:paddingLeft="10dp">
+
                 <ImageView
                     android:id="@+id/topLeftBtn"
                     android:layout_width="10dp"
@@ -31,251 +31,260 @@
                     android:layout_marginRight="5dp"
                     android:background="@mipmap/nav_left"
 
-                    android:textColor="#FFFFFF"/>
+                    android:textColor="#FFFFFF" />
             </LinearLayout>
+
             <TextView
                 android:id="@+id/et_search"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textColor="#666666"
-                android:textSize="18dp"
                 android:layout_centerInParent="true"
                 android:text="@string/mydata_setting"
-                />
+                android:textColor="#666666"
+                android:textSize="18dp" />
 
             <RelativeLayout
                 android:id="@+id/save_rl"
                 android:layout_width="80dp"
                 android:layout_height="match_parent"
-                android:layout_centerInParent="true"
-                android:layout_alignParentRight="true">
+                android:layout_alignParentRight="true"
+                android:layout_centerInParent="true">
+
                 <ImageView
                     android:layout_width="25dp"
                     android:layout_height="25dp"
-                    android:layout_centerInParent="true"
                     android:layout_alignParentRight="true"
+                    android:layout_centerInParent="true"
                     android:layout_marginRight="10dp"
                     android:src="@drawable/ic_ok"
-                    android:visibility="gone"
-                    />
+                    android:visibility="gone" />
+
                 <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
                     android:text="保存"
                     android:textColor="@color/green"
-                    android:textSize="14sp"
-                    android:layout_centerInParent="true"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
+                    android:textSize="14sp" />
             </RelativeLayout>
         </RelativeLayout>
 
 
     </RelativeLayout>
+
     <RelativeLayout
-        android:background="@mipmap/bg_my_bg"
         android:layout_width="match_parent"
-        android:layout_height="225dp">
+        android:layout_height="225dp"
+        android:background="@mipmap/bg_my_bg">
+
         <RelativeLayout
-            android:layout_centerInParent="true"
             android:layout_width="61dp"
-            android:layout_height="61dp">
+            android:layout_height="61dp"
+            android:layout_centerInParent="true">
+
             <View
-                android:background="@drawable/circle_white"
                 android:layout_width="61dp"
+                android:layout_height="61dp"
                 android:layout_centerInParent="true"
-                android:layout_height="61dp"/>
+                android:background="@drawable/circle_white" />
+
             <de.hdodenhof.circleimageview.CircleImageView
                 android:id="@+id/head_iv"
                 android:layout_width="60dp"
                 android:layout_height="60dp"
-                android:src="@drawable/touxian"
                 android:layout_centerInParent="true"
-                />
+                android:src="@drawable/touxian" />
+
             <ImageView
+                android:layout_width="15dp"
+                android:layout_height="15dp"
                 android:layout_alignParentRight="true"
                 android:layout_alignParentBottom="true"
                 android:layout_margin="5dp"
-                android:src="@mipmap/my_icon_bj"
-                android:layout_width="15dp"
-                android:layout_height="15dp" />
+                android:src="@mipmap/my_icon_bj" />
         </RelativeLayout>
 
     </RelativeLayout>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:background="@color/background_color">
+        android:background="@color/background_color"
+        android:orientation="vertical">
+
         <RelativeLayout
-            android:visibility="gone"
             android:id="@+id/head_rl"
             style="@style/mine_item_style02"
-            android:layout_marginTop="10dp"
             android:layout_height="70dp"
-            >
+            android:layout_marginTop="10dp"
+            android:visibility="gone">
+
             <TextView
                 android:id="@+id/head_tv"
                 style="@style/mine_text_style02"
-                android:text="头像"/>
+                android:text="头像" />
 
 
         </RelativeLayout>
-        <View
-            style="@style/view_style"
-            />
+
+        <View style="@style/view_style" />
 
         <RelativeLayout
             android:id="@+id/name_rl"
             style="@style/mine_item_style02"
-            android:visibility="visible"
-            >
+            android:visibility="visible">
+
             <TextView
                 android:id="@+id/name_title_tv"
                 style="@style/mine_text_style02"
-                android:text="昵称"/>
+                android:text="昵称" />
+
             <ImageView
-                android:src="@mipmap/my_icon_right"
+                android:layout_width="6dp"
+                android:layout_height="12dp"
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
                 android:layout_marginRight="15dp"
-                android:layout_width="6dp"
-                android:layout_height="12dp" />
+                android:src="@mipmap/my_icon_right" />
+
             <TextView
                 android:id="@+id/name_tv"
-                android:layout_marginRight="50dp"
                 style="@style/mine_text_style03"
-                android:hint="必填"
-                />
+                android:layout_marginRight="50dp"
+                android:hint="必填" />
         </RelativeLayout>
 
-        <View
-            style="@style/view_style"
-            />
+        <View style="@style/view_style" />
 
         <RelativeLayout
             android:id="@+id/sex_rl"
-            style="@style/mine_item_style02"
-            >
+            style="@style/mine_item_style02">
+
             <TextView
                 android:id="@+id/sex_title_tv"
                 style="@style/mine_text_style02"
-                android:text="@string/sex"/>
+                android:text="@string/sex" />
+
             <ImageView
-                android:src="@mipmap/my_icon_right"
+                android:layout_width="6dp"
+                android:layout_height="12dp"
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
                 android:layout_marginRight="15dp"
-                android:layout_width="6dp"
-                android:layout_height="12dp" />
+                android:src="@mipmap/my_icon_right" />
+
             <TextView
-                android:layout_marginRight="50dp"
                 android:id="@+id/sex_tv"
                 style="@style/mine_text_style03"
-                android:text="未知"/>
+                android:layout_marginRight="50dp"
+                android:text="未知" />
         </RelativeLayout>
 
-        <View
-            style="@style/view_style"
-            />
+        <View style="@style/view_style" />
 
         <RelativeLayout
             android:id="@+id/birthday_rl"
-            style="@style/mine_item_style02"
-            >
+            style="@style/mine_item_style02">
+
             <TextView
                 android:id="@+id/birthday_title_tv"
                 style="@style/mine_text_style02"
-                android:text="@string/birthday"/>
+                android:text="@string/birthday" />
+
             <TextView
                 android:id="@+id/birthday_tv"
-                android:layout_marginRight="50dp"
                 style="@style/mine_text_style03"
-                />
+                android:layout_marginRight="50dp" />
+
             <ImageView
-                android:src="@mipmap/my_icon_right"
+                android:layout_width="6dp"
+                android:layout_height="12dp"
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
                 android:layout_marginRight="15dp"
-                android:layout_width="6dp"
-                android:layout_height="12dp" />
+                android:src="@mipmap/my_icon_right" />
         </RelativeLayout>
 
         <RelativeLayout
             android:id="@+id/phone_rl"
             style="@style/mine_item_style02"
             android:layout_marginTop="10dp"
-            android:visibility="gone"
-            >
+            android:visibility="gone">
+
             <TextView
                 android:id="@+id/phone_title_tv"
                 style="@style/mine_text_style02"
-                android:text="@string/phone"/>
+                android:text="@string/phone" />
+
             <TextView
                 android:id="@+id/phone_tv"
                 style="@style/mine_text_style03"
-                android:text="13138569878"/>
+                android:text="13138569878" />
         </RelativeLayout>
 
-        <View
-            style="@style/view_style"
-            />
+        <View style="@style/view_style" />
 
         <RelativeLayout
             android:id="@+id/telephone_rl"
             style="@style/mine_item_style02"
-            android:visibility="gone"
-            >
+            android:visibility="gone">
+
             <TextView
                 android:id="@+id/telephone_title_tv"
                 style="@style/mine_text_style02"
-                android:text="@string/telephone"/>
+                android:text="@string/telephone" />
+
             <TextView
                 android:id="@+id/telephone_tv"
                 style="@style/mine_text_style03"
-                android:text="0770-6986549"/>
+                android:text="0770-6986549" />
         </RelativeLayout>
 
         <View
             style="@style/view_style"
-            android:visibility="gone"
-            />
+            android:visibility="gone" />
 
         <RelativeLayout
             android:id="@+id/email_rl"
             style="@style/mine_item_style02"
-            android:visibility="gone"
-            >
+            android:visibility="gone">
+
             <TextView
                 android:id="@+id/email_title_tv"
                 style="@style/mine_text_style02"
-                android:text="@string/email"/>
+                android:text="@string/email" />
+
             <TextView
                 android:id="@+id/email_tv"
                 style="@style/mine_text_style03"
-                android:text="1458798787@qq.com"/>
+                android:text="1458798787@qq.com" />
         </RelativeLayout>
+
         <RelativeLayout
             android:id="@+id/update_password_rl"
-            style="@style/mine_item_style02"
-            >
+            style="@style/mine_item_style02">
+
             <TextView
                 android:id="@+id/update_password_title_tv"
                 style="@style/mine_text_style02"
-                android:text="@string/update_password"/>
+                android:text="@string/update_password" />
+
             <ImageView
-                android:src="@mipmap/my_icon_right"
+                android:layout_width="6dp"
+                android:layout_height="12dp"
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
                 android:layout_marginRight="15dp"
-                android:layout_width="6dp"
-                android:layout_height="12dp" />
+                android:src="@mipmap/my_icon_right" />
         </RelativeLayout>
+
         <TextView
             android:id="@+id/tip_tv"
             android:layout_width="match_parent"
             android:layout_height="30dp"
-            android:text="昵称必填"
             android:gravity="center"
-            android:textColor="@color/red"/>
+            android:text="昵称必填"
+            android:textColor="@color/red" />
 
     </LinearLayout>
 </LinearLayout>

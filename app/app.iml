@@ -123,7 +123,6 @@
     <orderEntry type="library" name="Gradle: com.android.support.constraint:constraint-layout-solver:1.0.2@jar" level="project" />
     <orderEntry type="library" name="Gradle: com.facebook.fresco:fbcore:0.11.0@aar" level="project" />
     <orderEntry type="library" name="Gradle: com.danikula:videocache:2.6.4@aar" level="project" />
-    <orderEntry type="library" name="Gradle: __local_aars__:/Users/gamekonglee/Downloads/GkleeProject/juhao/app/libs/itextpdf-5.2.1.jar:unspecified@jar" level="project" />
     <orderEntry type="library" name="Gradle: tv.danmaku.ijk.media:ijkplayer-exo:0.7.9@aar" level="project" />
     <orderEntry type="library" name="Gradle: com.github.bumptech.glide:annotations:4.5.0@jar" level="project" />
     <orderEntry type="library" name="Gradle: com.aliyun.iot.aep.sdk:alog:0.0.5.1@aar" level="project" />
@@ -136,14 +135,15 @@
     <orderEntry type="library" name="Gradle: javax.inject:javax.inject:1@jar" level="project" />
     <orderEntry type="library" name="Gradle: com.aliyun.alink.linksdk:public-channel-mobile:1.2.0@aar" level="project" />
     <orderEntry type="library" name="Gradle: com.aliyun.iot.aep.sdk:rn-external-fresco:0.41.2.20180331@aar" level="project" />
+    <orderEntry type="library" name="Gradle: __local_aars__:/Users/gamekonglee/Downloads/juhao191105/juhao/app/libs/zxing-3.3.2.jar:unspecified@jar" level="project" />
     <orderEntry type="library" name="Gradle: com.aliyun.alink.linksdk:android_alink_id2:1.0.2@aar" level="project" />
     <orderEntry type="library" name="Gradle: org.jsoup:jsoup:1.9.2@jar" level="project" />
     <orderEntry type="library" name="Gradle: cn.jiguang.sdk:jcore:1.1.2@aar" level="project" />
     <orderEntry type="library" name="Gradle: com.android.support:support-core-ui:27.0.2@aar" level="project" />
-    <orderEntry type="library" name="Gradle: __local_aars__:/Users/gamekonglee/Downloads/GkleeProject/juhao/app/libs/tbs_sdk_thirdapp_v3.1.0.1034_43100_sharewithdownload_obfs_20170301_182143.jar:unspecified@jar" level="project" />
+    <orderEntry type="library" name="Gradle: __local_aars__:/Users/gamekonglee/Downloads/juhao191105/juhao/app/libs/MobCommons-2016.1201.1839.jar:unspecified@jar" level="project" />
+    <orderEntry type="library" name="Gradle: __local_aars__:/Users/gamekonglee/Downloads/juhao191105/juhao/app/libs/org.apache.http.legacy.jar:unspecified@jar" level="project" />
     <orderEntry type="library" name="Gradle: com.aliyun.iot.aep.sdk:router:0.0.6@aar" level="project" />
     <orderEntry type="library" name="Gradle: com.alibaba.sdk.android.openaccount:openaccount-ui-default:3.5.3.4@aar" level="project" />
-    <orderEntry type="library" name="Gradle: __local_aars__:/Users/gamekonglee/Downloads/GkleeProject/juhao/app/libs/MobCommons-2016.1201.1839.jar:unspecified@jar" level="project" />
     <orderEntry type="library" name="Gradle: :SMSSDK-2.1.3:@aar" level="project" />
     <orderEntry type="library" name="Gradle: com.tencent.mm.opensdk:wechat-sdk-android-with-mta:5.4.0@jar" level="project" />
     <orderEntry type="library" name="Gradle: com.aliyun.alink.linksdk:ilop-devicecenter-ext-boneplugin:1.5.1@aar" level="project" />
@@ -157,6 +157,7 @@
     <orderEntry type="library" name="Gradle: com.pgyersdk:sdk:2.8.1@aar" level="project" />
     <orderEntry type="library" name="Gradle: com.android.support:multidex:1.0.2@aar" level="project" />
     <orderEntry type="library" name="Gradle: com.aliyun.iot.aep.sdk:account-oa:0.0.3.9@aar" level="project" />
+    <orderEntry type="library" name="Gradle: __local_aars__:/Users/gamekonglee/Downloads/juhao191105/juhao/app/libs/MobTools-2016.1201.1839.jar:unspecified@jar" level="project" />
     <orderEntry type="library" name="Gradle: me.leolin:ShortcutBadger:1.1.16@aar" level="project" />
     <orderEntry type="library" name="Gradle: com.aliyun.iot.aep.component:scan:0.0.1@aar" level="project" />
     <orderEntry type="library" name="Gradle: com.github.donkingliang:ImageSelector:1.6.0@aar" level="project" />
@@ -165,15 +166,14 @@
     <orderEntry type="library" name="Gradle: com.squareup.okhttp3:okhttp-urlconnection:3.11.0@jar" level="project" />
     <orderEntry type="library" name="Gradle: com.github.chrisbanes:PhotoView:2.1.3@aar" level="project" />
     <orderEntry type="library" name="Gradle: com.android.support:transition:26.1.0@aar" level="project" />
+    <orderEntry type="library" name="Gradle: __local_aars__:/Users/gamekonglee/Downloads/juhao191105/juhao/app/libs/open_sdk_r5990_lite.jar:unspecified@jar" level="project" />
     <orderEntry type="library" name="Gradle: com.aliyun.iot.aep.sdk:account:0.0.2.3@aar" level="project" />
     <orderEntry type="library" name="Gradle: com.android.support:support-media-compat:26.1.0@aar" level="project" />
     <orderEntry type="library" name="Gradle: com.android.support:support-annotations:27.0.2@jar" level="project" />
-    <orderEntry type="library" name="Gradle: __local_aars__:/Users/gamekonglee/Downloads/GkleeProject/juhao/app/libs/xstream-1.4.7.jar:unspecified@jar" level="project" />
     <orderEntry type="library" name="Gradle: com.facebook.soloader:soloader:0.1.0@aar" level="project" />
     <orderEntry type="library" name="Gradle: org.mozilla:rhino:1.7.9@jar" level="project" />
     <orderEntry type="library" name="Gradle: com.aliyun.alink.linksdk:breeze:1.2.5@aar" level="project" />
     <orderEntry type="library" name="Gradle: com.nineoldandroids:library:2.4.0@jar" level="project" />
-    <orderEntry type="library" name="Gradle: __local_aars__:/Users/gamekonglee/Downloads/GkleeProject/juhao/app/libs/universalimageloader.jar:unspecified@jar" level="project" />
     <orderEntry type="library" name="Gradle: com.aliyun.alink.linksdk:iot-apiclient:1.0.0@jar" level="project" />
     <orderEntry type="library" name="Gradle: com.aliyun.iot.ilop.page:scan:0.0.1@aar" level="project" />
     <orderEntry type="library" name="Gradle: com.andkulikov:transitionseverywhere:1.7.0@aar" level="project" />
@@ -186,6 +186,7 @@
     <orderEntry type="library" name="Gradle: com.android.support:support-compat:27.0.2@aar" level="project" />
     <orderEntry type="library" name="Gradle: :libraryConvenientBanner:@aar" level="project" />
     <orderEntry type="library" name="Gradle: com.bigkoo:alertview:1.0.3@aar" level="project" />
+    <orderEntry type="library" name="Gradle: __local_aars__:/Users/gamekonglee/Downloads/juhao191105/juhao/app/libs/hyphenatechat_3.2.2.jar:unspecified@jar" level="project" />
     <orderEntry type="library" name="Gradle: com.aliyun.iot.aep.sdk:apiclient:0.0.5@aar" level="project" />
     <orderEntry type="library" name="Gradle: cn.jiguang.sdk:janalytics:1.1.1@aar" level="project" />
     <orderEntry type="library" name="Gradle: com.aliyun.alink.linksdk:public-channel-gateway:1.6.1@aar" level="project" />
@@ -196,14 +197,15 @@
     <orderEntry type="library" name="Gradle: com.aliyun.iot.aep.component:router-external:0.1.3.1@aar" level="project" />
     <orderEntry type="library" name="Gradle: com.google.code.gson:gson:2.8.1@jar" level="project" />
     <orderEntry type="library" name="Gradle: :circleimageview-2.0.0:@aar" level="project" />
+    <orderEntry type="library" name="Gradle: __local_aars__:/Users/gamekonglee/Downloads/juhao191105/juhao/app/libs/tbs_sdk_thirdapp_v3.1.0.1034_43100_sharewithdownload_obfs_20170301_182143.jar:unspecified@jar" level="project" />
     <orderEntry type="library" name="Gradle: com.facebook.fresco:drawee:0.11.0@aar" level="project" />
     <orderEntry type="library" name="Gradle: androidx.multidex:multidex:2.0.0@aar" level="project" />
+    <orderEntry type="library" name="Gradle: __local_aars__:/Users/gamekonglee/Downloads/juhao191105/juhao/app/libs/universalimageloader.jar:unspecified@jar" level="project" />
     <orderEntry type="library" name="Gradle: com.google.android:flexbox:0.3.1@aar" level="project" />
     <orderEntry type="library" name="Gradle: com.aliyun.alink.linksdk:public-channel-core:0.5.2@aar" level="project" />
     <orderEntry type="library" name="Gradle: com.aliyun.iot.aep.sdk:jsbridge-external:0.0.9.2@aar" level="project" />
     <orderEntry type="library" name="Gradle: com.aliyun.alink.linksdk:breeze-ota:1.2.2@aar" level="project" />
     <orderEntry type="library" name="Gradle: com.aliyun.alink.linksdk:tools:1.3.3@aar" level="project" />
-    <orderEntry type="library" name="Gradle: __local_aars__:/Users/gamekonglee/Downloads/GkleeProject/juhao/app/libs/zxing-3.3.2.jar:unspecified@jar" level="project" />
     <orderEntry type="library" name="Gradle: com.facebook.fresco:imagepipeline-base:0.11.0@aar" level="project" />
     <orderEntry type="library" name="Gradle: android.arch.lifecycle:runtime:1.0.3@aar" level="project" />
     <orderEntry type="library" name="Gradle: com.aliyun.iot.aep.sdk:connectchannel:0.0.2@aar" level="project" />
@@ -215,15 +217,15 @@
     <orderEntry type="library" name="Gradle: com.squareup.okio:okio:2.1.0@jar" level="project" />
     <orderEntry type="library" name="Gradle: com.aliyun.iot.aep.component:bundlemanager:0.0.4.5@aar" level="project" />
     <orderEntry type="library" name="Gradle: com.aliyun.iot.aep.sdk:rncontainer:0.41.2.20190325@aar" level="project" />
+    <orderEntry type="library" name="Gradle: __local_aars__:/Users/gamekonglee/Downloads/juhao191105/juhao/app/libs/alipaySdk-20180601.jar:unspecified@jar" level="project" />
     <orderEntry type="library" name="Gradle: com.aliyun.dpa:oss-android-sdk:2.7.0@aar" level="project" />
-    <orderEntry type="library" name="Gradle: __local_aars__:/Users/gamekonglee/Downloads/GkleeProject/juhao/app/libs/MobTools-2016.1201.1839.jar:unspecified@jar" level="project" />
     <orderEntry type="library" name="Gradle: com.github.bumptech.glide:gifdecoder:4.5.0@aar" level="project" />
+    <orderEntry type="library" name="Gradle: __local_aars__:/Users/gamekonglee/Downloads/juhao191105/juhao/app/libs/google-play-services.jar:unspecified@jar" level="project" />
     <orderEntry type="library" name="Gradle: com.aliyun.alink.linksdk:network-core:1.0.0@jar" level="project" />
-    <orderEntry type="library" name="Gradle: __local_aars__:/Users/gamekonglee/Downloads/GkleeProject/juhao/app/libs/org.apache.http.legacy.jar:unspecified@jar" level="project" />
     <orderEntry type="library" name="Gradle: com.android.support:appcompat-v7:27.0.2@aar" level="project" />
     <orderEntry type="library" name="Gradle: com.aliyun.iot.aep.sdk:jsbridge:0.0.4@aar" level="project" />
     <orderEntry type="library" name="Gradle: cn.qqtheme.framework:Common:1.5.6.20190131@aar" level="project" />
-    <orderEntry type="library" name="Gradle: __local_aars__:/Users/gamekonglee/Downloads/GkleeProject/juhao/app/libs/eventbus-3.0.0.jar:unspecified@jar" level="project" />
+    <orderEntry type="library" name="Gradle: __local_aars__:/Users/gamekonglee/Downloads/juhao191105/juhao/app/libs/eventbus-3.0.0.jar:unspecified@jar" level="project" />
     <orderEntry type="library" name="Gradle: com.aliyun.alink.linksdk:public-cmp:1.5.0@aar" level="project" />
     <orderEntry type="library" name="Gradle: com.aliyun.alink.external:react-native:0.41.2-20190131-okhttp@aar" level="project" />
     <orderEntry type="library" name="Gradle: com.aliyun.alink.linksdk:lpbs-plugin-breeze:1.0.5@aar" level="project" />
@@ -232,30 +234,28 @@
     <orderEntry type="library" name="Gradle: com.parse.bolts:bolts-tasks:1.4.0@jar" level="project" />
     <orderEntry type="library" name="Gradle: cn.qqtheme.framework:WheelPicker:1.5.6.20190131@aar" level="project" />
     <orderEntry type="library" name="Gradle: com.aliyun.iot.aep.sdk:configmanager:0.0.4@aar" level="project" />
+    <orderEntry type="library" name="Gradle: __local_aars__:/Users/gamekonglee/Downloads/juhao191105/juhao/app/libs/BaiduLBS_Android.jar:unspecified@jar" level="project" />
     <orderEntry type="library" name="Gradle: com.github.bumptech.glide:glide:4.5.0@aar" level="project" />
     <orderEntry type="library" scope="TEST" name="Gradle: com.android.support:multidex-instrumentation:1.0.2@aar" level="project" />
     <orderEntry type="library" name="Gradle: org.greenrobot:greendao-api:3.1.0@jar" level="project" />
-    <orderEntry type="library" name="Gradle: __local_aars__:/Users/gamekonglee/Downloads/GkleeProject/juhao/app/libs/open_sdk_r5990_lite.jar:unspecified@jar" level="project" />
     <orderEntry type="library" name="Gradle: com.aliyun.alink.linksdk:public-alcs-cmp:1.4.0@aar" level="project" />
-    <orderEntry type="library" name="Gradle: __local_aars__:/Users/gamekonglee/Downloads/GkleeProject/juhao/app/libs/alipaySdk-20180601.jar:unspecified@jar" level="project" />
     <orderEntry type="library" name="Gradle: com.aliyun.iot.link:uicomponent:0.0.1@aar" level="project" />
     <orderEntry type="library" name="Gradle: com.aliyun.iot.aep.sdk:scan:0.0.1.2@aar" level="project" />
     <orderEntry type="library" name="Gradle: com.shuyu:GSYVideoPlayer:1.6.5@aar" level="project" />
     <orderEntry type="library" name="Gradle: com.github.gamekonglee:regionSelector:1.0@aar" level="project" />
+    <orderEntry type="library" name="Gradle: __local_aars__:/Users/gamekonglee/Downloads/juhao191105/juhao/app/libs/itextpdf-5.2.1.jar:unspecified@jar" level="project" />
     <orderEntry type="library" name="Gradle: android.arch.core:common:1.0.0@jar" level="project" />
     <orderEntry type="library" name="Gradle: com.aliyun.iot.aep.sdk:rn-external:0.41.2.20180331@aar" level="project" />
     <orderEntry type="library" name="Gradle: com.aliyun.ams:alicloud-android-utdid:1.1.5.4@jar" level="project" />
     <orderEntry type="library" name="Gradle: com.facebook.fresco:imagepipeline-okhttp3:0.11.0@aar" level="project" />
-    <orderEntry type="library" name="Gradle: __local_aars__:/Users/gamekonglee/Downloads/GkleeProject/juhao/app/libs/google-play-services.jar:unspecified@jar" level="project" />
     <orderEntry type="library" name="Gradle: com.google.code.findbugs:jsr305:3.0.0@jar" level="project" />
     <orderEntry type="library" name="Gradle: com.android.support:support-fragment:27.0.2@aar" level="project" />
     <orderEntry type="library" name="Gradle: com.aliyun.api.gateway:sdk-core-android:1.1.4@jar" level="project" />
     <orderEntry type="library" scope="TEST" name="Gradle: com.android.support:multidex:1.0.1@aar" level="project" />
     <orderEntry type="library" name="Gradle: com.aliyun.iot.aep.sdk:threadpool:0.0.3@aar" level="project" />
     <orderEntry type="library" name="Gradle: com.facebook.fbui.textlayoutbuilder:textlayoutbuilder:1.0.0@aar" level="project" />
-    <orderEntry type="library" name="Gradle: __local_aars__:/Users/gamekonglee/Downloads/GkleeProject/juhao/app/libs/hyphenatechat_3.2.2.jar:unspecified@jar" level="project" />
+    <orderEntry type="library" name="Gradle: __local_aars__:/Users/gamekonglee/Downloads/juhao191105/juhao/app/libs/xstream-1.4.7.jar:unspecified@jar" level="project" />
     <orderEntry type="library" name="Gradle: com.aliyun.ams:alicloud-android-push-iot:1.0.3@aar" level="project" />
-    <orderEntry type="library" name="Gradle: __local_aars__:/Users/gamekonglee/Downloads/GkleeProject/juhao/app/libs/BaiduLBS_Android.jar:unspecified@jar" level="project" />
     <orderEntry type="library" name="Gradle: com.jakewharton:disklrucache:2.0.2@jar" level="project" />
     <orderEntry type="library" name="Gradle: com.android.support:support-vector-drawable:27.0.2@aar" level="project" />
     <orderEntry type="library" name="Gradle: com.aliyun.iot.aep.sdk:iot-credential:0.0.2@aar" level="project" />
@@ -265,17 +265,14 @@
     <orderEntry type="library" name="Gradle: com.aliyun.alink.linksdk:ble-library:1.2.3@aar" level="project" />
     <orderEntry type="library" name="Gradle: com.facebook.fresco:fresco:0.11.0@aar" level="project" />
     <orderEntry type="library" name="Gradle: com.github.bumptech.glide:disklrucache:4.5.0@jar" level="project" />
-    <orderEntry type="module" module-name="filter-lib" />
-    <orderEntry type="module" module-name="common" />
     <orderEntry type="module" module-name="swipelistviewlibrary" />
-    <orderEntry type="module" module-name="filter-lib" />
     <orderEntry type="module" module-name="common" />
-    <orderEntry type="module" module-name="swipelistviewlibrary" />
     <orderEntry type="module" module-name="filter-lib" />
-    <orderEntry type="module" module-name="common" />
     <orderEntry type="module" module-name="swipelistviewlibrary" />
+    <orderEntry type="module" module-name="common" />
     <orderEntry type="module" module-name="filter-lib" />
-    <orderEntry type="module" module-name="common" />
     <orderEntry type="module" module-name="swipelistviewlibrary" />
+    <orderEntry type="module" module-name="common" />
+    <orderEntry type="module" module-name="filter-lib" />
   </component>
 </module>

@@ -1,26 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="#ffffff"
     android:focusable="true"
     android:focusableInTouchMode="true"
     android:orientation="vertical">
-<View
-    android:background="#ffffff"
-    android:layout_width="match_parent"
-    android:layout_height="20dp"/>
+
     <!--com.lib.common.hxp.view.PullToRefreshLayout-->
     <com.lib.common.hxp.view.PullToRefreshLayout
         android:id="@+id/refresh_view"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentLeft="true">
+        android:layout_height="match_parent">
 
-        <include layout="@layout/refresh_head"/>
+        <include layout="@layout/refresh_head" />
+
         <!-- 支持所有实现Pullable接口的View -->
         <!--bc.juhao.com.ui.view.ObservableScrollView-->
         <bc.juhao.com.ui.view.ObservableScrollView
@@ -37,6 +32,7 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
 
+                <!--banner-->
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
@@ -44,132 +40,133 @@
                     <com.bigkoo.convenientbanner.ConvenientBanner
                         android:id="@+id/convenientBanner"
                         android:layout_width="wrap_content"
-                        android:layout_height="220dp"
-                        />
+                        android:layout_height="220dp" />
                 </RelativeLayout>
+
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="55dp"
-                    android:background="@color/white"
-                    >
+                    android:background="@color/white">
 
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:layout_marginLeft="15dp"
                         android:layout_centerInParent="true"
+                        android:layout_marginLeft="15dp"
                         android:layout_marginTop="5dp"
                         android:orientation="horizontal">
 
                         <LinearLayout
                             android:id="@+id/one_ll"
                             android:layout_width="0dp"
-                            android:layout_weight="8"
                             android:layout_height="match_parent"
-                            android:gravity="center"
                             android:layout_marginRight="20dp"
+                            android:layout_weight="8"
+                            android:gravity="center"
                             android:orientation="horizontal">
 
                             <ImageView
                                 android:layout_width="15dp"
                                 android:layout_height="16dp"
                                 android:layout_gravity="center"
-                                android:src="@mipmap/home_return"/>
+                                android:src="@mipmap/home_return" />
 
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="一个月无理由退换"
                                 android:layout_marginLeft="5dp"
+                                android:text="一个月无理由退换"
                                 android:textColor="@color/font_color1"
-                                android:textSize="12sp"/>
+                                android:textSize="12sp" />
                         </LinearLayout>
 
                         <View
-                            android:visibility="gone"
                             android:layout_width="1dp"
                             android:layout_height="40dp"
                             android:layout_centerVertical="true"
                             android:layout_marginRight="20dp"
                             android:layout_toLeftOf="@id/address_iv"
-                            android:background="#e0e0e0"/>
+                            android:background="#e0e0e0"
+                            android:visibility="gone" />
 
                         <LinearLayout
                             android:id="@+id/two_ll"
                             android:layout_width="0dp"
-                            android:layout_weight="4"
                             android:layout_height="match_parent"
-                            android:gravity="center_vertical"
                             android:layout_marginRight="20dp"
+                            android:layout_weight="4"
+                            android:gravity="center_vertical"
                             android:orientation="horizontal">
 
                             <ImageView
                                 android:layout_width="15dp"
                                 android:layout_height="16dp"
                                 android:layout_gravity="center"
-                                android:src="@mipmap/home_terms_of_service"/>
+                                android:src="@mipmap/home_terms_of_service" />
 
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="服务条款"
                                 android:layout_marginLeft="5dp"
+                                android:text="服务条款"
                                 android:textColor="@color/font_color1"
-                                android:textSize="12sp"/>
+                                android:textSize="12sp" />
                         </LinearLayout>
 
                         <View
-                            android:visibility="gone"
                             android:layout_width="1dp"
                             android:layout_height="40dp"
                             android:layout_centerVertical="true"
                             android:layout_marginRight="20dp"
                             android:layout_toLeftOf="@id/address_iv"
-                            android:background="#e0e0e0"/>
+                            android:background="#e0e0e0"
+                            android:visibility="gone" />
 
                         <LinearLayout
                             android:id="@+id/three_ll"
                             android:layout_width="0dp"
-                            android:layout_weight="5"
-
                             android:layout_height="match_parent"
-                            android:orientation="horizontal"
-                            android:gravity="center">
+
+                            android:layout_weight="5"
+                            android:gravity="center"
+                            android:orientation="horizontal">
 
                             <ImageView
                                 android:layout_width="16dp"
                                 android:layout_height="16dp"
                                 android:layout_gravity="center"
-                                android:src="@mipmap/home_operator"/>
+                                android:src="@mipmap/home_operator" />
 
                             <TextView
-                                android:layout_marginLeft="5dp"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
+                                android:layout_marginLeft="5dp"
                                 android:text="服务运营商"
                                 android:textColor="@color/font_color1"
-                                android:textSize="13sp"/>
+                                android:textSize="13sp" />
                         </LinearLayout>
                     </LinearLayout>
                 </RelativeLayout>
+
                 <View
-                    android:background="@color/theme_lines"
                     android:layout_width="match_parent"
-                    android:layout_height="1dp"/>
+                    android:layout_height="1dp"
+                    android:background="@color/theme_lines" />
+
+                <!--not use-->
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:visibility="gone"
+                    android:background="#ffffff"
                     android:orientation="vertical"
-                    android:background="#ffffff">
+                    android:visibility="gone">
 
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="horizontal"
                         android:paddingLeft="5dp"
-                        android:paddingRight="5dp"
-                        >
+                        android:paddingRight="5dp">
 
                         <LinearLayout
                             android:id="@+id/keting_ll"
@@ -184,7 +181,7 @@
                                 android:id="@+id/keting_home_iv"
                                 android:layout_width="44dp"
                                 android:layout_height="44dp"
-                                android:src="@mipmap/home_living_room"/>
+                                android:src="@mipmap/home_living_room" />
 
                             <TextView
                                 android:layout_width="match_parent"
@@ -193,9 +190,8 @@
                                 android:gravity="center"
                                 android:text="客厅"
                                 android:textColor="@color/black"
-                                android:textSize="@dimen/x30"/>
+                                android:textSize="@dimen/x30" />
                         </LinearLayout>
-
 
 
                         <LinearLayout
@@ -211,7 +207,7 @@
                                 android:id="@+id/canting_home_iv"
                                 android:layout_width="44dp"
                                 android:layout_height="44dp"
-                                android:src="@mipmap/home_restaurant"/>
+                                android:src="@mipmap/home_restaurant" />
 
                             <TextView
                                 android:layout_width="match_parent"
@@ -220,7 +216,7 @@
                                 android:gravity="center"
                                 android:text="餐厅"
                                 android:textColor="@color/black"
-                                android:textSize="@dimen/x30"/>
+                                android:textSize="@dimen/x30" />
                         </LinearLayout>
 
                         <LinearLayout
@@ -236,7 +232,7 @@
                                 android:id="@+id/meishi_iv"
                                 android:layout_width="44dp"
                                 android:layout_height="44dp"
-                                android:src="@mipmap/home_bedroom"/>
+                                android:src="@mipmap/home_bedroom" />
 
                             <TextView
                                 android:layout_width="match_parent"
@@ -245,7 +241,7 @@
                                 android:gravity="center"
                                 android:text="卧室"
                                 android:textColor="@color/black"
-                                android:textSize="@dimen/x30"/>
+                                android:textSize="@dimen/x30" />
                         </LinearLayout>
 
                         <LinearLayout
@@ -261,7 +257,7 @@
                                 android:id="@+id/shufang_home_iv"
                                 android:layout_width="44dp"
                                 android:layout_height="44dp"
-                                android:src="@mipmap/home_study"/>
+                                android:src="@mipmap/home_study" />
 
                             <TextView
                                 android:layout_width="match_parent"
@@ -270,8 +266,9 @@
                                 android:gravity="center"
                                 android:text="书房"
                                 android:textColor="@color/black"
-                                android:textSize="@dimen/x30"/>
+                                android:textSize="@dimen/x30" />
                         </LinearLayout>
+
                         <LinearLayout
                             android:id="@+id/yangtai_ll"
                             android:layout_width="0dp"
@@ -285,7 +282,7 @@
                                 android:id="@+id/yangtai_iv"
                                 android:layout_width="44dp"
                                 android:layout_height="44dp"
-                                android:src="@mipmap/home_balcony"/>
+                                android:src="@mipmap/home_balcony" />
 
                             <TextView
                                 android:layout_width="match_parent"
@@ -294,7 +291,7 @@
                                 android:gravity="center"
                                 android:text="阳台"
                                 android:textColor="@color/black"
-                                android:textSize="@dimen/x30"/>
+                                android:textSize="@dimen/x30" />
                         </LinearLayout>
                     </LinearLayout>
 
@@ -304,8 +301,8 @@
                         android:layout_marginTop="5dp"
                         android:orientation="horizontal"
                         android:paddingLeft="5dp"
-                        android:paddingRight="5dp"
-                        >
+                        android:paddingRight="5dp">
+
                         <LinearLayout
                             android:id="@+id/ertongfang_ll"
                             android:layout_width="0dp"
@@ -319,7 +316,7 @@
                                 android:id="@+id/ertongfang_iv"
                                 android:layout_width="44dp"
                                 android:layout_height="44dp"
-                                android:src="@mipmap/home_children_room"/>
+                                android:src="@mipmap/home_children_room" />
 
                             <TextView
                                 android:layout_width="match_parent"
@@ -328,7 +325,7 @@
                                 android:gravity="center"
                                 android:text="儿童房"
                                 android:textColor="@color/black"
-                                android:textSize="@dimen/x30"/>
+                                android:textSize="@dimen/x30" />
                         </LinearLayout>
 
                         <LinearLayout
@@ -344,7 +341,7 @@
                                 android:id="@+id/weiyujian_iv"
                                 android:layout_width="44dp"
                                 android:layout_height="44dp"
-                                android:src="@mipmap/home_bathroom"/>
+                                android:src="@mipmap/home_bathroom" />
 
                             <TextView
                                 android:layout_width="match_parent"
@@ -353,8 +350,9 @@
                                 android:gravity="center"
                                 android:text="卫浴间"
                                 android:textColor="@color/black"
-                                android:textSize="@dimen/x30"/>
+                                android:textSize="@dimen/x30" />
                         </LinearLayout>
+
                         <LinearLayout
                             android:id="@+id/bieshu_ll"
                             android:layout_width="0dp"
@@ -368,7 +366,7 @@
                                 android:id="@+id/bieshu_iv"
                                 android:layout_width="44dp"
                                 android:layout_height="44dp"
-                                android:src="@mipmap/home_villa"/>
+                                android:src="@mipmap/home_villa" />
 
                             <TextView
                                 android:layout_width="match_parent"
@@ -377,7 +375,7 @@
                                 android:gravity="center"
                                 android:text="别墅"
                                 android:textColor="@color/black"
-                                android:textSize="@dimen/x30"/>
+                                android:textSize="@dimen/x30" />
                         </LinearLayout>
 
                         <LinearLayout
@@ -393,7 +391,7 @@
                                 android:id="@+id/louti_iv"
                                 android:layout_width="44dp"
                                 android:layout_height="44dp"
-                                android:src="@mipmap/home_stairs"/>
+                                android:src="@mipmap/home_stairs" />
 
                             <TextView
                                 android:layout_width="match_parent"
@@ -402,7 +400,7 @@
                                 android:gravity="center"
                                 android:text="楼梯"
                                 android:textColor="@color/black"
-                                android:textSize="@dimen/x30"/>
+                                android:textSize="@dimen/x30" />
                         </LinearLayout>
 
                         <LinearLayout
@@ -418,7 +416,7 @@
                                 android:id="@+id/zoulang_iv"
                                 android:layout_width="44dp"
                                 android:layout_height="44dp"
-                                android:src="@mipmap/home_corridor"/>
+                                android:src="@mipmap/home_corridor" />
 
                             <TextView
                                 android:layout_width="match_parent"
@@ -427,40 +425,45 @@
                                 android:gravity="center"
                                 android:text="走廊"
                                 android:textColor="@color/black"
-                                android:textSize="@dimen/x30"/>
+                                android:textSize="@dimen/x30" />
                         </LinearLayout>
                     </LinearLayout>
                 </LinearLayout>
+
                 <View
-                    android:background="#f9f9f9"
                     android:layout_width="match_parent"
-                    android:layout_height="10dp"/>
+                    android:layout_height="10dp"
+                    android:background="#f9f9f9" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="80dp"
-                    android:padding="10dp"
+                    android:layout_height="match_parent"
                     android:gravity="center"
-                    android:orientation="horizontal">
+                    android:orientation="horizontal"
+                    android:layout_marginBottom="10dp">
+
                     <ImageView
                         android:id="@+id/iv_zwj"
-                        android:background="@mipmap/home_btn_zwj"
                         android:layout_width="160dp"
-                        android:layout_height="70dp" />
+                        android:layout_height="80dp"
+                        android:layout_weight="1"
+                        android:background="@mipmap/home_btn_zwj"/>
+
                     <ImageView
                         android:id="@+id/iv_ar"
-                        android:layout_marginLeft="20dp"
-                        android:background="@mipmap/home_btn_arswpd"
                         android:layout_width="160dp"
-                        android:layout_height="70dp" />
+                        android:layout_height="80dp"
+                        android:layout_weight="1"
+                        android:layout_marginLeft="10dp"
+                        android:background="@mipmap/home_btn_arswpd" />
                 </LinearLayout>
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="60dp"
                     android:background="@color/white"
                     android:gravity="center_vertical"
-                    android:orientation="horizontal"
-                    >
+                    android:orientation="horizontal">
 
                     <LinearLayout
                         android:layout_width="80dp"
@@ -470,7 +473,7 @@
                         <ImageView
                             android:layout_width="60dp"
                             android:layout_height="wrap_content"
-                            android:src="@mipmap/home_news"/>
+                            android:src="@mipmap/home_news" />
                     </LinearLayout>
 
                     <TextSwitcher
@@ -480,83 +483,87 @@
                         android:layout_gravity="center_vertical"
                         android:layout_weight="1"
                         android:gravity="center_vertical"
-                        android:textColor="#444444"
-                        android:textSize="15sp"
                         android:inAnimation="@anim/push_up_in"
                         android:outAnimation="@anim/push_up_out"
-                        android:padding="0dp"></TextSwitcher>
+                        android:padding="0dp"
+                        android:textColor="#444444"
+                        android:textSize="15sp"/>
+
                     <View
                         android:layout_width="1dp"
-                        android:background="#7e7e7e"
+                        android:layout_height="15dp"
                         android:layout_margin="10dp"
-                        android:layout_height="15dp"/>
-                <TextView
-                    android:id="@+id/tv_home_news_more"
-                    android:text="更多"
-                    android:textColor="@color/theme_orange"
-                    android:textSize="15sp"
-                    android:layout_marginRight="15dp"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
+                        android:background="#7e7e7e" />
+
+                    <TextView
+                        android:id="@+id/tv_home_news_more"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="更多"
+                        android:textColor="@color/theme_orange"
+                        android:textSize="15sp" />
                 </LinearLayout>
+
+                <!--not use-->
                 <LinearLayout
                     android:id="@+id/time_buy_ll"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@color/white"
                     android:orientation="vertical"
-                    android:visibility="gone"
-                    >
+                    android:visibility="gone">
+
                     <View
                         android:layout_width="match_parent"
-                        android:background="#f9f9f9"
-                        android:layout_height="10dp"/>
+                        android:layout_height="10dp"
+                        android:background="#f9f9f9" />
 
                     <RelativeLayout
                         android:layout_width="match_parent"
-                        android:layout_height="45dp"
-                        >
+                        android:layout_height="45dp">
 
                         <bc.juhao.com.ui.view.TextViewPlus
-                            app:left_width="18dp"
-                            app:left_height="18dp"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_margin="10dp"
-                            android:text="限时购"
-                            android:textStyle="bold"
                             android:drawableLeft="@mipmap/home_time"
                             android:gravity="center"
+                            android:text="限时购"
                             android:textColor="#444444"
-                            android:textSize="15dp"/>
+                            android:textSize="15dp"
+                            android:textStyle="bold"
+                            app:left_height="18dp"
+                            app:left_width="18dp" />
+
                         <bc.juhao.com.ui.view.countdownview.CountdownView
                             android:id="@+id/cv_countdownView"
                             android:layout_width="90dp"
                             android:layout_height="30dp"
                             android:layout_alignParentRight="true"
-                            android:layout_marginRight="10dp"
                             android:layout_marginTop="10dp"
+                            android:layout_marginRight="10dp"
                             app:isShowMillisecond="false"
                             app:isShowMinute="true"
                             app:isShowSecond="true"
-                            app:suffixGravity="center"
-                            app:suffixTextColor="#000000"
-                            app:suffixTextSize="15sp"
                             app:suffixDay="天"
+                            app:suffixGravity="center"
                             app:suffixHour="时"
                             app:suffixMinute="分"
                             app:suffixSecond="秒"
+                            app:suffixTextColor="#000000"
+                            app:suffixTextSize="15sp"
                             app:timeTextColor="#000000"
                             app:timeTextSize="15sp" />
 
                     </RelativeLayout>
+
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="horizontal"
                         android:paddingLeft="5dp"
-                        android:paddingRight="5dp"
-                        >
+                        android:paddingRight="5dp">
+
                         <com.lib.common.hxp.view.GridViewForScrollView
                             android:id="@+id/time_buy_lv"
                             android:layout_width="match_parent"
@@ -566,43 +573,48 @@
                             android:numColumns="4"
                             android:paddingLeft="10dp"
                             android:paddingRight="10dp"
-                            android:visibility="visible"/>
+                            android:visibility="visible" />
                     </LinearLayout>
 
                 </LinearLayout>
 
+                <!--not use-->
                 <LinearLayout
-                    android:visibility="gone"
-                    android:background="#ffffff"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical">
+                    android:background="#ffffff"
+                    android:orientation="vertical"
+                    android:visibility="gone">
+
                     <View
-                        android:background="#f9f9f9"
                         android:layout_width="match_parent"
-                        android:layout_height="10dp"/>
+                        android:layout_height="10dp"
+                        android:background="#f9f9f9" />
+
                     <bc.juhao.com.ui.view.TextViewPlus
-                        android:text="钜豪超市"
-                        android:textSize="15sp"
-                        android:textColor="#444444"
-                        android:textStyle="bold"
-                        android:gravity="center"
-                        app:left_width="20dp"
-                        app:left_height="15dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
                         android:layout_margin="10dp"
                         android:drawableLeft="@mipmap/home_supermarket"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" />
+                        android:gravity="center"
+                        android:text="钜豪超市"
+                        android:textColor="#444444"
+                        android:textSize="15sp"
+                        android:textStyle="bold"
+                        app:left_height="15dp"
+                        app:left_width="20dp" />
+
                     <HorizontalScrollView
                         android:id="@+id/hsv_supermarket"
                         android:layout_width="match_parent"
-                        android:scrollbars="none"
-                        android:layout_height="match_parent">
+                        android:layout_height="match_parent"
+                        android:scrollbars="none">
+
                         <LinearLayout
                             android:id="@+id/ll_supermacket"
-                            android:orientation="horizontal"
                             android:layout_width="match_parent"
-                            android:layout_height="match_parent"/>
+                            android:layout_height="match_parent"
+                            android:orientation="horizontal" />
                     </HorizontalScrollView>
 
                 </LinearLayout>
@@ -610,101 +622,108 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="344dp"
-                    android:paddingBottom="10dp"
-                    android:orientation="vertical">
+                    android:orientation="vertical"
+                    android:paddingBottom="10dp">
+
                     <View
-                        android:background="#f9f9f9"
                         android:layout_width="match_parent"
-                        android:layout_height="10dp"/>
+                        android:layout_height="10dp"
+                        android:background="#f9f9f9" />
+
                     <ImageView
-                        android:src="@mipmap/home_fldh"
                         android:layout_width="match_parent"
-                        android:layout_height="71dp" />
+                        android:layout_height="71dp"
+                        android:src="@mipmap/home_fldh" />
 
                     <LinearLayout
-                        android:paddingLeft="15dp"
-                        android:paddingRight="15dp"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="horizontal">
+
                         <ImageView
                             android:id="@+id/iv_diaodeng"
-                            android:src="@mipmap/img_dd"
                             android:layout_width="0dp"
+                            android:layout_height="80dp"
                             android:layout_weight="1"
-                            android:layout_height="80dp" />
+                            android:src="@mipmap/img_dd" />
+
                         <ImageView
                             android:id="@+id/iv_xidingdeng"
-                            android:src="@mipmap/img_xxd"
                             android:layout_width="0dp"
+                            android:layout_height="80dp"
+                            android:layout_marginLeft="5dp"
                             android:layout_weight="1"
-                            android:layout_marginLeft="10dp"
-                            android:layout_height="80dp" />
+                            android:src="@mipmap/img_xxd" />
                     </LinearLayout>
+
                     <LinearLayout
-                        android:layout_marginTop="10dp"
-                        android:paddingLeft="15dp"
-                        android:paddingRight="15dp"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
                         android:orientation="horizontal">
+
                         <ImageView
                             android:id="@+id/iv_bideng"
-                            android:src="@mipmap/img_bd"
                             android:layout_width="0dp"
+                            android:layout_height="80dp"
                             android:layout_weight="1"
-                            android:layout_height="80dp" />
+                            android:src="@mipmap/img_bd" />
+
                         <ImageView
                             android:id="@+id/iv_taideng"
-                            android:src="@mipmap/img_td"
                             android:layout_width="0dp"
-                            android:layout_weight="1"
+                            android:layout_height="80dp"
                             android:layout_marginLeft="10dp"
-                            android:layout_height="80dp" />
+                            android:layout_weight="1"
+                            android:src="@mipmap/img_td" />
                     </LinearLayout>
+
                     <LinearLayout
-                        android:layout_marginTop="10dp"
-                        android:paddingLeft="15dp"
-                        android:paddingRight="15dp"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
                         android:orientation="horizontal">
+
                         <ImageView
                             android:id="@+id/iv_luodideng"
-                            android:src="@mipmap/img_ld"
                             android:layout_width="0dp"
+                            android:layout_height="80dp"
                             android:layout_weight="1"
-                            android:layout_height="80dp" />
+                            android:src="@mipmap/img_ld" />
+
                         <ImageView
                             android:id="@+id/iv_diangong"
-                            android:src="@mipmap/img_dgdq"
                             android:layout_width="0dp"
-                            android:layout_weight="1"
+                            android:layout_height="80dp"
                             android:layout_marginLeft="10dp"
-                            android:layout_height="80dp" />
+                            android:layout_weight="1"
+                            android:src="@mipmap/img_dgdq" />
                     </LinearLayout>
                 </LinearLayout>
 
                 <LinearLayout
-                    android:background="#ffffff"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:background="#ffffff"
                     android:orientation="vertical">
+
                     <View
-                        android:background="@color/line"
                         android:layout_width="match_parent"
-                        android:layout_height="15dp"/>
+                        android:layout_height="15dp"
+                        android:background="@color/line" />
+
                     <ImageView
                         android:id="@+id/iv_taocan"
                         android:layout_width="match_parent"
-                        android:layout_height="75dp"/>
+                        android:layout_height="75dp" />
+
                     <LinearLayout
-                        android:orientation="horizontal"
-                        android:gravity="center_vertical"
-                        android:visibility="gone"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent">
-                    <!--<bc.juhao.com.ui.view.TextViewPlus-->
+                        android:layout_height="match_parent"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal"
+                        android:visibility="gone">
+                        <!--<bc.juhao.com.ui.view.TextViewPlus-->
                         <!--android:text="  套餐秒杀"-->
                         <!--android:textSize="15sp"-->
                         <!--android:textColor="#444444"-->
@@ -717,67 +736,75 @@
                         <!--android:layout_width="wrap_content"-->
                         <!--android:layout_height="wrap_content" />-->
                         <!--<View-->
-                            <!--android:layout_weight="1"-->
-                            <!--android:layout_width="wrap_content"-->
-                            <!--android:layout_height="wrap_content"/>-->
-                    <bc.juhao.com.ui.view.TextViewPlus
-                        android:id="@+id/tv_more_taocan"
-                        android:text="更多"
-                        android:textColor="#444444"
-                        android:textSize="15sp"
-                        android:drawablePadding="5dp"
-                        android:layout_marginRight="15dp"
-                        android:drawableRight="@mipmap/into"
-                        android:layout_marginLeft="15dp"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" />
+                        <!--android:layout_weight="1"-->
+                        <!--android:layout_width="wrap_content"-->
+                        <!--android:layout_height="wrap_content"/>-->
+                        <bc.juhao.com.ui.view.TextViewPlus
+                            android:id="@+id/tv_more_taocan"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="15dp"
+                            android:layout_marginRight="15dp"
+                            android:drawableRight="@mipmap/into"
+                            android:drawablePadding="5dp"
+                            android:text="更多"
+                            android:textColor="#444444"
+                            android:textSize="15sp" />
                     </LinearLayout>
+
                     <View
-                        android:background="@color/line"
                         android:layout_width="match_parent"
-                        android:layout_height="10dp"/>
+                        android:layout_height="10dp"
+                        android:background="@color/line" />
+
                     <HorizontalScrollView
                         android:id="@+id/hsv_taocan"
                         android:layout_width="match_parent"
-                        android:scrollbars="none"
-                        android:layout_height="match_parent">
+                        android:layout_height="match_parent"
+                        android:scrollbars="none">
+
                         <LinearLayout
                             android:id="@+id/ll_taocan"
-                            android:orientation="horizontal"
                             android:layout_width="match_parent"
-                            android:layout_height="match_parent"/>
+                            android:layout_height="match_parent"
+                            android:orientation="horizontal" />
                     </HorizontalScrollView>
                 </LinearLayout>
+
                 <View
-                    android:background="@color/line"
                     android:layout_width="match_parent"
-                    android:layout_height="10dp"/>
+                    android:layout_height="10dp"
+                    android:background="@color/line" />
+
                 <LinearLayout
-                    android:background="#ffffff"
                     android:layout_width="match_parent"
                     android:layout_height="540dp"
+                    android:background="#ffffff"
                     android:orientation="vertical">
+
                     <RelativeLayout
                         android:layout_width="match_parent"
-                        android:layout_height="80dp"
-                        >
+                        android:layout_height="80dp">
+
                         <ImageView
-                            android:scaleType="fitXY"
                             android:id="@+id/iv_new_product"
                             android:layout_width="match_parent"
-                            android:layout_height="80dp"/>
+                            android:layout_height="80dp"
+                            android:scaleType="fitXY" />
+
                         <TextView
                             android:id="@+id/tv_new_product_more"
-                            android:text="查看更多"
-                            android:textColor="@color/theme_orange"
-                            android:textSize="15sp"
-                            android:visibility="gone"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
                             android:layout_alignParentBottom="true"
                             android:layout_marginBottom="10dp"
                             android:background="@drawable/bg_corner_empty_theme_25"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content" />
+                            android:text="查看更多"
+                            android:textColor="@color/theme_orange"
+                            android:textSize="15sp"
+                            android:visibility="gone" />
                     </RelativeLayout>
+
                     <com.lib.common.hxp.view.GridViewForScrollView
                         android:id="@+id/priductGv01"
                         android:layout_width="match_parent"
@@ -786,43 +813,45 @@
                         android:horizontalSpacing="10dp"
                         android:numColumns="2"
                         android:paddingLeft="10dp"
-                        android:paddingRight="10dp"
-                        android:verticalSpacing="10dp"
                         android:paddingTop="10dp"
+                        android:paddingRight="10dp"
                         android:paddingBottom="10dp"
-                        />
+                        android:verticalSpacing="10dp" />
                     <!--<HorizontalScrollView-->
-                        <!--android:id="@+id/hsv_xinpin"-->
-                        <!--android:layout_width="match_parent"-->
-                        <!--android:scrollbars="none"-->
-                        <!--android:layout_height="match_parent">-->
-                        <!--<LinearLayout-->
-                            <!--android:id="@+id/ll_xinpin"-->
-                            <!--android:orientation="horizontal"-->
-                            <!--android:layout_width="match_parent"-->
-                            <!--android:layout_height="match_parent"/>-->
+                    <!--android:id="@+id/hsv_xinpin"-->
+                    <!--android:layout_width="match_parent"-->
+                    <!--android:scrollbars="none"-->
+                    <!--android:layout_height="match_parent">-->
+                    <!--<LinearLayout-->
+                    <!--android:id="@+id/ll_xinpin"-->
+                    <!--android:orientation="horizontal"-->
+                    <!--android:layout_width="match_parent"-->
+                    <!--android:layout_height="match_parent"/>-->
                     <!--</HorizontalScrollView>-->
                 </LinearLayout>
 
                 <LinearLayout
-                    android:background="#ffffff"
                     android:layout_width="match_parent"
                     android:layout_height="570dp"
+                    android:background="#ffffff"
                     android:orientation="vertical">
+
                     <View
-                        android:background="@color/line"
                         android:layout_width="match_parent"
-                        android:layout_height="10dp"/>
+                        android:layout_height="10dp"
+                        android:background="@color/line" />
+
                     <RelativeLayout
                         android:layout_width="match_parent"
-                        android:layout_height="100dp"
-                        >
+                        android:layout_height="100dp">
+
                         <ImageView
-                            android:scaleType="fitXY"
                             android:id="@+id/iv_diaodeng_product"
                             android:layout_width="match_parent"
-                            android:layout_height="100dp"/>
+                            android:layout_height="100dp"
+                            android:scaleType="fitXY" />
                     </RelativeLayout>
+
                     <com.lib.common.hxp.view.GridViewForScrollView
                         android:id="@+id/gv_diaodeng"
                         android:layout_width="match_parent"
@@ -831,32 +860,34 @@
                         android:horizontalSpacing="10dp"
                         android:numColumns="2"
                         android:paddingLeft="10dp"
-                        android:paddingRight="10dp"
-                        android:verticalSpacing="10dp"
                         android:paddingTop="10dp"
+                        android:paddingRight="10dp"
                         android:paddingBottom="10dp"
-                        />
+                        android:verticalSpacing="10dp" />
                 </LinearLayout>
 
                 <LinearLayout
-                    android:background="#ffffff"
                     android:layout_width="match_parent"
                     android:layout_height="570dp"
+                    android:background="#ffffff"
                     android:orientation="vertical">
+
                     <View
-                        android:background="@color/line"
                         android:layout_width="match_parent"
-                        android:layout_height="10dp"/>
+                        android:layout_height="10dp"
+                        android:background="@color/line" />
+
                     <RelativeLayout
                         android:layout_width="match_parent"
-                        android:layout_height="100dp"
-                        >
+                        android:layout_height="100dp">
+
                         <ImageView
-                            android:scaleType="fitXY"
                             android:id="@+id/iv_xidingdeng_product"
                             android:layout_width="match_parent"
-                            android:layout_height="100dp"/>
+                            android:layout_height="100dp"
+                            android:scaleType="fitXY" />
                     </RelativeLayout>
+
                     <com.lib.common.hxp.view.GridViewForScrollView
                         android:id="@+id/gv_xidingdeng"
                         android:layout_width="match_parent"
@@ -865,34 +896,35 @@
                         android:horizontalSpacing="10dp"
                         android:numColumns="2"
                         android:paddingLeft="10dp"
-                        android:paddingRight="10dp"
-                        android:verticalSpacing="10dp"
                         android:paddingTop="10dp"
+                        android:paddingRight="10dp"
                         android:paddingBottom="10dp"
-                        />
+                        android:verticalSpacing="10dp" />
                 </LinearLayout>
 
 
-
                 <LinearLayout
-                    android:background="#ffffff"
                     android:layout_width="match_parent"
                     android:layout_height="570dp"
+                    android:background="#ffffff"
                     android:orientation="vertical">
+
                     <View
-                        android:background="@color/line"
                         android:layout_width="match_parent"
-                        android:layout_height="10dp"/>
+                        android:layout_height="10dp"
+                        android:background="@color/line" />
+
                     <RelativeLayout
                         android:layout_width="match_parent"
-                        android:layout_height="100dp"
-                        >
+                        android:layout_height="100dp">
+
                         <ImageView
-                            android:scaleType="fitXY"
                             android:id="@+id/iv_bideng_product"
                             android:layout_width="match_parent"
-                            android:layout_height="100dp"/>
+                            android:layout_height="100dp"
+                            android:scaleType="fitXY" />
                     </RelativeLayout>
+
                     <com.lib.common.hxp.view.GridViewForScrollView
                         android:id="@+id/gv_bideng"
                         android:layout_width="match_parent"
@@ -901,34 +933,35 @@
                         android:horizontalSpacing="10dp"
                         android:numColumns="2"
                         android:paddingLeft="10dp"
-                        android:paddingRight="10dp"
-                        android:verticalSpacing="10dp"
                         android:paddingTop="10dp"
+                        android:paddingRight="10dp"
                         android:paddingBottom="10dp"
-                        />
+                        android:verticalSpacing="10dp" />
                 </LinearLayout>
 
 
-
                 <LinearLayout
-                    android:background="#ffffff"
                     android:layout_width="match_parent"
                     android:layout_height="570dp"
+                    android:background="#ffffff"
                     android:orientation="vertical">
+
                     <View
-                        android:background="@color/line"
                         android:layout_width="match_parent"
-                        android:layout_height="10dp"/>
+                        android:layout_height="10dp"
+                        android:background="@color/line" />
+
                     <RelativeLayout
                         android:layout_width="match_parent"
-                        android:layout_height="100dp"
-                        >
+                        android:layout_height="100dp">
+
                         <ImageView
-                            android:scaleType="fitXY"
                             android:id="@+id/iv_taideng_product"
                             android:layout_width="match_parent"
-                            android:layout_height="100dp"/>
+                            android:layout_height="100dp"
+                            android:scaleType="fitXY" />
                     </RelativeLayout>
+
                     <com.lib.common.hxp.view.GridViewForScrollView
                         android:id="@+id/gv_taideng"
                         android:layout_width="match_parent"
@@ -937,34 +970,35 @@
                         android:horizontalSpacing="10dp"
                         android:numColumns="2"
                         android:paddingLeft="10dp"
-                        android:paddingRight="10dp"
-                        android:verticalSpacing="10dp"
                         android:paddingTop="10dp"
+                        android:paddingRight="10dp"
                         android:paddingBottom="10dp"
-                        />
+                        android:verticalSpacing="10dp" />
                 </LinearLayout>
 
 
-
                 <LinearLayout
-                    android:background="#ffffff"
                     android:layout_width="match_parent"
                     android:layout_height="570dp"
+                    android:background="#ffffff"
                     android:orientation="vertical">
+
                     <View
-                        android:background="@color/line"
                         android:layout_width="match_parent"
-                        android:layout_height="10dp"/>
+                        android:layout_height="10dp"
+                        android:background="@color/line" />
+
                     <RelativeLayout
                         android:layout_width="match_parent"
-                        android:layout_height="100dp"
-                        >
+                        android:layout_height="100dp">
+
                         <ImageView
-                            android:scaleType="fitXY"
                             android:id="@+id/iv_luodideng_product"
                             android:layout_width="match_parent"
-                            android:layout_height="100dp"/>
+                            android:layout_height="100dp"
+                            android:scaleType="fitXY" />
                     </RelativeLayout>
+
                     <com.lib.common.hxp.view.GridViewForScrollView
                         android:id="@+id/gv_luodideng"
                         android:layout_width="match_parent"
@@ -973,34 +1007,35 @@
                         android:horizontalSpacing="10dp"
                         android:numColumns="2"
                         android:paddingLeft="10dp"
-                        android:paddingRight="10dp"
-                        android:verticalSpacing="10dp"
                         android:paddingTop="10dp"
+                        android:paddingRight="10dp"
                         android:paddingBottom="10dp"
-                        />
+                        android:verticalSpacing="10dp" />
                 </LinearLayout>
 
 
-
                 <LinearLayout
-                    android:background="#ffffff"
                     android:layout_width="match_parent"
                     android:layout_height="570dp"
+                    android:background="#ffffff"
                     android:orientation="vertical">
+
                     <View
-                        android:background="@color/line"
                         android:layout_width="match_parent"
-                        android:layout_height="10dp"/>
+                        android:layout_height="10dp"
+                        android:background="@color/line" />
+
                     <RelativeLayout
                         android:layout_width="match_parent"
-                        android:layout_height="100dp"
-                        >
+                        android:layout_height="100dp">
+
                         <ImageView
-                            android:scaleType="fitXY"
                             android:id="@+id/iv_diangong_product"
                             android:layout_width="match_parent"
-                            android:layout_height="100dp"/>
+                            android:layout_height="100dp"
+                            android:scaleType="fitXY" />
                     </RelativeLayout>
+
                     <com.lib.common.hxp.view.GridViewForScrollView
                         android:id="@+id/gv_diangong"
                         android:layout_width="match_parent"
@@ -1009,83 +1044,82 @@
                         android:horizontalSpacing="10dp"
                         android:numColumns="2"
                         android:paddingLeft="10dp"
-                        android:paddingRight="10dp"
-                        android:verticalSpacing="10dp"
                         android:paddingTop="10dp"
+                        android:paddingRight="10dp"
                         android:paddingBottom="10dp"
-                        />
+                        android:verticalSpacing="10dp" />
                 </LinearLayout>
 
 
-
-
-
-
-
-
                 <LinearLayout
-                    android:background="#efefef"
                     android:layout_width="match_parent"
                     android:layout_height="268dp"
+                    android:background="#efefef"
                     android:orientation="vertical">
+
                     <View
-                        android:background="@color/line"
                         android:layout_width="match_parent"
-                        android:layout_height="10dp"/>
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:background="#ffffff"
-                    android:layout_height="wrap_content"
-                    android:gravity="center_vertical"
-                    android:orientation="horizontal">
-                    <bc.juhao.com.ui.view.TextViewPlus
-                        android:text="配灯"
-                        android:textStyle="bold"
-                        android:textColor="#444444"
-                        android:textSize="15sp"
-                        app:left_width="14dp"
-                        app:left_height="16dp"
-                        android:gravity="center"
-                        android:layout_margin="10dp"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" />
-                    <View
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"/>
-                    <RelativeLayout
-                        android:id="@+id/add_rl"
-                        android:layout_width="wrap_content"
+                        android:layout_height="10dp"
+                        android:background="@color/line" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_alignParentRight="true"
-                        android:layout_centerInParent="true">
-                    <TextView
-                        android:text="新增配灯"
-                        android:textSize="15sp"
-                        android:textColor="#444444"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" />
-                    </RelativeLayout>
-                    <bc.juhao.com.ui.view.TextViewPlus
-                        android:id="@+id/tv_more_lamb"
-                        android:text="更多"
-                        android:textColor="@color/theme_orange"
-                        android:textSize="15sp"
-                        android:drawablePadding="5dp"
-                        android:layout_marginRight="15dp"
-                        android:drawableRight="@mipmap/into"
-                        android:layout_marginLeft="15dp"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" />
-                </LinearLayout>
+                        android:background="#ffffff"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
+
+                        <bc.juhao.com.ui.view.TextViewPlus
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="10dp"
+                            android:gravity="center"
+                            android:text="配灯"
+                            android:textColor="#444444"
+                            android:textSize="15sp"
+                            android:textStyle="bold"
+                            app:left_height="16dp"
+                            app:left_width="14dp" />
+
+                        <View
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1" />
+
+                        <RelativeLayout
+                            android:id="@+id/add_rl"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentRight="true"
+                            android:layout_centerInParent="true">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="新增配灯"
+                                android:textColor="#444444"
+                                android:textSize="15sp" />
+                        </RelativeLayout>
+
+                        <bc.juhao.com.ui.view.TextViewPlus
+                            android:id="@+id/tv_more_lamb"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="15dp"
+                            android:layout_marginRight="15dp"
+                            android:drawableRight="@mipmap/into"
+                            android:drawablePadding="5dp"
+                            android:text="更多"
+                            android:textColor="@color/theme_orange"
+                            android:textSize="15sp" />
+                    </LinearLayout>
 
                     <LinearLayout
                         android:id="@+id/choose_view"
                         android:layout_width="match_parent"
                         android:layout_height="40dp"
                         android:background="@color/white"
-                        android:orientation="horizontal"
-                        >
+                        android:orientation="horizontal">
 
                         <LinearLayout
                             android:id="@+id/square_ll"
@@ -1103,14 +1137,14 @@
                                 android:gravity="center"
                                 android:text="发现设计师"
                                 android:textColor="@color/colorPrimaryRed"
-                                android:textSize="15sp"/>
+                                android:textSize="15sp" />
 
                             <View
                                 android:id="@+id/square_view"
                                 android:layout_width="match_parent"
                                 android:layout_height="2dp"
                                 android:background="#F33F3F"
-                                android:visibility="visible"/>
+                                android:visibility="visible" />
                         </LinearLayout>
 
 
@@ -1130,14 +1164,14 @@
                                 android:gravity="center"
                                 android:text="我的作品"
                                 android:textColor="@color/txt_black"
-                                android:textSize="15sp"/>
+                                android:textSize="15sp" />
 
                             <View
                                 android:id="@+id/my_works_view"
                                 android:layout_width="match_parent"
                                 android:layout_height="2dp"
                                 android:background="#F33F3F"
-                                android:visibility="invisible"/>
+                                android:visibility="invisible" />
                         </LinearLayout>
 
                         <LinearLayout
@@ -1156,193 +1190,206 @@
                                 android:gravity="center"
                                 android:text="筛选"
                                 android:textColor="@color/txt_black"
-                                android:textSize="15sp"/>
+                                android:textSize="15sp" />
 
                             <View
                                 android:id="@+id/select_view"
                                 android:layout_width="match_parent"
                                 android:layout_height="2dp"
                                 android:background="#F33F3F"
-                                android:visibility="invisible"/>
+                                android:visibility="invisible" />
                         </LinearLayout>
                     </LinearLayout>
+
                     <include
                         android:id="@+id/null_programe_view"
                         layout="@layout/empty_page_no_recoder"
                         android:layout_width="match_parent"
                         android:layout_height="350dp"
-                        android:visibility="gone"
-                        />
-                <GridView
-                    android:id="@+id/gv_home_lamb"
-                    android:numColumns="2"
-                    android:paddingLeft="10dp"
-                    android:paddingRight="10dp"
-                    android:paddingBottom="10dp"
-                    android:paddingTop="10dp"
-                    android:verticalSpacing="10dp"
-                    android:horizontalSpacing="10dp"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"/>
-                </LinearLayout>
+                        android:visibility="gone" />
 
+                    <GridView
+                        android:id="@+id/gv_home_lamb"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:horizontalSpacing="10dp"
+                        android:numColumns="2"
+                        android:paddingLeft="10dp"
+                        android:paddingTop="10dp"
+                        android:paddingRight="10dp"
+                        android:paddingBottom="10dp"
+                        android:verticalSpacing="10dp" />
+                </LinearLayout>
 
 
                 <LinearLayout
                     android:id="@+id/ll_my_product"
-                    android:background="#efefef"
-                    android:visibility="gone"
                     android:layout_width="match_parent"
                     android:layout_height="200dp"
-                    android:orientation="vertical">
+                    android:background="#efefef"
+                    android:orientation="vertical"
+                    android:visibility="gone">
                     <!--<bc.juhao.com.ui.view.TextViewPlus-->
-                        <!--android:text="我的产品"-->
-                        <!--android:textSize="15sp"-->
-                        <!--android:textColor="#444444"-->
-                        <!--android:textStyle="bold"-->
-                        <!--android:gravity="center"-->
-                        <!--android:layout_margin="10dp"-->
-                        <!--android:drawableLeft="@mipmap/home_my_product"-->
-                        <!--app:left_width="17dp"-->
-                        <!--app:left_height="18dp"-->
-                        <!--android:layout_width="wrap_content"-->
-                        <!--android:layout_height="wrap_content" />-->
+                    <!--android:text="我的产品"-->
+                    <!--android:textSize="15sp"-->
+                    <!--android:textColor="#444444"-->
+                    <!--android:textStyle="bold"-->
+                    <!--android:gravity="center"-->
+                    <!--android:layout_margin="10dp"-->
+                    <!--android:drawableLeft="@mipmap/home_my_product"-->
+                    <!--app:left_width="17dp"-->
+                    <!--app:left_height="18dp"-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="wrap_content" />-->
                     <ImageView
                         android:id="@+id/iv_chanpin"
-                        android:scaleType="fitXY"
                         android:layout_width="match_parent"
                         android:layout_height="100dp"
-                        />
+                        android:scaleType="fitXY" />
+
                     <HorizontalScrollView
-                        android:scrollbars="none"
-                        android:background="#efefef"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent">
+                        android:layout_height="match_parent"
+                        android:background="#efefef"
+                        android:scrollbars="none">
+
                         <LinearLayout
                             android:id="@+id/ll_my_product_list"
-                            android:background="#efefef"
-                            android:orientation="horizontal"
                             android:layout_width="match_parent"
-                            android:layout_height="match_parent"/>
+                            android:layout_height="match_parent"
+                            android:background="#efefef"
+                            android:orientation="horizontal" />
                     </HorizontalScrollView>
                 </LinearLayout>
+
                 <View
-                    android:background="@color/line"
                     android:layout_width="match_parent"
-                    android:layout_height="10dp"/>
+                    android:layout_height="10dp"
+                    android:background="@color/line" />
+
                 <LinearLayout
-                    android:background="#ffffff"
                     android:layout_width="match_parent"
                     android:layout_height="305dp"
+                    android:background="#ffffff"
                     android:orientation="vertical">
+
                     <ImageView
                         android:id="@+id/iv_zhuanti"
-                        android:scaleType="fitXY"
                         android:layout_width="match_parent"
                         android:layout_height="100dp"
-                        android:orientation="horizontal"/>
-                        <!--<bc.juhao.com.ui.view.TextViewPlus-->
-                            <!--android:text="专题精选"-->
-                            <!--android:textStyle="bold"-->
-                            <!--android:textColor="#444444"-->
-                            <!--android:textSize="15sp"-->
-                            <!--app:left_width="15dp"-->
-                            <!--app:left_height="19dp"-->
-                            <!--android:drawableLeft="@mipmap/home_thematic"-->
-                            <!--android:gravity="center"-->
-                            <!--android:layout_margin="10dp"-->
-                            <!--android:layout_width="wrap_content"-->
-                            <!--android:layout_height="wrap_content" />-->
-
-                    <View
-                        android:background="@color/line"
-                        android:layout_width="match_parent"
-                        android:layout_height="10dp"
-                        />
-                    <HorizontalScrollView
-                        android:layout_width="match_parent"
-                        android:scrollbars="none"
-                        android:layout_height="match_parent">
-                        <LinearLayout
-                            android:id="@+id/ll_jingxuan"
-                            android:orientation="horizontal"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"/>
-                    </HorizontalScrollView>
-                </LinearLayout>
-                <View
-                    android:background="#f9f9f9"
-                    android:layout_width="match_parent"
-                    android:layout_height="10dp"/>
-                <!--<bc.juhao.com.ui.view.TextViewPlus-->
-                    <!--android:text="猜你喜欢"-->
+                        android:orientation="horizontal"
+                        android:scaleType="fitXY" />
+                    <!--<bc.juhao.com.ui.view.TextViewPlus-->
+                    <!--android:text="专题精选"-->
                     <!--android:textStyle="bold"-->
-                    <!--android:background="#ffffff"-->
                     <!--android:textColor="#444444"-->
                     <!--android:textSize="15sp"-->
-                    <!--app:left_width="17dp"-->
-                    <!--app:left_height="15dp"-->
-                    <!--android:drawableLeft="@mipmap/home_like"-->
-                    <!--android:gravity="center_vertical"-->
-                    <!--android:paddingLeft="10dp"-->
-                    <!--android:layout_width="match_parent"-->
-                    <!--android:layout_height="40dp" />-->
+                    <!--app:left_width="15dp"-->
+                    <!--app:left_height="19dp"-->
+                    <!--android:drawableLeft="@mipmap/home_thematic"-->
+                    <!--android:gravity="center"-->
+                    <!--android:layout_margin="10dp"-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="wrap_content" />-->
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="10dp"
+                        android:background="@color/line" />
+
+                    <HorizontalScrollView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:scrollbars="none">
+
+                        <LinearLayout
+                            android:id="@+id/ll_jingxuan"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:orientation="horizontal" />
+                    </HorizontalScrollView>
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="10dp"
+                    android:background="#f9f9f9" />
+                <!--<bc.juhao.com.ui.view.TextViewPlus-->
+                <!--android:text="猜你喜欢"-->
+                <!--android:textStyle="bold"-->
+                <!--android:background="#ffffff"-->
+                <!--android:textColor="#444444"-->
+                <!--android:textSize="15sp"-->
+                <!--app:left_width="17dp"-->
+                <!--app:left_height="15dp"-->
+                <!--android:drawableLeft="@mipmap/home_like"-->
+                <!--android:gravity="center_vertical"-->
+                <!--android:paddingLeft="10dp"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="40dp" />-->
                 <ImageView
                     android:id="@+id/iv_cnxh"
-                    android:scaleType="fitXY"
+                    android:layout_width="match_parent"
                     android:layout_height="100dp"
-                    android:layout_width="match_parent"/>
+                    android:scaleType="fitXY" />
+
                 <com.lib.common.hxp.view.GridViewForScrollView
                     android:id="@+id/priductGridView"
                     android:layout_width="match_parent"
                     android:layout_height="200dp"
+                    android:background="#f6f6f6"
                     android:horizontalSpacing="10dp"
                     android:numColumns="2"
-                    android:background="#f6f6f6"
                     android:paddingLeft="10dp"
-                    android:paddingRight="10dp"
                     android:paddingTop="10dp"
+                    android:paddingRight="10dp"
                     android:verticalSpacing="10dp"
-                    android:visibility="visible"/>
+                    android:visibility="visible" />
+
                 <View
                     android:layout_width="match_parent"
-                    android:background="@color/line"
                     android:layout_height="20dp"
+                    android:background="@color/line"
 
                     />
+
                 <ImageView
                     android:id="@+id/iv_tyd"
                     android:layout_width="match_parent"
-                    android:layout_height="395dp"/>
+                    android:layout_height="395dp" />
+
                 <LinearLayout
-                    android:gravity="center_vertical"
                     android:layout_width="match_parent"
-                    android:layout_marginTop="15dp"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="15dp"
+                    android:gravity="center_vertical"
                     android:orientation="horizontal">
+
                     <View
                         android:layout_width="0dp"
-                        android:layout_weight="1"
-                        android:background="#d8d8d8"
+                        android:layout_height="1dp"
                         android:layout_marginLeft="20dp"
                         android:layout_marginRight="20dp"
-                        android:layout_height="1dp"/>
+                        android:layout_weight="1"
+                        android:background="#d8d8d8" />
+
                     <TextView
-                        android:text="已经到底拉"
-                        android:textSize="15sp"
-                        android:textColor="#aaaaaa"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" />
+                        android:layout_height="wrap_content"
+                        android:text="已经到底拉"
+                        android:textColor="#aaaaaa"
+                        android:textSize="15sp" />
+
                     <View
                         android:layout_width="0dp"
-                        android:layout_weight="1"
-                        android:background="#d8d8d8"
+                        android:layout_height="1dp"
                         android:layout_marginLeft="20dp"
                         android:layout_marginRight="20dp"
-                        android:layout_height="1dp"/>
+                        android:layout_weight="1"
+                        android:background="#d8d8d8" />
                 </LinearLayout>
+
                 <RelativeLayout
-                    android:visibility="gone"
                     android:id="@+id/yaoqing_rl"
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
@@ -1350,7 +1397,7 @@
                     android:background="@color/white"
                     android:gravity="center_vertical"
                     android:orientation="horizontal"
-                    >
+                    android:visibility="gone">
 
                     <LinearLayout
                         android:id="@+id/juhao_iv"
@@ -1361,7 +1408,7 @@
                         <ImageView
                             android:layout_width="wrap_content"
                             android:layout_height="30dp"
-                            android:src="@drawable/juhao"/>
+                            android:src="@drawable/juhao" />
                     </LinearLayout>
 
                     <TextView
@@ -1372,32 +1419,31 @@
                         android:layout_marginLeft="10dp"
                         android:layout_toRightOf="@id/juhao_iv"
                         android:textColor="@color/black"
-                        android:textSize="16sp"/>
+                        android:textSize="16sp" />
 
                     <RelativeLayout
                         android:id="@+id/kefu_rl"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_alignParentRight="true"
-                        >
+                        android:layout_alignParentRight="true">
 
                         <ImageView
                             android:id="@+id/address_iv"
                             android:layout_width="30dp"
                             android:layout_height="25dp"
                             android:layout_alignParentRight="true"
-                            android:layout_marginRight="20dp"
                             android:layout_marginTop="5dp"
-                            android:src="@drawable/weizhi"/>
+                            android:layout_marginRight="20dp"
+                            android:src="@drawable/weizhi" />
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_alignParentRight="true"
                             android:layout_below="@id/address_iv"
+                            android:layout_alignParentRight="true"
                             android:layout_marginRight="13dp"
                             android:text="找到我"
-                            android:textSize="13sp"/>
+                            android:textSize="13sp" />
                     </RelativeLayout>
 
                     <View
@@ -1406,12 +1452,10 @@
                         android:layout_centerVertical="true"
                         android:layout_marginRight="20dp"
                         android:layout_toLeftOf="@id/kefu_rl"
-                        android:background="#e0e0e0"/>
+                        android:background="#e0e0e0" />
                 </RelativeLayout>
 
-                <View
-                    style="@style/view_style"
-                    />
+                <View style="@style/view_style" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -1419,45 +1463,43 @@
                     android:layout_marginTop="5dp"
                     android:background="@color/white"
                     android:orientation="vertical"
-                    android:visibility="gone"
-                    >
+                    android:visibility="gone">
 
                     <ImageView
                         android:layout_width="match_parent"
                         android:layout_height="50dp"
-                        android:visibility="gone"
                         android:scaleType="centerCrop"
-                        android:src="@drawable/dafengge"/>
+                        android:src="@drawable/dafengge"
+                        android:visibility="gone" />
 
 
                     <ImageView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:scaleType="centerCrop"
-                        android:src="@mipmap/gongnengqu"/>
+                        android:src="@mipmap/gongnengqu" />
 
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="5dp"
                         android:paddingLeft="5dp"
-                        android:paddingRight="5dp"
-                        >
+                        android:paddingRight="5dp">
 
                         <ImageView
                             android:id="@+id/keting_iv"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:src="@mipmap/keting"
-                            android:paddingRight="5dp"/>
+                            android:paddingRight="5dp"
+                            android:src="@mipmap/keting" />
 
                         <ImageView
                             android:id="@+id/woshi_iv"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:src="@mipmap/woshi"/>
+                            android:src="@mipmap/woshi" />
 
                     </LinearLayout>
 
@@ -1474,14 +1516,14 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:paddingRight="5dp"
-                            android:src="@mipmap/ertong"/>
+                            android:src="@mipmap/ertong" />
 
                         <ImageView
                             android:id="@+id/guangyuan_iv"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:src="@mipmap/guangyuan"/>
+                            android:src="@mipmap/guangyuan" />
 
                     </LinearLayout>
 
@@ -1498,16 +1540,17 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:paddingRight="5dp"
-                            android:src="@mipmap/canting"/>
+                            android:src="@mipmap/canting" />
 
                         <ImageView
                             android:id="@+id/juhuasuan_iv"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:src="@mipmap/juhuasuan"/>
+                            android:src="@mipmap/juhuasuan" />
 
                     </LinearLayout>
+
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -1521,14 +1564,14 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:paddingRight="5dp"
-                            android:src="@mipmap/yiji"/>
+                            android:src="@mipmap/yiji" />
 
                         <ImageView
                             android:id="@+id/gengduo_iv"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:src="@mipmap/gengduo"/>
+                            android:src="@mipmap/gengduo" />
 
                     </LinearLayout>
 
@@ -1547,15 +1590,14 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:scaleType="fitStart"
-                        />
+                        android:scaleType="fitStart" />
 
                     <View
                         android:layout_width="1dp"
                         android:layout_height="match_parent"
                         android:layout_centerVertical="true"
                         android:layout_toLeftOf="@id/address_iv"
-                        android:background="#e0e0e0"/>
+                        android:background="#e0e0e0" />
 
                     <LinearLayout
                         android:layout_width="0dp"
@@ -1568,18 +1610,15 @@
                             android:layout_width="match_parent"
                             android:layout_height="90dp"
                             android:scaleType="fitStart"
-                            android:src="@mipmap/pinpaitehui"/>
+                            android:src="@mipmap/pinpaitehui" />
 
-                        <View
-                            style="@style/view_style"
-                            />
+                        <View style="@style/view_style" />
 
                         <ImageView
                             android:id="@+id/maishoutuijian_iv"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:scaleType="fitStart"
-                            />
+                            android:scaleType="fitStart" />
                     </LinearLayout>
                 </LinearLayout>
 
@@ -1590,37 +1629,36 @@
                     android:layout_height="95dp"
                     android:scaleType="fitStart"
                     android:src="@mipmap/yijianpei"
-                    android:visibility="gone"/>
+                    android:visibility="gone" />
 
                 <ImageView
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
                     android:scaleType="fitStart"
-                    android:visibility="gone"
-                    android:src="@mipmap/xinpinshangxian"/>
+                    android:src="@mipmap/xinpinshangxian"
+                    android:visibility="gone" />
 
-              
 
                 <ImageView
-                    android:visibility="gone"
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
                     android:scaleType="fitStart"
-                    android:src="@mipmap/renqituijian"/>
+                    android:src="@mipmap/renqituijian"
+                    android:visibility="gone" />
 
                 <LinearLayout
-                    android:visibility="gone"
                     android:layout_width="match_parent"
                     android:layout_height="250dp"
                     android:background="@color/white"
-                    android:orientation="horizontal">
+                    android:orientation="horizontal"
+                    android:visibility="gone">
 
                     <LinearLayout
                         android:id="@+id/popularity_01_ll"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
-                        android:layout_marginRight="5dp"
                         android:layout_marginTop="5dp"
+                        android:layout_marginRight="5dp"
                         android:layout_weight="1"
                         android:background="#E9EDF0"
                         android:orientation="vertical"
@@ -1629,14 +1667,13 @@
                         <ImageView
                             android:id="@+id/popularity_01_iv"
                             android:layout_width="match_parent"
-                            android:layout_height="150dp"
-                            />
+                            android:layout_height="150dp" />
 
                         <ImageView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="10dp"
-                            android:src="@mipmap/chakan"/>
+                            android:src="@mipmap/chakan" />
 
                     </LinearLayout>
 
@@ -1651,23 +1688,22 @@
                             android:id="@+id/popularity_02_ll"
                             android:layout_width="match_parent"
                             android:layout_height="0dp"
+                            android:layout_marginBottom="3dp"
                             android:layout_weight="1"
                             android:background="#E9EDF0"
                             android:gravity="center_horizontal"
-                            android:orientation="vertical"
-                            android:layout_marginBottom="3dp">
+                            android:orientation="vertical">
 
                             <ImageView
                                 android:id="@+id/popularity_02_iv"
                                 android:layout_width="90dp"
-                                android:layout_height="90dp"
-                                />
+                                android:layout_height="90dp" />
 
                             <ImageView
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="5dp"
-                                android:src="@mipmap/chakan"/>
+                                android:src="@mipmap/chakan" />
 
                         </LinearLayout>
 
@@ -1683,14 +1719,13 @@
                             <ImageView
                                 android:id="@+id/popularity_03_iv"
                                 android:layout_width="90dp"
-                                android:layout_height="90dp"
-                                />
+                                android:layout_height="90dp" />
 
                             <ImageView
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="5dp"
-                                android:src="@mipmap/chakan"/>
+                                android:src="@mipmap/chakan" />
 
                         </LinearLayout>
                     </LinearLayout>
@@ -1698,31 +1733,32 @@
                 </LinearLayout>
 
 
-
             </LinearLayout>
 
         </bc.juhao.com.ui.view.ObservableScrollView>
 
-        <include layout="@layout/load_more"/>
+        <include layout="@layout/load_more" />
 
     </com.lib.common.hxp.view.PullToRefreshLayout>
+
     <FrameLayout
         android:id="@+id/fl_ll"
         android:layout_width="match_parent"
         android:layout_height="55dp"
-        android:background="@color/transparent">
-    </FrameLayout>
+        android:background="@color/transparent"/>
+
+    <!--not use-->
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
         <android.support.v7.widget.Toolbar
             android:id="@+id/toolbar"
-            android:visibility="gone"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             android:background="#ffffff"
-            android:minHeight="?attr/actionBarSize">
+            android:minHeight="?attr/actionBarSize"
+            android:visibility="gone">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -1731,49 +1767,51 @@
                 android:orientation="horizontal">
 
                 <bc.juhao.com.ui.view.TextViewPlus
-                    android:text="扫一扫"
                     android:id="@+id/topLeftBtn"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
                     android:layout_marginRight="5dp"
                     android:drawableTop="@mipmap/home_scanning"
-                    app:top_width="20dp"
-                    app:top_height="20dp"
                     android:drawablePadding="5dp"
+                    android:text="扫一扫"
                     android:textColor="#444444"
-                    android:textSize="10sp"/>
+                    android:textSize="10sp"
+                    app:top_height="20dp"
+                    app:top_width="20dp" />
+
                 <RelativeLayout
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:background="@drawable/bg_eeeeee_corner_100"
-                    android:layout_marginBottom="10dp"
-                    android:layout_marginTop="10dp"
                     android:layout_marginLeft="5dp"
+                    android:layout_marginTop="10dp"
                     android:layout_marginRight="5dp"
-                    android:layout_weight="1">
+                    android:layout_marginBottom="10dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/bg_eeeeee_corner_100">
+
                     <EditText
-                        android:hint="请输入搜索关键词"
-                        android:gravity="center"
                         android:id="@+id/et_search"
                         android:layout_width="match_parent"
                         android:layout_height="35dp"
                         android:layout_marginRight="5dp"
                         android:background="@null"
                         android:focusable="false"
-                        android:paddingBottom="2dp"
+                        android:gravity="center"
+                        android:hint="请输入搜索关键词"
                         android:paddingLeft="5dp"
                         android:paddingTop="2dp"
+                        android:paddingBottom="2dp"
                         android:textColor="#222222"
                         android:textColorHint="#bbbbbb"
-                        android:textSize="15sp"
-                        />
+                        android:textSize="15sp" />
+
                     <ImageView
-                        android:src="@mipmap/home_search"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
                         android:layout_marginLeft="50dp"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" />
+                        android:src="@mipmap/home_search" />
 
                 </RelativeLayout>
 
@@ -1787,21 +1825,20 @@
 
                     <bc.juhao.com.ui.view.TextViewPlus
                         android:id="@+id/topRightBtn"
-                        android:text="通知"
-                        android:textSize="10sp"
-                        android:drawableTop="@mipmap/home_notice"
-                        app:top_width="20dp"
-                        app:top_height="20dp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentRight="true"
                         android:layout_centerVertical="true"
                         android:layout_marginLeft="5dp"
-                        android:layout_marginRight="10dp"
-                        android:gravity="center"
                         android:layout_marginTop="5dp"
+                        android:layout_marginRight="10dp"
                         android:background="@drawable/xiaoxi"
-                        />
+                        android:drawableTop="@mipmap/home_notice"
+                        android:gravity="center"
+                        android:text="通知"
+                        android:textSize="10sp"
+                        app:top_height="20dp"
+                        app:top_width="20dp" />
 
                     <TextView
                         android:id="@+id/unMessageTv"
@@ -1812,8 +1849,7 @@
                         android:gravity="center"
                         android:text="0"
                         android:textColor="#FFFFFF"
-                        android:visibility="visible"
-                        />
+                        android:visibility="visible" />
                 </RelativeLayout>
 
 

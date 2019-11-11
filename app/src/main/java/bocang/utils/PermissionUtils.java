@@ -219,6 +219,7 @@ public class PermissionUtils {
     public static void requestPermissionsResult(final Activity activity, final int requestCode, @NonNull String[] permissions,
                                                 @NonNull int[] grantResults, PermissionGrant permissionGrant) {
 
+
         if (activity == null) {
             return;
         }

@@ -1,56 +1,63 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
     android:layout_width="250dp"
-    android:gravity="center"
+    android:layout_height="wrap_content"
     android:background="@android:color/transparent"
-    android:layout_height="wrap_content">
+    android:gravity="center"
+    android:orientation="vertical">
+
     <RelativeLayout
         android:layout_width="250dp"
         android:layout_height="98dp">
+
         <View
-            android:background="#fff"
-            android:layout_alignParentBottom="true"
             android:layout_width="250dp"
-            android:layout_height="50dp"/>
+            android:layout_height="50dp"
+            android:layout_alignParentBottom="true"
+            android:background="#fff" />
+
         <RelativeLayout
-            android:background="@mipmap/bg_up_date"
             android:layout_width="wrap_content"
-            android:layout_height="100dp">
+            android:layout_height="100dp"
+            android:background="@mipmap/bg_up_date">
+
             <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="20dp"
                 android:text="发现新版本"
                 android:textColor="#ffffff"
-                android:textSize="15sp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                android:textSize="15sp" />
+
             <ImageView
                 android:id="@+id/iv_close"
+                android:layout_width="15dp"
+                android:layout_height="15dp"
                 android:layout_alignParentRight="true"
                 android:layout_margin="12dp"
-                android:background="@mipmap/icon_close"
-                android:layout_width="15dp"
-                android:layout_height="15dp" />
+                android:background="@mipmap/icon_close" />
 
         </RelativeLayout>
     </RelativeLayout>
+
     <TextView
-        android:background="#ffffff"
         android:id="@+id/tv_update_info"
-        android:text="更新内容"
-        android:textSize="12sp"
-        android:textColor="#444444"
-        android:padding="15dp"
-        android:lineSpacingExtra="15dp"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:background="#ffffff"
+        android:lineSpacingExtra="15dp"
+        android:padding="15dp"
+        android:text="更新内容"
+        android:textColor="#444444"
+        android:textSize="12sp" />
+
     <Button
         android:id="@+id/btn_upgrate"
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:background="@drawable/btn_selector_theme_orange"
         android:text="马上更新"
         android:textColor="#ffffff"
-        android:textSize="15sp"
-        android:background="@drawable/btn_selector_theme_orange"
-        android:layout_width="match_parent"
-        android:layout_height="30dp" />
+        android:textSize="15sp" />
 </LinearLayout>

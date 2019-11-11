@@ -1,39 +1,46 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    android:orientation="vertical"
-    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
-    android:layout_height="match_parent">
-<LinearLayout
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="50dp"
-    android:orientation="horizontal">
-<TextView
-    android:id="@+id/tv_xuanchuan"
-    android:text="宣传视频"
-    android:textSize="15sp"
-    android:textColor="@color/green"
-    android:background="@drawable/bg_bottom_line"
-    android:gravity="center"
-    android:layout_width="0dp"
-    android:layout_weight="1"
-    android:layout_height="match_parent" />
-    <TextView
-        android:id="@+id/tv_jiaoxue"
-        android:text="教学视频"
-        android:textSize="15sp"
-        android:textColor="#444444"
-        android:gravity="center"
-        android:layout_width="0dp"
-        android:layout_weight="1"
-        android:layout_height="match_parent" />
-</LinearLayout>
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/tv_xuanchuan"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@drawable/bg_bottom_line"
+            android:gravity="center"
+            android:text="宣传视频"
+            android:textColor="@color/green"
+            android:textSize="15sp" />
+
+        <TextView
+            android:id="@+id/tv_jiaoxue"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="教学视频"
+            android:textColor="#444444"
+            android:textSize="15sp" />
+
+    </LinearLayout>
+
     <bc.juhao.com.ui.view.PMSwipeRefreshLayout
         android:id="@+id/pullToRefresh"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+
         <bc.juhao.com.ui.view.EndOfListView
             android:id="@+id/lv_video"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"/>
+            android:layout_height="match_parent" />
     </bc.juhao.com.ui.view.PMSwipeRefreshLayout>
+
 </LinearLayout>

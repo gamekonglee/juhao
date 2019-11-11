@@ -22,6 +22,7 @@ import java.lang.reflect.Field;
 import bc.juhao.com.cons.Constance;
 import bc.juhao.com.utils.MyShare;
 import bocang.utils.AppUtils;
+import bocang.utils.LogUtils;
 import bocang.utils.UIUtils;
 
 /**
@@ -30,10 +31,16 @@ import bocang.utils.UIUtils;
  * @desc ${TODD}
  */
 public abstract class BaseActivity  extends FragmentActivity {
+
+    private final static String TAG = "BaseActivity";
+
     private DemoApplication app;
     public ViewGroup rootView;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
+
+        LogUtils.logE(TAG, getClass().getSimpleName());
+
         super.onCreate(savedInstanceState);
         initData();
         initView();

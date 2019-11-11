@@ -27,6 +27,7 @@ import java.util.TimerTask;
  * @author 陈靖
  */
 public class PullToRefreshLayout extends RelativeLayout {
+
     public static final String TAG = "PullToRefreshLayout";
     // 初始状态
     public static final int INIT = 0;

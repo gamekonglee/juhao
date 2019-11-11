@@ -158,6 +158,7 @@ public class FileUtil {
                             @Override
                             public void onPermissionGranted(int requestCode) {
                                 takePhoto(context);
+//                                getTakePhoto(context);
                             }
                         });
                         break;

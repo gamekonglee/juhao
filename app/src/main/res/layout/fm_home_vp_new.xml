@@ -1,19 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout android:orientation="vertical"
-    android:background="#ffffff"
-    android:focusable="true"
-    android:paddingTop="20dp"
-    android:focusableInTouchMode="true"
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:gaga="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:gaga="http://schemas.android.com/tools">
-    <View
-        android:background="#ffffff"
-        android:layout_width="match_parent"
-        android:layout_marginTop="-20dp"
-        android:layout_height="20dp"/>
+    android:orientation="vertical"
+    android:paddingTop="20dp"
+    android:background="#ffffff"
+    android:focusable="true"
+    android:focusableInTouchMode="true">
+
+    <!--<View-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="20dp"-->
+    <!--android:layout_marginTop="-20dp"-->
+    <!--android:background="#ffffff" />-->
+
     <android.support.v7.widget.Toolbar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
@@ -28,119 +30,126 @@
             android:orientation="horizontal">
 
             <bc.juhao.com.ui.view.TextViewPlus
-                android:text="扫一扫"
                 android:id="@+id/topLeftBtn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
                 android:layout_marginRight="5dp"
                 android:drawableTop="@mipmap/home_scanning"
-                app:top_width="20dp"
-                app:top_height="20dp"
                 android:drawablePadding="5dp"
+                android:text="扫一扫"
                 android:textColor="#444444"
-                android:textSize="10sp"/>
+                android:textSize="10sp"
+                app:top_height="20dp"
+                app:top_width="20dp" />
+
             <RelativeLayout
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:background="@drawable/bg_eeeeee_corner_100"
-                android:layout_marginBottom="10dp"
-                android:layout_marginTop="10dp"
                 android:layout_marginLeft="5dp"
+                android:layout_marginTop="10dp"
                 android:layout_marginRight="5dp"
-                android:layout_weight="1">
+                android:layout_marginBottom="10dp"
+                android:layout_weight="1"
+                android:background="@drawable/bg_eeeeee_corner_100">
+
                 <EditText
-                    android:hint="请输入搜索关键词"
-                    android:gravity="center"
                     android:id="@+id/et_search"
                     android:layout_width="match_parent"
                     android:layout_height="35dp"
                     android:layout_marginRight="5dp"
                     android:background="@null"
                     android:focusable="false"
-                    android:paddingBottom="2dp"
+                    android:gravity="center"
+                    android:hint="请输入搜索关键词"
                     android:paddingLeft="5dp"
                     android:paddingTop="2dp"
+                    android:paddingBottom="2dp"
                     android:textColor="#222222"
                     android:textColorHint="#bbbbbb"
-                    android:textSize="15sp"
-                    />
+                    android:textSize="15sp" />
+
                 <ImageView
-                    android:src="@mipmap/home_search"
-                    android:layout_centerVertical="true"
-                    android:layout_marginLeft="50dp"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="15dp"
+                    android:src="@mipmap/home_search" />
+
                 <ImageView
-                    android:src="@mipmap/home_xj"
+                    android:layout_width="20dp"
+                    android:layout_height="16.5dp"
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
                     android:layout_marginRight="15dp"
-                    android:layout_width="20dp"
-                    android:layout_height="16.5dp" />
+                    android:src="@mipmap/home_xj" />
             </RelativeLayout>
 
             <RelativeLayout
                 android:layout_width="40dp"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
-                android:layout_centerVertical="true"
-
-                >
+                android:layout_centerVertical="true">
 
                 <bc.juhao.com.ui.view.TextViewPlus
                     android:id="@+id/topRightBtn"
-                    android:text="通知"
-                    android:textSize="10sp"
-                    android:drawableTop="@mipmap/home_notice"
-                    app:top_width="20dp"
-                    app:top_height="20dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="5dp"
-                    android:layout_marginRight="10dp"
-                    android:gravity="center"
                     android:layout_marginTop="5dp"
+                    android:layout_marginRight="10dp"
                     android:background="@drawable/xiaoxi"
-                    />
+                    android:drawableTop="@mipmap/home_notice"
+                    android:gravity="center"
+                    android:text="通知"
+                    android:textSize="10sp"
+                    app:top_height="20dp"
+                    app:top_width="20dp" />
 
                 <TextView
                     android:id="@+id/unMessageTv"
-                    android:layout_alignParentRight="true"
                     android:layout_width="18dp"
                     android:layout_height="18dp"
+                    android:layout_alignParentRight="true"
                     android:background="@drawable/bg_unread_count_red"
                     android:gravity="center"
                     android:text="0"
                     android:textColor="#FFFFFF"
-                    android:visibility="visible"
-                    />
+                    android:visibility="visible" />
+
             </RelativeLayout>
 
 
         </LinearLayout>
+
     </android.support.v7.widget.Toolbar>
+
     <LinearLayout
-        android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-    <astuetz.MyPagerSlidingTabStrip
-        android:background="#ffffff"
-        gaga:pstsIndicatorColor="#e9642b"
-        gaga:pstsTextViewSize="14dip"
-        gaga:pstsDividerColor="@color/white"
-        gaga:pstsSelectTextViewSize="14dip"
-        gaga:pstsTextViewColor="@color/fontColor3"
-        gaga:pstsSelectTextViewColor="#e9642b"
-        android:id="@+id/tabs"
-        android:layout_width="match_parent"
-        android:layout_height="35dip" />
-    <android.support.v4.view.ViewPager
-        android:id="@+id/main_viewpager"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-    </android.support.v4.view.ViewPager>
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:orientation="vertical">
+
+        <astuetz.MyPagerSlidingTabStrip
+            android:id="@+id/tabs"
+            android:layout_width="match_parent"
+            android:layout_height="35dip"
+            android:background="#ffffff"
+            gaga:pstsDividerColor="@color/white"
+            gaga:pstsIndicatorColor="#e9642b"
+            gaga:pstsSelectTextViewColor="#e9642b"
+            gaga:pstsSelectTextViewSize="14dip"
+            gaga:pstsTextViewColor="@color/fontColor3"
+            gaga:pstsTextViewSize="14dip" />
+
+        <android.support.v4.view.ViewPager
+            android:id="@+id/main_viewpager"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
     </LinearLayout>
+
 </LinearLayout>

@@ -44,6 +44,8 @@ import bc.juhao.com.ui.activity.WebViewHomeActivity;
 import bc.juhao.com.ui.activity.product.SelectGoodsActivity;
 import bc.juhao.com.ui.activity.programme.DiyActivity;
 import bc.juhao.com.ui.activity.programme.ProgrammerActivity;
+import bc.juhao.com.ui.activity.programme.SelectSceneActivity;
+import bc.juhao.com.ui.activity.programme.ThreeDimensionalSceneActivity;
 import bc.juhao.com.ui.activity.user.MerchantInfoActivity;
 import bc.juhao.com.ui.view.ObservableScrollView;
 import bc.juhao.com.utils.ColorUtil;
@@ -63,6 +65,7 @@ import static bc.juhao.com.R.id.keting_home_iv;
  * @desc 首页面
  */
 public class HomeFragment extends BaseFragment implements View.OnClickListener {
+
     private static final int RESULT_REQUEST_CODE = 400;
     private HomeController mController;
     private ImageView lineIv;
@@ -111,58 +114,13 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-//        ((MainActivity)getActivity()).setStatuTextColor(getActivity(), Color.WHITE);
+
         return inflater.inflate(R.layout.fm_home_new, null);
     }
 
     @Override
     protected void initController() {
         mController = new HomeController(this);
-    }
-
-    @Override
-    protected void initViewData() {
-        initImageView();
-    }
-    //在主线程执行
-    @Subscribe(threadMode = ThreadMode.MAIN)
-    public void onUserEvent(Integer action) {
-        if (action == Constance.CARTCOUNT) {
-//            mController.setIsShowCartCount();
-        }
-        if (action == Constance.MESSAGE) {
-            unreadMsgCount = DemoApplication.unreadMsgCount;
-            if (unreadMsgCount == 0) {
-                unMessageTv.setVisibility(View.GONE);
-                ShortcutBadger.applyCount(getContext(), 0);
-            } else {
-                ShortcutBadger.applyCount(getContext(), this.unreadMsgCount); //for 1.1.4+
-                unMessageTv.setVisibility(View.VISIBLE);
-                unMessageTv.setText(unreadMsgCount + "");
-            }
-        }
-    }
-    /**
-     * 动态初始化界面图片
-     */
-    private void initImageView() {
-//        ImageLoader.getInstance().displayImage(NetWorkConst.SCENE_HOST + "images/App/rexiaotop.jpg", rexiaotop_iv);
-//        ImageLoader.getInstance().displayImage(NetWorkConst.SCENE_HOST + "images/App/pinpaitehui.jpg", pinpaitehui_iv);
-//        ImageLoader.getInstance().displayImage(NetWorkConst.SCENE_HOST + "images/App/maishoutuijian.jpg", maishoutuijian_iv);
-//        ImageLoader.getInstance().displayImage(NetWorkConst.SCENE_HOST + "images/App/zhongshi.png", zhongshi_iv);
-//        ImageLoader.getInstance().displayImage(NetWorkConst.SCENE_HOST + "images/App/meishi.png", meishi_iv);
-//        ImageLoader.getInstance().displayImage(NetWorkConst.SCENE_HOST + "images/App/oushi.png", oushi_iv);
-//        ImageLoader.getInstance().displayImage(NetWorkConst.SCENE_HOST + "images/App/houxiandai.png", houxiandai_iv);
-//        ImageLoader.getInstance().displayImage(NetWorkConst.SCENE_HOST + "images/App/xinzhongshi.png", xinzhongshi_iv);
-//        ImageLoader.getInstance().displayImage(NetWorkConst.SCENE_HOST + "images/App/yijia.png", yijia_iv);
-//        ImageLoader.getInstance().displayImage(NetWorkConst.SCENE_HOST + "images/App/tianyuan.png", tianyuan_iv);
-//        ImageLoader.getInstance().displayImage(NetWorkConst.SCENE_HOST + "images/App/yijianpei.jpg", yijianpei);
-        //        ImageLoader.getInstance().displayImage(NetWorkConst.SCENE_HOST+"images/App/keting.png", keting_iv);
-        //        ImageLoader.getInstance().displayImage(NetWorkConst.SCENE_HOST+"images/App/woshi.png", woshi_iv);
-        //        ImageLoader.getInstance().displayImage(NetWorkConst.SCENE_HOST+"images/App/ertong.png", ertong_iv);
-        //        ImageLoader.getInstance().displayImage(NetWorkConst.SCENE_HOST+"images/App/guangyuan.png", guangyuan_iv);
-        //        ImageLoader.getInstance().displayImage(NetWorkConst.SCENE_HOST+"images/App/canting.png", canting_iv);
-        //        ImageLoader.getInstance().displayImage(NetWorkConst.SCENE_HOST+"images/App/gengduo.png", gengduo_iv);
     }
 
     @TargetApi(Build.VERSION_CODES.M)
@@ -400,6 +358,34 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener {
     }
 
     @Override
+    protected void initViewData() {
+        initImageView();
+    }
+
+    /**
+     * 动态初始化界面图片
+     */
+    private void initImageView() {
+//        ImageLoader.getInstance().displayImage(NetWorkConst.SCENE_HOST + "images/App/rexiaotop.jpg", rexiaotop_iv);
+//        ImageLoader.getInstance().displayImage(NetWorkConst.SCENE_HOST + "images/App/pinpaitehui.jpg", pinpaitehui_iv);
+//        ImageLoader.getInstance().displayImage(NetWorkConst.SCENE_HOST + "images/App/maishoutuijian.jpg", maishoutuijian_iv);
+//        ImageLoader.getInstance().displayImage(NetWorkConst.SCENE_HOST + "images/App/zhongshi.png", zhongshi_iv);
+//        ImageLoader.getInstance().displayImage(NetWorkConst.SCENE_HOST + "images/App/meishi.png", meishi_iv);
+//        ImageLoader.getInstance().displayImage(NetWorkConst.SCENE_HOST + "images/App/oushi.png", oushi_iv);
+//        ImageLoader.getInstance().displayImage(NetWorkConst.SCENE_HOST + "images/App/houxiandai.png", houxiandai_iv);
+//        ImageLoader.getInstance().displayImage(NetWorkConst.SCENE_HOST + "images/App/xinzhongshi.png", xinzhongshi_iv);
+//        ImageLoader.getInstance().displayImage(NetWorkConst.SCENE_HOST + "images/App/yijia.png", yijia_iv);
+//        ImageLoader.getInstance().displayImage(NetWorkConst.SCENE_HOST + "images/App/tianyuan.png", tianyuan_iv);
+//        ImageLoader.getInstance().displayImage(NetWorkConst.SCENE_HOST + "images/App/yijianpei.jpg", yijianpei);
+        //        ImageLoader.getInstance().displayImage(NetWorkConst.SCENE_HOST+"images/App/keting.png", keting_iv);
+        //        ImageLoader.getInstance().displayImage(NetWorkConst.SCENE_HOST+"images/App/woshi.png", woshi_iv);
+        //        ImageLoader.getInstance().displayImage(NetWorkConst.SCENE_HOST+"images/App/ertong.png", ertong_iv);
+        //        ImageLoader.getInstance().displayImage(NetWorkConst.SCENE_HOST+"images/App/guangyuan.png", guangyuan_iv);
+        //        ImageLoader.getInstance().displayImage(NetWorkConst.SCENE_HOST+"images/App/canting.png", canting_iv);
+        //        ImageLoader.getInstance().displayImage(NetWorkConst.SCENE_HOST+"images/App/gengduo.png", gengduo_iv);
+    }
+
+    @Override
     protected void initData() {
 
     }
@@ -612,8 +598,12 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener {
                 startActivity(new Intent(getActivity(), FindHomeActivity.class));
                 break;
             case R.id.iv_ar:
+//                DemoApplication.SCENE_TYPE=3;
+//                mIntent=new Intent(getActivity(),DiyActivity.class);
+//                mIntent.putExtra(Constance.is_find_home,true);
+//                startActivity(mIntent);
                 DemoApplication.SCENE_TYPE=3;
-                mIntent=new Intent(getActivity(),DiyActivity.class);
+                mIntent=new Intent(getActivity(), ThreeDimensionalSceneActivity.class);
                 mIntent.putExtra(Constance.is_find_home,true);
                 startActivity(mIntent);
                 break;
@@ -634,35 +624,6 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener {
     private int bannerViewHeight = 150; // 广告视图的高度
     private int titleViewHeight = 65; // 标题栏的高度
     private boolean isStickyTop = false; // 是否吸附在顶部
-
-    // 处理标题栏颜色渐变
-    private void handleTitleBarColorEvaluate() {
-        float fraction;
-        if (bannerViewTopMargin > 0) {
-            fraction = 1f - bannerViewTopMargin * 1f / 60;
-            if (fraction < 0f)
-                fraction = 0f;
-            fl_ll.setAlpha(fraction);
-            //            et_search.setAlpha(fraction+0.5f);
-            return;
-        }
-
-        float space = Math.abs(bannerViewTopMargin) * 1f;
-        fraction = space / (bannerViewHeight - titleViewHeight);
-        if (fraction < 0f)
-            fraction = 0f;
-        if (fraction > 1f)
-            fraction = 1f;
-        fl_ll.setAlpha(1f);
-        //        et_search.setAlpha(1f);
-        if (fraction >= 1f || isStickyTop) {
-            isStickyTop = true;
-            fl_ll.setBackgroundColor(getActivity().getResources().getColor(R.color.green));
-        } else {
-            fl_ll.setBackgroundColor(ColorUtil.getNewColorByStartEndColor(getActivity(), fraction, R.color.transparent, R.color.green));
-        }
-    }
-
 
     @Override
     public void onStart() {
@@ -760,6 +721,53 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener {
                 my_works_view.setVisibility(View.VISIBLE);
                 break;
 
+        }
+    }
+
+    //在主线程执行
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onUserEvent(Integer action) {
+        if (action == Constance.CARTCOUNT) {
+//            mController.setIsShowCartCount();
+        }
+        if (action == Constance.MESSAGE) {
+            unreadMsgCount = DemoApplication.unreadMsgCount;
+            if (unreadMsgCount == 0) {
+                unMessageTv.setVisibility(View.GONE);
+                ShortcutBadger.applyCount(getContext(), 0);
+            } else {
+                ShortcutBadger.applyCount(getContext(), this.unreadMsgCount); //for 1.1.4+
+                unMessageTv.setVisibility(View.VISIBLE);
+                unMessageTv.setText(unreadMsgCount + "");
+            }
+        }
+    }
+
+    // 处理标题栏颜色渐变
+    private void handleTitleBarColorEvaluate() {
+        float fraction;
+        if (bannerViewTopMargin > 0) {
+            fraction = 1f - bannerViewTopMargin * 1f / 60;
+            if (fraction < 0f)
+                fraction = 0f;
+            fl_ll.setAlpha(fraction);
+            //            et_search.setAlpha(fraction+0.5f);
+            return;
+        }
+
+        float space = Math.abs(bannerViewTopMargin) * 1f;
+        fraction = space / (bannerViewHeight - titleViewHeight);
+        if (fraction < 0f)
+            fraction = 0f;
+        if (fraction > 1f)
+            fraction = 1f;
+        fl_ll.setAlpha(1f);
+        //        et_search.setAlpha(1f);
+        if (fraction >= 1f || isStickyTop) {
+            isStickyTop = true;
+            fl_ll.setBackgroundColor(getActivity().getResources().getColor(R.color.green));
+        } else {
+            fl_ll.setBackgroundColor(ColorUtil.getNewColorByStartEndColor(getActivity(), fraction, R.color.transparent, R.color.green));
         }
     }
 }

@@ -17,6 +17,7 @@ import bc.juhao.com.controller.classify.ClassifyGoodsController;
  * @description :分类页面-分类一
  */
 public class ClassifyGoodsFragment extends BaseFragment implements View.OnClickListener {
+
     private ClassifyGoodsController mController;
     private LinearLayout all_ll;
 

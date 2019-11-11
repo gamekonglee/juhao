@@ -127,6 +127,7 @@ public class BaseAdapterHelper {
         return this;
     }
 
+
     /**
      * Will set the image of an ImageView from a resource id.
      * @param viewId     The view id.

@@ -1,5 +1,7 @@
 package bc.juhao.com.ui.activity.programme;
 
+import android.os.Build;
+import android.support.annotation.RequiresApi;
 import android.view.View;
 import android.widget.ImageView;
 
@@ -26,6 +28,7 @@ public class SelectSchemeActivity extends BaseActivity {
         mController=new SelectSchemeController(this);
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
     protected void initView() {
         setContentView(R.layout.activity_scheme_type);

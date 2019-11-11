@@ -312,6 +312,8 @@ public class DiyController extends BaseController implements INetworkCallBack {
             @Override
             public void run() {
                 final String resultJson = uploadFile(imageData, url, params, imageName);
+
+                LogUtils.logE(TAG,"resultJson:"+ resultJson);
                 //                final Result result = JSON.parseObject(resultJson, Result.class);
                 //分享的操作
                 mView.runOnUiThread(new Runnable() {
@@ -332,7 +334,8 @@ public class DiyController extends BaseController implements INetworkCallBack {
                         String title = "来自 " + mTitle + " 方案的分享";
                         String path="";
                         if(DemoApplication.SCENE_TYPE==3){
-                            path=currentUlr+"?title="+mTitle+"&phone="+DemoApplication.mUserObject.getString(Constance.username)+"&gdata=http://nvc.bocang.cc/Interface/get_goods_info?id="+currentGoodsId+"|"+currentGoodsImg;
+                            path=currentUlr+"?title="+mTitle+"&phone="+DemoApplication.mUserObject.getString(Constance.username)+"&gdata=http://api.juhao.com/v2/ecapi.product.get?id="+currentGoodsId+"|"+currentGoodsImg;
+//                            path=currentUlr+"?title="+mTitle+"&phone="+DemoApplication.mUserObject.getString(Constance.username)+"&gdata=http://nvc.bocang.cc/Interface/get_goods_info?id="+currentGoodsId+"|"+currentGoodsImg;
                         }else {
                             path = NetWorkConst.SHAREFANAN + object.getJSONObject(Constance.fangan).getString(Constance.id);
                         }
@@ -725,6 +728,7 @@ public class DiyController extends BaseController implements INetworkCallBack {
 
         }
     }
+
     Handler handler=new Handler(){
         @Override
         public void handleMessage( Message msg) {
@@ -732,9 +736,11 @@ public class DiyController extends BaseController implements INetworkCallBack {
 
         }
     };
+
     private MediaProjectionManager mMediaProjectionManager;
     private ImageReader mImageReader;
     private VirtualDisplay mVirtualDisplay;
+
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     private void getScreenShot(int resultCode, Intent data) {
         MediaProjection mMediaProjection = mMediaProjectionManager.getMediaProjection(resultCode, data);
@@ -887,7 +893,6 @@ public class DiyController extends BaseController implements INetworkCallBack {
                     }
                 });
     }
-
 
     //添加表情
     private void addStickerView(Bitmap bitmap) {

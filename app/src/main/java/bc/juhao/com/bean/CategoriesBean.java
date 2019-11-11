@@ -18,72 +18,92 @@ public class CategoriesBean {
      * @website http://www.bejson.com/java2pojo/
      */
 
-        private int id;
-        private String name;
-        private String desc;
-        private String thumbs;
-        private Photo photo;
-        private int more;
-        private List<Categories> categories;
-        private int sort;
-        public void setId(int id) {
-            this.id = id;
-        }
-        public int getId() {
-            return id;
-        }
+    private int id;
+    private String name;
+    private String desc;
+    private String thumbs;
+    private Photo photo;
+    private int more;
+    private List<Categories> categories;
+    private int sort;
+    private int current;
 
-        public void setName(String name) {
-            this.name = name;
-        }
-        public String getName() {
-            return name;
-        }
+    public void setId(int id) {
+        this.id = id;
+    }
 
-        public void setDesc(String desc) {
-            this.desc = desc;
-        }
-        public String getDesc() {
-            return desc;
-        }
+    public int getId() {
+        return id;
+    }
 
-        public void setThumbs(String thumbs) {
-            this.thumbs = thumbs;
-        }
-        public String getThumbs() {
-            return thumbs;
-        }
+    public void setName(String name) {
+        this.name = name;
+    }
 
-        public void setPhoto(Photo photo) {
-            this.photo = photo;
-        }
-        public Photo getPhoto() {
-            return photo;
-        }
+    public String getName() {
+        return name;
+    }
 
-        public void setMore(int more) {
-            this.more = more;
-        }
-        public int getMore() {
-            return more;
-        }
+    public void setDesc(String desc) {
+        this.desc = desc;
+    }
 
-        public void setCategories(List<Categories> categories) {
-            this.categories = categories;
-        }
-        public List<Categories> getCategories() {
-            return categories;
-        }
+    public String getDesc() {
+        return desc;
+    }
 
-        public void setSort(int sort) {
-            this.sort = sort;
-        }
-        public int getSort() {
-            return sort;
-        }
-/**
- * Copyright 2018 bejson.com
- */
+    public void setThumbs(String thumbs) {
+        this.thumbs = thumbs;
+    }
+
+    public String getThumbs() {
+        return thumbs;
+    }
+
+    public void setPhoto(Photo photo) {
+        this.photo = photo;
+    }
+
+    public Photo getPhoto() {
+        return photo;
+    }
+
+    public void setMore(int more) {
+        this.more = more;
+    }
+
+    public int getMore() {
+        return more;
+    }
+
+    public void setCategories(List<Categories> categories) {
+        this.categories = categories;
+    }
+
+    public List<Categories> getCategories() {
+        return categories;
+    }
+
+    public void setSort(int sort) {
+        this.sort = sort;
+    }
+
+    public int getSort() {
+        return sort;
+    }
+
+    public int getCurrent() {
+        return current;
+    }
+
+    public void setCurrent(int current) {
+        this.current = current;
+    }
+
+
+    /**
+     * Copyright 2018 bejson.com
+     */
 
     /**
      * Auto-generated: 2018-02-06 14:42:21

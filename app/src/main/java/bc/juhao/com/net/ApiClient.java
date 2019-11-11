@@ -591,6 +591,7 @@ public class ApiClient {
                 });
 
     }
+
     public static Response getRegionSync(String s)  {
 
         OkHttpClient okHttpClient=new OkHttpClient();

@@ -25,19 +25,27 @@ import bocang.view.BaseActivity;
  * @description :选择产品
  */
 public class SelectGoodsActivity extends BaseActivity {
+
     private SelectGoodsController mController;
+    private Intent mIntent;
+
     private TextView topRightBtn;
     public TextView popularityTv, newTv, saleTv;
     private LinearLayout stylell;
+    public TextView select_num_tv;
+    private RelativeLayout select_rl;
+    private LinearLayout ll_grid_or_list;
+    private TextView tv_ensure;
+    private TextView tv_reset;
+
     public String mCategoriesId="";
     public boolean isSelectGoods = false;
     public String mFilterAttr = "";
-    public TextView select_num_tv;
-    private Intent mIntent;
-    private RelativeLayout select_rl;
-    public int mSort=-1;
+    public int mSort= -1;
     public boolean mIsYiJI=false;
     public String keyword="";
+
+
 
     @Override
     protected void InitDataView() {
@@ -84,7 +92,10 @@ public class SelectGoodsActivity extends BaseActivity {
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
     protected void initView() {
+
         setContentView(R.layout.activity_select_product);
+        setColor(this, Color.WHITE);
+
         topRightBtn = getViewAndClick(R.id.topRightBtn);
         popularityTv = getViewAndClick(R.id.popularityTv);
         newTv = getViewAndClick(R.id.newTv);
@@ -92,7 +103,10 @@ public class SelectGoodsActivity extends BaseActivity {
         stylell = getViewAndClick(R.id.stylell);
         select_num_tv = (TextView)findViewById(R.id.select_num_tv);
         select_rl = getViewAndClick(R.id.select_rl);
-        setColor(this, Color.WHITE);
+        ll_grid_or_list = getViewAndClick(R.id.ll_grid_or_list);
+        tv_ensure = getViewAndClick(R.id.tv_ensure);
+        tv_reset = getViewAndClick(R.id.tv_reset);
+
     }
 
     @Override
@@ -112,7 +126,8 @@ public class SelectGoodsActivity extends BaseActivity {
     protected void onViewClick(View v) {
         switch (v.getId()) {
             case R.id.topRightBtn:
-                mController.openClassify();
+                mController.openDrawerLayout();
+//                mController.openClassify();
                 break;
             case R.id.newTv:
                 mController.selectSortType(R.id.newTv);
@@ -136,6 +151,15 @@ public class SelectGoodsActivity extends BaseActivity {
                     isPriceSort = true;
                     mController.selectSortType(R.id.stylell);
                 }
+                break;
+            case R.id.ll_grid_or_list:
+                mController.changeToGridOrList();
+                break;
+            case R.id.tv_ensure:
+                mController.ensureFilter();
+                break;
+            case R.id.tv_reset:
+                mController.resetFilter();
                 break;
         }
     }

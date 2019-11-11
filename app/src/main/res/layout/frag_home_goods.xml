@@ -1,0 +1,291 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v4.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/drawerlayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+    android:orientation="vertical">
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fitsSystemWindows="true"
+        android:orientation="vertical">
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:id="@+id/lineIv"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_alignParentBottom="true"
+                    android:background="@color/divider_gray"
+
+                    />
+
+                <LinearLayout
+                    android:id="@+id/search_ll"
+                    android:visibility="gone"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:layout_marginBottom="1dp"
+                    android:background="#FFFFFF"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/saleTv"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:text="@string/sale"
+                        android:textColor="@color/fontColor60"
+                        android:textSize="17sp" />
+
+                    <TextView
+                        android:id="@+id/newTv"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:text="@string/new_goods"
+                        android:textColor="@color/fontColor60"
+                        android:textSize="17sp" />
+
+                    <TextView
+                        android:id="@+id/popularityTv"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:text="@string/popularity"
+                        android:textColor="@color/fontColor60"
+                        android:textSize="17sp" />
+
+                    <LinearLayout
+                        android:id="@+id/stylell"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:id="@+id/priceTv"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:gravity="center"
+                            android:text="@string/price"
+                            android:textColor="@color/fontColor60"
+                            android:textSize="17sp" />
+
+                        <ImageView
+                            android:id="@+id/price_iv"
+                            android:layout_width="20dp"
+                            android:layout_height="25dp"
+                            android:src="@drawable/arror" />
+                    </LinearLayout>
+
+
+                    <bc.juhao.com.ui.view.TextViewPlus
+                        android:id="@+id/topRightBtn"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:drawableRight="@mipmap/shopping_sx"
+                        android:drawablePadding="2dp"
+                        android:gravity="center_vertical|right"
+                        android:paddingRight="10dp"
+                        android:text="筛选"
+                        android:textColor="@color/fontColor60"
+                        android:textSize="17sp"
+                        app:right_height="12dp"
+                        app:right_width="12dp" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@color/background_color"
+                    android:orientation="vertical">
+                    <!--第一次没有数据时显示空-->
+                    <include
+                        android:id="@+id/null_net"
+                        layout="@layout/empty_page_no_wifi"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:visibility="gone"
+
+                        />
+
+                    <include
+                        android:id="@+id/null_view"
+                        layout="@layout/empty_page_no_goods"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:visibility="gone" />
+
+
+                    <bc.juhao.com.ui.view.PMSwipeRefreshLayout
+                        android:id="@+id/refresh_view"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+
+                        <bc.juhao.com.ui.view.EndOfGridView
+                            android:id="@+id/priductGridView"
+                            android:layout_width="match_parent"
+                            android:layout_height="200dp"
+                            android:background="@color/line"
+                            android:horizontalSpacing="10dp"
+                            android:numColumns="2"
+                            android:paddingLeft="10dp"
+                            android:paddingTop="10dp"
+                            android:paddingRight="10dp"
+                            android:scrollbars="none"
+                            android:verticalSpacing="10dp" />
+
+                    </bc.juhao.com.ui.view.PMSwipeRefreshLayout>
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <ProgressBar
+                android:id="@+id/pd"
+                style="@style/Base.Widget.AppCompat.ProgressBar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="45dp"
+                android:visibility="invisible" />
+
+            <RelativeLayout
+                android:id="@+id/select_rl"
+                android:layout_width="150dp"
+                android:layout_height="50dp"
+                android:layout_gravity="bottom|right"
+                android:layout_marginRight="10dp"
+                android:layout_marginBottom="10dp"
+                android:background="@drawable/icon_select"
+                android:orientation="horizontal"
+                android:visibility="gone">
+
+                <TextView
+                    android:layout_width="150dp"
+                    android:layout_height="50dp"
+                    android:layout_marginLeft="20dp"
+                    android:gravity="center_vertical"
+                    android:text="开始做方案"
+                    android:textColor="@color/white"
+                    android:visibility="visible" />
+
+                <TextView
+                    android:id="@+id/select_num_tv"
+                    android:layout_width="150dp"
+                    android:layout_height="50dp"
+                    android:gravity="center"
+                    android:paddingLeft="100dp"
+                    android:text="0"
+                    android:textColor="@color/white"
+                    android:visibility="visible" />
+            </RelativeLayout>
+
+        </FrameLayout>
+
+    </LinearLayout>
+
+    <!--android:choiceMode="singleChoice"-->
+    <RelativeLayout
+        android:id="@+id/fl_filter"
+        android:layout_width="250dp"
+        android:layout_height="match_parent"
+        android:layout_gravity="end"
+        android:background="#ffffff"
+        android:clickable="true"
+        android:fitsSystemWindows="true"
+        android:focusable="true">
+
+        <TextView
+            android:id="@+id/tv_filter_has_choosen"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="25dp"
+            android:drawablePadding="5dp"
+            android:ellipsize="end"
+            android:gravity="center"
+            android:lines="1"
+            android:paddingLeft="30dp"
+            android:paddingTop="5dp"
+            android:paddingRight="10dp"
+            android:paddingBottom="5dp"
+            android:textColor="#ffffff"
+            android:textSize="11sp"
+            android:visibility="invisible" />
+
+        <ListView
+            android:id="@+id/lv_filter_type"
+            android:layout_width="350dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginBottom="50dp"
+            android:background="#ffffff"
+            android:divider="@null"
+            android:scrollbars="none" />
+
+
+        <View
+            android:layout_width="350dp"
+            android:layout_height="1dp"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="45dp"
+            android:background="#efefef" />
+
+        <LinearLayout
+            android:layout_width="350dp"
+            android:layout_height="45dp"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentBottom="true"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/tv_reset"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="#ffffff"
+                android:gravity="center"
+                android:text="重置"
+                android:textColor="@color/orange_theme"
+                android:textSize="15sp" />
+
+            <TextView
+                android:id="@+id/tv_ensure"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@color/orange_theme"
+                android:gravity="center"
+                android:text="确定"
+                android:textColor="#ffffff"
+                android:textSize="15sp" />
+        </LinearLayout>
+    </RelativeLayout>
+
+
+</android.support.v4.widget.DrawerLayout>

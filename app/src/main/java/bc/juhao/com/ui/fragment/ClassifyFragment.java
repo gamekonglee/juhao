@@ -26,9 +26,11 @@ import bocang.utils.IntentUtil;
  * @desc 分类页面
  */
 public class ClassifyFragment extends BaseFragment {
+
     private ViewPager mPager;//页卡内容
     private List<Fragment> listViews; // Tab页面列表
     private TextView t1, t2;// 页卡头标
+
     private ClassifyGoodsFragment mClassifyGoodsFragment;
     private FilterGoodsFragment mFilterGoodsFragment;
     private RelativeLayout rl_search;
@@ -66,10 +68,10 @@ public class ClassifyFragment extends BaseFragment {
             }
         });
         listViews = new ArrayList<Fragment>();
-        mClassifyGoodsFragment=new ClassifyGoodsFragment();
-        mFilterGoodsFragment=new FilterGoodsFragment();
+        mClassifyGoodsFragment = new ClassifyGoodsFragment();
+        mFilterGoodsFragment = new FilterGoodsFragment();
         listViews.add(mClassifyGoodsFragment);
-        listViews.add(mFilterGoodsFragment);
+//        listViews.add(mFilterGoodsFragment);
         try {
             mPager.setAdapter(new MyFrageStatePagerAdapter(getActivity().getSupportFragmentManager()));
             mPager.setCurrentItem(0);
@@ -81,7 +83,7 @@ public class ClassifyFragment extends BaseFragment {
 
                 @Override
                 public void onPageSelected(int position) {
-                    getCurrentTv(position);
+//                    getCurrentTv(position);
                 }
 
                 @Override
@@ -89,7 +91,7 @@ public class ClassifyFragment extends BaseFragment {
 
                 }
             });
-        }catch ( Exception e){
+        } catch (Exception e) {
 
         }
 
@@ -97,11 +99,9 @@ public class ClassifyFragment extends BaseFragment {
     }
 
 
-    class MyFrageStatePagerAdapter extends FragmentStatePagerAdapter
-    {
+    class MyFrageStatePagerAdapter extends FragmentStatePagerAdapter {
 
-        public MyFrageStatePagerAdapter(FragmentManager fm)
-        {
+        public MyFrageStatePagerAdapter(FragmentManager fm) {
             super(fm);
         }
 
@@ -140,9 +140,9 @@ public class ClassifyFragment extends BaseFragment {
         }
     }
 
-    private void getCurrentTv(int type){
+    private void getCurrentTv(int type) {
         regiestTv();
-        switch (type){
+        switch (type) {
             case 0:
                 t1.setBackgroundResource(R.drawable.classify_shape_pressed);
                 t1.setTextColor(getResources().getColor(R.color.white));
@@ -154,7 +154,7 @@ public class ClassifyFragment extends BaseFragment {
         }
     }
 
-    private void regiestTv(){
+    private void regiestTv() {
         t1.setBackgroundResource(R.drawable.classify_shape_active);
         t2.setBackgroundResource(R.drawable.classify_shape_active_right);
         t1.setTextColor(getResources().getColor(R.color.green));

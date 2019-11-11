@@ -29,9 +29,9 @@ import bocang.view.BaseActivity;
  * @date : 2017/6/23 14:53
  * @description :
  */
-public class ChartListActivity extends BaseActivity
-{
+public class ChartListActivity extends BaseActivity {
     private MessageFragment mFragment;
+
     @Override
     protected void InitDataView() {
         registerMessageListener();
@@ -47,7 +47,7 @@ public class ChartListActivity extends BaseActivity
         setContentView(R.layout.activity_message);
         setColor(this, Color.WHITE);
         //必需继承FragmentActivity,嵌套fragment只需要这行代码
-        mFragment=new MessageFragment();
+        mFragment = new MessageFragment();
         getSupportFragmentManager().beginTransaction().replace(R.id.container,
                 mFragment).commitAllowingStateLoss();
 
@@ -81,7 +81,7 @@ public class ChartListActivity extends BaseActivity
 
             @Override
             public void onMessageReceived(List<EMMessage> messages) {
-                Log.e("onMessageReceived",messages.size()+"");
+                Log.e("onMessageReceived", messages.size() + "");
                 for (EMMessage message : messages) {
                     //                    EMLog.d(TAG, "onMessageReceived id : " + message.getMsgId());
                     EaseUI.getInstance().getNotifier().onNewMsg(message);
@@ -101,7 +101,7 @@ public class ChartListActivity extends BaseActivity
 
             @Override
             public void onCmdMessageReceived(List<EMMessage> messages) {
-                Log.e("onCmdMessageReceived",messages.size()+"");
+                Log.e("onCmdMessageReceived", messages.size() + "");
                 for (EMMessage message : messages) {
                     //                    EMLog.d(TAG, "receive command message");
                     //get message body

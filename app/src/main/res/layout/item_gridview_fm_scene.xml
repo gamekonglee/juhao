@@ -5,26 +5,25 @@
 
     <RelativeLayout
         android:id="@+id/filter_rl"
-        style="@style/mine_item_style"
-        >
+        style="@style/mine_item_style">
 
         <TextView
             android:id="@+id/name_tv"
             style="@style/mine_text_style"
-            android:text="类型"/>
+            android:text="类型" />
 
         <ImageView
             android:id="@+id/type_iv"
             style="@style/mine_image_arrow"
-            android:layout_alignParentRight="true"/>
+            android:layout_alignParentRight="true" />
+
         <TextView
             android:id="@+id/filter_name_tv"
             style="@style/mine_text_style"
-            android:layout_toLeftOf="@id/type_iv"
             android:layout_marginRight="10dp"
-            android:textSize="13sp"
+            android:layout_toLeftOf="@id/type_iv"
             android:textColor="@color/green"
-            />
+            android:textSize="13sp" />
 
 
     </RelativeLayout>

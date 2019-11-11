@@ -43,9 +43,10 @@ import static android.webkit.WebView.enableSlowWholeDocumentDraw;
  * @description :场景配灯
  */
 public class DiyActivity extends BaseActivity implements IPicsGestureListener {
+
     private DiyController mController;
     private ImageView goSaveIv, goproductIv, goscreenctIv, jingxian_iv, goBrightnessIv, goHelpIv,goBackBtn01,sceneBgIv;
-    private LinearLayout pro_jingxiang_ll, goCart_ll, detail_ll, delete_ll,add_data_ll;
+    private LinearLayout pro_jingxiang_ll, goCart_ll, detail_ll, delete_ll,add_data_ll,botton_ll;;
     private View left_ll, right_ll;
     private FrameLayout sceneFrameLayout,main_fl;
     public String mPath;
@@ -126,6 +127,7 @@ public class DiyActivity extends BaseActivity implements IPicsGestureListener {
         yindao_iv = (ImageView) findViewById(R.id.yindao_iv);
         yindao_rl = (RelativeLayout) findViewById(R.id.yindao_rl);
         select_ll = (LinearLayout) findViewById(R.id.select_ll);
+        botton_ll = findViewById(R.id.botton_ll);
 
         boolean showHelp= MyShare.get(this).getBoolean(Constance.SHOWHELP);
         if(!showHelp){
@@ -144,6 +146,8 @@ public class DiyActivity extends BaseActivity implements IPicsGestureListener {
         add_data_tv = (TextView)findViewById(R.id.add_data_tv);
 //        picsGestureLayout = getViewAndClick(R.id.picsGestureLayout);
 //        picsGestureLayout.setPicsGestureListener(this);
+
+        showSceneTypeView();
 
 
     }
@@ -273,6 +277,7 @@ public class DiyActivity extends BaseActivity implements IPicsGestureListener {
             @Override
             public void onClick(View view) {
                 DemoApplication.SCENE_TYPE=2;
+                showSceneTypeView();
                 dialog.dismiss();
             }
         });
@@ -280,6 +285,7 @@ public class DiyActivity extends BaseActivity implements IPicsGestureListener {
             @Override
             public void onClick(View view) {
                 DemoApplication.SCENE_TYPE=3;
+                showSceneTypeView();
                 mController.send3DsceneList();
                 dialog.dismiss();
             }
@@ -287,6 +293,25 @@ public class DiyActivity extends BaseActivity implements IPicsGestureListener {
 
         dialog.show();
     }
+
+    /**
+     * 二维和三维DIY布局显示
+     */
+    private void showSceneTypeView() {
+        if (DemoApplication.SCENE_TYPE == 3){
+            jingxian_iv.setVisibility(View.GONE);
+            goBrightnessIv.setVisibility(View.GONE);
+            goHelpIv.setVisibility(View.GONE);
+            botton_ll.setVisibility(View.GONE);
+        }else if (DemoApplication.SCENE_TYPE == 2){
+            jingxian_iv.setVisibility(View.VISIBLE);
+            goBrightnessIv.setVisibility(View.VISIBLE);
+            goHelpIv.setVisibility(View.VISIBLE);
+            botton_ll.setVisibility(View.VISIBLE);
+        }
+    }
+
+
     /**
      * 退出
      */
@@ -352,6 +377,7 @@ public class DiyActivity extends BaseActivity implements IPicsGestureListener {
     }
 
 
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
