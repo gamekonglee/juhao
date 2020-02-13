@@ -74,7 +74,7 @@ public class SelectGoodsController extends BaseController implements INetworkCal
     private PMSwipeRefreshLayout mPullToRefreshLayout;
     private ProAdapter mProAdapter;
     private EndOfGridView order_sv;
-    private int page = 1;
+    public int page = 1;
     private View mNullView;
     private View mNullNet;
     private Button mRefeshBtn;
@@ -96,6 +96,8 @@ public class SelectGoodsController extends BaseController implements INetworkCal
     private List<CategoriesBean> mFirstLevelCategory;//一级分类数据
     private Map<Integer, Boolean> mCategoryIds;//已选中的category id
     private FilterPopWindow mFilterPopWindow;
+
+    private Boolean isSelecting = false;
 
     public SelectGoodsController(SelectGoodsActivity v) {
         mView = v;
@@ -125,7 +127,11 @@ public class SelectGoodsController extends BaseController implements INetworkCal
         if (mView.mIsYiJI) {
             selectYijiProduct(1, per_pag, null, null, null);
         } else {
-            selectProduct(1, per_pag, null, null, null);
+            if (isSelecting) {
+                ensureFilter(page);
+                return;
+            }
+            selectProduct(page, per_pag, null, null, null);
         }
     }
 
@@ -253,6 +259,14 @@ public class SelectGoodsController extends BaseController implements INetworkCal
                         int categoryId = itemAttr.getCategories().get(position).getId();
                         LogUtils.logE("categotyId", "categotyId:" + categoryId);
 
+                        for (Categories categories : itemAttr.getCategories()){
+                            if (itemAttr.getCategories().get(position) != categories && categories.isSelected()){
+                                categories.setSelected(false);
+                                mCategoryIds.remove(categories.getId());
+                            }
+                        }
+
+
                         if (!itemAttr.getCategories().get(position).isSelected()) {
 
                             itemAttr.getCategories().get(position).setSelected(true);
@@ -297,7 +311,8 @@ public class SelectGoodsController extends BaseController implements INetworkCal
     /**
      * 确定筛选
      */
-    public void ensureFilter(){
+    public void ensureFilter(int page){
+        isSelecting = true;
         //已选择的二级分类id
         List<Integer> selectedCategory = new ArrayList<>();
         for (Map.Entry<Integer, Boolean> entry : mCategoryIds.entrySet()) {
@@ -305,7 +320,7 @@ public class SelectGoodsController extends BaseController implements INetworkCal
                 selectedCategory.add(entry.getKey());
             }
         }
-        selectFilterProduct(1, "60", selectedCategory.toString());
+        selectFilterProduct(page, "60", selectedCategory.toString());
         mDrawerLayout.closeDrawer(Gravity.END);
     }
 
@@ -393,13 +408,18 @@ public class SelectGoodsController extends BaseController implements INetworkCal
         if (mView.mIsYiJI) {
             selectYijiProduct(1, per_pag, null, null, null);
         } else {
-            selectProduct(1, per_pag, null, null, null);
+            if (isSelecting) {
+                ensureFilter(page);
+                return;
+            }
+            selectProduct(page, per_pag, null, null, null);
         }
 
     }
 
 
     public void selectProduct(int page, String per_page, String brand, String category, String shop) {
+        isSelecting = false;
 //        String keyword = et_search.getText().toString();
         String keyword = mView.keyword;
         //        mView.setShowDialog(true);
@@ -434,15 +454,18 @@ public class SelectGoodsController extends BaseController implements INetworkCal
 //        mView.showLoading();
         mNetWork.sendGoodsType(1, 20, null, null, this);
     }
+    private void selectFilterProduct(int page, String perPage, String categories) {
+        mNetWork.sendGoodsList(page, perPage, null, categories, null, null, null, null, null, this);
+    }
+
+
 
     /**
      * @param page
      * @param perPage
      * @param categories 分类id(可多选拼接)
      */
-    private void selectFilterProduct(int page, String perPage, String categories) {
-        mNetWork.sendGoodsList(page, perPage, null, categories, null, null, null, null, null, this);
-    }
+
 
     @Override
     public void onSuccessListener(String requestCode, JSONObject ans) {
@@ -555,8 +578,9 @@ public class SelectGoodsController extends BaseController implements INetworkCal
     }
 
     private void getDataSuccess(JSONArray array) {
-        if (1 == page)
+        if (1 == page) {
             goodses = array;
+        }
         else if (null != goodses) {
             for (int i = 0; i < array.length(); i++) {
                 goodses.add(array.getJSONObject(i));
@@ -580,6 +604,10 @@ public class SelectGoodsController extends BaseController implements INetworkCal
         if (mView.mIsYiJI) {
             selectYijiProduct(page, per_pag, null, null, null);
         } else {
+            if (isSelecting) {
+                ensureFilter(page);
+                return;
+            }
             selectProduct(page, per_pag, null, null, null);
         }
 
@@ -591,6 +619,10 @@ public class SelectGoodsController extends BaseController implements INetworkCal
         if (mView.mIsYiJI) {
             selectYijiProduct(page, per_pag, null, null, null);
         } else {
+            if (isSelecting) {
+                ensureFilter(page);
+                return;
+            }
             selectProduct(page, per_pag, null, null, null);
         }
 
@@ -602,6 +634,10 @@ public class SelectGoodsController extends BaseController implements INetworkCal
         if (mView.mIsYiJI) {
             selectYijiProduct(page, per_pag, null, null, null);
         } else {
+            if (isSelecting) {
+                ensureFilter(page);
+                return;
+            }
             selectProduct(page, per_pag, null, null, null);
         }
 
@@ -656,7 +692,12 @@ public class SelectGoodsController extends BaseController implements INetworkCal
         if (mView.mIsYiJI) {
             selectYijiProduct(page, per_pag, null, null, null);
         } else {
+            if (isSelecting) {
+                ensureFilter(page);
+                return;
+            }
             selectProduct(page, per_pag, null, null, null);
+
         }
 
     }
@@ -714,6 +755,7 @@ public class SelectGoodsController extends BaseController implements INetworkCal
                 String name = goodses.getJSONObject(position).getString(Constance.name);
                 holder.textView.setText(name);
                 //                holder.imageView.setImageResource(R.drawable.bg_default);
+                ImageLoader.getInstance().displayImage("", holder.imageView);
                 ImageLoader.getInstance().displayImage(goodses.getJSONObject(position).getJSONObject(Constance.default_photo).getString(Constance.large)
                         , holder.imageView);
 

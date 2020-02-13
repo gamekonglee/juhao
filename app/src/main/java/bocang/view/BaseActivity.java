@@ -79,7 +79,7 @@ public abstract class BaseActivity extends FragmentActivity implements View.OnCl
      * @param activity 需要设置的activity
      * @param color 状态栏颜色值
      */
-    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     public static void setColor(Activity activity, int color) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
             // 设置状态栏透明

@@ -6,6 +6,7 @@ import android.graphics.Paint;
 import android.os.Message;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
@@ -118,7 +119,8 @@ import static bc.juhao.com.utils.UIUtils.getResources;
             if (mView.mIsYiJI) {
                 selectYijiProduct(1, per_pag, null, null, null);
             } else {
-                selectProduct(1, per_pag, null, null, null);
+//                selectProduct(1, per_pag, null, null, null);
+                ensureFilter(page);
             }
         }
 
@@ -233,7 +235,7 @@ import static bc.juhao.com.utils.UIUtils.getResources;
                         @Override
                         public void onClick(View view) {
 
-                            mFilterPopWindow = new FilterPopWindow(mView.getActivity(), itemAttr.getCategories(), mCategoryIds, categoryName);
+                            mFilterPopWindow = new FilterPopWindow(mView.getContext(), itemAttr.getCategories(), mCategoryIds, categoryName);
                             mFilterPopWindow.setOnMeanCallBack(meanCallBack);
                         }
                     });
@@ -245,6 +247,14 @@ import static bc.juhao.com.utils.UIUtils.getResources;
                             //二级categoryId 分类id
                             int categoryId = itemAttr.getCategories().get(position).getId();
                             LogUtils.logE("categotyId", "categotyId:" + categoryId);
+
+
+                            for (Categories categories : itemAttr.getCategories()){
+                                if (itemAttr.getCategories().get(position) != categories && categories.isSelected()){
+                                    categories.setSelected(false);
+                                    mCategoryIds.remove(categories.getId());
+                                }
+                            }
 
                             if (!itemAttr.getCategories().get(position).isSelected()) {
 
@@ -290,7 +300,7 @@ import static bc.juhao.com.utils.UIUtils.getResources;
         /**
          * 确定筛选
          */
-        public void ensureFilter(){
+        public void ensureFilter(int page){
             //已选择的二级分类id
             List<Integer> selectedCategory = new ArrayList<>();
             for (Map.Entry<Integer, Boolean> entry : mCategoryIds.entrySet()) {
@@ -298,7 +308,7 @@ import static bc.juhao.com.utils.UIUtils.getResources;
                     selectedCategory.add(entry.getKey());
                 }
             }
-            selectFilterProduct(1, "60", selectedCategory.toString());
+            selectFilterProduct(page, "60", selectedCategory.toString());
             mDrawerLayout.closeDrawer(Gravity.END);
         }
 
@@ -386,7 +396,8 @@ import static bc.juhao.com.utils.UIUtils.getResources;
             if (mView.mIsYiJI) {
                 selectYijiProduct(1, per_pag, null, null, null);
             } else {
-                selectProduct(1, per_pag, null, null, null);
+//                selectProduct(1, per_pag, null, null, null);
+                ensureFilter(page);
             }
 
         }
@@ -568,12 +579,14 @@ import static bc.juhao.com.utils.UIUtils.getResources;
             }
         };
 
+        @Override
         public void onRefresh() {
             page = 1;
             if (mView.mIsYiJI) {
                 selectYijiProduct(page, per_pag, null, null, null);
             } else {
-                selectProduct(page, per_pag, null, null, null);
+//                selectProduct(page, per_pag, null, null, null);
+                ensureFilter(page);
             }
 
         }
@@ -584,7 +597,8 @@ import static bc.juhao.com.utils.UIUtils.getResources;
             if (mView.mIsYiJI) {
                 selectYijiProduct(page, per_pag, null, null, null);
             } else {
-                selectProduct(page, per_pag, null, null, null);
+//                selectProduct(page, per_pag, null, null, null);
+                ensureFilter(page);
             }
 
         }
@@ -595,7 +609,8 @@ import static bc.juhao.com.utils.UIUtils.getResources;
             if (mView.mIsYiJI) {
                 selectYijiProduct(page, per_pag, null, null, null);
             } else {
-                selectProduct(page, per_pag, null, null, null);
+//                selectProduct(page, per_pag, null, null, null);
+                ensureFilter(page);
             }
 
         }
@@ -642,14 +657,16 @@ import static bc.juhao.com.utils.UIUtils.getResources;
 
         @Override
         public void onEndOfList(Object lastItem) {
-            if (page == 1 && goodses.length() == 0) {
+//            if (page == 1 && goodses.length() == 0) {
+            if (page == 1 && goodses.length() < 6) {
                 return;
             }
             page++;
             if (mView.mIsYiJI) {
                 selectYijiProduct(page, per_pag, null, null, null);
             } else {
-                selectProduct(page, per_pag, null, null, null);
+//                selectProduct(page, per_pag, null, null, null);
+                ensureFilter(page);
             }
 
         }
@@ -707,6 +724,7 @@ import static bc.juhao.com.utils.UIUtils.getResources;
                     String name = goodses.getJSONObject(position).getString(Constance.name);
                     holder.textView.setText(name);
                     //                holder.imageView.setImageResource(R.drawable.bg_default);
+                    ImageLoader.getInstance().displayImage("", holder.imageView);
                     ImageLoader.getInstance().displayImage(goodses.getJSONObject(position).getJSONObject(Constance.default_photo).getString(Constance.large)
                             , holder.imageView);
 

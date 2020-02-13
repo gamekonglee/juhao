@@ -27,7 +27,6 @@
             android:scrollbars="none">
 
             <LinearLayout
-
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
@@ -53,15 +52,14 @@
                         android:layout_height="match_parent"
                         android:layout_centerInParent="true"
                         android:layout_marginLeft="15dp"
+                        android:layout_marginRight="15dp"
                         android:layout_marginTop="5dp"
                         android:orientation="horizontal">
 
                         <LinearLayout
                             android:id="@+id/one_ll"
-                            android:layout_width="0dp"
+                            android:layout_width="wrap_content"
                             android:layout_height="match_parent"
-                            android:layout_marginRight="20dp"
-                            android:layout_weight="8"
                             android:gravity="center"
                             android:orientation="horizontal">
 
@@ -91,11 +89,12 @@
 
                         <LinearLayout
                             android:id="@+id/two_ll"
-                            android:layout_width="0dp"
+                            android:layout_width="wrap_content"
                             android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:layout_marginLeft="20dp"
                             android:layout_marginRight="20dp"
-                            android:layout_weight="4"
-                            android:gravity="center_vertical"
                             android:orientation="horizontal">
 
                             <ImageView
@@ -124,10 +123,8 @@
 
                         <LinearLayout
                             android:id="@+id/three_ll"
-                            android:layout_width="0dp"
+                            android:layout_width="wrap_content"
                             android:layout_height="match_parent"
-
-                            android:layout_weight="5"
                             android:gravity="center"
                             android:orientation="horizontal">
 

@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:paddingTop="20dp"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="44dp">
+        <TextView
+            android:text="@string/frag_cart"
+            android:textColor="#252525"
+            android:textSize="17sp"
+            android:layout_centerInParent="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <TextView
+            android:id="@+id/tv_edit"
+            android:text="@string/edit"
+            android:textColor="#fa4b00"
+            android:textSize="16sp"
+            android:layout_alignParentRight="true"
+            android:gravity="center"
+            android:paddingRight="15dp"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent" />
+    </RelativeLayout>
+        <bc.juhao.com.ui.view.ReboundScrollView
+            android:background="#f4f4f4"
+            android:scrollbars="none"
+            android:overScrollMode="never"
+            android:layout_weight="1"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <hxp.view.ListViewForScrollView
+                android:id="@+id/lv_cart"
+                android:divider="@null"
+                android:paddingTop="15dp"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"/>
+        </bc.juhao.com.ui.view.ReboundScrollView>
+
+    <LinearLayout
+        android:background="#FFFFFF"
+        android:gravity="center_vertical"
+        android:layout_width="match_parent"
+        android:layout_height="50dp">
+
+        <ImageView
+            android:src="@mipmap/icon_tick_nor"
+            android:adjustViewBounds="true"
+            android:layout_marginLeft="5dp"
+            android:padding="10dp"
+            android:layout_width="40dp"
+            android:layout_height="match_parent" />
+
+        <TextView
+            android:text="全选"
+            android:textSize="14sp"
+            android:layout_weight="1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <LinearLayout
+            android:id="@+id/ll_notedit"
+            android:gravity="center_vertical"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent">
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:text="不含运费"
+                    android:textSize="10sp"
+                    android:textColor="#999999"
+                    android:layout_marginRight="5dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+                <TextView
+                    android:text="合计:"
+                    android:textSize="14sp"
+                    android:textColor="#999999"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+                <TextView
+                    android:text=" ¥1490"
+                    android:textSize="14sp"
+                    android:textColor="#fa4b00"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
+            <TextView
+                android:id="@+id/tv_settle"
+                android:text="结算(1)"
+                android:textSize="14sp"
+                android:textColor="#ffffff"
+                android:background="@drawable/bg_bottom_orange_long_radiusmax"
+                android:gravity="center"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="15dp"
+                android:layout_width="70dp"
+                android:layout_height="30dp" />
+        </LinearLayout>
+        <LinearLayout
+            android:id="@+id/ll_isedit"
+            android:visibility="gone"
+            android:gravity="center_vertical"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent">
+
+            <Button
+                android:text="移入收藏夹"
+                android:textSize="14dp"
+                android:textColor="#eb6100"
+                android:gravity="center"
+                android:background="@drawable/bg_cart_btn_collect"
+                android:layout_marginRight="10dp"
+                android:layout_width="100dp"
+                android:layout_height="30dp" />
+
+            <Button
+                android:text="删除"
+                android:textSize="14dp"
+                android:textColor="#db1239"
+                android:gravity="center"
+                android:background="@drawable/bg_cart_btn_delete"
+                android:layout_marginRight="15dp"
+                android:layout_width="70dp"
+                android:layout_height="30dp" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</LinearLayout>

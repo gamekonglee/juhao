@@ -156,7 +156,10 @@ public class SelectGoodsActivity extends BaseActivity {
                 mController.changeToGridOrList();
                 break;
             case R.id.tv_ensure:
-                mController.ensureFilter();
+                keyword = "";
+                mController.et_search.setText(keyword);
+                mController.page = 1;
+                mController.ensureFilter(mController.page);
                 break;
             case R.id.tv_reset:
                 mController.resetFilter();

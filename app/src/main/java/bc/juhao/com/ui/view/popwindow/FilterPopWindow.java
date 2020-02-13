@@ -15,6 +15,8 @@ import android.widget.ListView;
 import android.widget.PopupWindow;
 import android.widget.TextView;
 
+import org.mozilla.javascript.ast.IfStatement;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -95,6 +97,8 @@ public class FilterPopWindow extends BasePopwindown implements View.OnClickListe
             protected void convert(BaseAdapterHelper helper, final Categories item) {
                 LinearLayout ll_selected_category = helper.getView(R.id.ll_selected_category);
                 final CheckBox cb_selected = helper.getView(R.id.cb_selected);
+                list_cb.add(cb_selected);
+                list_cat.add(item);
                 helper.setText(R.id.tv_category, item.getName());
 
                 cb_selected.setVisibility(item.isSelected() ? View.VISIBLE : View.GONE);
@@ -102,6 +106,18 @@ public class FilterPopWindow extends BasePopwindown implements View.OnClickListe
                 ll_selected_category.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
+
+                        for (CheckBox cb : list_cb){
+                            if (cb != view && cb.getVisibility() != View.GONE) {
+                                cb.setVisibility(View.GONE);
+                            }
+                        }
+                        for (Categories categories : list_cat){
+                            if (categories != item && categories.isSelected() != false) {
+                                categories.setSelected(false);
+                                mCategoryIds.remove(categories.getId());
+                            }
+                        }
 
 
                         if (item.isSelected()) {
@@ -127,6 +143,9 @@ public class FilterPopWindow extends BasePopwindown implements View.OnClickListe
 
         lv_selected_category.setAdapter(mCategoryAdapter);
     }
+
+    private List<CheckBox> list_cb = new ArrayList<>();//用于多选改为单选2019年12月2日10:05:09
+    private List<Categories> list_cat = new ArrayList<>();//同上
 
     @Override
     public void onClick(View view) {

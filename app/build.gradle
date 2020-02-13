@@ -10,8 +10,8 @@ android {
         applicationId 'bc.juhao.com'
         minSdkVersion 19
         targetSdkVersion 29
-        versionCode 45
-        versionName "1.53"
+        versionCode 47
+        versionName "1.55"
         //兼容Gradle3.X
         ndk {
 //            abiFilters "armeabi", "x86","arm64-v8a","armeabi-v7a","x86_64"
@@ -30,19 +30,19 @@ android {
         config {
             keyAlias 'juhao'
             keyPassword '123456'
-            storeFile file('/Users/gamekonglee/Downloads/juhao_git/ilopjuhaoapp/juhao.jks')
+            storeFile file('juhao.jks')
             storePassword '123456'
         }
         release {
             keyAlias 'juhao'
             keyPassword '123456'
-            storeFile file('/Users/gamekonglee/Downloads/juhao_git/ilopjuhaoapp/juhao.jks')
+            storeFile file('juhao.jks')
             storePassword '123456'
         }
         debug {
             keyAlias 'juhao'
             keyPassword '123456'
-            storeFile file('/Users/gamekonglee/Downloads/juhao_git/ilopjuhaoapp/juhao.jks')
+            storeFile file('juhao.jks')
             storePassword '123456'
         }
     }
@@ -61,15 +61,21 @@ android {
 //            keyPassword '123456'
 //        }
 //    }
+//    buildTypes {
+//        release {
+//            minifyEnabled true
+//            signingConfig signingConfigs.config
+//            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+//        }//debug 默认不开混淆
+//        debug {
+//            minifyEnabled false
+//            signingConfig signingConfigs.debug
+//            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+//        }
+//    }
     buildTypes {
         release {
-            minifyEnabled true
-            signingConfig signingConfigs.config
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-        }//debug 默认不开混淆
-        debug {
             minifyEnabled false
-            signingConfig signingConfigs.debug
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
@@ -340,7 +346,7 @@ dependencies {
 /*ijkPlayer*/
     // required, enough for most devices.
     implementation 'cn.jzvd:jiaozivideoplayer:6.0.0'
-    compile 'com.github.gamekonglee:regionSelector:1.0'
+    implementation 'com.github.gamekonglee:regionSelector:1.0'
 
 //    implementation 'tv.danmaku.ijk.media:ijkplayer-java:0.7.8.1'
 //    implementation 'tv.danmaku.ijk.media:ijkplayer-armv7a:0.7.8.1'

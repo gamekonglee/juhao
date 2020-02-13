@@ -944,6 +944,15 @@
         <activity android:name=".ui.activity.intelligence.DeviceShareAddUserActivity" />
         <activity android:name=".ui.activity.FindHomeActivity" />
         <activity android:name=".ui.activity.FindHomeListActivity" />
+
+        <activity android:name=".ui.activity.MyWebViewActivity" android:launchMode="singleTask"/>
+
+
+        <activity android:name=".ui.activity.newbuy.AddressActivity" android:launchMode="singleTask" />
+        <activity android:name=".ui.activity.newbuy.EditAddressActivity" android:launchMode="singleTask" />
+        <activity android:name=".ui.activity.newbuy.NewEditOrderActivity" android:launchMode="singleTask" />
+        <activity android:name=".ui.activity.newbuy.CashierActivity" android:launchMode="singleTask" />
+
     </application>
 
 </manifest>

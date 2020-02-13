@@ -65,6 +65,7 @@ import bc.juhao.com.ui.fragment.CartFragment;
 import bc.juhao.com.ui.fragment.ClassifyFragment;
 import bc.juhao.com.ui.fragment.HomeVpFragment;
 import bc.juhao.com.ui.fragment.MineFragment;
+import bc.juhao.com.ui.fragment.NewCartFragment;
 import bc.juhao.com.ui.fragment.ProgrammeFragment;
 import bc.juhao.com.ui.view.BottomBar;
 import bc.juhao.com.ui.view.ShowDialog;
@@ -122,6 +123,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
 //                new String[]{Manifest.permission.RECORD_AUDIO, Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.CALL_PHONE},
 //                1);
         JAnalyticsInterface.onPageStart(this, this.getClass().getCanonicalName());
+
     }
 
 
@@ -182,6 +184,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     @Override
     protected void InitDataView() {
         selectItem(R.id.frag_top_ll);
+
     }
 
     @Override

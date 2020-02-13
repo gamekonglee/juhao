@@ -1,6 +1,8 @@
 package bc.juhao.com.controller;
 
 import android.Manifest;
+import android.app.AlertDialog;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.os.Build;
@@ -11,6 +13,7 @@ import android.util.Log;
 import android.view.View;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
+import android.widget.TextView;
 
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.assist.FailReason;
@@ -19,10 +22,12 @@ import com.zhy.http.okhttp.callback.Callback;
 
 import java.util.Timer;
 
+import bc.juhao.com.R;
 import bc.juhao.com.cons.Constance;
 import bc.juhao.com.cons.NetWorkConst;
 import bc.juhao.com.listener.INetworkCallBack;
 import bc.juhao.com.net.ApiClient;
+import bc.juhao.com.ui.activity.MyWebViewActivity;
 import bc.juhao.com.ui.activity.SplashActivity;
 import bc.juhao.com.utils.MyShare;
 import bocang.json.JSONArray;
@@ -51,7 +56,13 @@ public class SplashController  extends BaseController {
     }
     public SplashController(SplashActivity activity){
         mView = activity;
-        initUI();
+        int i = MyShare.get(mView).getInt(Constance.intimes);
+        Log.d(TAG, "SplashController: "+i);
+        if (i == 0) {
+            showAgreementDialog();
+        }else {
+            initUI();
+        }
     }
 
     private void initUI() {
@@ -151,5 +162,56 @@ public class SplashController  extends BaseController {
         });
 
 
+    }
+
+
+
+    //隐私政策
+    public void showAgreementDialog(){
+        AlertDialog.Builder builder = new AlertDialog.Builder(mView);
+        View view = View.inflate(mView, R.layout.agreementdialog, null);
+        builder.setView(view);
+        builder.setCancelable(false);
+        AlertDialog dialog = builder.show();
+        TextView tv_agreement = view.findViewById(R.id.tv_agreement);
+        TextView tv_privacy = view.findViewById(R.id.tv_privacy);
+        TextView tv_cancel = view.findViewById(R.id.tv_cancel);
+        TextView tv_ok = view.findViewById(R.id.tv_ok);
+        tv_agreement.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(mView, MyWebViewActivity.class);
+                intent.putExtra(Constance.url, NetWorkConst.URL_AGREEMENT);
+                mView.startActivity(intent);
+            }
+        });
+        tv_privacy.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(mView, MyWebViewActivity.class);
+                intent.putExtra(Constance.url, NetWorkConst.URL_PRIVACY);
+                mView.startActivity(intent);
+            }
+        });
+        final AlertDialog finalDialog = dialog;
+        tv_cancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (finalDialog != null) {
+                    finalDialog.dismiss();
+                    mView.finish();
+                }
+            }
+        });
+        tv_ok.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (finalDialog != null) {
+                    finalDialog.dismiss();
+                }
+                initUI();
+                MyShare.get(mView).putInt(Constance.intimes, 1);
+            }
+        });
     }
 }

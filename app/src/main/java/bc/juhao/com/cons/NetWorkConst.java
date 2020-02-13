@@ -296,6 +296,10 @@ public class NetWorkConst {
     //修改邀请码
     public static final String LEVEL_EDIT_CODE_URL=API_HOST+"/v2/ecapi.user.code.edit";
 
+    //隐私政策
+    public static final String URL_AGREEMENT=SCENE_HOST+"/agreed.html";
+    public static final String URL_PRIVACY=SCENE_HOST+"/privacy.html";
+
 }
 
 

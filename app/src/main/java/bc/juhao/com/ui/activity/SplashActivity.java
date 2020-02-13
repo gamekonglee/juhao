@@ -1,5 +1,6 @@
 package bc.juhao.com.ui.activity;
 
+import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.ContentResolver;
 import android.content.Context;
@@ -30,11 +31,13 @@ import java.util.TimerTask;
 import bc.juhao.com.R;
 import bc.juhao.com.common.BaseActivity;
 import bc.juhao.com.cons.Constance;
+import bc.juhao.com.cons.NetWorkConst;
 import bc.juhao.com.controller.SplashController;
 import bc.juhao.com.utils.MyShare;
 import bocang.utils.AppUtils;
 import bocang.utils.CommonUtil;
 import bocang.utils.IntentUtil;
+import bocang.utils.UIUtils;
 
 /**
  * @author Jun
@@ -389,4 +392,5 @@ public class SplashActivity extends AActivity {
             finish();
         }
     }
+
 }

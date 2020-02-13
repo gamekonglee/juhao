@@ -1,6 +1,8 @@
 package bc.juhao.com.common;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
@@ -13,13 +15,21 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.aliyun.iot.ilop.demo.DemoApplication;
 
 import java.lang.reflect.Field;
 
+import bc.juhao.com.R;
 import bc.juhao.com.cons.Constance;
+import bc.juhao.com.cons.NetWorkConst;
+import bc.juhao.com.ui.activity.MyWebViewActivity;
+import bc.juhao.com.ui.activity.WebViewActivity;
+import bc.juhao.com.ui.activity.WebViewHomeActivity;
+import bc.juhao.com.ui.activity.WebViewTestActivity;
+import bc.juhao.com.ui.activity.user.LoginActivity;
 import bc.juhao.com.utils.MyShare;
 import bocang.utils.AppUtils;
 import bocang.utils.LogUtils;
@@ -267,4 +277,5 @@ public abstract class BaseActivity  extends FragmentActivity {
         }
         return result;
     }
+
 }

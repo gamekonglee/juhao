@@ -272,7 +272,7 @@ public class LoginController extends BaseController implements INetworkCallBack 
      * 登录成功处理事件
      */
     private void getSuccessLogin() {
-        final String uid= MyShare.get(mView).getString(Constance.USERID);
+        final String uid= MyShare.get(mView).getString(Constance.USERID);        Log.d(TAG, "USERID: "+uid);
         if(AppUtils.isEmpty(uid)){
             return;
         }

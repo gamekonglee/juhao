@@ -16,6 +16,7 @@ import java.util.Set;
 
 import bc.juhao.com.R;
 import bc.juhao.com.cons.Constance;
+import bc.juhao.com.cons.NetWorkConst;
 import bc.juhao.com.controller.SettingController;
 import bc.juhao.com.ui.activity.user.PerfectMydataActivity;
 import bc.juhao.com.ui.view.ShowDialog;
@@ -32,7 +33,7 @@ import cn.jpush.android.api.TagAliasCallback;
  */
 public class SettingActivity extends BaseActivity {
     private SettingController mController;
-    private RelativeLayout cache_rl;
+    private RelativeLayout cache_rl, agreement_rl, privacy_rl;
     private Button outlogin_bt;
     private TextView tv_tuisong;
     private boolean isOpen;
@@ -55,6 +56,8 @@ public class SettingActivity extends BaseActivity {
         setColor(this, Color.WHITE);
         outlogin_bt = getViewAndClick(R.id.outlogin_bt);
         cache_rl = getViewAndClick(R.id.cache_rl);
+        agreement_rl = getViewAndClick(R.id.agreement_rl);
+        privacy_rl = getViewAndClick(R.id.privacy_rl);
         tv_tuisong = getViewAndClick(R.id.tv_tuisong);
         TextView version_tv=findViewById(R.id.version_tv);
         tv_edit_info = getViewAndClick(R.id.tv_edit_info);
@@ -127,6 +130,16 @@ public class SettingActivity extends BaseActivity {
 
                     }
                 });
+                break;
+            case R.id.agreement_rl:
+                Intent intent = new Intent(this, MyWebViewActivity.class);
+                intent.putExtra(Constance.url, NetWorkConst.URL_AGREEMENT);
+                startActivity(intent);
+                break;
+            case R.id.privacy_rl:
+                Intent intent2 = new Intent(this, MyWebViewActivity.class);
+                intent2.putExtra(Constance.url, NetWorkConst.URL_PRIVACY);
+                startActivity(intent2);
                 break;
             case R.id.cache_rl:
                 mController.clearCache();

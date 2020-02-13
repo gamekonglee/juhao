@@ -1,6 +1,7 @@
 package bc.juhao.com.utils;
 
 import android.os.AsyncTask;
+import android.util.Log;
 
 import java.util.Iterator;
 import java.util.Map;
@@ -205,6 +206,7 @@ public class Network {
         params.add("per_page", per_page);
         params.add("category", category);
         params.add("shop", shop);
+        Log.d("oms", "sendGoodsType: "+NetWorkConst.CATEGORY+params.toString());
         sendRequest(params, NetWorkConst.CATEGORY, 2, 0, iNetworkCallBack);
     }
 
@@ -901,7 +903,6 @@ public class Network {
                         }
                         break;
                 }
-
             }
         });
 

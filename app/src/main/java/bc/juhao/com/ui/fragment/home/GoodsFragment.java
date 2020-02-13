@@ -192,7 +192,7 @@ public class GoodsFragment extends BaseFragment implements View.OnClickListener 
                 mController.changeToGridOrList();
                 break;
             case R.id.tv_ensure:
-                mController.ensureFilter();
+                mController.ensureFilter(1);
                 break;
             case R.id.tv_reset:
                 mController.resetFilter();

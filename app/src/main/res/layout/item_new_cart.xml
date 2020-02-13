@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:background="@drawable/bg_cart_dialog"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:layout_marginBottom="15dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <LinearLayout
+            android:gravity="center_vertical"
+            android:layout_width="match_parent"
+            android:layout_height="45dp">
+            <CheckBox
+                android:background="@drawable/selector_new_cart_checkbox"
+                android:button="@null"
+                android:gravity="center"
+                android:layout_marginLeft="15dp"
+                android:layout_width="20dp"
+                android:layout_height="20dp" />
+            <TextView
+                android:text="吸顶灯事业部"
+                android:textSize="14sp"
+                android:textColor="#333333"
+                android:layout_marginLeft="10dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+            <ImageView
+                android:src="@mipmap/into"
+                android:adjustViewBounds="true"
+                android:layout_marginLeft="10dp"
+                android:layout_width="wrap_content"
+                android:layout_height="13dp" />
+            <View
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:layout_height="0dp"/>
+            <TextView
+                android:text="领劵"
+                android:textSize="12sp"
+                android:textColor="#fa4b00"
+                android:gravity="center"
+                android:paddingRight="15sp"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent" />
+
+        </LinearLayout>
+        <hxp.view.ListViewForScrollView
+            android:id="@+id/lv_items"
+            android:divider="@null"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            tools:listitem="@layout/item_new_cart_item"/>
+
+
+    </LinearLayout>
+
+</LinearLayout>

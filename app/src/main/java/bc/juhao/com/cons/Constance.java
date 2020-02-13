@@ -527,6 +527,8 @@ public class Constance {
     public static String area="area";
     public static String xiaoqu="xiaoqu";
     public static String isFindHome="isFindHome";
+
+    public static String intimes="intimes";
 /*
             {
     {

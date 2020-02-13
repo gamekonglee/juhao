@@ -240,4 +240,8 @@
     <string name="scene_name">场景名称</string>
     <string name="no_data_from_server">服务器没有数据</string>
     <string name="no_more_data">没有更多内容了</string>
+    <string name="cart_delete">确认要删除1种商品吗？</string>
+    <string name="agreement">用户服务协议</string>
+    <string name="privacy">隐私权政策</string>
+    <string name="agreement_des">我们深知隐私对您的重要性，为了更全面地呈现我们收集和使用您个人信息的相关情况，我们根据最新法律法规的要求，对隐私政策进行了详细的修订。当您点击[同意]即表示您已充分阅读、理解并接受更新过的《钜豪商城用户服务协议》与《隐私权政策》的全部内容。请花一些时间熟悉我们的隐私政策，如果您有任何问题，请随时联系我们。</string>
 </resources>
